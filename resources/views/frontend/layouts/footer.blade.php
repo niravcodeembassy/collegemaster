@@ -1,0 +1,253 @@
+<footer>
+  <div class="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-uppercase Vogue header_title text-center text-white">
+            GET OUR LATEST OFFERS IN YOUR INBOX
+          </h2>
+        </div>
+        <div class="col-sm-4 py-2 py-lg-0 py-md-0 left">
+          <h4>
+            LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY
+            SUBSCRIBING!
+          </h4>
+        </div>
+        <div class="col-sm-8 right">
+          <div class="signup-form">
+            <form id="mc-form" action="{{ route('newsletter') }}" class="mc-form">
+              <div class="form"><input type="email" placeholder="Your Email" required id="newsletter_email"
+                  data-rule-required="true" name="email">
+                <input type="submit">
+              </div>
+              <div id="newsletterValidate"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-top footer-container footer-one pt-70 pb-20 pb-sm-10 pt-sm-50">
+    <div class="container">
+      <div class="row">
+        <div class="col footer-single-widget">
+          <!--=======  copyright text  =======-->
+          <!--=======  logo  =======-->
+          <div class="logo">
+            <a href="{{ url('/') }}">
+              <img class="img-fluid" src="{{ asset('storage/'.$frontsetting->logo ) }}" alt="At Auros">
+            </a>
+          </div>
+          <!--=======  End of logo  =======-->
+          <!--=======  copyright text  =======-->
+          <!--=======  End of copyright text  =======-->
+          <!--=======  End of copyright text  =======-->
+        </div>
+        <div class="col footer-single-widget">
+          <h5 class="widget-title">HELP TOPICS</h5>
+          <!--=======  footer navigation container  =======-->
+          <div class="footer-nav-container">
+            <nav>
+              <ul>
+                <li><a href="{{ route('page.faq') }}">FAQ</a></li>
+                <li><a href="{{ route('blog') }}">Blog</a></li>
+              </ul>
+            </nav>
+          </div>
+
+
+
+          <!--=======  End of footer navigation container  =======-->
+          <!--=======  single widget  =======-->
+        </div>
+        <div class="col footer-single-widget">
+          <h5 class="widget-title">ABOUT</h5>
+          <!--=======  footer navigation container  =======-->
+          <div class="footer-nav-container">
+            <nav>
+              <ul>
+                <li><a href="{{ route('page.about') }}">About us</a></li>
+                <li><a href="{{ route('blog') }}">Blog</a></li>
+                <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <!--=======  single widget  =======-->
+
+          <!--=======  End of footer navigation container  =======-->
+          <!--=======  single widget  =======-->
+        </div>
+        <div class="col footer-single-widget">
+          <h5 class="widget-title">Privacy</h5>
+          <!--=======  footer navigation container  =======-->
+          <div class="footer-nav-container">
+            <nav>
+              <ul class="footer-links">
+                <li><a href="{{ route('page.policy') }}">Privacy Policy</a></li>
+                <li><a href="{{ route('page.policy') }}">Photo Policy</a></li>
+                <li><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></li>
+                <li><a href="{{ route('page.term') }}">Terms OF Services</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <!--=======  single widget  =======-->
+
+          <!--=======  End of footer navigation container  =======-->
+          <!--=======  single widget  =======-->
+        </div>
+        <div class="col footer-single-widget">
+          <!--=======  single widget  =======-->
+          <div class="footer-subscription-widget">
+            <h4 class="footer-title reg-office">Registered Office:</h4>
+            <p class="about marginB20">
+              {{$frontsetting->address ?? ''}}
+            </p>
+            <h4 class="footer-title">Call Support:</h4>
+            <p class="about marginB20">
+              Call at
+              <a href="/tel:+918200324798" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact}}</a><br>
+              We are here to help you on all working days between 10:00 AM to
+              07:00 PM
+            </p>
+            <h4 class="footer-title d-none">We Accept</h4>
+            <ul class="footer-links d-none">
+              <li><img src="{{ asset('front/assets/images/payment/payment_icon.png')}}" alt="Payment"
+                  class="img-responsive"></li>
+            </ul>
+            <h4 class="footer-title">Foolow us</h4>
+            <ul class="footer-links list-inline social-link">
+              @if ($frontsetting->facebook)
+              <li><a href="{{$frontsetting->facebook}}"> <i class="fa fa-facebook"></i></a></li>
+              @endif
+              @if ($frontsetting->instagram)
+              <li><a href="{{$frontsetting->instagram}}"> <i class="fa fa-instagram"></i></a></li>
+              @endif
+              @if ($frontsetting->whatsapp)
+              <li><a href="{{$frontsetting->whatsapp}}"> <i class="fa fa-whatsapp"></i></a></li>
+              @endif
+              @if ($frontsetting->linkedin)
+              <li><a href="{{$frontsetting->linkedin}}"> <i class="fa fa-linkedin"></i></a></li>
+              @endif
+            </ul>
+          </div>
+          <!--=======  End of single widget  =======-->
+        </div>
+      </div>
+    </div>
+
+    <!--=======  WHATSAPP D =======-->
+    <div class="whatsapp-sec" style="z-index:90000">
+      <a href="https://api.whatsapp.com/send?phone=919898142002" target="_blank">
+        <img src="{{ asset('storage/setting/') }}/whatsapp.svg" class="whatsapp-img" />
+      </a>
+    </div>
+    <!--=======  END WHATSAP  =======-->
+
+  </div>
+  <div class="footer site-footer footer-bottom">
+    <div class="col-md-12">
+      <p class="text-center text-white">
+        {{$frontsetting->copyrights}}
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+
+<!--=====  End of footer area  ======-->
+<!--=============================================
+                 =            overlay items         =
+                 =============================================-->
+<!--=======  about overlay  =======-->
+
+<!--=======  End of about overlay  =======-->
+<!--=======  wishlist overlay  =======-->
+
+<!--=======  End of wishlist overlay  =======-->
+
+<!--=======  cart overlay  =======-->
+<div class="cart-overlay" id="cart-overlay">
+  <div class="cart-overlay-close inactive"></div>
+  <div class="cart-overlay-content">
+    <!--=======  close icon  =======-->
+    <span class="close-icon" id="cart-close-icon">
+      <a href="javascript:void(0)">
+        <i class="ion-android-close"></i>
+      </a>
+    </span>
+    <!--=======  End of close icon  =======-->
+    <!--=======  offcanvas cart content container  =======-->
+    <div class="offcanvas-cart-content-container">
+      <h3 class="cart-title">Cart</h3>
+      <div class="cart-product-wrapper" id="cart-product-wrapper">
+        @include('frontend.cart.cart_overlay' ,['cartList' => $cartList ])
+      </div>
+    </div>
+    <!--=======  End of offcanvas cart content container   =======-->
+  </div>
+</div>
+<!--=======  End of cart overlay  =======-->
+
+<!--=======  search overlay  =======-->
+<div class="search-overlay" id="search-overlay">
+  <!--=======  close icon  =======-->
+  <span class="close-icon search-close-icon">
+    <a href="javascript:void(0)" id="search-close-icon">
+      <i class="ti-close"></i>
+    </a>
+  </span>
+  <!--=======  End of close icon  =======-->
+  <!--=======  search overlay content  =======-->
+  <div class="search-overlay-content">
+    <div class="input-box">
+      <form action="https://live.hasthemes.com/html/3/lezada-preview/lezada/index.html">
+        <input type="search" placeholder="Search Products...">
+      </form>
+    </div>
+    <div class="search-hint">
+      <span># Hit enter to search or ESC to close</span>
+    </div>
+  </div>
+  <!--=======  End of search overlay content  =======-->
+</div>
+<!--=======  End of search overlay  =======-->
+<!--=====  End of overlay items  ======-->
+
+
+
+@push('script')
+<script>
+  $(document).ready(function () {
+                    $('#mc-form').validate({
+                      errorClass: "text-danger",
+                        errorPlacement: function(error, element) {
+                            error.appendTo($('#newsletterValidate'));
+                        },
+                        submitHandler: function(form ,event) {
+
+                            event.preventDefault();
+                            var datastring = $(form).serialize();
+                            var url = $(form).attr('action');
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: datastring
+                            }).always(function(res){
+                                $('#newsletter_email').val(null);
+                            }).done(function(res){
+                                $.toast({
+                                    position: 'top-right',
+                                    text: res.message,
+                                    loader: false,
+                                })
+                            });
+                        }
+                    });
+                });
+</script>
+@endpush

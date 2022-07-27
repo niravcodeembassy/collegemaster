@@ -1,0 +1,1 @@
+    {!! Form::label('[% field_name %]',[% field_title %],['class' => 'control-label']) !!}
