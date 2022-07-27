@@ -88,7 +88,7 @@
                 <li><a href="{{ route('page.policy') }}">Privacy Policy</a></li>
                 <li><a href="{{ route('page.policy') }}">Photo Policy</a></li>
                 <li><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></li>
-                <li><a href="{{ route('page.term') }}">Terms OF Services</a></li>
+                <li><a href="{{ route('page.term') }}">Term and Conditions</a></li>
               </ul>
             </nav>
           </div>

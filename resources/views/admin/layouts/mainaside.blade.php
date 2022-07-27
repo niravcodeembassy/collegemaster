@@ -115,7 +115,7 @@
           </p>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item d-none">
         <a href="{{ route('admin.testimonial.index') }}" class="nav-link  {{ Helper::isActive(['testimonial.*']) }}">
           <i class="px-1  nav-icon f-18 fa fa-quote-left d-inline-block"></i>
           <p class="align-middle">
