@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 // use Barryvdh\DomPDF\Facade as PDF;
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/linkstorage', function () {
+  Artisan::call('storage:link');
+});
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
 
