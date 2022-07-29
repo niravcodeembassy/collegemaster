@@ -17,13 +17,11 @@ class CategoryController extends Controller
     return $this->view('admin.categories.index');
   }
 
-
   public function create()
   {
     $this->data['title'] = 'Create';
     return $this->view('admin.categories.create');
   }
-
 
   public function dataList(Request $request)
   {
@@ -33,7 +31,6 @@ class CategoryController extends Controller
       1 => 'name',
       3 => 'action',
     );
-
 
     $totalData = Category::count(); // datata table count
 
@@ -72,7 +69,7 @@ class CategoryController extends Controller
           'id' => $item->id,
           'action' => route('admin.category.edit', $item->id),
           'icon' => 'fa fa-pen',
-          'permission' => true
+          'permission' => true,
         ]),
         collect([
           'text' => 'Delete',
@@ -80,9 +77,9 @@ class CategoryController extends Controller
           'action' => route('admin.category.destroy', ['category' => $item->id]),
           'class' => 'delete-confirmation',
           'icon' => 'fa fa-trash',
-          'permission' => true
+          'permission' => true,
 
-        ])
+        ]),
       ]);
 
       $data[] = $row;
@@ -98,7 +95,6 @@ class CategoryController extends Controller
     return response()->json($json_data);
   }
 
-
   /**
    * Store a newly created resource in storage.
    *
@@ -111,10 +107,10 @@ class CategoryController extends Controller
     $category->name = $request->name;
     $category->slug = $request->slug;
     $category->description = $request->description;
-    $category->meta_title    = $request->meta_title ?? $request->title;
-    $category->meta_description     = $request->meta_description;
+    $category->meta_title = $request->meta_title ?? $request->title;
+    $category->meta_description = $request->meta_description;
     $category->meta_keywords = $request->meta_keywords;
-    $category->handle        = $request->handle;
+    $category->handle = $request->slug;
     $category->image = FileUploader::make($request->images)->upload('category');
     $category->save();
 
@@ -157,10 +153,10 @@ class CategoryController extends Controller
     $category->name = $request->name;
     $category->slug = $request->slug;
     $category->description = $request->description;
-    $category->meta_title    = $request->meta_title ?? $request->title;
-    $category->meta_description     = $request->meta_description;
+    $category->meta_title = $request->meta_title ?? $request->title;
+    $category->meta_description = $request->meta_description;
     $category->meta_keywords = $request->meta_keywords;
-    $category->handle        = $request->handle;
+    $category->handle = $request->slug;
     $category->image = FileUploader::make($request->images)->upload('category', $category->image);
     $category->save();
     return redirect()->route('admin.category.index')->with('success', 'Category Updated Successfully');
@@ -179,14 +175,14 @@ class CategoryController extends Controller
 
     return response()->json([
       'success' => true,
-      'message' => 'Category Deleted SuccessFully'
+      'message' => 'Category Deleted SuccessFully',
     ], 200);
   }
 
   public function changeStatus(Request $request, $id)
   {
     $category = Category::findOrFail($request->id);
-    $category->is_active  = $request->status == 'true' ? null :  date('Y-m-d H:i:s');
+    $category->is_active = $request->status == 'true' ? null : date('Y-m-d H:i:s');
 
     if ($category->save()) {
       $statuscode = 200;
@@ -197,10 +193,9 @@ class CategoryController extends Controller
 
     return response()->json([
       'success' => true,
-      'message' => $message
+      'message' => $message,
     ], $statuscode ?? 400);
   }
-
 
   public function exists(Request $request)
   {

@@ -21,17 +21,23 @@ class ProductController extends Controller
   public function categoryProductList(Request $request, $slug)
   {
     // dump($request->query());
-    if ($slug !== "all") {
-      $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
-    } else {
-      $category = Category::where('slug', $slug)->select('id', 'slug', 'image', 'name', 'description')->firstOrFail();
-    }
-    $categoryList = Category::whereNull('is_active')->with(['subCategory' => function ($q) {
-      $q->whereNull('is_active');
-    }])->whereNull('is_active')->get();
+    // if ($slug !== "all") {
+    //  $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
+    // } else {
+    //   $category = Category::where('slug', $slug)->select('id', 'slug', 'image', 'name', 'description')->firstOrFail();
+    // }
+
+    $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
+
+
+    $categoryList = Category::whereNull('is_active')
+      ->withCount(['products' => function ($q) {
+        $q->where('is_active', 'Yes');
+      }])->with(['subCategory' => function ($q) {
+        $q->whereNull('is_active');
+      }])->whereNull('is_active')->get();
 
     $product =  $this->getProductQuery($request, $slug, $category);
-
     $this->data['product'] = $product;
     $this->data['title'] = $category->name;
     $this->data['categoryList'] = $categoryList;
@@ -63,14 +69,19 @@ class ProductController extends Controller
         return $q->orderBy('v.taxable_price', 'asc');
       })
       ->when($request->search, function ($q) use ($request) {
-        return $q->where('products.name', 'like', "%$request->search%");
+        return $q->Where('products.name', 'like', $request->search . '_%');
+        // return $q->where('products.name', 'like', "%$request->search%");
       })
+      ->with('category', 'subcategory')
       ->paginate(12);
   }
-  public function subcategoryProductList(Request $request, $id, $slug)
+  public function subcategoryProductList(Request $request, $cat_slug, $slug)
   {
-    $subCategory = SubCategory::where('id', $id)->select('id', 'slug', 'name', 'category_id')->firstOrFail();
+
+    $subCategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'image', 'description', 'category_id')->firstOrFail();
+
     $category = Category::findOrFail($subCategory->category_id);
+
     $this->data['category'] = $category;
 
     $this->data['subCategory'] = $subCategory;
@@ -78,7 +89,6 @@ class ProductController extends Controller
 
     // $product = Product::productList()->where('sub_category_id', $subCategory->id)->paginate(12);;
     $product =  $this->getProductQuery($request, $slug, $category, $subCategory);
-
 
     $categoryList = Category::whereNull('is_active')->with(['subCategory' => function ($q) {
       $q->whereNull('is_active');
@@ -94,10 +104,18 @@ class ProductController extends Controller
     return $this->view('frontend.product.subproductlist');
   }
 
-  public function productDetails(Request $request, $slug)
+  public function productDetails(Request $request, $cat_slug, $productAndSubcategorySlug, $slug = null)
   {
     // dd($request->all());
-    $product = Product::where('slug', $slug)->firstOrFail();
+    $product = Product::where('slug', $productAndSubcategorySlug)->first();
+    $subCategory = SubCategory::with('category')->where('slug', $productAndSubcategorySlug)->first();
+
+    if ($product === null && $subCategory !== null && $subCategory->category && $slug == null) {
+      return $this->subcategoryProductList($request, $cat_slug, $productAndSubcategorySlug);
+    }
+
+    $product = Product::where('slug', $slug ?? $product->slug)->firstOrFail();
+
     $this->session_id = Session::get('cart_session');
 
     $variant = Productvariant::when($request->variant, function ($q, $variant) use ($request) {
@@ -131,7 +149,10 @@ class ProductController extends Controller
     }
 
     $review = ProductReview::where('product_id', $product->id)->inRandomOrder()->orderBy('id', 'DESC')->limit(3)->get();
-
+    $product_review = $product->product_review;
+    $review_rating = intval($product_review->pluck('rating')->avg());
+    $this->data['product_review'] = $product_review;
+    $this->data['review_rating'] = $review_rating;
     $this->data['product'] = $product;
     $this->data['variantCombination'] = $variantCombination;
     $this->data['productVarinat'] = $variant;

@@ -23,13 +23,7 @@ class CustomerController extends Controller
   {
 
     // Listing colomns to show
-    $columns = array(
-      0 => 'name',
-      1 => 'email',
-      2 => 'phone',
-      4 => 'action',
-    );
-
+    $columns = array('name', 'email', 'phone', 'created_at', 'orders_count', 'action');
 
     $totalData = User::count(); // datata table count
 
@@ -43,7 +37,7 @@ class CustomerController extends Controller
 
     // DB::enableQueryLog();
     // genrate a query
-    $customcollections = User::when($search, function ($query, $search) {
+    $customcollections = User::withCount('orders')->when($search, function ($query, $search) {
       return $query->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%")->orWhere('phone', 'LIKE', "%{$search}%");
     });
 
@@ -51,17 +45,17 @@ class CustomerController extends Controller
 
     $totalFiltered = $customcollections->count();
 
-    $customcollections = $customcollections->offset($start)->limit($limit)->orderBy('created_at', 'DESC')->get();
+    $customcollections = $customcollections->offset($start)->limit($limit)->orderBy($order, $dir)->get();
 
     $data = [];
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
-
       // dd(route('admin.brand.edit', $item->id));
       $row['name']   = $item->name;
       $row['email']  = $item->email;
       $row['phone']  = $item->phone;
-      $row['created_at']  = $item->created_at;
+      $row['created_at']  = date("d-m-Y", strtotime($item->created_at));
+      $row['order_status'] =  '<i class="fa fa-truck f-18 px-2"></i>' . $item->orders_count;
       $row['status'] = $this->status($item->is_active, $item->id, route('admin.customer.status'));
       $row['action'] = $this->action([
         collect([
@@ -70,7 +64,6 @@ class CustomerController extends Controller
           'id' => $item->id, 'action' => route('admin.customer.show', $item->id),
           'permission' => true
         ]),
-
       ]);
 
       $data[] = $row;
@@ -88,7 +81,6 @@ class CustomerController extends Controller
 
   public function show(Request $request, $id)
   {
-
     $this->data['title'] = 'Customer';
     $this->data['customer'] = User::with(['orders' => function ($q) {
       $q->orderBy('id', 'DESC');

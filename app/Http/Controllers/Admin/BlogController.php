@@ -118,7 +118,7 @@ class BlogController extends Controller
     $blog->meta_title    = $request->meta_title ?? $request->title;
     $blog->meta_description     = $request->meta_description;
     $blog->meta_keywords = $request->meta_keywords;
-    $blog->handle        = $request->handle;
+    $blog->handle        = $request->slug;
     $blog->image = FileUploader::make($request->images)->upload('blog');
     $blog->save();
 
@@ -167,7 +167,7 @@ class BlogController extends Controller
     $blog->meta_title    = $request->meta_title ?? $request->title;
     $blog->meta_description     = $request->meta_description;
     $blog->meta_keywords = $request->meta_keywords;
-    $blog->handle        = $request->handle;
+    $blog->handle        = $request->slug;
     $blog->image = FileUploader::make($request->images)->upload('blog', $blog->image);
     $blog->save();
 

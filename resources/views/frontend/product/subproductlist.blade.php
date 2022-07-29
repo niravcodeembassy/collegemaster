@@ -18,15 +18,30 @@
     border-color: #333333;
   }
 
-  .category_section h1 {
-    font-size: 30px !important;
+  .breadcrumb-area h2 {
+    font-size: 17px !important;
   }
 
-  .category_section h2 {
-    font-size: 20px !important;
+  .breadcrumb-area {
+    background-image: url({{$subCategory->image_src ?? ''}})
   }
 </style>
 @endpush
+
+@section('title', $subCategory->meta_title)
+@section('keywords', $subCategory->meta_keywords)
+@section('published_time', $subCategory->created_at)
+@section('description', $subCategory->meta_description)
+
+@section('og-title', $subCategory->meta_title)
+@section('og-url', url()->current())
+@section('og-image', $subCategory->image_src)
+@section('og-description',$subCategory->meta_description)
+
+@section('twiter-title', $subCategory->meta_title)
+@section('twiter-description', $subCategory->meta_description)
+@section('twitter-image', $subCategory->image_src)
+
 @section('content')
 <div class="breadcrumb-area d-none  pt-20 pb-20" style="background-color: #f5f5f5;">
   <div class="container">
@@ -41,14 +56,28 @@
     </div>
   </div>
 </div>
-<form action="{{ route('subcategory.product', ['id'=>$subCategory->id , 'slug'=> $subCategory->slug]) }}" method="get"
-  id="filterForm">
+
+<div class="breadcrumb-area pt-50 pb-70 mb-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="text-white">{{ucfirst($subCategory->name) ?? ''}}</h1>
+        {{-- <h2> {{ Str::limit($subCategory->description,230)}}</h2> --}}
+        <h2 class="text-white"> {{ $subCategory->description ?? ''}}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form
+  action="{{ route('product.details', ['cat_slug'=>$category->slug , 'product_subcategory_slug'=> $subCategory->slug,'slug'=>null]) }}"
+  method="get" id="filterForm">
   <div class="shop-page-wrapper">
     <div class="shop-page-header">
       <div class="container">
         <div class="row align-items-center">
 
-          <div class="col-12 d-none">
+          {{-- <div class="col-12 d-none">
             <!--=======  filter icons  =======-->
 
             <div class="filter-icons">
@@ -66,17 +95,16 @@
               <!--=======  End of filter dropdown  =======-->
 
               <!--=======  grid icons  =======-->
-
               <div class="single-icon ">
-                <a href="{{ route('subcategory.product' , [ 'id'=> $subCategory->id ,'slug' => $subCategory->slug ,'type' => 'grid-four' ,  ] + request()->query() ) }}"
+                <a href="{{ route('product.details' , [ 'cat_slug'=> $category->slug ,'product_subcategory_slug' => $subCategory->slug ,'slug'=>null,'type' => 'grid-four' ,  ] + request()->query() ) }}"
                   class="{{ request('type','grid') == 'grid-four' ? 'active' : '' }} mr-3" style="opacity: 0.4;">
                   <i class="ti-layout-grid3-alt "></i>
                 </a>
-                <a href="{{ route('subcategory.product' , [ 'id'=> $subCategory->id, 'slug' => $subCategory->slug,'type' => 'grid', ] + request()->query() ) }}"
+                <a href="{{ route('product.details' , [ 'cat_slug'=> $category->slug, 'product_subcategory_slug' => $subCategory->slug,'slug'=>null,'type' => 'grid', ] + request()->query() ) }}"
                   class="{{ request('type','grid') == 'grid' ? 'active' : '' }} mr-3" style="opacity: 0.4;">
                   <i class="ti-layout-grid2-alt "></i>
                 </a>
-                <a href="{{ route('subcategory.product' , [ 'id'=> $subCategory->id ,'slug' => $subCategory->slug,'type' => 'list' , ]  + request()->query()) }}"
+                <a href="{{ route('product.details' , ['cat_slug'=> $category->slug ,'product_subcategory_slug' => $subCategory->slug,'slug'=>null,'type' => 'list' , ]  + request()->query()) }}"
                   class="{{ request('type') == 'list' ? 'active' : '' }} mr-3" style="opacity: 0.4;">
                   <i class="ti-view-list"></i>
                 </a>
@@ -85,14 +113,7 @@
             </div>
 
             <!--=======  End of filter icons  =======-->
-          </div>
-          <div class="col-md-12 col-sm-12 categor_banner d-none">
-            <img src="{{$category->image_src}}" class="img-fluid" alt="{{$category->name ?? ''}}">
-          </div>
-          <div class="col-md-12 col-sm-12 category_section">
-            <h1>{{$category->name ?? ''}}</h1>
-            <h2> {{ Str::limit($category->description,230)}}</h2>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
@@ -135,7 +156,7 @@
                       @foreach ($item->subCategory as $subItem)
                       <li>
                         <a class=" {{ (isset($subCategory) && $subCategory->id == $subItem->id) ? 'active'  : '' }}"
-                          href="{{ route('subcategory.product',['id' => $subItem->id , 'slug' => $subItem->slug]) }}">{{
+                          href="{{ route('product.details',['cat_slug'=> $category->slug , 'product_subcategory_slug' => $subItem->slug,'slug'=>null]) }}">{{
                           $subItem->name }}
                         </a>{{-- <span class="quantity">12</span> --}}
                       </li>
@@ -148,15 +169,15 @@
               </div>
               <!--=======  End of single sidebar widget  =======-->
               @endif
-              <div class="single-sidebar-widget mb-40" style="display:none">
+              {{-- <div class="single-sidebar-widget mb-40" style="display:none">
                 <h2 class="single-sidebar-widget--title">Filters</h2>
                 <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range"
                   value="{{ request('range',null)  }}" />
-              </div>
+              </div> --}}
               @if (request()->has('search') || request()->has('sort') || request()->has('range'))
               <div class=" text-center">
                 <a class="lezada-button  lezada-button--small btn-sm"
-                  href="{{ route('subcategory.product',['id'=> $subCategory->id ,'slug' => $subCategory->slug]) }}"
+                  href="{{ route('product.details',['cat_slug'=> $category->slug ,'product_subcategory_slug' => $subCategory->slug,'slug'=>null]) }}"
                   role="button">Clear Fitler</a>
               </div>
               @endif

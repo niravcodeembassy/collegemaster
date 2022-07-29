@@ -56,5 +56,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('authUser' , $user);
         });
 
+        
+
     }
 }

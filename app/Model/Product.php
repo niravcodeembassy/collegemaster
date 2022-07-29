@@ -132,6 +132,8 @@ class Product extends Model
       'products.content',
       'products.product_type',
       'products.slug',
+      'products.category_id',
+      'products.sub_category_id',
       'products.name',
       'v.id as variant_id',
       'v.product_id',
@@ -228,9 +230,14 @@ class Product extends Model
     return $this->belongsTo(HsCode::class, 'hs_id', 'id');
   }
 
+  public function product_review()
+  {
+    return $this->hasMany(ProductReview::class, 'product_id', 'id');
+  }
+
   public function getProductSrcAttribute()
   {
-    
+
     foreach ($this->images->take(1) as $item) {
       return $item->variant_image;
     }

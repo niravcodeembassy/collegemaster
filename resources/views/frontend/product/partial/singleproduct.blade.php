@@ -2,10 +2,11 @@
   <!--=======  single product image  =======-->
   @php
   $priceData = Helper::productPrice($product->productdefaultvariant);
+  $routeParameter = Helper::productRouteParameter($product);
+  $route = route('product.details',$routeParameter);
   @endphp
   <div class="single-product__image">
-
-    <a class="image-wrap" href="{{ route('product.details' , ['slug' =>  $product->slug  ?? 'all' ]) }}">
+    <a class="image-wrap" href="{{ $route }}">
       @foreach ($product->images->take(1) as $item)
       <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
       @endforeach
@@ -48,10 +49,10 @@
   <div class="single-product__content">
     <div class="title">
       <h3>
-        <a href="{{ route('product.details' , ['slug' => $product->slug ?? 'all']) }}">{{ Str::words($product->name,8,
+        <a href="{{ $route }}">{{ Str::words($product->name,8,
           '...') }}</a>
       </h3>
-      <a href="{{ route('product.details' , ['slug' => $product->slug  ?? 'all' ]) }}">
+      <a href="{{ $route }}">
         VIEW PRODUCT
       </a>
     </div>

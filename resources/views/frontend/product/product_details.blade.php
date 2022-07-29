@@ -15,14 +15,9 @@
     font-size: 1.1rem !important;
   }
 
-  .shop-product__title h1 {
-    font-size: 22px !important;
-  }
-
   .social-share-link,
   .quickview-social-icons li a {
     font-size: 15px;
-    /* margin: 0 4.5px; */
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -44,8 +39,7 @@
     display: inline-block;
   }
 
-  .social-share-link:hover,
-  .quickview-social-icons li a:hover {
+  .social-share-link:hover {
     color: #ffffff !important;
     background-color: #1f1f1f;
   }
@@ -55,6 +49,16 @@
     line-height: 42px !important;
     padding: 0 25px !important;
     border-radius: 0px !important;
+  }
+
+  .breadcrumb-list__item:after {
+    content: ">" !important;
+
+  }
+
+  li.breadcrumb-list__item {
+    font-size: 10px !important;
+    font-weight: 500 !important;
   }
 </style>
 @endpush
@@ -89,13 +93,13 @@
             <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name)
               }}</a>
           </li>
-          @php
+          {{-- @php
           $sub = $product->subcategory;
           @endphp
           <li class="breadcrumb-list__item breadcrumb-list__item--active">
             <a href="{{ route('subcategory.product', ['id' => $sub->id, $sub->slug]) }}">{{ $sub->name }}
             </a>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </div>
@@ -116,20 +120,22 @@
                 }}</a>
             </li>
             @php
+            $routeParameter = Helper::productRouteParameter($product);
             $sub = $product->subcategory;
+            unset($routeParameter['slug']);
             @endphp
-            @if ($sub->count()>0)
+            @if (isset($sub) && !is_null($sub))
             <li class="breadcrumb-list__item">
-              <a href="{{ route('subcategory.product', ['id' => $sub->id, $sub->slug]) }}">{{ $sub->name }}
+              <a href="{{ route('product.details',$routeParameter) }}">{{
+                $sub->name }}
               </a>
             </li>
             @endif
-            <li class="breadcrumb-list__item breadcrumb-list__item--active truncate">
-              <a href="{{ route('product.details', ['slug' =>$product->slug]) }}">
-                {{-- {{ Str::limit($product->name,50)}} --}}
-                {{ Str::words($product->name,8, '...') }}
-            </li>
-            </a>
+            <li class="breadcrumb-list__item breadcrumb-list__item--active">
+              <a href="javascript:void(0)">
+                {{-- {{ Str::words($product->name,8, '...') }} --}}
+                {{$product->name}}
+              </a>
             </li>
           </ul>
         </div>
@@ -222,7 +228,7 @@
             <div class="col-lg-6">
               <!--=======  shop product description  =======-->
               <div class="shop-product__description shop-product-url "
-                data-url="{{ route('product.details', ['slug' => $product->slug]) }}">
+                data-url="{{ route('product.details',$routeParameter) }}">
                 <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                 <!--=======  shop product navigation  =======-->
 
@@ -235,19 +241,17 @@
 
                 <!--=======  shop product rating  =======-->
                 @auth
-                @if ($review->count() > 0)
+                @if ($product_review->count() > 0)
                 <div class="shop-product__rating mb-15 text-right">
                   <span class="review-link ">
-                    {{-- <a href="javascript:void(0)">({{ $review->count() }} customer
+                    {{-- <a href="javascript:void(0)">({{ $product_review->count() }} customer
                       reviews)</a> --}}
-                    @foreach (range(1,3) as $rating)
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    @endforeach
-                    @foreach (range(1,2) as $rating)
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    @endforeach
-                    <a href="javascript:void(0)">
-                      Review ({{ $review->count() }})</a>
+                    @for ($i = 0; $i <$review_rating; $i++) <i class="fa fa-star star fa-1x" aria-hidden="true"></i>
+                      @endfor
+                      @for ($i = 0; $i < 5 - $review_rating; $i++) <i class="fa fa-star-o fa-1x" aria-hidden="true"></i>
+                        @endfor
+                        <a href="javascript:void(0)">
+                          Review ({{ $product_review->count() }})</a>
                   </span>
                 </div>
                 @endif
@@ -283,7 +287,7 @@
 
                 <!--=======  shop product short description  =======-->
 
-                <div class="shop-product__short-desc mb-50">
+                <div class="shop-product__short-desc">
                   {!! $product->short_content ?? '' !!}
                 </div>
                 <!--=======  End of shop product short description  =======-->
@@ -291,7 +295,7 @@
                 <div id="block-varient">
                   @foreach ($variatoinList as $key => $variatoins)
 
-                  <div class="form-group mb-25    ">
+                  <div class="form-group mb-25">
                     @php
                     $option = \App\Model\Option::find($key);
                     $productvariants = \App\Model\ProductVariant::whereProductId($product->id)->get();
@@ -459,10 +463,10 @@
                           <a href="#">Men</a>
                         </td>
                       </tr>
-                      <tr class="single-info d-none">
-                        <td class="quickview-title">Share: </td>
+                      <tr class="single-info">
+                        <td class="quickview-title">Share : </td>
                         <td class="quickview-value">
-                          <div class="share mb-30">
+                          <div class="share">
                             <span class="socials">
                               <a href="https://www.facebook.com/sharer.php?u=https://demo4.drfuri.com/razzi/shop/blazer-coupe-amincie/"
                                 target="_blank" class="social-share-link facebook"><span class="svg_icon "><svg
@@ -473,7 +477,7 @@
                                     </path>
                                   </svg></span><span class="after-text d-none">Share on Facebook</span></a><a
                                 href="https://twitter.com/intent/tweet?url=https://demo4.drfuri.com/razzi/shop/blazer-coupe-amincie/&amp;text=Blazer%20Coupe%20Amincie"
-                                target="_blank" class="social-share-link twitter"><span class="svg_icon "><svg
+                                target="_blank" class="social-share-link twitter mx-2"><span class="svg_icon "><svg
                                     aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" width="24"
                                     height="24" fill="currentColor">
                                     <path
@@ -494,17 +498,17 @@
                         </td>
 
                       </tr>
-                      <tr class="single-info">
-                        <td class="quickview-title">Share: </td>
+                      {{-- <tr class="single-info">
+                        <td class="quickview-title">Share : </td>
                         <td class="quickview-value">
                           <ul class="quickview-social-icons">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li class="d-none"><a href="#"><i class="fa fa-google-plus "></i></a></li>
+                            <li class="d-none"><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
                           </ul>
                         </td>
-                      </tr>
+                      </tr> --}}
                     </table>
                   </div>
 

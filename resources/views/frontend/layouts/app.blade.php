@@ -11,7 +11,7 @@
   <!-- Favicon -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{ asset('storage/'.$frontsetting->favicon) }}" type="png">
-
+  
   {{-- seo meta tag --}}
   <meta name="title" content="@yield('title',$frontsetting->meta_title)">
   <meta name="description" content="@yield('description',$frontsetting->meta_description)">
@@ -22,10 +22,10 @@
   <meta property='og:url' content="@yield('og-url',url()->current())">
   <meta property='og:image' content="@yield('og-image',asset('storage/'.$frontsetting->logo))">
 
-  <meta name="twitter:card" content=@yield('twitter-card','Property')>
-  <meta name="twitter:title" content=@yield('twitter-title',$frontsetting->meta_title)>
-  <meta name="twitter:description" content=@yield('twitter-description',$frontsetting->meta_description)>
-  <meta name="twitter:image" content=@yield('twitter-image',$frontsetting->meta_keywords)>
+  <meta name="twitter:card" content="@yield('twitter-card','Property')">
+  <meta name="twitter:title" content="@yield('twitter-title',$frontsetting->meta_title)">
+  <meta name="twitter:description" content="@yield('twitter-description',$frontsetting->meta_description)">
+  <meta name="twitter:image" content="@yield('twitter-image',$frontsetting->meta_keywords)">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
@@ -71,6 +71,8 @@
   <script src="{{ asset('front/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
   <style>
+
+
     /* the slides */
     .slick-slide {
       margin: 0 10px;

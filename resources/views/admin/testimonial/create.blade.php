@@ -27,7 +27,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Rating</label>
-                <input type="text" name="rating" id="rating" data-rule-number="true" class="form-control">
+                <input type="text" name="rating" id="rating" range="[1,5]" data-rule-number="true" class="form-control">
               </div>
             </div>
 

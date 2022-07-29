@@ -52,8 +52,9 @@
 /*  01. Theme default CSS
 /*----------------------------------------*/
 /*-- Google Font --*/
-@import url("https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900");
-@import url("https://fonts.googleapis.com/css?family=Spectral:300,300i,400,400i,500,500i,600,600i,700,700i&amp;display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap'");
+@import url("https://fonts.googleapis.com/css?family=Spectral:300,300i,400,400i,500,500i,600,600i,700,700i&amp;display=swap"); */
+/* @import url("https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900");
 /*-- Common Style --*/
 *, *::after, *::before {
   box-sizing: border-box;
@@ -70,7 +71,7 @@ body {
   font-style: normal;
   font-weight: 400;
   visibility: visible;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #777777;
   position: relative;
 }
@@ -114,13 +115,13 @@ body.active-body-search-overlay {
 
 h1, h2, h3, h4, h5, h6 {
   color: #333333;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   margin-top: 0;
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 20px;
   line-height: 42px;
 }
 
@@ -7066,7 +7067,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   color: #333333;
   line-height: 36px;
   text-align: center;
-  font-family: Work Sans;
+  font-family: 'Open Sans';
   font-weight: 600;
   font-style: normal;
   margin-bottom: 0;
@@ -7088,7 +7089,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   color: #333333;
   line-height: 100px;
   text-align: center;
-  font-family: Work Sans;
+  font-family: 'Open Sans';
   font-weight: 600;
   font-style: normal;
   max-width: 500px;

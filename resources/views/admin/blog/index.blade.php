@@ -28,7 +28,7 @@
             <tr>
               <th style="width:1%">No</th>
               <th style="width:25%" data-orderable="true">Title</th>
-              <th style="width:25%" data-orderable="true">Created At</th>
+              <th style="width:25%" data-orderable="true">Published Date</th>
               <th style="width:10%" data-orderable="false">Status</th>
               <th style="width:10%" class="text-center" data-orderable="false">Action</th>
             </tr>

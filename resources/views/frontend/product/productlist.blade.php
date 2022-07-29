@@ -18,12 +18,13 @@
     border-color: #333333;
   }
 
-  .category_section h1 {
-    font-size: 30px !important;
+  .breadcrumb-area h2 {
+    font-size: 17px !important;
+    color: #ffffff;
   }
 
-  .category_section h2 {
-    font-size: 20px !important;
+  .breadcrumb-area {
+    background-image: url({{$category->image_src ?? ''}});
   }
 </style>
 @endpush
@@ -48,26 +49,25 @@
 
 
 @section('content')
-<div class="breadcrumb-area d-none  pt-20 pb-20" style="background-color: #f5f5f5;">
+<div class="breadcrumb-area pt-50 pb-70 mb-50">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="breadcrumb-title">Shop</h1>
-        <ul class="breadcrumb-list">
-          <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-          <li class="breadcrumb-list__item breadcrumb-list__item--active">{{ $category->name }}</li>
-        </ul>
+        <h1 class="text-white">{{$category->name ?? ''}}</h1>
+        {{-- <h2> {{ Str::limit($category->description,250)}}</h2> --}}
+        <h2> {{ $category->description}}</h2>
       </div>
     </div>
   </div>
 </div>
+
 <form action="{{ route('category.product', $category->slug) }}" method="get" id="filterForm">
   <div class="shop-page-wrapper">
-    <div class="shop-page-header">
+    <div class="shop-page-header border-0">
       <div class="container">
         <div class="row align-items-center">
 
-          <div class="col-12 d-none">
+          {{-- <div class="col-12 d-none">
             <!--=======  filter icons  =======-->
 
             <div class="filter-icons">
@@ -107,23 +107,14 @@
             </div>
 
             <!--=======  End of filter icons  =======-->
-          </div>
-
-          <div class="col-md-12 col-sm-12 categor_banner d-none">
-            <img src="{{$category->image_src}}" class="img-fluid" alt="{{$category->name ?? ''}}">
-          </div>
-          <div class="col-md-12 col-sm-12 category_section">
-            <h1>{{$category->name ?? ''}}</h1>
-            <h2> {{ Str::limit($category->description,230)}}</h2>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
     <!--=============================================
           =            shop page content         =
           =============================================-->
-
-    <div class="shop-page-content mt-100 mb-100 mt-sm-10 mb-sm-10">
+    <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
       <div class="container">
         <div class="row">
           <div class="col-lg-3 order-1 order-lg-2 mb-md-80 mb-sm-20">
@@ -153,19 +144,17 @@
                     <span class="quantity">{{$AllProductCount}}</span>
                   </li>
                   @foreach ($categoryList as $item)
-                  @php
-                  $ProductCount = App\Model\Product::where('category_id',$item->id)->get();
-                  @endphp
+
                   <li class="has-children">
                     <a class=" {{ $item->id == $category->id ? 'active'  : '' }}"
                       href="{{ route('category.product',$item->slug) }}"> {{ $item->name ?? '' }} </a> <span
-                      class="quantity">{{ $ProductCount->count() }}</span>
+                      class="quantity">{{ $item->products_count ?? 0 }}</span>
                     @if ($item->subCategory->count())
                     <ul style="{{ $item->id == $category->id ? 'display: block;' : '' }}">
                       @foreach ($item->subCategory as $subItem)
                       <li>
                         <a class=" {{ (isset($subCategory) && $subCategory->id == $subItem->id) ? 'active'  : '' }}"
-                          href="{{ route('subcategory.product',['id' => $subItem->id , $subItem->slug]) }}">{{
+                          href="{{ route('product.details',['cat_slug' =>$item->slug, 'product_subcategory_slug'=>$subItem->slug,'slug'=>null]) }}">{{
                           $subItem->name }}
                         </a>{{-- <span class="quantity">12</span> --}}
                       </li>
@@ -178,11 +167,11 @@
               </div>
               <!--=======  End of single sidebar widget  =======-->
               @endif
-              <div class="single-sidebar-widget mb-40" style="display:none">
+              {{-- <div class="single-sidebar-widget mb-40" style="display:none">
                 <h2 class="single-sidebar-widget--title">Filters</h2>
                 <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range"
                   value="{{ request('range',null)  }}" />
-              </div>
+              </div> --}}
               @if (request()->has('search') || request()->has('sort') || request()->has('range'))
               <div class=" text-center">
                 <a class="lezada-button  lezada-button--small btn-sm"

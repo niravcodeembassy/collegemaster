@@ -93,7 +93,7 @@
                 </div>
               </div>
 
-              <div class="form-row">
+              {{-- <div class="form-row">
                 <div class="col">
                   <div class="form-group">
                     <label for="url_handle">URL and handle <span class="text-danger">*</span></label>
@@ -101,7 +101,7 @@
                       data-rule-required="true" data-msg-remote="Handle is already exist." data-rule-required="false">
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>

@@ -96,7 +96,7 @@
                 </div>
               </div>
 
-              <div class="form-row">
+              {{-- <div class="form-row">
                 <div class="col">
                   <div class="form-group">
                     <label for="url_handle">URL and handle <span class="text-danger">*</span></label>
@@ -104,7 +104,7 @@
                       x-model="slug(name)" data-rule-required="false" value="{{$category->handle ?? ''}}">
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>

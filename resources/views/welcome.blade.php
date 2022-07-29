@@ -1,27 +1,97 @@
 @extends('frontend.layouts.app')
+@push('style')
+  <style>
+    .q-slick-slider::after,
+    .q-slick-slider::before {
+      content: "";
+      width: 90px;
+      height: 60px;
+      position: absolute;
+      left: 0;
+    }
+
+    .q-slick-slider::before {
+      top: -30px;
+      left: -85px;
+      right: auto;
+      background: url('{{ asset('front/assets/images/quote-left.png') }}') no-repeat center;
+    }
+
+    .star {
+      color: rgb(252, 88, 47);
+    }
+
+    .q-slick-slider p {
+      font-size: 16px;
+    }
+    
+    .single-category__content--three--creativehome .title p > a {
+      font-size: 24px !important;
+    }
+
+    .q-slick-slider::after {
+      bottom: -60px;
+      left: auto;
+      right: -100px;
+      background: url('{{ asset('front/assets/images/quote-right.png') }}') no-repeat center;
+    }
+
+    @media (max-width: 568px) {
+      .q-slick-slider::after {
+        width: 96px;
+      }
+
+      .q-slick-slider::before {
+        width: 96px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .q-slick-slider::after {
+        bottom: -80px;
+        left: auto;
+        right: 8px;
+      }
+
+      .q-slick-slider::before {
+        top: -50px;
+        left: 4px;
+        right: auto;
+      }
+    }
+
+    .trust_icon img {
+      height: 100px !important;
+    }
+
+    /* .trust_icon:not(:first-child) {
+        border-left: 1px solid black;
+      } */
+  </style>
+@endpush
+
 @section('content')
 
 
-<!--=============================================
-	=            slider area         =
-	=============================================-->
-@if ($banner->count())
 
 
-<!--  Demos -->
-{{-- <section class="slider-area mb-50"> --}}
-  <div class="slider-area">
-    <div class="fadeOut owl-carousel owl-theme">
-      @foreach ($banner as $item)
-      <div class="item">
-        <img src="{{asset('storage/'.$item->slider_img)}}">
+  <!--=============================================
+     =            slider area         =
+     =============================================-->
+  @if ($banner->count())
+    <!--  Demos -->
+    {{-- <section class="slider-area mb-50"> --}}
+    <div class="slider-area">
+      <div class="fadeOut owl-carousel owl-theme">
+        @foreach ($banner as $item)
+          <div class="item">
+            <img src="{{ asset('storage/' . $item->slider_img) }}">
+          </div>
+        @endforeach
       </div>
-      @endforeach
     </div>
-  </div>
-  {{--
-</section> --}}
-{{-- <div class="slider-area mb-50">
+    {{-- </section> --}}
+    {{-- <div class="slider-area mb-50">
   <div id="rev_slider_17_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-7"
     data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
     <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
@@ -40,7 +110,7 @@
           data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9=""
           data-param10="" data-description="">
           <!-- MAIN IMAGE -->
-          @if((new \Jenssegers\Agent\Agent())->isDesktop())
+          @if ((new \Jenssegers\Agent\Agent())->isDesktop())
 
 
           <img src="{{ $item->slider_image }}" alt="" data-bgposition="center center" data-kenburns="on"
@@ -50,7 +120,7 @@
           <!-- LAYERS -->
           @endif
 
-          @if((new \Jenssegers\Agent\Agent())->isMobile())
+          @if ((new \Jenssegers\Agent\Agent())->isMobile())
           <img src="{{env('APP_URL')}}/storage/{{ $item->mobile_slider_image }}" alt="" data-bgposition="center center"
             data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100"
             data-scaleend="110" data-rotatestart="0" data-rotateend="0" data-blurstart="0" data-blurend="0"
@@ -81,7 +151,7 @@
             data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
             style="z-index: 6; white-space: nowrap; font-size: 56px; line-height: 56px; font-weight: 300; color: #333333; letter-spacing: 0px;font-family:Work Sans;">
             {!! $item->title !!} </div>
-          @if($item->btn_name && $item->btn_url)
+          @if ($item->btn_name && $item->btn_url)
           <div class="tp-caption button-under-line  rev-btn  tp-resizeme" id="slide-45-layer-20"
             data-x="['left','center','center','left']" data-hoffset="['372','-369','-246','39']"
             data-y="['top','top','top','top']" data-voffset="['416','362','781','607']" data-width="none"
@@ -101,175 +171,142 @@
   </div><!-- END REVOLUTION SLIDER -->
 </div> --}}
 
-<!--=====  End of slider area  ======-->
-@endif
-<div class="icon-box-area icon-box-area--feature-icon pt-20 pb-20 mb-50">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <img src="{{ asset('front/assets/images/website_icon/icon.jpg')}}" class="w-100 img-fluid">
-      </div>
-      <div class="col-md-4 mb-md-30 mb-sm-30 d-none">
-        <!--=======  single icon box  =======-->
-
-        <div class="single-icon-box single-icon-box--feature-icon">
-          <div class="icon-box-icon">
-            <i class="fa fa-money"></i>
-          </div>
-          <div class="icon-box-content">
-            <h3 class="title ">MONEY BACK GUARANTEE</h3>
-          </div>
+    <!--=====  End of slider area  ======-->
+  @endif
+  <div class="icon-box-area icon-box-area--feature-icon pt-50 pb-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 trust_icon text-center">
+          <img src="{{ asset('front/assets/images/website_icon/gifting.png') }}" class="img-fluid">
+          <h3 class="text-uppercase mt-4">900+ gifting ideas</h3>
         </div>
-
-        <!--=======  End of single icon box  =======-->
-      </div>
-      <div class="col-md-4 mb-md-30 mb-sm-30 d-none">
-        <!--=======  single icon box  =======-->
-
-        <div class="single-icon-box single-icon-box--feature-icon">
-          <div class="icon-box-icon">
-            <i class="fa fa-shopping-basket"></i>
-          </div>
-          <div class="icon-box-content">
-            <h3 class="title">FREE SHIPPING &amp; RETURN</h3>
-          </div>
+        <div class="col-lg-3 col-sm-6 trust_icon text-center">
+          <img src="{{ asset('front/assets/images/website_icon/profesion.png') }}" class="img-fluid">
+          <h3 class="text-uppercase mt-4">Proffessionally designed</h3>
         </div>
-
-
-        <!--=======  End of single icon box  =======-->
-      </div>
-      <div class="col-md-4 mb-md-30 mb-sm-30 d-none">
-        <!--=======  single icon box  =======-->
-
-        <div class="single-icon-box single-icon-box--feature-icon">
-          <div class="icon-box-icon">
-            <i class="fa fa-life-ring"></i>
-          </div>
-          <div class="icon-box-content">
-            <h3 class="title">24X7 TO QUICK SUPPORT</h3>
-          </div>
+        <div class="col-lg-3 col-sm-6 trust_icon text-center">
+          <img src="{{ asset('front/assets/images/website_icon/privacy.png') }}" class="img-fluid">
+          <h3 class="text-uppercase mt-4">Valued Privacy</h3>
         </div>
-        <!--=======  End of single icon box  =======-->
+        <div class="col-lg-3 col-sm-6 trust_icon text-center">
+          <img src="{{ asset('front/assets/images/website_icon/delivery.png') }}" class="img-fluid">
+          <h3 class="text-uppercase mt-4">Free Worldwide Delivery</h3>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-@if ($commonBanner->count() > 0)
-<div class="section-title-container mb-30 mb-md-30 mb-sm-30">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <!--=======  section title  =======-->
-        <div class="section-title section-title--one text-center">
-          <h1>Clever & unique ideas</h1>
-        </div>
-        <!--=======  End of section title  =======-->
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="hover-banner-area mb-65 mb-md-45 mb-sm-45">
-  <div class="container wide">
-    <div class="row">
-      @foreach ($commonBanner as $item)
-      <div class="col-md-4 mb-30">
-        <!--=======  single category  =======-->
-        <div class="single-category single-category--three">
-          <!--=======  single category image  =======-->
-          <div
-            class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
-            <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
-          </div>
-          <!--=======  single category content  =======-->
-          <div
-            class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-25">
-            <div class="title">
-              <p><a href="{{$item->url}}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
-              @if ($item->url)
-              <a href="{{$item->url}}">{{ $item->caption3 ?? '' }}</a>
-              @endif
+  @if ($commonBanner->count() > 0)
+    <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!--=======  section title  =======-->
+            <div class="section-title section-title--one text-center">
+              <h1>Clever & unique ideas</h1>
             </div>
+            <!--=======  End of section title  =======-->
           </div>
-          <!--=======  banner-link  =======-->
-          @if ($item->url)
-          <a href="{{$item->url}}" class="banner-link"></a>
-          @endif
-          <!--=======  End of banner-link  =======-->
         </div>
-        <!--=======  End of single category  =======-->
       </div>
-      @endforeach
     </div>
-  </div>
-</div>
-@endif
 
-@php
-$dayofdeal = App\Model\DealOfDay::first();
-$date = explode(' ',$dayofdeal->end_time)[0];
-$end_date = explode('-',$date);
-@endphp
-
-@if($dayofdeal != null && $dayofdeal->status == 1)
-<div class="countdown-timer-area mb-100 countdown-background countdown-bg-4 pt-30 pb-30">
-  <div class="container wide">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="row align-items-center">
-          <div class="col-lg-4 col-xl-5">
-            <div class="countdown-image text-center">
-              <img src="{{ env('APP_URL') . '/storage/' . $dayofdeal->bg_img }}" class="img-fluid" alt="">
+    <div class="hover-banner-area mb-65 mb-md-45 mb-sm-45">
+      <div class="container wide">
+        <div class="row">
+          @foreach ($commonBanner as $item)
+            <div class="col-lg-4 col-sm-6 mb-30">
+              <!--=======  single category  =======-->
+              <div class="single-category single-category--three">
+                <!--=======  single category image  =======-->
+                <div class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
+                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
+                </div>
+                <!--=======  single category content  =======-->
+                <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-25">
+                  <div class="title">
+                    <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
+                    @if ($item->url)
+                      <a href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
+                    @endif
+                  </div>
+                </div>
+                <!--=======  banner-link  =======-->
+                @if ($item->url)
+                  <a href="{{ $item->url }}" class="banner-link"></a>
+                @endif
+                <!--=======  End of banner-link  =======-->
+              </div>
+              <!--=======  End of single category  =======-->
             </div>
-          </div>
-          <div class=" col-12 col-xl-7 col-lg-8 mt-4">
-            <div class="countdown-wrapper text-center">
-              <h3>{{ $dayofdeal->title }}</h3>
-              <div class="deal-countdown" data-countdown="{{ $end_date[0] }}/{{ $end_date[1] }}/{{ $end_date[2] }}">
-                <div class="single-countdown">
-                  <span class="single-countdown__time">00</span>
-                  <span class="single-countdown__text">Days</span>
-                </div>
-                <div class="single-countdown">
-                  <span class="single-countdown__time">00</span>
-                  <span class="single-countdown__text">Hours</span>
-                </div>
-                <div class="single-countdown">
-                  <span class="single-countdown__time">00</span>
-                  <span class="single-countdown__text">Minutes</span>
-                </div>
-                <div class="single-countdown">
-                  <span class="single-countdown__time">00</span>
-                  <span class="single-countdown__text">Seconds</span>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  @endif
+
+  @php
+  $dayofdeal = App\Model\DealOfDay::first();
+  $date = explode(' ', $dayofdeal->end_time)[0];
+  $end_date = explode('-', $date);
+  @endphp
+
+  @if ($dayofdeal != null && $dayofdeal->status == 1)
+    <div class="countdown-timer-area mb-100 countdown-background countdown-bg-4 pt-30 pb-30">
+      <div class="container wide">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row align-items-center">
+              <div class="col-lg-4 col-xl-5">
+                <div class="countdown-image text-center">
+                  <img src="{{ env('APP_URL') . '/storage/' . $dayofdeal->bg_img }}" class="img-fluid" alt="">
                 </div>
               </div>
-              @if ($dayofdeal->btn_url != null)
-              <a href="{{ $dayofdeal->btn_url }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
-                <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
-              @else
-              @if ($dayofdeal->product_id != null)
-              @php
-              $product = App\Model\Product::find($dayofdeal->product_id);
-              @endphp
-              <a href="{{ route('product.details', ['slug' => $product->slug]) }}"
-                class="lezada-button lezada-button--medium lezada-button--icon--left">
-                <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
-              @endif
-
-              @endif
+              <div class=" col-12 col-xl-7 col-lg-8 mt-4">
+                <div class="countdown-wrapper text-center">
+                  <h3>{{ $dayofdeal->title }}</h3>
+                  <div class="deal-countdown" data-countdown="{{ $end_date[0] }}/{{ $end_date[1] }}/{{ $end_date[2] }}">
+                    <div class="single-countdown">
+                      <span class="single-countdown__time">00</span>
+                      <span class="single-countdown__text">Days</span>
+                    </div>
+                    <div class="single-countdown">
+                      <span class="single-countdown__time">00</span>
+                      <span class="single-countdown__text">Hours</span>
+                    </div>
+                    <div class="single-countdown">
+                      <span class="single-countdown__time">00</span>
+                      <span class="single-countdown__text">Minutes</span>
+                    </div>
+                    <div class="single-countdown">
+                      <span class="single-countdown__time">00</span>
+                      <span class="single-countdown__text">Seconds</span>
+                    </div>
+                  </div>
+                  @if ($dayofdeal->btn_url != null)
+                    <a href="{{ $dayofdeal->btn_url }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
+                      <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
+                  @else
+                    @if ($dayofdeal->product_id != null)
+                      @php
+                        $product = App\Model\Product::find($dayofdeal->product_id);
+                        $routeParameter = Helper::productRouteParameter($product);
+                      @endphp
+                      <a href="{{ route('product.details', $routeParameter) }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
+                        <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
+                    @endif
+                  @endif
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-@endif
-<!--=====  End of banner category area  ======-->
+  @endif
+  <!--=====  End of banner category area  ======-->
 
-{{--
-<!--=============================================
+  {{-- <!--=============================================
          =            section title  container      =
          =============================================-->
 <div class="section-title-container mb-70 mb-md-50 mb-sm-50">
@@ -326,10 +363,9 @@ $end_date = explode('-',$date);
     </div>
   </div>
 </div> --}}
-<!--=====  End of product carousel container  ======-->
+  <!--=====  End of product carousel container  ======-->
 
-{{--
-<!--=============================================
+  {{-- <!--=============================================
          =            sofa banner rev         =
          =============================================-->
 @php
@@ -470,13 +506,12 @@ $lastBanner = $commonBanner->last();
   </div>
   <!-- END REVOLUTION SLIDER -->
 </div> --}}
-{{--
-<!--=====  End of sofa banner rev  ======--> --}}
+  {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
-<!--=============================================
-         =            instagram slider area         =
-         =============================================-->
-{{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
+  <!--=============================================
+             =            instagram slider area         =
+             =============================================-->
+  {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-8 order-2 order-lg-1">
@@ -507,21 +542,21 @@ $lastBanner = $commonBanner->last();
     </div>
   </div>
 </div> --}}
-<!--=====  End of instagram slider area  ======-->
+  <!--=====  End of instagram slider area  ======-->
 
-<!--=====  Testimonial area  ======-->
+  <!--=====  Testimonial area  ======-->
 
-{{-- @include('frontend.testimonial',[
-'testimonial' => $testimonial
-]) --}}
+  @include('frontend.testimonial', [
+      'testimonial' => $testimonial,
+  ])
 
-<div class="text-center mb-60">
-  @if(isset($frontsetting->is_active) && $frontsetting->is_active ==true )
-  <div>
-    {!! $frontsetting->trust_box ?? '' !!}
+  <div class="text-center mb-60">
+    @if (isset($frontsetting->is_active) && $frontsetting->is_active == true)
+      <div>
+        {!! $frontsetting->trust_box ?? '' !!}
+      </div>
+    @endif
   </div>
-  @endif
-</div>
 
 
 
@@ -529,25 +564,25 @@ $lastBanner = $commonBanner->last();
 
 
 @push('js')
-<link rel="stylesheet" href="{{asset('front/assets/css/owl.carousel.min.css')}}">
-<script src="{{asset('front/assets/js/owl.carousel.js')}}"></script>
-<link rel="stylesheet" href="{{asset('front/assets/css/animate.css')}}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/owl.carousel.min.css') }}">
+  <script src="{{ asset('front/assets/js/owl.carousel.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
 
-<script>
-  var owl = $('.owl-carousel');
-        owl.owlCarousel({
-            items: 1,
-            animateOut: 'slideOutUp',
-            animateIn: 'goDown',
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            // autoplayHoverPause: true,
-            navigation: false,
-            navigationText: false,
-            transitionStyle : "fade"
-        });
-    jQuery(document).ready(function ($) {
+  <script>
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+      items: 1,
+      animateOut: 'slideOutUp',
+      animateIn: 'goDown',
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      // autoplayHoverPause: true,
+      navigation: false,
+      navigationText: false,
+      transitionStyle: "fade"
+    });
+    jQuery(document).ready(function($) {
       $('.fadeOut').owlCarousel({
         items: 1,
         animateOut: 'fadeOut',
@@ -563,9 +598,8 @@ $lastBanner = $commonBanner->last();
         smartSpeed: 450
       });
     });
-</script>
-{{--
-<!-- Revolution Slider JS -->
+  </script>
+  {{-- <!-- Revolution Slider JS -->
 <script src="{{ asset('front/assets/revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
 <script src="{{ asset('front/assets/revolution/js/jquery.themepunch.tools.min.js') }}">
 </script>
@@ -583,7 +617,6 @@ $lastBanner = $commonBanner->last();
   src="{{ asset('front/assets/revolution/js/extensions/revolution.extension.navigation.min.js') }}"></script>
 <script type="text/javascript"
   src="{{ asset('front/assets/revolution/js/extensions/revolution.extension.parallax.min.js') }}"></script> --}}
-<!--<script src="{{ asset('front/assets/js/main.js') }}"></script>-->
-<!--  <script src="{{ asset('front/assets/js/plugins.js') }}"></script>-->
-
+  <!--<script src="{{ asset('front/assets/js/main.js') }}"></script>-->
+  <!--  <script src="{{ asset('front/assets/js/plugins.js') }}"></script>-->
 @endpush

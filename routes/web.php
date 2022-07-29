@@ -41,9 +41,12 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
   Route::post('contact-us', 'ContactUsController@store')->name('contact-us.stroe');
 
-  Route::get('product/category/{slug}', 'ProductController@categoryProductList')->name('category.product');
-  Route::get('product/category/sub-category-{id}/{slug}', 'ProductController@subcategoryProductList')->name('subcategory.product');
-  Route::get('product/details/{slug}', 'ProductController@productDetails')->name('product.details');
+
+  // Route::get('product/category/{slug}', 'ProductController@categoryProductList')->name('category.product');
+  // Route::get('product/details/{slug}', 'ProductController@productDetails')->name('product.details');
+  // Route::get('product/category/sub-category-{id}/{slug}', 'ProductController@subcategoryProductList')->name('subcategory.product');
+
+
   Route::post('product/varient/', 'ProductController@varient')->name('product.varients');
 
   Route::post('cart/add', 'CartController@add')->name('cart.add');
@@ -128,4 +131,10 @@ Route::get('print', function () {
   // return $pdf->stream('a.pdf');
 
   return view('inv');
+});
+
+Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
+  Route::get('{cat_slug}/{product_subcategory_slug}/{slug?}', 'ProductController@productDetails')->name('product.details'); //category/product
+  Route::get('{slug}', 'ProductController@categoryProductList')->name('category.product'); //category page
+  // Route::get('{cat_slug}/{sub_slug}/{slug}', 'ProductController@productSubDetails')->name('product.sub.details'); //category/subcategory/product
 });

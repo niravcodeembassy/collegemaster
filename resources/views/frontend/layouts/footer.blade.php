@@ -101,11 +101,11 @@
         <div class="col footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
-            <h4 class="footer-title reg-office">Registered Office:</h4>
+            <h5 class="footer-title widget-title reg-office">Registered Office:</h5>
             <p class="about marginB20">
               {{$frontsetting->address ?? ''}}
             </p>
-            <h4 class="footer-title">Call Support:</h4>
+            <h5 class="footer-title widget-title">Call Support:</h5>
             <p class="about marginB20">
               Call at
               <a href="/tel:+918200324798" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact}}</a><br>
@@ -117,7 +117,7 @@
               <li><img src="{{ asset('front/assets/images/payment/payment_icon.png')}}" alt="Payment"
                   class="img-responsive"></li>
             </ul>
-            <h4 class="footer-title">Foolow us</h4>
+            <h5 class="widget-title">Foolow us</h5>
             <ul class="footer-links list-inline social-link">
               @if ($frontsetting->facebook)
               <li><a href="{{$frontsetting->facebook}}"> <i class="fa fa-facebook"></i></a></li>

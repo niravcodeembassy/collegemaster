@@ -21,22 +21,20 @@ class HomeController extends Controller
 
   public function index()
   {
-    $product = Product::get();
+    // $product = Product::get();
+    // foreach ($product as $key => $value) {
+    //   $pattern = '/❤️️🖤❤️️️/i';
+    //   $content =  preg_replace($pattern, '', $value->content);
 
-    foreach ($product as $key => $value) {
-      $pattern = '/❤️️🖤❤️️️/i';
-      $content =  preg_replace($pattern, '', $value->content);
-
-      $product_data = Product::find($value->id);
-      // dd($content,$value->id);
-      $product_data->update(['content' => $content]);
-    }
+    //   $product_data = Product::find($value->id);
+    //   // dd($content,$value->id);
+    //   $product_data->update(['content' => $content]);
+    // }
 
     // $product = Product::productList()->inRandomOrder()->get();
     $this->data['banner'] = Homepagebanner::whereNull('is_active')->get();
     $this->data['commonBanner'] = CommonBanner::whereNull('is_active')->get();
     $this->data['testimonial'] = Testimonial::whereNull('is_active')->get();
-    // $this->data['product'] = $product;
     return view('welcome', $this->data);
   }
 
