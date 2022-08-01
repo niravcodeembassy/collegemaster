@@ -58,15 +58,17 @@
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                @foreach ($frontsetting->category as $list)
-                  @php
-                    $category = \App\Category::find($list);
-                  @endphp
-                  <li><a href="{{ route('category.product', ['slug' => $category->slug]) }}">
-                      {{ $category->name }}
-                    </a>
-                  </li>
-                @endforeach
+                @if (!is_null($frontsetting->category))
+                  @foreach ($frontsetting->category as $list)
+                    @php
+                      $category = \App\Category::find($list);
+                    @endphp
+                    <li><a href="{{ route('category.product', ['slug' => $category->slug]) }}">
+                        {{ $category->name }}
+                      </a>
+                    </li>
+                  @endforeach
+                @endif
               </ul>
             </nav>
           </div>
