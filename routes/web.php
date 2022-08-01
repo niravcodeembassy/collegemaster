@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/linkstorage', function () {
   Artisan::call('storage:link');
 });
+Route::get('/install', function () {
+  Artisan::call('composer install');
+});
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
 
