@@ -58,7 +58,7 @@
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                @if (!is_null($frontsetting->category))
+                @if (!is_null($frontsetting->category) && isset($frontsetting->category))
                   @foreach ($frontsetting->category as $list)
                     @php
                       $category = \App\Category::find($list);
