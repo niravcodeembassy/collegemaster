@@ -5,36 +5,41 @@
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> {{ env('APP_NAME') }} | @yield('title' ,$title ?? 'Home')</title>
+  <title> {{ env('APP_NAME') }} | @yield('title', $title ?? 'Home')</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="icon" href="{{ asset('storage/'.$frontsetting->favicon) }}" type="png">
-  
-  {{-- seo meta tag --}}
-  <meta name="title" content="@yield('title',$frontsetting->meta_title)">
-  <meta name="description" content="@yield('description',$frontsetting->meta_description)">
-  <meta name="keywords" content="@yield('keywords',$frontsetting->meta_keywords)">
-  <meta property='article:published_time' content="@yield('published_time',now())">
-  <meta property='og:description' content="@yield('og-description',$frontsetting->meta_description)">
-  <meta property='og:title' content="@yield('og-title',$frontsetting->meta_title)">
-  <meta property='og:url' content="@yield('og-url',url()->current())">
-  <meta property='og:image' content="@yield('og-image',asset('storage/'.$frontsetting->logo))">
+  <link rel="icon" href="{{ asset('storage/' . $frontsetting->favicon) }}" type="png">
 
-  <meta name="twitter:card" content="@yield('twitter-card','Property')">
-  <meta name="twitter:title" content="@yield('twitter-title',$frontsetting->meta_title)">
-  <meta name="twitter:description" content="@yield('twitter-description',$frontsetting->meta_description)">
-  <meta name="twitter:image" content="@yield('twitter-image',$frontsetting->meta_keywords)">
+  {{-- seo meta tag --}}
+  <meta name="title" content="@yield('title', $frontsetting->meta_title)">
+  <meta name="description" content="@yield('description', $frontsetting->meta_description)">
+  <meta name="keywords" content="@yield('keywords', $frontsetting->meta_keywords)">
+  <meta property='article:published_time' content="@yield('published_time', now())">
+
+  <meta property='og:type' content="website">
+  <meta property='og:description' content="@yield('og-description', $frontsetting->meta_description)">
+  <meta property='og:title' content="@yield('og-title', $frontsetting->meta_title)">
+  <meta property='og:url' content="@yield('og-url', url()->current())">
+  <meta property='og:image' itemprop="image" content="@yield('og-image', asset('storage/' . $frontsetting->logo))">
+
+  <meta name="twitter:card" content="@yield('twitter-card', 'Property')">
+  <meta name="twitter:title" content="@yield('twitter-title', $frontsetting->meta_title)">
+  <meta name="twitter:description" content="@yield('twitter-description', $frontsetting->meta_description)">
+  <meta name="twitter:image" content="@yield('twitter-image', asset('storage/' . $frontsetting->logo))">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-CE3412SH9L');
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-CE3412SH9L');
   </script>
 
   @yield('meta')
@@ -58,7 +63,7 @@
   <link href="{{ asset('front/assets/css/footer.css') }}" rel="stylesheet">
 
   <!-- Responsive D CSS -->
-  <link href="{{ asset('front/assets/css/responsive.css') }}?v=<?=rand()?>" rel="stylesheet">
+  <link href="{{ asset('front/assets/css/responsive.css') }}?v=<?= rand() ?>" rel="stylesheet">
 
   <!-- Revolution Slider CSS -->
   <link href="{{ asset('front/assets/revolution/css/settings.css') }}" rel="stylesheet">
@@ -71,8 +76,6 @@
   <script src="{{ asset('front/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
   <style>
-
-
     /* the slides */
     .slick-slide {
       margin: 0 10px;
@@ -184,7 +187,7 @@
     }
 
     .signup-form input[type=submit] {
-      background: url('{{asset('front/assets/images/payment/telegram-plane.svg')}}');
+      background: url('{{ asset('front/assets/images/payment/telegram-plane.svg') }}');
       background-repeat: no-repeat;
       width: 35px;
       height: 30px;
@@ -207,6 +210,7 @@
 </head>
 
 <body>
+  <link itemprop="thumbnailUrl" href="@yield('og-image', asset('storage/' . $frontsetting->logo))">
   <!--=============================================
          =            Header without topbar         =
          =============================================-->
@@ -233,11 +237,9 @@
   <!-- Main JS -->
   <script src="{{ asset('front/assets/js/main.js') }}"></script>
 
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js">
-  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
 
@@ -246,34 +248,31 @@
 
   <script>
     var lodingImage = '<div class="lds-ellipsis"> <div></div> <div></div> <div></div> <div></div> </div>';
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
 
-        function showLoader() {
-            $.blockUI({
-                message: lodingImage,
-                baseZ: 2000,
-                css: {
-                border: '0',
-                cursor: 'wait',
-                backgroundColor: 'transparent'
-                },
-            });
-        }
+    function showLoader() {
+      $.blockUI({
+        message: lodingImage,
+        baseZ: 2000,
+        css: {
+          border: '0',
+          cursor: 'wait',
+          backgroundColor: 'transparent'
+        },
+      });
+    }
 
-        function stopLoader() {
-            $.unblockUI();
-        }
+    function stopLoader() {
+      $.unblockUI();
+    }
 
-        $(".alert").delay(4000).slideUp(200, function() {
-             $(this).alert('close');
-        });
-
-
-
+    $(".alert").delay(4000).slideUp(200, function() {
+      $(this).alert('close');
+    });
   </script>
 
   @stack('js')
@@ -283,155 +282,154 @@
 
   <script>
     window.Laravel = @json([
-            'csrfToken' => csrf_token(),
-        ]);
-        const message = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success shadow mr-5',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
+    'csrfToken' => csrf_token(),
+]);
+    const message = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success shadow mr-5',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    const toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+    });
+
+    @if (Session::has('error'))
+      toast.fire({
+        type: 'error',
+        title: 'Error',
+        text: "{!! session('error') !!}"
+      });
+      @php session()->forget('error') @endphp
+    @endif
+
+    @if (Session::has('success'))
+      $.toast({
+        heading: "Success",
+        text: "{!! session('success') !!}",
+        showHideTransition: "slide",
+        icon: "success",
+        loaderBg: "#f96868",
+        position: "top-right"
+      });
+      @php
+        session()->forget('success');
+      @endphp
+    @endif
+
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+      $(document).on('click', '.call-modal', function(e) {
+
+        e.preventDefault();
+        // return false;
+        var el = $(this);
+
+        if (el.data('requestRunning')) {
+          console.log('0');
+          return;
+        }
+        el.data('requestRunning', true);
+
+        showLoader();
+
+        var url = el.data('url');
+        var target = el.data('target-modal');
+
+        console.log(target);
+
+        $.ajax({
+          type: "GET",
+          url: url
+        }).always(function() {
+
+          $('#load-modal').html(' ');
+          el.data('requestRunning', false);
+
+          stopLoader();
+
+        }).done(function(res) {
+          $('#load-modal').html(res.html);
+          // $('body').append(res.html);
+          el.attr({
+            'data-toggle': "modal",
+            'data-target': target
+          });
+          $(target).modal('toggle');
+
         });
 
-        const toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 5000,
-            timerProgressBar: true,
-        });
+      });
 
-        @if(Session::has('error'))
-            toast.fire({
-                type: 'error',
-                title: 'Error',
-                text: "{!! session('error') !!}"
-            });
-            @php session()->forget('error') @endphp
-        @endif
 
-        @if(Session::has('success'))
+      $(document).on('click', '.has-wish-lists', function() {
+
+        var el = $(this);
+        var url = el.attr('data-url');
+        var remove = el.attr('data-remove');
+
+        $.ajax({
+          type: "GET",
+          url: url,
+        }).done(function(res) {
+
+          if (res.process == "add") {
+            $(el).addClass('bg-danger');
+            $(el).find('i').addClass('text-white');
             $.toast({
-                heading: "Success",
-                text: "{!! session('success') !!}",
-                showHideTransition: "slide",
-                icon: "success",
-                loaderBg: "#f96868",
-                position: "top-right"
+              heading: 'Success',
+              text: 'Favourite add successfully.',
+              showHideTransition: 'slide',
+              icon: 'success',
+              loaderBg: '#f96868',
+              position: 'top-right',
+              stack: 1
             });
-            @php
-                session()->forget('success');
-            @endphp
-        @endif
+          } else if (res.process == "remove") {
 
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $(document).on('click', '.call-modal', function (e) {
+            if (remove) {
+              el.closest('.col-grid-box').remove();
+              if (!$('.col-grid-box').length) {
+                $('.dashboard').html('<h4>You have no wishlist</h4>')
+              }
+            }
 
-                e.preventDefault();
-                // return false;
-                var el = $(this);
-
-                if (el.data('requestRunning')) {
-                    console.log('0');
-                    return;
-                }
-                el.data('requestRunning', true);
-
-                showLoader();
-
-                var url = el.data('url');
-                var target = el.data('target-modal');
-
-                console.log(target);
-
-                $.ajax({
-                    type: "GET",
-                    url: url
-                }).always(function () {
-
-                    $('#load-modal').html(' ');
-                    el.data('requestRunning', false);
-
-                    stopLoader();
-
-                }).done(function (res) {
-                    $('#load-modal').html(res.html);
-                    // $('body').append(res.html);
-                    el.attr({
-                        'data-toggle': "modal",
-                        'data-target': target
-                    });
-                    $(target).modal('toggle');
-
-                });
-
+            $(el).removeClass('bg-danger');
+            $(el).find('i').removeClass('text-white');
+            $.toast({
+              heading: 'Success',
+              text: 'Favourite remove successfully.',
+              showHideTransition: 'slide',
+              icon: 'success',
+              loaderBg: '#f96868',
+              position: 'top-right',
+              stack: 1
             });
+          }
 
+        }).fail(function(res) {
 
-            $(document).on('click', '.has-wish-lists', function () {
-
-                var el = $(this);
-                var url = el.attr('data-url');
-                var remove = el.attr('data-remove');
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                }).done(function (res) {
-
-                    if (res.process == "add") {
-                        $(el).addClass('bg-danger');
-                        $(el).find('i').addClass('text-white');
-                        $.toast({
-                            heading: 'Success',
-                            text: 'Favourite add successfully.',
-                            showHideTransition: 'slide',
-                            icon: 'success',
-                            loaderBg: '#f96868',
-                            position: 'top-right',
-                            stack: 1
-                        });
-                    } else if (res.process == "remove") {
-
-                        if(remove) {
-                            el.closest('.col-grid-box').remove();
-                            if(!$('.col-grid-box').length ) {
-                                $('.dashboard').html('<h4>You have no wishlist</h4>')
-                            }
-                        }
-
-                        $(el).removeClass('bg-danger');
-                        $(el).find('i').removeClass('text-white');
-                        $.toast({
-                            heading: 'Success',
-                            text: 'Favourite remove successfully.',
-                            showHideTransition: 'slide',
-                            icon: 'success',
-                            loaderBg: '#f96868',
-                            position: 'top-right',
-                            stack: 1
-                        });
-                    }
-
-                }).fail(function(res){
-
-                    $.toast({
-                        heading: 'Error',
-                        text: 'Something went wrong.',
-                        showHideTransition: 'slide',
-                        icon: 'success',
-                        loaderBg: '#f96868',
-                        position: 'top-right'
-                    })
-
-                });
-
-            });
-
+          $.toast({
+            heading: 'Error',
+            text: 'Something went wrong.',
+            showHideTransition: 'slide',
+            icon: 'success',
+            loaderBg: '#f96868',
+            position: 'top-right'
+          })
 
         });
 
+      });
+
+
+    });
   </script>
 
 

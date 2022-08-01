@@ -126,6 +126,9 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::post('review/list', 'ReviewController@dataListing')->name('review.list');
   Route::resource('review', 'ReviewController');
 
+  Route::post('faq/list', 'FrequentAskQuestionController@dataListing')->name('faq.list');
+  Route::resource('faq', 'FrequentAskQuestionController');
+
 
   Route::post('discount/status', 'DiscountController@changeStatus')->name('discount.status');
   Route::post('discount/checkDiscountCode', 'DiscountController@checkDiscountCode')->name('discount.checkDiscountCode');
@@ -150,6 +153,8 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
 
     Route::get('deal-of-day', 'DealOfDayController@index')->name('dealofday.index');
     Route::post('deal-of-day/update', 'DealOfDayController@update')->name('dealofday.update');
+
+
 
 
     Route::get('website-setting', 'SettingController@showSettingPage')->name('website-setting');

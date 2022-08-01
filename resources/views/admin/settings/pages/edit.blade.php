@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8 d-none">
+    <div class="col-md-8">
       <div class="card">
         <div class="card-body">
           <div class="form-row">
@@ -112,7 +112,7 @@
               <h6 class="text-mute"><strong>Slider Image <span class="text-danger">*</span></strong> </h6>
               <hr>
               <div class="text-center">
-                <img src="{{$page->page_image}}" data-default="{{ $page->page_image }}" class="w-100" id="preview">
+                <img src="{{$page->page_image}}" data-default="{{ $page->page_image }}" class="w-25" id="preview">
               </div><br>
               <div class="form-group">
                 <input type="file" name="slider_image" class="file-upload-default" data-rule-accept="jpg,png,jpeg"
@@ -120,7 +120,7 @@
                   data-rule-filesize="5000000" id="featured_image" data-msg-required="Image is required."
                   data-msg-filesize="File size must be less than 5mb">
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                  <input type="text" class="form-control file-upload-info" disabled="true" placeholder="Upload Image">
                   <span class="input-group-append">
                     <button class="file-upload-browse shadow-sm btn btn-primary" type="button">Upload</button>
                   </span>

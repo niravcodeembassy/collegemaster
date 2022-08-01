@@ -86,4 +86,11 @@ class ContactUsController extends Controller
     $this->data['title'] = 'Photo Policy';
     return view('frontend.photo', $this->data);
   }
+  public function cookiePolicy(Request $request)
+  {
+    $page = Page::findOrfail(7);
+    $this->data['page'] = $page;
+    $this->data['title'] = 'Cookie Policy';
+    return view('frontend.photo', $this->data);
+  }
 }

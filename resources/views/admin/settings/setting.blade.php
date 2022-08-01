@@ -186,7 +186,36 @@
                   </div>
                   <input class="form-control" type="text" value="{{ $setting->response->linkedin ?? '' }}" name="linkedin" placeholder="Recipient's text" aria-label="Recipient's ">
                 </div>
-
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fab fa-twitter"></i>
+                    </span>
+                  </div>
+                  <input class="form-control" type="text" name="twitter" value="{{ $setting->response->twitter ?? '' }}" placeholder="Recipient's text" aria-label="Recipient's ">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fab fa-pinterest"></i>
+                    </span>
+                  </div>
+                  <input class="form-control" type="text" name="pinterest" value="{{ $setting->response->pinterest ?? '' }}" placeholder="Recipient's text" aria-label="Recipient's ">
+                </div>
+              </div>
+            </div>
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="offertext">Category Selection <span class="text-danger">*</span></label>
+                  <select class="form-control category-select2" multiple name="category[]" id="category" data-url="{{ route('admin.get.category') }}" data-rule-required="true" data-placeholder="Select Category."
+                    data-msg-required="Category is required.">
+                    @foreach ($setting->response->category as $item)
+                      <option value="{{ $item }}" selected>{{ \App\Category::find($item)->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
             </div>
             <hr style="margin: 15px -20px">
@@ -203,7 +232,6 @@
             <div class="row">
               <h5 class="pl-2 mb-3"><strong>Shipping Charge For India</strong></h5><br>
               <div class="col-12">
-
                 <div class="form-row d-none">
                   <div class="form-group">
                     <div class="form-radio">
@@ -299,8 +327,8 @@
                     <label for="invoiceformat">Invoice Format</label>
                     <p>
                       <label class="m-radio">
-                        <input type="radio" class="forment" id="forment1" value="1" {{ !empty($setting) && optional($setting->response)->forment == '1' ? 'checked' : '' }} {{ empty($setting) ? 'checked' : '' }}
-                          name="forment" value="0" checked="">
+                        <input type="radio" class="forment" id="forment1" value="1" {{ !empty($setting) && optional($setting->response)->forment == '1' ? 'checked' : '' }} {{ empty($setting) ? 'checked' : '' }} name="forment"
+                          value="0" checked="">
                         Number Based(00001)
                         <span></span>
                       </label><br>
@@ -378,6 +406,9 @@
   </div>
 @endsection
 
+@push('js')
+  <script src="{{ asset('js/subcategory.js') }}"></script>
+@endpush
 @push('scripts')
   <script>
     $(document).ready(function() {

@@ -36,8 +36,15 @@
     </div>
   </div>
 </div>
+
 <div class="section-title-container mb-20">
   <div class="container">
+   @if(isset($page->slider_image))
+   <div class="single-slider-post__image single-slider-post--sticky__image mb-30">
+    <img src="{{$page->page_image ?? ''}}" class="img-fluid w-100" alt="">
+   </div>
+  @endif
+
     {!! $page->bodyhtml ?? '' !!}
   </div>
 </div>

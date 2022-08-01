@@ -56,7 +56,6 @@ class PagesController extends Controller
             $fileName = str_replace(' ', '_', $fileName);
             $filepath = $file->storeAs('banner', $fileName);
             $pages->slider_image = $filepath;
-
         }
 
 

@@ -15,7 +15,7 @@ class Page extends Model
         if($imageExist) {
             return asset('storage/'.$this->slider_image )  ;
         }
-        return asset('storage/default/picture.png');
+        return asset('storage/default/default.png');
 
     }
 }

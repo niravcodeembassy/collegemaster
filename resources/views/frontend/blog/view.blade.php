@@ -86,7 +86,7 @@
                     {{$blog->content ?? ''}}
                   </p>
                   <p class="mb-30">
-                    {!! $blog->description!!}
+                    {!! $blog->description ?? ''!!}
                   </p>
                 </div>
 

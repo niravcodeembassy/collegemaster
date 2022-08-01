@@ -2,22 +2,21 @@
   <div class="newsletter">
     <div class="container">
       <div class="row">
-        <div class="col-sm-12">
-          <h2 class="text-uppercase Vogue header_title text-center text-white">
-            GET OUR LATEST OFFERS IN YOUR INBOX
-          </h2>
+        <div class="col-lg-2 col-md-4 py-lg-0 py-2 text-center py-md-0 left ">
+          <h3 class="text-uppercase text-center text-white">
+            NEWS LETTER
+          </h3>
         </div>
-        <div class="col-sm-4 py-2 py-lg-0 py-md-0 left">
-          <h4>
+        <div class="col-lg-4 col-md-8 py-lg-0 py-md-0 left">
+          <h4 class="text-uppercase px-md-3 px-sm-0 border-left newsletter_border">
             LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY
-            SUBSCRIBING!
+            SUBSCRIBING OUR NEWS LETTER.
           </h4>
         </div>
-        <div class="col-sm-8 right">
+        <div class="col-lg-6 col-md-12 right">
           <div class="signup-form">
             <form id="mc-form" action="{{ route('newsletter') }}" class="mc-form">
-              <div class="form"><input type="email" placeholder="Your Email" required id="newsletter_email"
-                  data-rule-required="true" name="email">
+              <div class="form"><input type="email" placeholder="Your Email" required id="newsletter_email" data-rule-required="true" name="email">
                 <input type="submit">
               </div>
               <div id="newsletterValidate"></div>
@@ -36,7 +35,16 @@
           <!--=======  logo  =======-->
           <div class="logo">
             <a href="{{ url('/') }}">
-              <img class="img-fluid" src="{{ asset('storage/'.$frontsetting->logo ) }}" alt="At Auros">
+              <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
+            </a>
+            <a href="">
+              <img class="img-fluid mt-4 my-2" src="{{ asset('front/assets/images/website_icon/google.png') }}">
+            </a>
+            <a href="https://www.trustpilot.com/review/collagemaster.com?" target="_blank">
+              <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
+            </a>
+            <a href="">
+              <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
             </a>
           </div>
           <!--=======  End of logo  =======-->
@@ -45,18 +53,43 @@
           <!--=======  End of copyright text  =======-->
         </div>
         <div class="col footer-single-widget">
-          <h5 class="widget-title">HELP TOPICS</h5>
+          <h5 class="widget-title">Shop</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
-              <ul>
-                <li><a href="{{ route('page.faq') }}">FAQ</a></li>
-                <li><a href="{{ route('blog') }}">Blog</a></li>
+              <ul class="footer-links">
+                @foreach ($frontsetting->category as $list)
+                  @php
+                    $category = \App\Category::find($list);
+                  @endphp
+                  <li><a href="{{ route('category.product', ['slug' => $category->slug]) }}">
+                      {{ $category->name }}
+                    </a>
+                  </li>
+                @endforeach
               </ul>
             </nav>
           </div>
+          <!--=======  single widget  =======-->
 
-
+          <!--=======  End of footer navigation container  =======-->
+          <!--=======  single widget  =======-->
+        </div>
+        <div class="col footer-single-widget">
+          <h5 class="widget-title">policies</h5>
+          <!--=======  footer navigation container  =======-->
+          <div class="footer-nav-container">
+            <nav>
+              <ul class="footer-links">
+                <li><a href="{{ route('page.policy') }}">Privacy Policy</a></li>
+                <li><a href="{{ route('page.photo') }}">Photos Policy</a></li>
+                <li><a href="{{ route('page.cookie') }}">Cookies Policy</a></li>
+                <li><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></li>
+                <li><a href="{{ route('page.term') }}">Terms & Conditions</a></li>
+              </ul>
+            </nav>
+          </div>
+          <!--=======  single widget  =======-->
 
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
@@ -69,26 +102,8 @@
               <ul>
                 <li><a href="{{ route('page.about') }}">About us</a></li>
                 <li><a href="{{ route('blog') }}">Blog</a></li>
+                <li class="d-none"><a href="{{ route('page.faq') }}">FAQ</a></li>
                 <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
-              </ul>
-            </nav>
-          </div>
-
-          <!--=======  single widget  =======-->
-
-          <!--=======  End of footer navigation container  =======-->
-          <!--=======  single widget  =======-->
-        </div>
-        <div class="col footer-single-widget">
-          <h5 class="widget-title">Privacy</h5>
-          <!--=======  footer navigation container  =======-->
-          <div class="footer-nav-container">
-            <nav>
-              <ul class="footer-links">
-                <li><a href="{{ route('page.policy') }}">Privacy Policy</a></li>
-                <li><a href="{{ route('page.policy') }}">Photo Policy</a></li>
-                <li><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></li>
-                <li><a href="{{ route('page.term') }}">Term and Conditions</a></li>
               </ul>
             </nav>
           </div>
@@ -101,35 +116,40 @@
         <div class="col footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
-            <h5 class="footer-title widget-title reg-office">Registered Office:</h5>
+            <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>
             <p class="about marginB20">
-              {{$frontsetting->address ?? ''}}
+              {{ $frontsetting->address ?? '' }}
             </p>
-            <h5 class="footer-title widget-title">Call Support:</h5>
+            <h5 class="footer-title footer_heading">Call Support:</h5>
             <p class="about marginB20">
               Call at
-              <a href="/tel:+918200324798" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact}}</a><br>
+              <a href="/tel:+918200324798" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact }}</a><br>
               We are here to help you on all working days between 10:00 AM to
               07:00 PM
             </p>
             <h4 class="footer-title d-none">We Accept</h4>
             <ul class="footer-links d-none">
-              <li><img src="{{ asset('front/assets/images/payment/payment_icon.png')}}" alt="Payment"
-                  class="img-responsive"></li>
+              <li><img src="{{ asset('front/assets/images/payment/payment_icon.png') }}" alt="Payment" class="img-responsive"></li>
             </ul>
-            <h5 class="widget-title">Foolow us</h5>
+            <h5 class="footer_heading">Foolow us</h5>
             <ul class="footer-links list-inline social-link">
               @if ($frontsetting->facebook)
-              <li><a href="{{$frontsetting->facebook}}"> <i class="fa fa-facebook"></i></a></li>
+                <li><a href="{{ $frontsetting->facebook }}"> <i class="fa fa-facebook"></i></a></li>
               @endif
               @if ($frontsetting->instagram)
-              <li><a href="{{$frontsetting->instagram}}"> <i class="fa fa-instagram"></i></a></li>
+                <li><a href="{{ $frontsetting->instagram }}"> <i class="fa fa-instagram"></i></a></li>
               @endif
               @if ($frontsetting->whatsapp)
-              <li><a href="{{$frontsetting->whatsapp}}"> <i class="fa fa-whatsapp"></i></a></li>
+                <li><a href="{{ $frontsetting->whatsapp }}"> <i class="fa fa-whatsapp"></i></a></li>
               @endif
               @if ($frontsetting->linkedin)
-              <li><a href="{{$frontsetting->linkedin}}"> <i class="fa fa-linkedin"></i></a></li>
+                <li><a href="{{ $frontsetting->linkedin }}"> <i class="fa fa-linkedin"></i></a></li>
+              @endif
+              @if ($frontsetting->twitter)
+                <li><a href="{{ $frontsetting->twitter }}"> <i class="fa fa-twitter"></i></a></li>
+              @endif
+              @if ($frontsetting->pinterest)
+                <li><a href="{{ $frontsetting->pinterest }}"> <i class="fa fa-pinterest"></i></a></li>
               @endif
             </ul>
           </div>
@@ -150,7 +170,7 @@
   <div class="footer site-footer footer-bottom">
     <div class="col-md-12">
       <p class="text-center text-white">
-        {{$frontsetting->copyrights}}
+        {{ $frontsetting->copyrights }}
       </p>
     </div>
   </div>
@@ -184,7 +204,7 @@
     <div class="offcanvas-cart-content-container">
       <h3 class="cart-title">Cart</h3>
       <div class="cart-product-wrapper" id="cart-product-wrapper">
-        @include('frontend.cart.cart_overlay' ,['cartList' => $cartList ])
+        @include('frontend.cart.cart_overlay', ['cartList' => $cartList])
       </div>
     </div>
     <!--=======  End of offcanvas cart content container   =======-->
@@ -220,34 +240,34 @@
 
 
 @push('script')
-<script>
-  $(document).ready(function () {
-                    $('#mc-form').validate({
-                      errorClass: "text-danger",
-                        errorPlacement: function(error, element) {
-                            error.appendTo($('#newsletterValidate'));
-                        },
-                        submitHandler: function(form ,event) {
+  <script>
+    $(document).ready(function() {
+      $('#mc-form').validate({
+        errorClass: "text-danger",
+        errorPlacement: function(error, element) {
+          error.appendTo($('#newsletterValidate'));
+        },
+        submitHandler: function(form, event) {
 
-                            event.preventDefault();
-                            var datastring = $(form).serialize();
-                            var url = $(form).attr('action');
+          event.preventDefault();
+          var datastring = $(form).serialize();
+          var url = $(form).attr('action');
 
-                            $.ajax({
-                                type: "POST",
-                                url: url,
-                                data: datastring
-                            }).always(function(res){
-                                $('#newsletter_email').val(null);
-                            }).done(function(res){
-                                $.toast({
-                                    position: 'top-right',
-                                    text: res.message,
-                                    loader: false,
-                                })
-                            });
-                        }
-                    });
-                });
-</script>
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: datastring
+          }).always(function(res) {
+            $('#newsletter_email').val(null);
+          }).done(function(res) {
+            $.toast({
+              position: 'top-right',
+              text: res.message,
+              loader: false,
+            })
+          });
+        }
+      });
+    });
+  </script>
 @endpush

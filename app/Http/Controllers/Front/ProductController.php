@@ -11,7 +11,9 @@ use App\Model\ShoppingCart;
 use App\Model\SubCategory;
 use App\Model\WishList;
 use Illuminate\Http\Request;
+use App\Model\FrequentAskQuestion;
 use Auth;
+use Helper;
 use Str;
 use Illuminate\Support\Facades\Session;
 use Psy\Exception\BreakException;
@@ -131,6 +133,17 @@ class ProductController extends Controller
       $this->data['cart_product'] = ShoppingCart::where('session_id', $this->session_id)->where('variant_id', $variant->id)->first();
     }
 
+    $faq = FrequentAskQuestion::with('children')->whereNull('parent_id')->get();
+    $routeParameter = Helper::productRouteParameter($product);
+    $social_link =  \Share::page(route('product.details', $routeParameter))
+      ->facebook()
+      ->twitter()
+      ->linkedin()
+      ->whatsapp()
+      ->pinterest()
+      ->getRawLinks();
+
+
     $product = Product::with([
       'productvariants',
       'images:id,product_id,image_name,image_alt',
@@ -157,6 +170,8 @@ class ProductController extends Controller
     $this->data['variantCombination'] = $variantCombination;
     $this->data['productVarinat'] = $variant;
     $this->data['review'] = $review;
+    $this->data['social_link'] = $social_link;
+    $this->data['faqList'] = $faq;
     return $this->view('frontend.product.product_details');
   }
 

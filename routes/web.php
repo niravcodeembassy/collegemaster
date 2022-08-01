@@ -34,7 +34,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
   Route::get('page/about', 'ContactUsController@about')->name('page.about');
   Route::get('page/policy', 'ContactUsController@policy')->name('page.policy');
-  Route::get('page/photo-policy', 'ContactUsController@photoPolicy')->name('page.policy');
+  Route::get('page/photo-policy', 'ContactUsController@photoPolicy')->name('page.photo');
+  Route::get('page/cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');
   Route::get('page/returns-policy', 'ContactUsController@returnPolicy')->name('page.returns');
   Route::get('page/term-conditions', 'ContactUsController@term')->name('page.term');
   Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');

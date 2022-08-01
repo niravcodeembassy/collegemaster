@@ -24,8 +24,8 @@
     .q-slick-slider p {
       font-size: 16px;
     }
-    
-    .single-category__content--three--creativehome .title p > a {
+
+    .single-category__content--three--creativehome .title p>a {
       font-size: 24px !important;
     }
 
@@ -53,6 +53,12 @@
         right: 8px;
       }
 
+      @media only screen and (max-width: 600px) {
+        .lezada-button {
+          width: auto;
+        }
+      }
+
       .q-slick-slider::before {
         top: -50px;
         left: 4px;
@@ -64,9 +70,16 @@
       height: 100px !important;
     }
 
-    /* .trust_icon:not(:first-child) {
-        border-left: 1px solid black;
-      } */
+
+    .lezada-button--small {
+      font-size: 12px !important;
+      padding: 8px 15px !important;
+      border-radius: 0px !important;
+    }
+
+    .single-category__content--three--banner .title>a:hover {
+      border-color: #333;
+    }
   </style>
 @endpush
 
@@ -76,8 +89,8 @@
 
 
   <!--=============================================
-     =            slider area         =
-     =============================================-->
+                               =            slider area         =
+                               =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -223,11 +236,11 @@
                   <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
                 </div>
                 <!--=======  single category content  =======-->
-                <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-25">
+                <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">
                   <div class="title">
                     <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
                     @if ($item->url)
-                      <a href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
+                      <a class="lezada-button lezada-button--small lezada-button--custom" href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
                     @endif
                   </div>
                 </div>
@@ -509,8 +522,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-             =            instagram slider area         =
-             =============================================-->
+                                       =            instagram slider area         =
+                                       =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

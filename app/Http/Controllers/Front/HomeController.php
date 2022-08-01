@@ -60,7 +60,16 @@ class HomeController extends Controller
   public function viewBlog($slug)
   {
     $blog = Blog::where('slug', $slug)->first();
+    $social_link =  \Share::page(route('blog.show', $blog->slug))
+      ->facebook()
+      ->twitter()
+      ->linkedin()
+      ->whatsapp()
+      ->pinterest()
+      ->getRawLinks();
+
     $this->data['blog'] = $blog;
+    $this->data['social_link'] = $social_link;
     return view('frontend.blog.view',  $this->data);
   }
 }
