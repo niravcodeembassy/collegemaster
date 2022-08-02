@@ -42,7 +42,6 @@ class FrequentAskQuestionController extends Controller
    */
   public function store(Request $request)
   {
-
     $question = FrequentAskQuestion::updateOrCreate(['id' => $request->question_id, 'parent_id' => null], [
       'title' => $request->title,
     ]);
@@ -204,8 +203,8 @@ class FrequentAskQuestionController extends Controller
   public function destroy(FrequentAskQuestion $faq)
   {
     $id = $faq->id;
-    FrequentAskQuestion::where('id',$id)->delete();
-    
+    FrequentAskQuestion::where('id', $id)->delete();
+
     return response()->json([
       'success' => true,
       'message' => 'Faq Deleted SuccessFully'

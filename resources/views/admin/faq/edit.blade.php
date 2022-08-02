@@ -32,10 +32,11 @@
                       </div>
 
                       <input type="hidden" name="parent_id" value="{{ $item->id }}">
-
-                      <div class="form-group">
-                        <label class="form-label fs-6 fw-bolder mb-3">Answer <span class="text-danger">*</span></label>
-                        <textarea name="answer" rows="2" required class="form-control form-control-solid answer">{{ $item->answer ?? '' }}</textarea>
+                      <div class="form-group min">
+                        <div class="form-group">
+                          <label class="form-label fs-6 fw-bolder mb-3">Answer <span class="text-danger">*</span></label>
+                          <textarea name="answer" rows="2" required class="form-control form-control-solid answer">{{ $item->answer ?? '' }}</textarea>
+                        </div>
                       </div>
 
                       <button data-repeater-delete type="button" class="input-group-text bg-danger">
@@ -51,11 +52,13 @@
                     </div>
 
                     <input type="hidden" name="parent_id">
-
-                    <div class="form-group">
-                      <label class="form-label fs-6 fw-bolder mb-3">Answer <span class="text-danger">*</span></label>
-                      <textarea name="answer" rows="2" required class="form-control form-control-solid answer"> </textarea>
+                    <div class="form-group min">
+                      <div class="form-group">
+                        <label class="form-label fs-6 fw-bolder mb-3">Answer <span class="text-danger">*</span></label>
+                        <textarea name="answer" rows="2" required class="form-control form-control-solid answer"> </textarea>
+                      </div>
                     </div>
+
 
                     <button data-repeater-delete type="button" class="input-group-text bg-danger">
                       <i class="fas fa-trash-alt text-light"></i>
@@ -86,15 +89,37 @@
 @push('js')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js" integrity="sha512-foIijUdV0fR0Zew7vmw98E6mOWd9gkGWQBWaoA1EOFAx+pY+N8FmmtIYAVj64R98KeD2wzZh1aHK0JSpKmRH8w==" crossorigin="anonymous"
     referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
 @endpush
-
 
 
 @push('scripts')
   <script type="text/javascript">
+    document.querySelectorAll('.answer').forEach(function(item) {
+      ClassicEditor
+        .create(item)
+        .catch(error => {
+          console.error(error);
+        });
+    })
+
+
+    $('.repeater').repeater({
+      show: function() {
+        $(this).slideDown(function() {
+          ClassicEditor
+            .create($(this).children('.min').find('.answer')[0])
+            .catch(error => {
+              console.error(error);
+            });
+        });
+      },
+    });
+
     jQuery(document).ready(function($) {
 
-      $('.repeater').repeater();
+
+
 
       $('#addmore').on('submit', function(event) {
         $('.question').each(function() {

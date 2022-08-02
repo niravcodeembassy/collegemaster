@@ -16,7 +16,7 @@ use Auth;
 use Helper;
 use Str;
 use Illuminate\Support\Facades\Session;
-use Psy\Exception\BreakException;
+use Share;
 
 class ProductController extends Controller
 {
@@ -46,6 +46,14 @@ class ProductController extends Controller
     $this->data['category'] = $category;
     $this->data['min'] = Productvariant::min('mrp_price');
     $this->data['max'] = Productvariant::max('mrp_price');
+    $this->data['category_list_view'] = '';
+    if (isset($categoryList) && $categoryList->count() > 0) {
+      $this->data['category_list_view'] = view('frontend.product.partial.category-list', [
+        'AllProductCount' => Product::count(),
+        'categoryList' => $categoryList,
+        'category' => $category
+      ])->render();
+    }
     // dd($this);
     return $this->view('frontend.product.productlist');
   }
@@ -92,14 +100,32 @@ class ProductController extends Controller
     // $product = Product::productList()->where('sub_category_id', $subCategory->id)->paginate(12);;
     $product =  $this->getProductQuery($request, $slug, $category, $subCategory);
 
-    $categoryList = Category::whereNull('is_active')->with(['subCategory' => function ($q) {
-      $q->whereNull('is_active');
-    }])->get();
+    // $categoryList = Category::whereNull('is_active')->with(['subCategory' => function ($q) {
+    //   $q->whereNull('is_active');
+    // }])->get();
+
+    $categoryList = Category::whereNull('is_active')
+      ->withCount(['products' => function ($q) {
+        $q->where('is_active', 'Yes');
+      }])->with(['subCategory' => function ($q) {
+        $q->whereNull('is_active');
+      }])->whereNull('is_active')->get();
+
     $this->data['categoryList'] = $categoryList;
     $this->data['product'] = $product;
     $this->data['min'] = Productvariant::min('mrp_price');
     $this->data['max'] = Productvariant::max('mrp_price');
     $this->data['title'] = $subCategory->name;
+
+    $this->data['category_list_view'] = '';
+    if (isset($categoryList) && $categoryList->count() > 0) {
+      $this->data['category_list_view'] = view('frontend.product.partial.category-list', [
+        'AllProductCount' => Product::count(),
+        'categoryList' => $categoryList,
+        'category' => $category,
+        'subCategory' => $subCategory
+      ])->render();
+    }
 
     // $this->data['category'] = $category;
     // dd($this);
@@ -135,7 +161,7 @@ class ProductController extends Controller
 
     $faq = FrequentAskQuestion::with('children')->whereNull('parent_id')->get();
     $routeParameter = Helper::productRouteParameter($product);
-    $social_link =  \Share::page(route('product.details', $routeParameter))
+    $social_link =  Share::page(route('product.details', $routeParameter))
       ->facebook()
       ->twitter()
       ->linkedin()

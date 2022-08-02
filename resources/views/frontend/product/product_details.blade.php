@@ -59,6 +59,25 @@
       font-size: 10px !important;
       font-weight: 500 !important;
     }
+
+    .accordion .card-header:after {
+      font-family: 'FontAwesome';
+      content: "\f067";
+      float: right;
+    }
+
+    .accordion .card-body {
+      padding: 0.5rem !important;
+    }
+
+    .accordion .card-header:not(.collapsed)::after {
+      content: "\f068";
+    }
+
+    .faq-title {
+      font-size: 25px !important;
+      line-height: 10px;
+    }
   </style>
 @endpush
 
@@ -507,11 +526,11 @@
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
                     <div class="nav nav-tabs justify-content-center" id="nav-tab2" role="tablist">
                       <a class="nav-item nav-link mx-5 active" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
-                      <a class="nav-item nav-link mx-5" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
-                        ({{ $review->count() }})</a>
-                      <a class="nav-item nav-link mx-5" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">FAQ
+                      <a class="nav-item nav-link mx-5" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
                         ({{ $faqList->count() }})
                       </a>
+                      <a class="nav-item nav-link mx-5" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
+                        ({{ $review->count() }})</a>
                     </div>
                   </div>
 
@@ -532,38 +551,8 @@
                     </div>
 
                     <div class="tab-pane fade" id="product-series-2" role="tabpanel" aria-labelledby="product-tab-2">
-                      @if ($faqList->count() > 0)
-                        @foreach ($faqList as $key => $item)
-                          <div class="single-faq mb-40">
-                            <h2 class="faq-title mb-20">{{ $item->title ?? '' }}</h2>
-                            <div class="accordion" id="shippingInfo{{ $key }}">
-                              @if ($item->children->count() > 0)
-                                @foreach ($item->children as $index => $child)
-                                  <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                      <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ $child->id }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
-                                          aria-controls="collapseOne{{ $child->id }}">
-                                          {{ $child->question ?? '' }}
-                                        </button>
-                                      </h5>
-                                    </div>
-                                    <div id="collapseOne{{ $child->id }}" class="collapse{{ $index == 0 ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#shippingInfo{{ $key }}" style="">
-                                      <div class="card-body">
-                                        {{ $child->answer }}
-                                      </div>
-                                    </div>
-                                  </div>
-                                @endforeach
-                              @endif
-                            </div>
-                          </div>
-                        @endforeach
-                      @else
-                        <div class="text-center">
-                          <h4 class="text-muted">No FAQs found</h4>
-                        </div>
-                      @endif
+
+                      @include('frontend.product.partial.specification')
 
                     </div>
 
