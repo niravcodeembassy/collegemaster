@@ -40,12 +40,12 @@
             <!--=======  End of single-icon  =======-->
             <!--=======  single-icon  =======-->
             @auth
-              <div class="user-login">
+              <div class="single-icon user-login">
                 <a href="{{ route('profile.index') }}">
                   <i class="ion-android-person"></i>
                 </a>
               </div>
-              <div class="wishlist">
+              <div class="single-icon wishlist">
                 <a href="{{ route('wishlist.index') }}" id="offcanvas-wishlist-icon">
                   <i class="ion-android-favorite-outline"></i>
                 </a>
