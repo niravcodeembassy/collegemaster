@@ -1,86 +1,7 @@
 @extends('frontend.layouts.app')
-@push('style')
-  <style>
-    .q-slick-slider::after,
-    .q-slick-slider::before {
-      content: "";
-      width: 90px;
-      height: 60px;
-      position: absolute;
-      left: 0;
-    }
 
-    .q-slick-slider::before {
-      top: -30px;
-      left: -85px;
-      right: auto;
-      background: url('{{ asset('front/assets/images/quote-left.png') }}') no-repeat center;
-    }
-
-    .star {
-      color: rgb(252, 88, 47);
-    }
-
-    .q-slick-slider p {
-      font-size: 16px;
-    }
-
-    .single-category__content--three--creativehome .title p>a {
-      font-size: 24px !important;
-    }
-
-    .q-slick-slider::after {
-      bottom: -60px;
-      left: auto;
-      right: -100px;
-      background: url('{{ asset('front/assets/images/quote-right.png') }}') no-repeat center;
-    }
-
-    @media (max-width: 568px) {
-      .q-slick-slider::after {
-        width: 96px;
-      }
-
-      .q-slick-slider::before {
-        width: 96px;
-      }
-    }
-
-    @media (max-width: 980px) {
-      .q-slick-slider::after {
-        bottom: -80px;
-        left: auto;
-        right: 8px;
-      }
-
-      @media only screen and (max-width: 600px) {
-        .lezada-button {
-          width: auto;
-        }
-      }
-
-      .q-slick-slider::before {
-        top: -50px;
-        left: 4px;
-        right: auto;
-      }
-    }
-
-    .trust_icon img {
-      height: 100px !important;
-    }
-
-
-    .lezada-button--small {
-      font-size: 12px !important;
-      padding: 8px 15px !important;
-      border-radius: 0px !important;
-    }
-
-    .single-category__content--three--banner .title>a:hover {
-      border-color: #333;
-    }
-  </style>
+@push('css')
+  <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
 @endpush
 
 @section('content')
@@ -89,8 +10,8 @@
 
 
   <!--=============================================
-                               =            slider area         =
-                               =============================================-->
+                                 =            slider area         =
+                                 =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -522,8 +443,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                       =            instagram slider area         =
-                                       =============================================-->
+                                         =            instagram slider area         =
+                                         =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

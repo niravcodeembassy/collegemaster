@@ -199,6 +199,88 @@
       font-size: 0;
       padding: 0
     }
+
+    /* //header css */
+    .search_form_mobile {
+      position: relative;
+      width: 100% !important;
+    }
+
+    .search_form {
+      width: 70% !important;
+      position: relative;
+    }
+
+    .search_form input {
+      border-radius: 96px;
+      padding: 20px;
+      border: 2px solid black;
+    }
+
+    .search_form_mobile input {
+      border-radius: 96px;
+      padding: 10px;
+      border: 2px solid black;
+    }
+
+
+    .search_form button,
+    .search_form_mobile button {
+      font-size: 25px;
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      padding: 0px 10px;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      color: #cccccc;
+      border: none;
+      background: none;
+    }
+
+    nav.site-nav>ul>li {
+      line-height: 35px;
+    }
+
+    nav.site-nav>ul>li>a:after {
+      bottom: 0px;
+    }
+
+    .about-overlay .overlay-content {
+      width: 290px;
+      padding: 55px 20px;
+    }
+
+    a.login_link:hover {
+      color: black;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      .header-right-icons {
+        float: right;
+      }
+
+      .header-bottom-container .header-right-container {
+        flex-basis: 60%;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      .header-bottom-container .header-right-container {
+        flex-basis: 72%;
+      }
+    }
+
+    @media only screen and (max-width: 479px) {
+      .header-right-icons .single-icon {
+        margin-left: 8px;
+      }
+
+      .header-right-icons {
+        float: right;
+      }
+    }
   </style>
 
   @stack('css')
@@ -210,7 +292,7 @@
 </head>
 
 <body>
-  <link itemprop="thumbnailUrl" href="@yield('og-image', asset('storage/' . $frontsetting->logo))">
+  {{-- <link itemprop="thumbnailUrl" href="@yield('og-image', asset('storage/' . $frontsetting->logo))"> --}}
   <!--=============================================
          =            Header without topbar         =
          =============================================-->

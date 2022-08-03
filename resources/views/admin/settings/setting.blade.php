@@ -32,10 +32,12 @@
 
     .settings li i {
       padding-right: 15px;
+
     }
   </style>
 @endpush
 @section('content')
+
   @component('component.heading',
       [
           'page_title' => '',
@@ -211,7 +213,7 @@
                   <label for="offertext">Category Selection <span class="text-danger">*</span></label>
                   <select class="form-control category-select2" multiple name="category[]" id="category" data-url="{{ route('admin.get.category') }}" data-rule-required="true" data-placeholder="Select Category."
                     data-msg-required="Category is required.">
-                    @if (!is_null($setting->response->category) && isset($setting->response->category))
+                    @if (isset($setting->response->category) && !is_null($setting->response->category))
                       @foreach ($setting->response->category as $item)
                         <option value="{{ $item }}" selected>{{ \App\Category::find($item)->name }}</option>
                       @endforeach
@@ -220,6 +222,30 @@
                 </div>
               </div>
             </div>
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="pl-2 mb-3">website Review Link</h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Google Review <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="google_link" value="{{ $setting->response->google_link ?? '' }}" aria-label="Recipient's ">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Trust Pilot Review <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="pilot_link" value="{{ $setting->response->pilot_link ?? '' }}" aria-label="Recipient's ">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Esty Review <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="esty_link" value="{{ $setting->response->esty_link ?? '' }}" aria-label="Recipient's ">
+                </div>
+              </div>
+            </div>
+
+
             <hr style="margin: 15px -20px">
             <div class="row">
               <div class="col">

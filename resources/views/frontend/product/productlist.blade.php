@@ -27,29 +27,9 @@
       background-image: url({{ $category->image_src ?? '' }});
     }
 
-    .tablet_view {
-      display: none;
-    }
-
     .about-overlay .overlay-content {
       width: 290px;
       padding: 55px 20px;
-    }
-
-    @media only screen and (min-device-width : 320px) and (max-device-width : 540px) {
-      .tablet_view {
-        display: block;
-      }
-    }
-
-    @media only screen and (min-device-width : 768px) and (max-device-width : 1020px) {
-      .tablet_view {
-        display: block;
-      }
-
-      .non_tablet_view {
-        display: none;
-      }
     }
   </style>
 @endpush
@@ -109,9 +89,11 @@
               </div> --}}
                 <!--=======  End of filter dropdown  =======-->
                 <!--=======  grid icons  =======-->
-                <div class="single-icon advance-filter-icon tablet_view">
-                  <a href="javascript:void(0)" id="offcanvas-about-icon" class=""><i class="ion-android-funnel"></i>
-                    <b>Filter Category</b></a>
+                <div class="single-icon advance-filter-icon d-lg-none">
+                  <a href="javascript:void(0)" id="offcanvas-category-icon" class="">
+                    <i class="ion-android-funnel"></i>
+                    <b>Filter Category</b>
+                  </a>
                 </div>
                 <div class="single-icon ">
                   {{-- <a href="{{ route('category.product' , [ 'slug' => $category->slug ,'type' => 'grid-four' ,  ] + request()->query() ) }}"
@@ -141,8 +123,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                          =            shop page content         =
-                                                                          =============================================-->
+                                                                                =            shop page content         =
+                                                                                =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">
           <div class="row">
@@ -162,7 +144,7 @@
                     $AllProductCount = App\Model\Product::count();
                   @endphp
                   <!--=======  single sidebar widget  =======-->
-                  <div class="single-sidebar-widget non_tablet_view mb-40">
+                  <div class="single-sidebar-widget mb-40 d-none d-lg-block">
                     <h2 class="single-sidebar-widget--title">Categories</h2>
                     {!! $category_list_view !!}
                   </div>

@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Route::get('/linkstorage', function () {
-  Artisan::call('storage:link');
-});
-Route::get('/install', function () {
-  Artisan::call('composer install');
-});
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
 
@@ -41,7 +35,13 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('page/cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');
   Route::get('page/returns-policy', 'ContactUsController@returnPolicy')->name('page.returns');
   Route::get('page/term-conditions', 'ContactUsController@term')->name('page.term');
-  Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');
+
+  Route::get('page/place-order', 'ContactUsController@placeOrder')->name('page.order.place');
+  Route::get('page/send-photo', 'ContactUsController@sendPhoto')->name('page.send.photo');
+  Route::get('page/photo-send', 'ContactUsController@photoSend')->name('page.photo.send');
+  Route::get('page/send-change', 'ContactUsController@saveChange')->name('page.save.change');
+  Route::get('page/delivery-time', 'ContactUsController@deliveryTime')->name('page.delivery.time');
+  // Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');
 
   Route::post('contact-us', 'ContactUsController@store')->name('contact-us.stroe');
 

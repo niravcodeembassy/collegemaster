@@ -28,22 +28,22 @@
   </div>
 
   <div class="footer-top footer-container footer-one pt-70 pb-20 pb-sm-10 pt-sm-50">
-    <div class="container">
-      <div class="row">
-        <div class="col footer-single-widget">
+    <div class="container-fluid">
+      <div class="row clearfix mx-lg-5 mx-sm-0">
+        <div class="col-lg-2  col-md-4 footer-single-widget">
           <!--=======  copyright text  =======-->
           <!--=======  logo  =======-->
           <div class="logo">
             <a href="{{ url('/') }}">
               <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
             </a>
-            <a href="">
+            <a href="{{ $frontsetting->google_link ?? '' }}">
               <img class="img-fluid mt-4 my-2" src="{{ asset('front/assets/images/website_icon/google.png') }}">
             </a>
-            <a href="https://www.trustpilot.com/review/collagemaster.com?" target="_blank">
+            <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
               <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
             </a>
-            <a href="">
+            <a href="{{ $frontsetting->esty_link ?? '' }}">
               <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
             </a>
           </div>
@@ -52,7 +52,7 @@
           <!--=======  End of copyright text  =======-->
           <!--=======  End of copyright text  =======-->
         </div>
-        <div class="col footer-single-widget">
+        <div class="col-lg-2 col-sm-4 footer-single-widget">
           <h5 class="widget-title">Shop</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -77,7 +77,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col footer-single-widget">
+        <div class="col-lg-2 col-md-4 footer-single-widget">
           <h5 class="widget-title">policies</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -96,16 +96,17 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col footer-single-widget">
-          <h5 class="widget-title">ABOUT</h5>
+        <div class="col-lg-2 col-md-4 footer-single-widget">
+          <h5 class="widget-title"> help topics</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
               <ul>
-                <li><a href="{{ route('page.about') }}">About us</a></li>
-                <li><a href="{{ route('blog') }}">Blog</a></li>
-                <li class="d-none"><a href="{{ route('page.faq') }}">FAQ</a></li>
-                <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
+                <li><a href="{{ route('page.order.place') }}">How To Place Order</a></li>
+                <li><a href="{{ route('page.send.photo') }}">How To Send Us Photos</a></li>
+                <li><a href="{{ route('page.photo.send') }}">How Many Photos To Send</a></li>
+                <li><a href="{{ route('page.save.change') }}">How To Send Us Changes</a></li>
+                <li><a href="{{ route('page.delivery.time') }}">Estimated Delivery Time</a></li>
               </ul>
             </nav>
           </div>
@@ -115,7 +116,24 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col footer-single-widget">
+        <div class="col-lg-1 col-md-4 footer-single-widget">
+          <h5 class="widget-title">ABOUT</h5>
+          <!--=======  footer navigation container  =======-->
+          <div class="footer-nav-container">
+            <nav>
+              <ul>
+                <li><a href="{{ route('page.about') }}">About us</a></li>
+                <li><a href="{{ route('blog') }}">Blog</a></li>
+                <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <!--=======  single widget  =======-->
+
+          <!--=======  End of footer navigation container  =======-->
+          <!--=======  single widget  =======-->
+        </div>
+        <div class="col-lg-3 col-md-4 footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
             <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>
@@ -215,7 +233,7 @@
 <!--=======  End of cart overlay  =======-->
 
 <!--=======  search overlay  =======-->
-<div class="search-overlay" id="search-overlay">
+{{-- <div class="search-overlay" id="search-overlay">
   <!--=======  close icon  =======-->
   <span class="close-icon search-close-icon">
     <a href="javascript:void(0)" id="search-close-icon">
@@ -235,7 +253,7 @@
     </div>
   </div>
   <!--=======  End of search overlay content  =======-->
-</div>
+</div> --}}
 <!--=======  End of search overlay  =======-->
 <!--=====  End of overlay items  ======-->
 

@@ -1,8 +1,8 @@
-<div class="header-offcanvas about-overlay" id="about-overlay">
+<div class="header-offcanvas about-overlay" id="category-overlay">
   <div class="overlay-close inactive"></div>
   <div class="overlay-content">
     <!--=======  close icon  =======-->
-    <span class="close-icon" id="about-close-icon">
+    <span class="close-icon" id="category-close-icon">
       <a href="javascript:void(0)">
         <i class="ti-close"></i>
       </a>
