@@ -183,6 +183,16 @@
                 </a>
               </span>
             </div>
+            <div class="align-items-center col-sm-12 col-md-4 d-flex py-3">
+              <a href="{{ route('admin.story.index') }}" role="button" type="button" class="btn btn-primary shdow mr-3 shadow">
+                <i class="fas fa-video" aria-hidden="true"></i>
+              </a>
+              <span class="text-muted">
+                <a href="{{ route('admin.story.index') }}">
+                  <h6 class="text-capitalize mb-1"><b>Our Story</b></h6>
+                </a>
+              </span>
+            </div>
 
           </div>
         </div>

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Contact;
 use App\Model\Page;
+use App\Model\Team;
 use App\Model\Testimonial;
 use App\Setting;
 use Illuminate\Http\Request;
+use App\Model\Story;
 
 class ContactUsController extends Controller
 {
@@ -47,6 +49,7 @@ class ContactUsController extends Controller
     $this->data['page'] = $page;
     $this->data['title'] = 'About';
     $this->data['testimonial'] = Testimonial::whereNull('is_active')->get();
+    $this->data['team'] = Team::whereNull('is_active')->get();
     return view('frontend.about', $this->data);
   }
 
@@ -131,5 +134,13 @@ class ContactUsController extends Controller
     $this->data['page'] = $page;
     $this->data['title'] = 'Estimated Delivery Time';
     return view('frontend.delivery-time', $this->data);
+  }
+
+  public function ourStory()
+  {
+    $story = Story::with('image')->firstOrFail();
+    $this->data['story'] = $story;
+    $this->data['title'] = 'Our Story';
+    return view('frontend.story', $this->data);
   }
 }

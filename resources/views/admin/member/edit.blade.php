@@ -5,45 +5,42 @@
     <div class="col-sm-12 col-md-4">
       <div class="cards">
         <div class="card-body p-0">
-          <h4 class=""> Create Testimonial </h4>
-          <p class="text-muted">Hear you can create a testimonial</p>
+          <h4 class=""> Edit Member </h4>
+          <p class="text-muted">Hear you can edit a team member</p>
         </div>
       </div>
     </div>
 
     <div class="col-sm-12 col-md-8 ">
-      <form action="{{ route('admin.testimonial.store') }}" id="testimonialForm" method="post">
-        @csrf
+      <form action="{{ route('admin.team.update', $team->id) }}" id="teamForm" method="post" enctype="multipart/form-data">
+        @csrf @method('PUT')
         <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label>Name <span class="text-danger">*</span></label>
-                  <input type="text" name="testimonial_name" id="testimonial_name" required class="form-control">
+                  <label>Title <span class="text-danger">*</span></label>
+                  <input type="text" name="title" value="{{ $team->title ?? '' }}" id="title" required class="form-control">
                 </div>
               </div>
 
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Rating</label>
-                  <input type="text" name="rating" id="rating" range="[1,5]" data-rule-number="true" class="form-control">
+                  <label>Designation</label>
+                  <input type="text" name="designation" value="{{ $team->designation ?? '' }}" id="designation" class="form-control">
                 </div>
               </div>
 
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Description <span class="text-danger">*</span></label>
-                  <textarea name="description" id="description" required rows="3" class="form-control"></textarea>
-                </div>
+              <div class="col-md-12 ">
+                @include('component.imagepriview', ['height' => '200px', 'label' => 'Image', 'name' => 'images', 'priview' => $team->image_src ?? null])
               </div>
 
             </div>
           </div>
         </div>
         <div class="float-right">
-          <a href="{{ route('admin.testimonial.index') }}" class="btn btn-default mr-2 "> Cancel</a>
-          <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
+          <a href="{{ route('admin.team.index') }}" class="btn btn-default mr-2 "> Cancel</a>
+          <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Update</button>
         </div>
       </form>
     </div>
@@ -55,7 +52,7 @@
   <script>
     $(document).ready(function() {
 
-      $('#testimonialForm').validate({
+      $('#teamForm').validate({
         debug: false,
         ignore: '.select2-search__field,:hidden:not("textarea,.files,select")',
         errorPlacement: function(error, element) {

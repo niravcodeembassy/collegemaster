@@ -201,6 +201,10 @@
     }
 
     /* //header css */
+    .header-bottom-container .logo-with-offcanvas {
+      flex-basis: 15%;
+    }
+
     .search_form_mobile {
       position: relative;
       width: 100% !important;
@@ -211,33 +215,58 @@
       position: relative;
     }
 
-    .search_form input {
+    .search_form input,
+    .search_form_mobile input {
       border-radius: 96px;
       padding: 20px;
       border: 2px solid black;
     }
 
-    .search_form_mobile input {
-      border-radius: 96px;
-      padding: 10px;
-      border: 2px solid black;
+
+    .search_form .form-control:focus {
+      border-color: black;
+      box-shadow: none;
     }
 
+    .search_form_mobile .form-control:focus {
+      border-color: black;
+      box-shadow: none;
+    }
 
-    .search_form button,
-    .search_form_mobile button {
-      font-size: 25px;
+    .search_form_mobile .main_div {
       position: absolute;
       top: 50%;
       right: 0px;
-      padding: 0px 10px;
+      padding: 0px 20px;
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%);
+    }
+
+    .search_form_mobile .main_div button {
       color: #cccccc;
       border: none;
       background: none;
+      font-size: 25px;
     }
+
+    .search_form .main_div {
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      padding: 0px 20px;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .search_form .main_div button {
+      color: #cccccc;
+      border: none;
+      background: none;
+      font-size: 25px;
+    }
+
 
     nav.site-nav>ul>li {
       line-height: 35px;
@@ -245,6 +274,14 @@
 
     nav.site-nav>ul>li>a:after {
       bottom: 0px;
+    }
+
+    .dropdown-menu {
+      width: 100% !important;
+    }
+
+    a.dropdown-item {
+      white-space: normal;
     }
 
     .about-overlay .overlay-content {
@@ -256,9 +293,17 @@
       color: black;
     }
 
+    .twitter-typeahead {
+      width: 100%;
+    }
+
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       .header-right-icons {
         float: right;
+      }
+
+      .header-bottom-container .logo-with-offcanvas {
+        flex-basis: 40%;
       }
 
       .header-bottom-container .header-right-container {
@@ -269,6 +314,10 @@
     @media only screen and (max-width: 767px) {
       .header-bottom-container .header-right-container {
         flex-basis: 72%;
+      }
+
+      .header-bottom-container .logo-with-offcanvas {
+        flex-basis: 32%;
       }
     }
 
@@ -328,6 +377,9 @@
   <script src="{{ asset('front/assets/js/productdetails.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+  <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
   <script>
     var lodingImage = '<div class="lds-ellipsis"> <div></div> <div></div> <div></div> <div></div> </div>';
     $.ajaxSetup({
@@ -355,6 +407,61 @@
     $(".alert").delay(4000).slideUp(200, function() {
       $(this).alert('close');
     });
+
+    //ask why error
+    document.querySelectorAll('oembed[url]').forEach(element => {
+      const anchor = document.createElement('a');
+
+      anchor.setAttribute('href', element.getAttribute('url'));
+      anchor.className = 'embedly-card';
+
+      element.appendChild(anchor);
+    });
+
+    //mobile_view
+    $('#live_search_mobile').on('keyup', function() {
+      $('#search_mobile_btn').removeClass('d-none');
+    });
+
+    $('#search_mobile_btn').on('click', function() {
+      $('#live_search_mobile').val('');
+      $('#search_mobile_btn').addClass('d-none');
+    })
+
+    var route_second = $('#live_search_mobile').data('url');
+    search('#live_search_mobile', route_second);
+
+
+    //desktop view
+    $('#live_search').on('keyup', function() {
+      $('#search_btn').removeClass('d-none');
+    });
+
+    $('#search_btn').on('click', function() {
+      $('#live_search').val('');
+      $('#search_btn').addClass('d-none');
+    })
+
+    //product search
+    var route = $('#live_search').data('url');
+    search('#live_search', route);
+
+    function search(Id, route) {
+      $(Id).typeahead({
+        source: function(query, process) {
+          return $.get(route, {
+            query: query
+          }, function(data) {
+            return process(data);
+          });
+        },
+        afterSelect: function(item) {
+          $(Id).val(item.name);
+          var url = "/all?product=" + encodeURIComponent(item.name) + "&flag=" + false;
+          window.location.href = url;
+        },
+      });
+    }
   </script>
 
   @stack('js')

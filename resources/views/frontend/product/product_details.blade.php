@@ -62,7 +62,7 @@
 
     .accordion .card-header:after {
       font-family: 'FontAwesome';
-      content: "\f067";
+      content: "\f054";
       float: right;
     }
 
@@ -71,12 +71,30 @@
     }
 
     .accordion .card-header:not(.collapsed)::after {
-      content: "\f068";
+      content: "\f078";
     }
 
     .faq-title {
       font-size: 25px !important;
       line-height: 10px;
+    }
+
+    .collapse_border {
+      border: 1px solid grey;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .tab-product-navigation .nav {
+        flex-direction: column;
+      }
+
+      .tab-product-navigation .nav-tabs .nav-link.active {
+        border: none !important;
+      }
+
+      .nav-tabs a {
+        border: none !important;
+      }
     }
   </style>
 @endpush
@@ -524,7 +542,7 @@
                   <!--=======  tab navigation  =======-->
 
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
-                    <div class="nav nav-tabs justify-content-center" id="nav-tab2" role="tablist">
+                    <div class="nav nav-tabs justify-content-center flex-lg-row" id="nav-tab2" role="tablist">
                       <a class="nav-item nav-link mx-5 active" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
                       <a class="nav-item nav-link mx-5" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
                         ({{ $faqList->count() }})

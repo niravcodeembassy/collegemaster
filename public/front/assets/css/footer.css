@@ -40,9 +40,16 @@ h5.footer_heading{
 p.about{
   color: #000 !important;
 }
-@media(max-width:575px){
-  .newsletter_border{
+
+h4{
+  border-left : 1px solid white;
+}
+@media only screen and (max-width: 600px) {
+  h4{
     border: none !important;
   }
-
 }
+
+
+
+

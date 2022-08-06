@@ -129,6 +129,14 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::post('faq/list', 'FrequentAskQuestionController@dataListing')->name('faq.list');
   Route::resource('faq', 'FrequentAskQuestionController');
 
+  Route::post('story/list', 'StoryController@dataListing')->name('story.list');
+  Route::resource('story', 'StoryController');
+
+  Route::post('team/exists', 'TeamController@exists')->name('team.exists');
+  Route::post('team/{id}/status', 'TeamController@changeStatus')->name('team.status');
+  Route::post('team/list', 'TeamController@dataListing')->name('team.list');
+  Route::resource('team', 'TeamController');
+
 
   Route::post('discount/status', 'DiscountController@changeStatus')->name('discount.status');
   Route::post('discount/checkDiscountCode', 'DiscountController@checkDiscountCode')->name('discount.checkDiscountCode');

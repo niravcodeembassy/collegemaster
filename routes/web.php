@@ -26,10 +26,12 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('blog', 'HomeController@allBlog')->name('blog');
   Route::get('blog/{slug}', 'HomeController@viewBlog')->name('blog.show');
 
+  Route::get('live-search', 'HomeController@liveSearch')->name('live.search');
 
   Route::get('contact-us', 'ContactUsController@index')->name('contact-us.index');
 
   Route::get('page/about', 'ContactUsController@about')->name('page.about');
+  Route::get('page/our-story', 'ContactUsController@ourStory')->name('page.story');
   Route::get('page/policy', 'ContactUsController@policy')->name('page.policy');
   Route::get('page/photo-policy', 'ContactUsController@photoPolicy')->name('page.photo');
   Route::get('page/cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');

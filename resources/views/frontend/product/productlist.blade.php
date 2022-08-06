@@ -123,46 +123,49 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                =            shop page content         =
-                                                                                =============================================-->
+                                                                                                                  =            shop page content         =
+                                                                                                                  =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">
           <div class="row">
-            <div class="col-lg-3 order-1 order-lg-2 mb-md-80 mb-sm-20">
-              <div class="single-sidebar-widget mb-40">
-                <!--=======  search widget  =======-->
-                <div class="search-widget">
-                  <input type="search" value="{{ request('search', null) }}" name="search" placeholder="Search products ...">
-                  <button type="submit"><i class="ion-android-search"></i></button>
-                </div>
-                <!--=======  End of search widget  =======-->
-              </div>
-              <div class="page-sidebar">
 
-                @if (isset($categoryList) && $categoryList->count() > 0)
-                  @php
-                    $AllProductCount = App\Model\Product::count();
-                  @endphp
-                  <!--=======  single sidebar widget  =======-->
-                  <div class="single-sidebar-widget mb-40 d-none d-lg-block">
-                    <h2 class="single-sidebar-widget--title">Categories</h2>
-                    {!! $category_list_view !!}
+            @if (request('flag') == false)
+              <div class="col-lg-3 order-1 order-lg-2 mb-md-80 mb-sm-20">
+                <div class="single-sidebar-widget mb-40">
+                  <!--=======  search widget  =======-->
+                  <div class="search-widget">
+                    <input type="search" value="{{ request('search', null) }}" name="search" placeholder="Search products ...">
+                    <button type="submit"><i class="ion-android-search"></i></button>
                   </div>
-
-                  <!--=======  End of single sidebar widget  =======-->
-                @endif
-                <div class="single-sidebar-widget mb-40 d-none">
-                  <h2 class="single-sidebar-widget--title">Filters</h2>
-                  <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range" value="{{ request('range', null) }}" />
+                  <!--=======  End of search widget  =======-->
                 </div>
-                @if (request()->has('search') || request()->has('sort') || request()->has('range'))
-                  <div class=" text-center">
-                    <a class="lezada-button  lezada-button--small btn-sm" href="{{ route('category.product', $category->slug) }}" role="button">Clear Fitler</a>
+                <div class="page-sidebar">
+
+                  @if (isset($categoryList) && $categoryList->count() > 0)
+                    @php
+                      $AllProductCount = App\Model\Product::count();
+                    @endphp
+                    <!--=======  single sidebar widget  =======-->
+                    <div class="single-sidebar-widget mb-40 d-none d-lg-block">
+                      <h2 class="single-sidebar-widget--title">Categories</h2>
+                      {!! $category_list_view !!}
+                    </div>
+
+                    <!--=======  End of single sidebar widget  =======-->
+                  @endif
+                  <div class="single-sidebar-widget mb-40 d-none">
+                    <h2 class="single-sidebar-widget--title">Filters</h2>
+                    <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range" value="{{ request('range', null) }}" />
                   </div>
-                @endif
+                  @if (request()->has('search') || request()->has('sort') || request()->has('range'))
+                    <div class=" text-center">
+                      <a class="lezada-button  lezada-button--small btn-sm" href="{{ route('category.product', $category->slug) }}" role="button">Clear Fitler</a>
+                    </div>
+                  @endif
+                </div>
               </div>
-            </div>
-            <div class="col-lg-9 order-1 order-lg-2 mb-md-80 mb-sm-80">
+            @endif
+            <div class="{{ request('product') !== null ? 'col-lg-12' : 'col-lg-9' }} order-1 order-lg-2 mb-md-80 mb-sm-80">
               @php
                 $type = 'list';
                 if (request('type', 'grid') == 'grid') {
@@ -174,7 +177,7 @@
               <div class="row product-isotope shop-product-wrap {{ $type }} ">
                 @foreach ($product as $item)
                   <!--=======  single product  =======-->
-                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale  {{ request('type') == 'grid-four' ? 'col-lg-3' : 'col-lg-4' }} ">
+                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale  {{ request('type') == 'grid-four' || request('product') !== null ? 'col-lg-3' : 'col-lg-4' }} ">
                     @if (request('type', 'grid') == 'grid' || request('type') == 'grid-four')
                       @include('frontend.product.partial.singleproduct', [
                           'product' => $item,

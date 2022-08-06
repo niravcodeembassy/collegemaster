@@ -1,5 +1,25 @@
 @extends('frontend.layouts.app')
+@push('style')
+  <style>
+    .owl-nav button {
+      position: absolute;
+      top: 50%;
+      background-color: #000;
+      transform: translateY(-50%);
+      color: #fff;
+      margin: 0;
+      transition: all 0.3s ease-in-out;
+    }
 
+    .owl-nav button.owl-prev {
+      left: 0;
+    }
+
+    .owl-nav button.owl-next {
+      right: 0;
+    }
+  </style>
+@endpush
 @push('css')
   <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
 @endpush
@@ -84,20 +104,103 @@
     </div>
   </div>
 
-  @include('frontend.testimonial')
+
+  <div class="section-title section-title--one text-center mb-20">
+    <h1>Creative team</h1>
+  </div>
+
+
+
+
+  <div class="team-member-area mb-100">
+    <div class="container">
+      <div class="row">
+        <div class="fadeOut owl-carousel owl-theme">
+          @foreach ($team as $key => $member)
+            <div class="item">
+              <div class="single-team-member text-center">
+                <div class="member-image">
+                  <img src="{{ $member->image_src ?? '' }}" class="img-fluid" alt="">
+                  <div class="social-inside d-none">
+                    <ul class="social-list">
+                      <li class="social-list__item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                      <li class="social-list__item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                      <li class="social-list__item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="member-caption">
+                  <h2 class="name">{{ $member->title ?? '' }}</h2>
+                  <span class="subtext">{{ $member->designation ?? '' }}</span>
+                </div>
+              </div>
+            </div>
+          @endforeach
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  @if ($testimonial->count() > 0)
+    @include('frontend.testimonial')
+  @endif
 
 @endsection
 
+@push('css')
+  <link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/owl.carousel.min.css') }}">
+@endpush
+
+@push('js')
+  <script src="{{ asset('front/assets/js/owl.carousel.js') }}"></script>
+@endpush
+
 @push('script')
-  <script src="https://www.google.com/recaptcha/api.js"></script>
   <script>
-    function onSubmit(token) {
-      document.getElementById("contact-form").submit();
-    }
-  </script>
-  <script>
-    $(".alert").delay(4000).slideUp(200, function() {
-      $(this).alert('close');
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+      items: 4,
+      animateOut: 'slideOutUp',
+      animateIn: 'goDown',
+      loop: false,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      navigation: true,
+      navText: [
+        "<i class='fa fa-chevron-left'></i>",
+        "<i class='fa fa-chevron-right'></i>"
+      ],
+      transitionStyle: "fade",
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
+        },
+        600: {
+          items: 3,
+          nav: true
+        },
+        1000: {
+          items: 4,
+          nav: true,
+          loop: false
+        }
+      }
+    });
+    jQuery(document).ready(function($) {
+      $('.fadeOut').owlCarousel({
+        items: 1,
+        animateOut: 'fadeOut',
+        loop: true,
+        margin: 10,
+      });
     });
   </script>
 @endpush

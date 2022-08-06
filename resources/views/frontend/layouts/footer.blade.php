@@ -2,13 +2,13 @@
   <div class="newsletter">
     <div class="container">
       <div class="row">
-        <div class="col-lg-2 col-md-4 py-lg-0 py-2 text-center py-md-0 left ">
+        <div class="col-lg-2 col-md-4 py-lg-0 py-2 text-center py-md-0 left">
           <h3 class="text-uppercase text-center text-white">
             NEWS LETTER
           </h3>
         </div>
         <div class="col-lg-4 col-md-8 py-lg-0 py-md-0 left">
-          <h4 class="text-uppercase px-md-3 px-sm-0 border-left newsletter_border">
+          <h4 class="text-uppercase px-md-3 px-sm-0">
             LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY
             SUBSCRIBING OUR NEWS LETTER.
           </h4>
@@ -125,6 +125,7 @@
                 <li><a href="{{ route('page.about') }}">About us</a></li>
                 <li><a href="{{ route('blog') }}">Blog</a></li>
                 <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
+                <li><a href="{{ route('page.story') }}">Our Story</a></li>
               </ul>
             </nav>
           </div>
