@@ -98,6 +98,8 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::post('blog/data-list', 'BlogController@dataList')->name('blog.dataList');
   Route::resource('blog', 'BlogController');
 
+  Route::get('/chat', 'MessageController@index')->name('chat.order');
+
   Route::get('testimonial/exists', 'TestimonialController@exists')->name('testimonial.exists');
   Route::post('testimonial/{id}/status', 'TestimonialController@changeStatus')->name('testimonial.status');
   Route::post('testimonial/data-list', 'TestimonialController@dataList')->name('testimonial.dataList');

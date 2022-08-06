@@ -7,30 +7,30 @@ use Livewire\Component;
 
 class Cart extends Component
 {
-    public $carts = [] ;
-    public $code = "";
+  public $carts = [];
+  public $code = "";
 
-    private $shoppingCart;
+  // private $shoppingCart;
 
-    public function __construct(Cart $shoppingCart) {
-        $this->cart = $shoppingCart;
-    }
+  // public function __construct(Cart $shoppingCart) {
+  //     $this->cart = $shoppingCart;
+  // }
 
-    public function mount($carts)
-    {
-        $this->carts = $carts;
-    }
+  public function mount($carts)
+  {
+    $this->carts = $carts;
+  }
 
-    public function render()
-    {
-        return view('livewire.cart');
-    }
+  public function render()
+  {
+    return view('livewire.cart');
+  }
 
-    public function applycode()
-    {
-        $couponCode = Discount::first();
-        $shoppingCart->get()
-        dd($this->code);
-    }
+  // public function applycode()
+  // {
+  //     $couponCode = Discount::first();
+  //     $this->shoppingCart->get()
+  //     dd($this->code);
+  // }
 
 }

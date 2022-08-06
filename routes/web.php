@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   });
 
   Route::get('/', 'HomeController@index')->name('front.home');
+
   Route::post('newsletter', 'HomeController@newsletter')->name('newsletter');
   Route::get('blog', 'HomeController@allBlog')->name('blog');
   Route::get('blog/{slug}', 'HomeController@viewBlog')->name('blog.show');
@@ -73,6 +74,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
     Route::resource('profile', 'UserProfileController');
     Route::post('/change/image/{id}', 'UserProfileController@changeProfilImage')->name('changeProfilImage');
+    
+    Route::get('/chat', 'MessageController@index')->name('order.chat');
 
     Route::post('/checkEmail', 'UserProfileController@checkEmail')->name('mailcheck');
     Route::get('/change-password', 'UserProfileController@changePasswordGet')->name('changePassword.get');

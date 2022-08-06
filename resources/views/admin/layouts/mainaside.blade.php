@@ -83,6 +83,7 @@
           </p>
         </a>
       </li>
+      @livewire('chat-counter')
       <li class="nav-item">
         <a href="{{ route('admin.customer.index') }}" class="nav-link  {{ Helper::isActive(['customer.*']) }}">
           <i class="px-1  nav-icon f-18 fa fa-user-astronaut d-inline-block"></i>

@@ -43,7 +43,7 @@
 @endpush
 
 @section('content')
-
+    
     @include('frontend.layouts.banner',[
         'pageTitel' => $title ?? '',
     ])
@@ -138,7 +138,7 @@
                                                         <label>Country*</label>
                                                         <input type="hidden" name="country_url" id="country_url"
                                                         value="{{ route('country.to.state') }}">
-        
+
                                                         <select class="nice-select" placeholder="Country" name="country"
                                                             style="display: none;" id="country">
                                                             <option value="">Select Country</option>
@@ -158,7 +158,7 @@
                                                         <select class="nice-select state" required name="state" id="state"
                                                             style="display: none;">
                                                             <option value="">Select State</option>
-                                                            
+
                                                         </select>
                                                     </div>
 
@@ -242,7 +242,7 @@
                 return false;
             }
         });
-        
+
         $(document).ready(function() {
             var country_code = $('#country').val();
             var country_url = $('#country_url').val();

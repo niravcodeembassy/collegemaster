@@ -53,7 +53,8 @@ class Controller extends BaseController
 
       $term = trim($request->search);
       $products =  Product::select('id', 'name')
-        ->where('name', 'LIKE',  '%' . $term . '%')
+        ->where('name', 'LIKE',  $term . '_%')
+        ->orWhere('sku', 'LIKE', $term . '_%')
         ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
 
       $morePages = true;

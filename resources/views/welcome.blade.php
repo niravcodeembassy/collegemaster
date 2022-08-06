@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                 =            slider area         =
-                                 =============================================-->
+                                                         =            slider area         =
+                                                         =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -443,8 +443,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                         =            instagram slider area         =
-                                         =============================================-->
+                                                                 =            instagram slider area         =
+                                                                 =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
@@ -530,6 +530,37 @@ $lastBanner = $commonBanner->last();
         margin: 30,
         stagePadding: 30,
         smartSpeed: 450
+      });
+      var trust = $('.trust-carousel');
+      trust.owlCarousel({
+        items: 4,
+        animateOut: 'slideOutUp',
+        animateIn: 'goDown',
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        navigation: false,
+        navText: [
+          "<i class='fa fa-chevron-left'></i>",
+          "<i class='fa fa-chevron-right'></i>"
+        ],
+        transitionStyle: "fade",
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1,
+            nav: false
+          },
+          600: {
+            items: 3,
+            nav: true
+          },
+          1000: {
+            items: 4,
+            nav: true,
+            loop: false
+          }
+        }
       });
     });
   </script>

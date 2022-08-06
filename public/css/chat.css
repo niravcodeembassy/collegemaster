@@ -1,0 +1,83 @@
+#file-area {
+  cursor: pointer;
+}
+#file-area > label > input {
+  display: none !important;
+}
+.chatbox {
+  max-height: 69vh !important;
+  overflow-y: scroll;
+}
+.header-div{
+  min-height: 76vh !important;
+}
+.not_main_div{
+  min-height: 76vh !important;
+}
+.media{
+  max-height: 250px;
+}
+.main_div{
+  max-height: 76vh !important;
+}
+.file_button{
+  padding: 0.2rem 0.55rem !important;
+  font-size: .925rem !important;
+  border-radius: 0.475rem !important;
+}
+.message-box {
+  height: 56vh !important;
+  overflow-y: scroll;
+  display:flex;
+  flex-direction:column-reverse;
+}
+
+@media only screen and (max-width: 480px) {
+  /* For mobile phones: */
+  .chatbox {
+      height: auto !important;
+  }
+  .message-box{
+      height: 40vh !important;
+  }
+  .media{
+      height: 100px;
+  }
+  .main-div{
+      height: auto !important;
+  }
+  .header-div{
+      height: auto !important;
+  }
+}
+
+@media screen and (min-device-width: 768px)
+and (max-device-width: 1020px) {
+  .chatbox {
+      height: auto !important;
+  }
+  .message-box {
+      height: 36vh !important;
+  }
+  .main-div{
+      height: auto !important;
+  }
+  .header-div{
+      height: auto !important;
+  }
+}
+
+@media only screen and (max-device-width: 540px) {
+  .chatbox {
+      height: auto !important;
+  }
+  .message-box {
+      height: 40vh !important;
+  }
+  .main-div{
+      height: auto !important;
+  }
+  .header-div{
+      height: auto !important;
+  }
+}
