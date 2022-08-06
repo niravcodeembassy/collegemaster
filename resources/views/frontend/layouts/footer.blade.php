@@ -59,12 +59,12 @@
             <nav>
               <ul class="footer-links">
                 @if (!is_null($frontsetting->category) && isset($frontsetting->category))
-                  @foreach ($frontsetting->category as $list)
-                    @php
-                      $category = \App\Category::find($list);
-                    @endphp
-                    <li><a href="{{ route('category.product', ['slug' => $category->slug]) }}">
-                        {{ $category->name }}
+                  @php
+                    $category = \App\Category::whereIn('id', $frontsetting->category)->get();
+                  @endphp
+                  @foreach ($category as $list)
+                    <li><a href="{{ route('category.product', ['slug' => $list->slug]) }}">
+                        {{ $list->name }}
                       </a>
                     </li>
                   @endforeach
