@@ -18,6 +18,8 @@ class CreateStoriesTable extends Migration
       $table->string('title')->nullable();
       $table->string('video_url')->nullable();
       $table->longText('description')->nullable();
+      $table->string('instagram_handle')->nullable();
+      $table->string('instagram_handle_url')->nullable();
       $table->timestamps();
     });
   }

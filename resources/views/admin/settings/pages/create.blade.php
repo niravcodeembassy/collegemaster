@@ -38,6 +38,16 @@
             <div class="form-row">
               <div class="col">
                 <div class="form-group">
+                  <h6><strong>short Content <span class="text-danger">*</span></strong></h6>
+                  <textarea id="short_content" class="form-control col-12" name="short_content" rows="3">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
                   <h6><strong>Content <span class="text-danger">*</span></strong></h6>
                   <textarea id="content" class="ckeditor form-control col-12" data-rule-ckdata="ck" name="content" data-rule-required="true" data-msg-ckdata="Title is required" rows="3">
                                     </textarea>

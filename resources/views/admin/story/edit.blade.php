@@ -37,6 +37,19 @@
                 </div>
               </div>
 
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Instagram Handle <span class="text-danger">*</span></label>
+                  <input type="text" name="instagram_handle" value="{{ $story->instagram_handle ?? '' }}" id="instagram_handle" required class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Instagram Handle URL <span class="text-danger">*</span></label>
+                  <input type="text" name="instagram_handle_url" value="{{ $story->instagram_handle_url ?? '' }}" id="instagram_handle_url" required class="form-control">
+                </div>
+              </div>
 
               <div class="col-md-12">
                 <div class="form-group min">
@@ -50,14 +63,45 @@
               </div>
             </div>
 
-            <div class="col-md-12">
+            @foreach ($story->image as $key => $post)
+              <div class="row mb-5">
+                <div class="col-4">
+                  <h6 class="text-mute"></strong> </h6>
+                  <hr>
+                  <div class="form-row">
+                    @include('component.imagepriview', [
+                        'height' => '200px',
+                        'label' => 'Image',
+                        'name' => 'post_image_' . $key,
+                        'id' => 'post_image_' . rand(0, 1111111),
+                        'priview' => $post->image_url ?? null,
+                    ])
+                  </div>
+                </div>
+                <div class="col">
+                  <h6 class="text-mute"><strong>Details</strong> </h6>
+                  </h6>
+                  <hr>
+                  <div class="form-group">
+                    <label for="caption_{{ $key }}">Caption</label>
+                    <input id="caption_{{ $key }}" class="form-control" value="{{ $post->caption ?? '' }}" type="text" name="caption[{{ $key }}]">
+                  </div>
+                  <input type="hidden" name="id[]" value="{{ $post->id }}">
+                  <div class="form-group">
+                    <label for="url_{{ $key }}">Url</label>
+                    <input id="url_{{ $key }}" class="form-control" type="text" value="{{ $post->url ?? '' }}" name="url[{{ $key }}]">
+                  </div>
+                </div>
+              </div>
+            @endforeach
+
+            {{-- <div class="col-md-12">
               <div class="form-group">
                 <label class="form-label fs-6 fw-bolder mb-3">Story Image</label>
                 <div class="input-images"></div>
               </div>
-            </div>
+            </div> --}}
           </div>
-
         </div>
       </div>
     </div>

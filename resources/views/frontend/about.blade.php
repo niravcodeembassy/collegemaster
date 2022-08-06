@@ -97,19 +97,22 @@
         <div class="offset-xl-1 col-xl-4 col-lg-6 col-md-6 mb-sm-50">
 
           <div class="about-page-text">
-            <p class=" mb-35">{!! $page->bodyhtml ?? '' !!}</p>
+            <p class=" mb-35">{{ $page->short_content ?? '' }}</p>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="about-page-text">
+            <p class="my-35">{!! $page->bodyhtml ?? '' !!}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
   <div class="section-title section-title--one text-center mb-20">
     <h1>Creative team</h1>
   </div>
-
-
 
 
   <div class="team-member-area mb-100">
@@ -136,8 +139,6 @@
               </div>
             </div>
           @endforeach
-
-
         </div>
 
 

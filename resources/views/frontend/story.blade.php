@@ -99,14 +99,15 @@
           </div>
         </div>
 
-
         <div class="col-lg-12 my-2">
-          <h3 class="text-center my-5">@collegeMasterco 22</h3>
+          <h3 class="text-center my-5"><a href="{{ $story->instagram_handle_url ?? '' }}">{{ $story->instagram_handle ?? '' }}</a></h3>
           <div class="slider-area">
             <div class="fadeOut owl-carousel owl-theme">
               @foreach ($story->image as $item)
                 <div class="item mx-4">
-                  <img src="{{ $item->image_url }}" class="img-fluid">
+                  <a href="{{ $item->url ?? '' }}">
+                    <img src="{{ $item->image_url }}" class="img-fluid">
+                  </a>
                 </div>
               @endforeach
             </div>

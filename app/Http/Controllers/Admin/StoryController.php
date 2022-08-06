@@ -8,6 +8,7 @@ use App\Model\StoryImage;
 use Illuminate\Http\Request;
 use App\Traits\DatatableTrait;
 use Illuminate\Support\Facades\DB;
+use Aj\FileUploader\FileUploader;
 
 class StoryController extends Controller
 {
@@ -22,6 +23,7 @@ class StoryController extends Controller
     $this->data['title'] = 'Our Story';
     return $this->view('admin.story.index');
   }
+
   public function dataListing(Request $request)
   {
     // Listing columns to show
@@ -110,45 +112,39 @@ class StoryController extends Controller
    */
   public function store(Request $request)
   {
+
     $story = new Story();
     $story->title = $request->title;
     $story->video_url = $request->video_url;
+    $story->instagram_handle = $request->instagram_handle;
+    $story->instagram_handle_url = $request->instagram_handle_url;
     $story->description = $request->description;
     $story->save();
 
-    try {
-
-      DB::beginTransaction();
-
-      $uploadedFile = [];
-
-      if ($request->hasFile('images')) {
-
-        foreach ($request->file('images', []) as $key => $value) {
-
-          $image = new StoryImage();
-          $image->story_id = $story->id;
-          $uploadFile =  $this->uploadFile($value);
-          $image->image =  $uploadFile;
-          $image->image_name =  \Str::after($uploadFile, 'story_image/');
-
-          $image->save();
-          $uploadedFile[] = [
-            'image_id' => $image->id,
-            'uuid' => \Str::uuid()
-          ];
-        }
-      }
-
-
-      DB::commit();
-    } catch (\Exception $e) {
-      report($e);
-
-      DB::rollback();
-
-      return redirect()->back()->with('error', 'Something went wrong please try again.');
+    foreach ($request->caption as $key => $value) {
+      $story_image = new StoryImage();
+      $file = FileUploader::make($request->file('post_image_' . $key, null))->upload('story_image', $story_image->image ?? null);
+      $story_image->url = $request->input('url.' . $key);
+      $story_image->image = $file;
+      $story_image->caption = $request->input('caption.' . $key);
+      $story_image->story_id = $story->id;
+      $story_image->save();
     }
+
+    // if ($request->hasFile('images')) {
+
+    //   foreach ($request->file('images', []) as $key => $value) {
+
+    //     $image = new StoryImage();
+    //     $image->story_id = $story->id;
+    //     $uploadFile =  $this->uploadFile($value);
+    //     $image->image =  $uploadFile;
+    //     $image->image_name =  \Str::after($uploadFile, 'story_image/');
+    //     $image->caption  = $value['caption'];
+    //     $image->url  = $value[' url'];
+    //     $image->save();
+    //   }
+    // }
     return redirect()->route('admin.story.index')->with('success', 'Story Created successfully');
   }
 
@@ -160,7 +156,6 @@ class StoryController extends Controller
     $uploadFile =  $file->storeAs('story_image', $fileName);
     return $uploadFile;
   }
-
 
   /**
    * Display the specified resource.
@@ -181,7 +176,7 @@ class StoryController extends Controller
    */
   public function edit(Story $story)
   {
-    $this->data['title'] = 'Edit Faq';
+    $this->data['title'] = 'Edit';
     $this->data['story'] = $story;
     return $this->view('admin.story.edit');
   }
@@ -195,53 +190,22 @@ class StoryController extends Controller
    */
   public function update(Request $request, Story $story)
   {
+
     $story->title = $request->title;
     $story->video_url = $request->video_url;
+    $story->instagram_handle = $request->instagram_handle;
+    $story->instagram_handle_url = $request->instagram_handle_url;
     $story->description = $request->description;
     $story->save();
 
-    $preloaded = $request->preloaded;
-    if (isset($preloaded) && count($preloaded) > 0) {
-      $get_image = StoryImage::whereNotIn('id', $preloaded)->where('story_id', $story->id)->get();
-      foreach ($get_image->pluck('image') as $path) {
-        $imageExist  = $path && \Storage::exists($path);
-        if ($imageExist && $path != NULL && $path != "") {
-          \Storage::delete($path);
-        }
-      }
-      $delete_image = StoryImage::whereNotIn('id', $preloaded)->where('story_id', $story->id)->delete();
-    }
-
-    try {
-
-      DB::beginTransaction();
-
-      $uploadedFile = [];
-
-      if ($request->hasFile('images')) {
-
-        foreach ($request->file('images', []) as $key => $value) {
-
-          $image = new StoryImage();
-          $image->story_id = $story->id;
-          $uploadFile =  $this->uploadFile($value);
-          $image->image =  $uploadFile;
-          $image->image_name =  \Str::after($uploadFile, 'story_image/');
-
-          $image->save();
-          $uploadedFile[] = [
-            'image_id' => $image->id,
-            'uuid' => \Str::uuid()
-          ];
-        }
-      }
-
-      DB::commit();
-    } catch (\Exception $e) {
-      report($e);
-
-      DB::rollback();
-      return redirect()->back()->with('error', 'Something went wrong please try again.');
+    foreach ($request->caption as $key => $value) {
+      $story_image = StoryImage::find($request->input('id.' . $key));
+      $file = FileUploader::make($request->file('post_image_' . $key, null))->upload('story_image', $story_image->image ?? null);
+      $story_image->url = $request->input('url.' . $key);
+      $story_image->image = $file;
+      $story_image->caption = $request->input('caption.' . $key);
+      $story_image->story_id = $story->id;
+      $story_image->save();
     }
 
     return redirect()->route('admin.story.index')->with('success', 'Story Updated successfully');

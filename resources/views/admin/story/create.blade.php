@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body repeater">
 
             <div class="row">
               <div class="col-md-12">
@@ -37,6 +37,20 @@
               </div>
 
               <div class="col-md-12">
+                <div class="form-group">
+                  <label>Instagram Handle <span class="text-danger">*</span></label>
+                  <input type="text" name="instagram_handle" id="instagram_handle" required class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Instagram Handle URL <span class="text-danger">*</span></label>
+                  <input type="text" name="instagram_handle_url" id="instagram_handle_url" required class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-12">
                 <div class="form-group min">
                   <div class="form-group">
                     <label>Description</label>
@@ -47,12 +61,43 @@
               </div>
             </div>
 
-            <div class="col-md-12">
+            @foreach (range(1, 5) as $key => $post)
+              <div class="row mb-5">
+                <div class="col-4">
+                  <h6 class="text-mute"><strong>POST</strong> </h6>
+                  <hr>
+                  <div class="form-row">
+                    @include('component.imagepriview', [
+                        'height' => '200px',
+                        'label' => 'Image',
+                        'name' => 'post_image_' . $key,
+                        'id' => 'post_image_' . rand(0, 1111111),
+                        'priview' => $post->image_url ?? null,
+                    ])
+                  </div>
+                </div>
+                <div class="col">
+                  <h6 class="text-mute"><strong>Details</strong> </h6>
+                  </h6>
+                  <hr>
+                  <div class="form-group">
+                    <label for="caption_{{ $key }}">Caption</label>
+                    <input id="caption_{{ $key }}" class="form-control" type="text" name="caption[{{ $key }}]">
+                  </div>
+                  <div class="form-group">
+                    <label for="url_{{ $key }}">Url</label>
+                    <input id="url_{{ $key }}" class="form-control" type="text" value="" name="url[{{ $key }}]">
+                  </div>
+                </div>
+              </div>
+            @endforeach
+
+            {{-- <div class="col-md-12">
               <div class="form-group">
                 <label class="form-label fs-6 fw-bolder mb-3">Story Image</label>
                 <div class="input-images"></div>
               </div>
-            </div>
+            </div> --}}
           </div>
 
         </div>
@@ -74,6 +119,8 @@
 @push('js')
   <script src="{{ asset('js/image-uploader.min.js') }}"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js" integrity="sha512-foIijUdV0fR0Zew7vmw98E6mOWd9gkGWQBWaoA1EOFAx+pY+N8FmmtIYAVj64R98KeD2wzZh1aHK0JSpKmRH8w==" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
 @endpush
 
 
@@ -84,6 +131,17 @@
       .catch(error => {
         console.error(error);
       });
+
+    $('.repeater').repeater({
+      show: function() {
+        $(this).slideDown(function() {
+
+        });
+      },
+      ready: function(setIndexes) {
+
+      }
+    });
 
     $(document).ready(function() {
       $('.input-images').imageUploader({

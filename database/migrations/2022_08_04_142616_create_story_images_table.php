@@ -18,6 +18,8 @@ class CreateStoryImagesTable extends Migration
       $table->text('image')->nullable();
       $table->string('image_name')->nullable();
       $table->string('image_url')->nullable();
+      $table->string('caption')->nullable();
+      $table->string('url')->nullable();
       $table->unsignedBigInteger('story_id');
       $table->foreign('story_id')->references('id')->on('stories')->onDelete('cascade');
       $table->timestamps();
