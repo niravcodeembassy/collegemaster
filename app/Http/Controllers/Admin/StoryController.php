@@ -68,14 +68,6 @@ class StoryController extends Controller
           'icon' => 'fa fa-pen',
           'permission' => false
         ]),
-        collect([
-          'text' => 'Delete',
-          'id' => $item->id,
-          'action' => route('admin.story.destroy', ['story' => $item->id]),
-          'class' => 'delete-confirmation',
-          'icon' => 'fa fa-trash',
-          'permission' => true
-        ])
       ]);
 
 
@@ -130,21 +122,6 @@ class StoryController extends Controller
       $story_image->story_id = $story->id;
       $story_image->save();
     }
-
-    // if ($request->hasFile('images')) {
-
-    //   foreach ($request->file('images', []) as $key => $value) {
-
-    //     $image = new StoryImage();
-    //     $image->story_id = $story->id;
-    //     $uploadFile =  $this->uploadFile($value);
-    //     $image->image =  $uploadFile;
-    //     $image->image_name =  \Str::after($uploadFile, 'story_image/');
-    //     $image->caption  = $value['caption'];
-    //     $image->url  = $value[' url'];
-    //     $image->save();
-    //   }
-    // }
     return redirect()->route('admin.story.index')->with('success', 'Story Created successfully');
   }
 
@@ -208,7 +185,7 @@ class StoryController extends Controller
       $story_image->save();
     }
 
-    return redirect()->route('admin.story.index')->with('success', 'Story Updated successfully');
+    return redirect()->route('admin.story.index')->with('success', 'Story Saved successfully');
   }
 
   /**

@@ -83,6 +83,11 @@ class ProductController extends Controller
           ->orWhere('products.sku', 'like', "%{$request->search}%");
         // return $q->where('products.name', 'like', "%$request->search%");
       })
+      ->when($request->product, function ($q) use ($request) {
+        return $q->Where('products.name', 'like', $request->product . '_%')
+          ->orWhere('products.sku', 'like', "%{$request->product}%");
+        // return $q->where('products.name', 'like', "%$request->search%");
+      })
       ->with('category', 'subcategory')
       ->paginate(12);
   }

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center col">
       <h4>{{ $title }}</h4>
       <div>
-        <a href="{{ route('admin.story.create') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ route('admin.story.create') }}" class="btn btn-secondary btn-sm d-none">
           <i class="fa fa-plus"></i> Add
         </a>
       </div>

@@ -14,8 +14,9 @@
         </div>
 
         <div class="search_form d-none d-lg-block">
-          <form method="get" action="{{ route('category.product', ['slug' => 'all']) }}">
-            <input class="form-control mr-sm-2" value="{{ request('product', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search" placeholder="Search Product" aria-label="Search">
+          <form method="get" action="{{ route('category.product', 'all') }}" id="search_form">
+            <input class="form-control mr-sm-2" name="product" value="{{ request('product', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search" placeholder="Search Product" aria-label="Search">
+            <input type="hidden" name="flag" value="false">
             <div class="d-flex justify-content-between main_div">
               <button type="button" id="search_btn" class="{{ request('product') ? '' : 'd-none' }}"><i class="fa fa-close"></i></button>
               <button type="submit"><i class="ion-ios-search-strong"></i></button>
@@ -117,7 +118,9 @@
         </a>
         <div class="search_form_mobile">
           <form method="get"></form>
-          <input class="form-control mr-sm-2" value="{{ request('product', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search_mobile" placeholder="Search Product" aria-label="Search">
+          <input class="form-control mr-sm-2" name="product" value="{{ request('product', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search_mobile" placeholder="Search Product"
+            aria-label="Search">
+          <input type="hidden" name="flag" value="false">
           <div class="d-flex justify-content-between main_div">
             <button type="button" id="search_mobile_btn" class="{{ request('product') ? '' : 'd-none' }}"><i class="fa fa-close"></i></button>
             <button type="submit submit_btn"><i class="ion-ios-search-strong"></i></button>

@@ -455,11 +455,11 @@
             return process(data);
           });
         },
-        afterSelect: function(item) {
-          $(Id).val(item.name);
-          var url = "/all?product=" + encodeURIComponent(item.name) + "&flag=" + false;
-          window.location.href = url;
-        },
+        // afterSelect: function(item) {
+        //   $(Id).val(item.name);
+        //   var url = "/all?product=" + encodeURIComponent(item.name) + "&flag=" + false;
+        //   window.location.href = url;
+        // },
       });
     }
   </script>
