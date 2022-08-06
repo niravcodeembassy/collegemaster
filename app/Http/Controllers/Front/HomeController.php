@@ -77,10 +77,8 @@ class HomeController extends Controller
   {
     $query = $request->get('query');
 
-    $filter_result = Product::where('is_active', 'Yes')->where(function ($q) use ($query) {
-      return  $q->where('name', 'like', $query . '_%')
-        ->orWhere('sku', 'like', $query . '_%');
-    })->select('id', 'name', 'slug', 'sku')->get();
+    $filter_result = Product::where('is_active', 'Yes')->where('name', 'like', $query . '_%')
+      ->select('id', 'name', 'slug', 'sku')->get();
 
     return response()->json($filter_result);
   }

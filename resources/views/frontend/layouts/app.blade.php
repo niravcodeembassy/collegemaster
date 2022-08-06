@@ -425,6 +425,8 @@
 
     $('#search_mobile_btn').on('click', function() {
       $('#live_search_mobile').val('');
+      var url = "/all";
+      window.location.href = url;
       $('#search_mobile_btn').addClass('d-none');
     })
 
@@ -439,6 +441,8 @@
 
     $('#search_btn').on('click', function() {
       $('#live_search').val('');
+      var url = "/all";
+      window.location.href = url;
       $('#search_btn').addClass('d-none');
     })
 

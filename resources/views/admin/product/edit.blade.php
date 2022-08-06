@@ -290,7 +290,7 @@
                 <div class="input-group input-group-button">
 
                   <select class="form-control buy-together-select2" name="buy_to_together[]" multiple
-                    id="buy_to_together" data-url="{{ route('admin.get.product' ) }}"
+                    id="buy_to_together" data-url="{{ route('admin.get.search.product' ) }}"
                     data-placeholder="Select Related Products." data-rule-required="false" data-target="#product_id"
                     data-msg-required="Product category is required.">
                     <option value="">Select Related Products </option>

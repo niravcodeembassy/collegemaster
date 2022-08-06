@@ -79,14 +79,11 @@ class ProductController extends Controller
         return $q->orderBy('v.taxable_price', 'asc');
       })
       ->when($request->search, function ($q) use ($request) {
-        return $q->Where('products.name', 'like', $request->search . '_%')
-          ->orWhere('products.sku', 'like', "%{$request->search}%");
+        return $q->Where('products.name', 'like', $request->search . '_%');
         // return $q->where('products.name', 'like', "%$request->search%");
       })
       ->when($request->product, function ($q) use ($request) {
-        return $q->Where('products.name', 'like', $request->product . '_%')
-          ->orWhere('products.sku', 'like', "%{$request->product}%");
-        // return $q->where('products.name', 'like', "%$request->search%");
+        return $q->Where('products.name', 'like', $request->product . '_%');
       })
       ->with('category', 'subcategory')
       ->paginate(12);
