@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Message;
 use App\User;
-use App\Model\order;
+use App\Model\Order;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
