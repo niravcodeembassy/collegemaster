@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                         =            slider area         =
-                                                         =============================================-->
+                                                                                                                                             =            slider area         =
+                                                                                                                                             =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -110,22 +110,54 @@
   <div class="icon-box-area icon-box-area--feature-icon pt-50 pb-50 mb-50">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3 col-sm-6 trust_icon text-center">
-          <img src="{{ asset('front/assets/images/website_icon/gifting.png') }}" class="img-fluid">
-          <h3 class="text-uppercase mt-4">900+ gifting ideas</h3>
+        <div class="col-lg-12">
+          <!--=======  product carousel  =======-->
+          <div class="lezada-slick-slider trust_slider product-carousel product-carousel--smarthome"
+            data-slick-setting='{
+            "slidesToShow": 4,
+            "slidesToScroll": 2,
+            "arrows": false,
+            "dots": false,
+            "autoplay": false,
+            "autoplaySpeed": 5000,
+            "speed": 1000,
+            "prevArrow": {"buttonClass": "slick-prev", "iconClass": "ti-angle-left" },
+            "nextArrow": {"buttonClass": "slick-next", "iconClass": "ti-angle-right" }
+          }'
+            data-slick-responsive='[
+            {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
+            {"breakpoint":1199, "settings": {"slidesToShow": 4, "arrows": false} },
+            {"breakpoint":991, "settings": {"slidesToShow": 3,"slidesToScroll": 2,   "autoplay": true,"autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} }
+          ]'>
+
+            <div class="trust_icon">
+              <img src="{{ asset('front/assets/images/website_icon/gifting.png') }}" class="img-fluid">
+              <h3 class="text-uppercase mt-4">900+ gifting ideas</h3>
+            </div>
+
+            <div class="trust_icon">
+              <img src="{{ asset('front/assets/images/website_icon/profesion.png') }}" class="img-fluid">
+              <h3 class="text-uppercase mt-4">Proffessionally designed</h3>
+            </div>
+
+            <div class="trust_icon">
+              <img src="{{ asset('front/assets/images/website_icon/privacy.png') }}" class="img-fluid">
+              <h3 class="text-uppercase mt-4">Valued Privacy</h3>
+            </div>
+
+            <div class="trust_icon">
+              <img src="{{ asset('front/assets/images/website_icon/delivery.png') }}" class="img-fluid">
+              <h3 class="text-uppercase mt-4">Free Worldwide Delivery</h3>
+            </div>
+          </div>
+
+          <!--=======  End of single product  =======-->
         </div>
-        <div class="col-lg-3 col-sm-6 trust_icon text-center">
-          <img src="{{ asset('front/assets/images/website_icon/profesion.png') }}" class="img-fluid">
-          <h3 class="text-uppercase mt-4">Proffessionally designed</h3>
-        </div>
-        <div class="col-lg-3 col-sm-6 trust_icon text-center">
-          <img src="{{ asset('front/assets/images/website_icon/privacy.png') }}" class="img-fluid">
-          <h3 class="text-uppercase mt-4">Valued Privacy</h3>
-        </div>
-        <div class="col-lg-3 col-sm-6 trust_icon text-center">
-          <img src="{{ asset('front/assets/images/website_icon/delivery.png') }}" class="img-fluid">
-          <h3 class="text-uppercase mt-4">Free Worldwide Delivery</h3>
-        </div>
+
+        <!--=======  End of product carousel  =======-->
       </div>
     </div>
   </div>
@@ -443,8 +475,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                 =            instagram slider area         =
-                                                                 =============================================-->
+                                                                                                                                                     =            instagram slider area         =
+                                                                                                                                                     =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
@@ -530,37 +562,6 @@ $lastBanner = $commonBanner->last();
         margin: 30,
         stagePadding: 30,
         smartSpeed: 450
-      });
-      var trust = $('.trust-carousel');
-      trust.owlCarousel({
-        items: 4,
-        animateOut: 'slideOutUp',
-        animateIn: 'goDown',
-        loop: true,
-        autoplay: true,
-        autoplayTimeout: 5000,
-        navigation: false,
-        navText: [
-          "<i class='fa fa-chevron-left'></i>",
-          "<i class='fa fa-chevron-right'></i>"
-        ],
-        transitionStyle: "fade",
-        responsiveClass: true,
-        responsive: {
-          0: {
-            items: 1,
-            nav: false
-          },
-          600: {
-            items: 3,
-            nav: true
-          },
-          1000: {
-            items: 4,
-            nav: true,
-            loop: false
-          }
-        }
       });
     });
   </script>

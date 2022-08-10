@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-lg-row" wire:poll.keep-alive>
+<div class="d-flex flex-column flex-lg-row chat_content" wire:poll="mountComponent">
   <!--begin::Sidebar-->
   @if ($admin_user)
     <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
@@ -10,7 +10,7 @@
           <form class="w-100 position-relative" autocomplete="off">
             <!--begin::Icon-->
             <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-            <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+            <span class="svg-icon svg-icon-2 top-50 svg-icon-lg-1 svg-icon-gray-500 position-absolute ms-5 translate-middle-y">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
                 <path
@@ -21,14 +21,14 @@
             <!--end::Svg Icon-->
             <!--end::Icon-->
             <!--begin::Input-->
-            <input type="text" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by username or email..." wire:model="search" />
+            <input type="text" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by order No" wire:model="search" />
             <!--end::Input-->
           </form>
           <!--end::Form-->
         </div>
         <!--end::Card header-->
         <!--begin::Card body-->
-        <div class="card-body chatbox pt-5" id="kt_chat_contacts_body" wire:poll.10ms="mountComponent()">
+        <div class="card-body chatbox pt-5" id="kt_chat_contacts_body">
           <!--begin::List-->
           <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
             data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="5px">
@@ -37,10 +37,12 @@
               @php
                 $not_seen =
                     \App\Model\Message::where('order_id', $order->id)
+                        ->where('user_id', $order->user->id)
                         ->where('is_seen', false)
                         ->get() ?? null;
                 $latest =
                     \App\Model\Message::where('order_id', $order->id)
+                        ->where('user_id', $order->user->id)
                         ->latest()
                         ->first() ?? null;
               @endphp
@@ -49,29 +51,33 @@
                 <div class="d-flex align-items-center">
                   <!--begin::Avatar-->
                   <div class="symbol symbol-45px symbol-circle">
-                    <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->id ?? '' }}</span>
+                    <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
+                    @if (isset($clicked_user) && $clicked_user->id == $order->id)
+                      <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                    @endif
                   </div>
                   <!--end::Avatar-->
                   <!--begin::Details-->
                   <div class="ms-5">
-                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">{{ $order->user->name ?? '' }}</a>
-                    <div class="fw-bold text-muted">{{ $order->user->email ?? '' }}</div>
+                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="javscript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">{{ ucwords($order->user->name) ?? '' }}</a>
+                    {{-- <div class="fw-bold text-muted">{{ $order->user->email ?? '' }}</div> --}}
                   </div>
                   <!--end::Details-->
                 </div>
                 <!--end::Details-->
                 <!--begin::Lat seen-->
                 <div class="d-flex flex-column align-items-end ms-2">
-                  <span class="text-muted fs-7">5 mins</span>
-                  {{-- <span class="text-muted fs-7">{{ $latest->created_at->diffForHumans(null, true) }}</span>
+                  @if (!is_null($latest))
+                    <span class="text-muted fs-7">{{ $latest->created_at->diffForHumans(null, true) }}</span>
+                  @endif
                   @if (filled($not_seen))
                     <span class="badge badge-sm badge-circle badge-light-warning">{{ $not_seen->count() }}
                     </span>
-                  @endif --}}
+                  @endif
                 </div>
                 <!--end::Lat seen-->
               </div>
-              <div class="separator separator-dashed d-none"></div>
+              <div class="separator separator-dashed"></div>
             @endforeach
 
 
@@ -95,13 +101,14 @@
           <!--begin::User-->
           <div class="d-flex justify-content-center flex-column me-3">
             @if (isset($clicked_user))
-              <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ $clicked_user->user->name ?? '' }}</a>
+              <span class="text-bold pb-2">Order No : <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></span>
+              <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ ucwords($clicked_user->user->name) ?? '' }}</a>
             @elseif ($admin_user)
               <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">Admin</a>
             @else
               <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">
                 Select a
-                user to see the chat</a>
+                order to see the chat</a>
             @endif
           </div>
           <!--end::User-->
@@ -109,7 +116,7 @@
       </div>
       <!--end::Card header-->
       <!--begin::Card body-->
-      <div class="card-body message-box" id="kt_chat_messenger_body" @if (!$admin_user) wire:poll.10ms="mountComponent()" @endif>
+      <div class="card-body message-box" id="kt_chat_messenger_body" @if (!$admin_user)  @endif>
         <!--begin::Messages-->
         <div class="scroll-y me-n5 pe-5" id="scroll_body">
           @if (!$messages)
@@ -139,7 +146,7 @@
                       <!--end::Avatar-->
                       <!--begin::Details-->
                       <div class="ms-3">
-                        <a href="javascript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{ $message->user->name ?? '' }}</a>
+                        <a href="javascript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
                         <span class="text-muted fs-7 mb-1">{{ $message->created_at->diffForHumans() ?? '' }}</span>
                       </div>
                       <!--end::Details-->
@@ -147,7 +154,7 @@
                     <!--end::User-->
                     <!--begin::Text-->
                     @if (!empty($message->message))
-                      <div class="p-5 rounded text-dark fw-bold mw-lg-400px text-start {{ $align }}" data-kt-element="message-text">{{ $message->message }}</div>
+                      <div class="p-3 rounded text-dark fw-bold mw-lg-400px text-start {{ $align }}" data-kt-element="message-text">{{ $message->message }}</div>
                     @endif
 
                     @if (Uploader::isPhoto($message->file))
@@ -187,11 +194,11 @@
                   <div class="card card-stretch">
                     <div class="card-body">
                       <div class="text-center d-block">
-                        <img class="overlay-wrapper h-300px bgi-no-repeat bgi-size-contain bgi-position-center" src="{{ asset('admin/assets/media/illustrations/sigma-1/1.png') }}" alt="">
+                        <img class="overlay-wrapper h-300px bgi-no-repeat bgi-size-contain bgi-position-center" src="{{ asset('front/assets/images/1.png') }}" alt="">
                       </div>
                       <div class="d-flex flex-column mt-4">
-                        <span class="h1 text-center">Click on a user to see the
-                          messages</span>
+                        <span class="h1 text-center">Select a
+                          order to see the chat</span>
                       </div>
                     </div>
                   </div>
@@ -224,7 +231,7 @@
                 @endif
               </div>
               <div class="col-md-12">
-                <textarea wire:model="message" class="form-control form-control-flush" rows="2" placeholder="Type a message" id="message" wire:keydown.enter="SendMessage" @if (!$file) required @endif></textarea>
+                <textarea wire:model.defer="message" class="form-control form-control-flush" rows="2" placeholder="Type a message" id="message" wire:keydown.enter="SendMessage" @if (!$file) required @endif></textarea>
                 <div class="d-flex flex-stack">
                   <div class="d-flex align-items-center me-2">
                     @if (empty($file))

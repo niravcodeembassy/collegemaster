@@ -12,11 +12,13 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/backend-plugins.css') }}" rel="stylesheet">
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
 
   @stack('css')
 
   @stack('style')
+
   <style>
     .select2-container {
       width: 100% !important;

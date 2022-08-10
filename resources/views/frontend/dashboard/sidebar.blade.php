@@ -9,7 +9,7 @@
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'changePassword.get') {{ 'active' }} @endif" href="{{ route('changePassword.get') }}"> <i class="fa fa-lock"></i> Change Password</a>
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'orders.list') {{ 'active' }} @endif" href="{{ route('orders.list') }}"><i class="fa fa-truck"></i> Order</a>
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'wishlist.index') {{ 'active' }} @endif" href="{{ route('wishlist.index') }}"><i class="fa fa-list"></i> Wish List</a>
-      <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'order.chat') {{ 'active' }} @endif" href="{{ route('order.chat') }}"><i class="fa fa-comments-o"></i> Chat</a>
+      @livewire('order-counter')
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'logout') {{ 'active' }} @endif" href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a>
     </div>
   </div>

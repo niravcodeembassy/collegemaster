@@ -25,6 +25,7 @@
   font-size: .925rem !important;
   border-radius: 0.475rem !important;
 }
+
 .message-box {
   height: 56vh !important;
   overflow-y: scroll;
@@ -50,6 +51,8 @@
       height: auto !important;
   }
 }
+
+
 
 @media screen and (min-device-width: 768px)
 and (max-device-width: 1020px) {

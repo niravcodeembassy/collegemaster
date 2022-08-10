@@ -35,24 +35,16 @@ class Message extends Component
     $this->hasAdmin = $hasAdmin;
     $search = $this->search;
 
-    $orders = Order::select('id', 'user_id', 'order_number')->with('user')->get();
+    $orders = Order::select('id', 'user_id', 'order_no')->with('user')
+      ->when($search, function ($query, $search) {
+        return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
+      })->get();
 
-    // $users =  User::select('users.*', DB::raw("MAX(messages.created_at) as date"))
-    //   ->Join('messages', function ($join) {
-    //     $join->on('users.id', '=', 'messages.user_id')
-    //       ->where('users.is_admin', false);
-    //   })->when($search, function ($query, $search) {
-    //     return $query->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
-    //   })
-    //   ->orderBy('date', 'DESC')
-    //   ->groupBy('users.id')
-    //   ->get();
 
     // $this->users = $users;
     $this->orders = $orders;
 
     return view('livewire.message', [
-      'users' =>  $this->users,
       'admin' => $this->admin,
       'admin_user' => $hasAdmin,
       'orders' => $this->orders,
@@ -70,11 +62,11 @@ class Message extends Component
   {
     $admin_user = User::where('is_admin', true)->first();
     if ($this->clicked_user) {
-      $this->messages = Chat::where('user_id', $this->clicked_user->user_id)
-        ->orWhere('receiver', $this->clicked_user->user_id)
+      $this->messages = Chat::where('order_id', $this->clicked_user->id)
         ->orderBy('id', 'Asc')
         ->get();
-      $not_seen = Chat::where('user_id', $this->clicked_user->user_id);
+
+      $not_seen = Chat::where('order_id', $this->clicked_user->id)->where('user_id', $this->clicked_user->user_id);
       $not_seen->update(['is_seen' => true]);
       $this->emit('message_seen');
     } else {
@@ -91,17 +83,9 @@ class Message extends Component
     $admin_user = User::where('is_admin', true)->first();
     $new_message = new Chat();
     $new_message->message = $this->message;
-    $new_message->user_id =  auth()->id();
-    if ($this->hasAdmin) {
-      $new_message->user_id = $admin_user->id;
-      $new_message->is_seen = 1;
-      $new_message->order_id = $this->clicked_user->id;
-    }
-    if ($this->clicked_user == null && !$this->hasAdmin) {
-      $user_id = $admin_user->id;
-    } else {
-      $user_id = $this->clicked_user->user_id;
-    }
+    $new_message->user_id = $admin_user->id;
+    $new_message->order_id = $this->clicked_user->id;
+    $user_id = $this->clicked_user->user_id;
     $new_message->receiver = $user_id;
 
     // Deal with the file if uploaded

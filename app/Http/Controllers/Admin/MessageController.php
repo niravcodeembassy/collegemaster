@@ -18,19 +18,10 @@ class MessageController extends Controller
    */
   public function index()
   {
-    $users =  User::select('users.*', DB::raw("MAX(messages.created_at) as date"))
-      ->Join('messages', function ($join) {
-        $join->on('users.id', '=', 'messages.user_id')
-          ->where('users.is_admin', false);
-      })
-      ->orderBy('date', 'DESC')
-      ->groupBy('users.id')
-      ->get();
 
     $orders = Order::select('id', 'user_id', 'order_number')->with('user')->get();
 
     $this->data['title'] = 'Chat';
-    $this->data['users'] = $users;
     $this->data['orders'] = $orders;
     $this->data['messages'] = $messages ?? null;
     return $this->view('admin.chat.index');

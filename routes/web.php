@@ -74,7 +74,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
     Route::resource('profile', 'UserProfileController');
     Route::post('/change/image/{id}', 'UserProfileController@changeProfilImage')->name('changeProfilImage');
-    
+
     Route::get('/chat', 'MessageController@index')->name('order.chat');
 
     Route::post('/checkEmail', 'UserProfileController@checkEmail')->name('mailcheck');

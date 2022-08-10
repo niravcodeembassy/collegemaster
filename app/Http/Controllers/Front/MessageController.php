@@ -17,14 +17,12 @@ class MessageController extends Controller
    */
   public function index()
   {
-    $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get();
     $id = auth('web')->id();
-    $order = Order::where('user_id', $id)->get();
+    $orders = Order::where('user_id', $id)->get();
     $messages = Message::where('user_id', $id)->orWhere('receiver', $id)->orderBy('id', 'DESC')->get();
 
     $this->data['title'] = 'Chat';
-    $this->data['users'] = $users;
-    $this->data['order'] = $order;
+    $this->data['orders'] = $orders;
     $this->data['messages'] = $messages ?? null;
     return $this->view('frontend.chat.user-chat');
   }

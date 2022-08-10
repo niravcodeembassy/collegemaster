@@ -178,14 +178,15 @@
           url: dealproductSelect2.data('url'),
           data: function(params) {
             return {
-              search: params.term,
-              id: $(dealproductSelect2.data('target')).val()
+              search: params.term || '',
+              id: $(dealproductSelect2.data('target')).val(),
+              page: params.page || 1
             };
           },
           dataType: 'json',
           processResults: function(data) {
             return {
-              results: data.data.map(function(item) {
+              results: data.results.map(function(item) {
                 return {
                   id: item.id,
                   text: item.name,

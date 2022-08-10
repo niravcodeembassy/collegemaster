@@ -95,20 +95,21 @@ $(document).ready(function () {
   });
 
   bytogetherSelect2.select2({
-    allowClear: true,
+    // allowClear: true,
     theme: "bootstrap4",
     ajax: {
       url: bytogetherSelect2.data("url"),
       data: function (params) {
         return {
-          search: params.term,
+          search: params.term || "",
           id: $(bytogetherSelect2.data("target")).val(),
+          page: params.page || 1,
         };
       },
       dataType: "json",
       processResults: function (data) {
         return {
-          results: data.map(function (item) {
+          results: data.results.map(function (item) {
             return {
               id: item.id,
               text: item.name,

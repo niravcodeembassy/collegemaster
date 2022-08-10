@@ -222,6 +222,21 @@
       border: 2px solid black;
     }
 
+    nav.site-nav>ul>li {
+      margin: 5px 80px 5px 0px;
+    }
+
+    nav.site-nav>ul>li a {
+      color: #ffffff;
+    }
+
+    nav.site-nav>ul>li a:hover {
+      color: #ffffff;
+    }
+
+    .main_category {
+      background-color: black
+    }
 
     .search_form .form-control:focus {
       border-color: black;
@@ -408,15 +423,15 @@
       $(this).alert('close');
     });
 
-    //ask why error
-    document.querySelectorAll('oembed[url]').forEach(element => {
-      const anchor = document.createElement('a');
+    // //ask why error
+    // document.querySelectorAll('oembed[url]').forEach(element => {
+    //   const anchor = document.createElement('a');
 
-      anchor.setAttribute('href', element.getAttribute('url'));
-      anchor.className = 'embedly-card';
+    //   anchor.setAttribute('href', element.getAttribute('url'));
+    //   anchor.className = 'embedly-card';
 
-      element.appendChild(anchor);
-    });
+    //   element.appendChild(anchor);
+    // });
 
     //mobile_view
     $('#live_search_mobile').on('keyup', function() {

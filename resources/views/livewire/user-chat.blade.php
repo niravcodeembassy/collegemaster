@@ -1,194 +1,180 @@
-<div class="container">
-
-  <!-- Page header start -->
-  {{-- <div class="page-title">
-    <div class="row gutters">
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-        <h5 class="title">Chat App</h5>
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> </div>
-    </div>
-  </div> --}}
-  <!-- Page header end -->
-
-  <!-- Content wrapper start -->
-  <div class="content-wrapper">
-
-    <!-- Row start -->
-    <div class="row gutters">
-
-      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-        <div class="card m-0">
-
-          <!-- Row start -->
-          <div class="row no-gutters">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
-              <div class="users-container">
-                <div class="chat-search-box">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="Search">
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-info">
-                        <i class="fa fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <ul class="users">
-                  <li class="person" data-chat="person1">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <span class="status busy"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Steve Bangalter</span>
-                      <span class="time">15/02/2019</span>
-                    </p>
-                  </li>
-                  <li class="person" data-chat="person1">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar1.png" alt="Retail Admin">
-                      <span class="status offline"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Steve Bangalter</span>
-                      <span class="time">15/02/2019</span>
-                    </p>
-                  </li>
-                  <li class="person active-user" data-chat="person2">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar2.png" alt="Retail Admin">
-                      <span class="status away"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Peter Gregor</span>
-                      <span class="time">12/02/2019</span>
-                    </p>
-                  </li>
-                  <li class="person" data-chat="person3">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <span class="status busy"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Jessica Larson</span>
-                      <span class="time">11/02/2019</span>
-                    </p>
-                  </li>
-                  <li class="person" data-chat="person4">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">
-                      <span class="status offline"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Lisa Guerrero</span>
-                      <span class="time">08/02/2019</span>
-                    </p>
-                  </li>
-                  <li class="person" data-chat="person5">
-                    <div class="user">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar5.png" alt="Retail Admin">
-                      <span class="status away"></span>
-                    </div>
-                    <p class="name-time">
-                      <span class="name">Michael Jordan</span>
-                      <span class="time">05/02/2019</span>
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
-              <div class="selected-user">
-                <span>To: <span class="name">Emily Russell</span></span>
-              </div>
-              <div class="chat-container">
-                <ul class="chat-box chatContainerScroll">
-                  <li class="chat-left">
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <div class="chat-name">Russell</div>
-                    </div>
-                    <div class="chat-text">Hello, I'm Russell.
-                      <br>How can I help you today?
-                    </div>
-                    <div class="chat-hour">08:55 <span class="fa fa-check-circle"></span></div>
-                  </li>
-                  <li class="chat-right">
-                    <div class="chat-hour">08:56 <span class="fa fa-check-circle"></span></div>
-                    <div class="chat-text">Hi, Russell
-                      <br> I need more information about Developer Plan.
-                    </div>
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <div class="chat-name">Sam</div>
-                    </div>
-                  </li>
-                  <li class="chat-left">
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <div class="chat-name">Russell</div>
-                    </div>
-                    <div class="chat-text">Are we meeting today?
-                      <br>Project has been already finished and I have results to show you.
-                    </div>
-                    <div class="chat-hour">08:57 <span class="fa fa-check-circle"></span></div>
-                  </li>
-                  <li class="chat-right">
-                    <div class="chat-hour">08:59 <span class="fa fa-check-circle"></span></div>
-                    <div class="chat-text">Well I am not sure.
-                      <br>I have results to show you.
-                    </div>
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar5.png" alt="Retail Admin">
-                      <div class="chat-name">Joyse</div>
-                    </div>
-                  </li>
-                  <li class="chat-left">
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <div class="chat-name">Russell</div>
-                    </div>
-                    <div class="chat-text">The rest of the team is not here yet.
-                      <br>Maybe in an hour or so?
-                    </div>
-                    <div class="chat-hour">08:57 <span class="fa fa-check-circle"></span></div>
-                  </li>
-                  <li class="chat-right">
-                    <div class="chat-hour">08:59 <span class="fa fa-check-circle"></span></div>
-                    <div class="chat-text">Have you faced any problems at the last phase of the project?</div>
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">
-                      <div class="chat-name">Jin</div>
-                    </div>
-                  </li>
-                  <li class="chat-left">
-                    <div class="chat-avatar">
-                      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                      <div class="chat-name">Russell</div>
-                    </div>
-                    <div class="chat-text">Actually everything was fine.
-                      <br>I'm very excited to show this to our team.
-                    </div>
-                    <div class="chat-hour">07:00 <span class="fa fa-check-circle"></span></div>
-                  </li>
-                </ul>
-                <div class="form-group mt-3 mb-0">
-                  <textarea class="form-control" rows="3" placeholder="Type your message here..."></textarea>
-                </div>
+<main class="content" wire:poll="mountComponent">
+  <div class="container p-0">
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-12  col-lg-4 border-right order_div">
+          <div class="px-4 d-none d-md-block">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <input type="text" class="form-control my-3" name="search" value="" placeholder="Search by order No" wire:model="search" />
               </div>
             </div>
           </div>
-          <!-- Row end -->
+          @foreach ($orders as $order)
+            @php
+              $not_seen =
+                  \App\Model\Message::where('order_id', $order->id)
+                      ->where('user_id', $admin->id)
+                      ->where('is_seen', false)
+                      ->get() ?? null;
+              $latest =
+                  \App\Model\Message::where('order_id', $order->id)
+                      ->where('user_id', $admin->id)
+                      ->latest()
+                      ->first() ?? null;
+            @endphp
+            <a href="#" wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" class="list-group-item list-group-item-action border-0">
+              @if (filled($not_seen))
+                <div class="badge bg-warning float-right"> {{ $not_seen->count() }}</div>
+              @endif
+              <div class="d-flex align-items-start">
+                <div class="symbol symbol-45px symbol-circle">
+                  <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
+                  @if (isset($clicked_user) && $clicked_user->id == $order->id)
+                    <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                  @endif
+                </div>
+                <div class="flex-grow-1 ml-3">
+                  {{ ucwords($order->user->name) ?? '' }}
+                  @if (!is_null($latest))
+                    <div class="small"> {{ $latest->created_at->diffForHumans(null, true) }}</div>
+                  @endif
+                </div>
+              </div>
+            </a>
+          @endforeach
+
+
+          <hr class="d-block d-lg-none mt-1 mb-0">
         </div>
-
+        <div class="col-12 col-lg-8 header-div">
+          @if ($show)
+            <div class="py-2 px-4 border-bottom d-none d-lg-block">
+              <div class="d-flex align-items-center py-1">
+                <div class="position-relative">
+                  <img src="{{ $admin->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                </div>
+                <div class="flex-grow-1 pl-3">
+                  <strong>{{ ucwords($admin->name) ?? '' }}</strong>
+                </div>
+              </div>
+              <strong class="text-bold pb-2">Order No : <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></strong>
+            </div>
+            <div class="position-relative">
+              <div class="chat-messages p-4 scroll_div">
+                @if (!$messages)
+                  <div class="chat-name">Here Is chat Dashboard</div>
+                @else
+                  @if (isset($messages))
+                    @foreach ($messages as $message)
+                      @php
+                        $className = $message->user_id == auth()->id() ? 'chat-message-right' : 'chat-message-left';
+                        $position = $message->user_id == auth()->id() ? 'mr-3' : 'ml-3';
+                        $flex = $message->user_id == auth()->id() ? 'align-items-end' : 'align-items-start';
+                      @endphp
+                      <div class="{{ $className }} pb-4">
+                        <div class="d-flex flex-column {{ $flex }}">
+                          <div class="d-flex align-items-center mb-2">
+                            <img src="{{ $message->user->profile_src ?? '' }}" class="rounded-circle avatar mr-1" alt="Chris Wood">
+                            <div class="ms-3">
+                              <a href="javascript:void(0)" class="fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
+                              <span class="text-muted small fs-7 mb-1">{{ $message->created_at->diffForHumans() ?? '' }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        @if (!empty($message->message))
+                          <div class="flex-shrink-1 bg-light rounded py-2 px-3 {{ $position }}">
+                            <span> {{ $message->message }}</span>
+                          </div>
+                        @endif
+                        @if (Uploader::isPhoto($message->file))
+                          <div class="flex-shrink-1 rounded py-2 px-3 {{ $position }}">
+                            <img class="img-fluid rounded media" loading="lazy" src="{{ $message->file }}"><br />
+                            <a href="{{ $message->file }}" download="{{ $message->file_name }}" class="bg-light p-2 image_download rounded-pill"><i class="fa fa-download"></i>
+                              {{ $message->file_name }}
+                            </a>
+                          </div>
+                        @elseif (Uploader::isVideo($message->file))
+                          <div class="flex-shrink-1 rounded py-2 px-3 {{ $position }}">
+                            <video class="img-fluid rounded media_video" controls>
+                              <source src="{{ $message->file }}">
+                            </video>
+                            <a href="{{ $message->file }}" download="{{ $message->file_name }}" class="bg-light p-2 download rounded-pill"><i class="fa fa-download"></i>
+                              {{ $message->file_name }}
+                            </a>
+                          </div>
+                        @elseif($message->file)
+                          <div class="flex-shrink-1 rounded py-2 px-3 {{ $position }}">
+                            <a href="{{ $message->file }}" download="{{ $message->file_name }}" class="bg-light download p-2 rounded-pill"><i class="fa fa-download"></i>
+                              {{ $message->file_name }}
+                            </a>
+                          </div>
+                        @endif
+                      </div>
+                    @endforeach
+                  @endif
+                @endif
+              </div>
+            </div>
+            <div class="flex-grow-0 py-3 px-4 border-top">
+              <form wire:submit.prevent="SendMessage" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div wire:loading="" wire:target="SendMessage">
+                      Sending message . . .
+                    </div>
+                    <div wire:loading="" wire:target="file">
+                      Uploading file . . .
+                    </div>
+                    @if ($file)
+                      <section>
+                        {{ $file->getClientOriginalName() }}
+                        <button type="button" wire:click="resetFile" class="btn btn-danger btn-sm rounded file_button"><i class="fa fa-times px-1"></i>
+                        </button>
+                      </section>
+                    @endif
+                  </div>
+                  <div class="col-md-12">
+                    <textarea wire:model.defer="message" class="form-control form-control-flush" rows="2" placeholder="Type a message" id="message" wire:keydown.enter="SendMessage" @if (!$file) required @endif></textarea>
+                    <div class="d-flex flex-stack">
+                      <div class="d-flex align-items-center me-2">
+                        @if (empty($file))
+                          <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" id="file-area" data-bs-toggle="tooltip" title="uplod">
+                            <label>
+                              <i class="fa fa-upload fs-3"></i>
+                              <input type="file" wire:model="file">
+                            </label>
+                          </button>
+                        @endif
+                      </div>
+                      <button class="btn btn-primary" type="submit" data-kt-element="send">Send</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          @else
+            <div class="py-2 px-4 border-bottom d-none d-lg-block">
+              <div class="d-flex align-items-center py-1">
+                <div class="position-relative">
+                  <img src="{{ auth()->user()->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                </div>
+                <div class="flex-grow-1 pl-3">
+                  <strong>{{ ucwords(auth()->user()->name) ?? '' }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="position-relative">
+              <div class="text-center d-block">
+                <img class="overlay-wrapper h-300px bgi-no-repeat bgi-size-contain bgi-position-center" src="{{ asset('front/assets/images/1.png') }}" alt="">
+              </div>
+              <div class="chat-messages_display p-4">
+                <div class="h3 text-center">Here is chat Dashboard</div>
+              </div>
+            </div>
+          @endif
+        </div>
       </div>
-
     </div>
-    <!-- Row end -->
-
   </div>
-  <!-- Content wrapper end -->
-
-</div>
+</main>

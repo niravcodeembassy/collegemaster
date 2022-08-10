@@ -77,3 +77,8 @@
 .single-category__content--three--banner .title>a:hover {
   border-color: #333;
 }
+
+
+.trust_slider .slick-list{
+  text-align: -webkit-center;
+  }
