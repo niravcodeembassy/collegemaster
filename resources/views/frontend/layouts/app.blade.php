@@ -221,7 +221,7 @@
       padding: 20px;
       border: 2px solid black;
     }
-
+/*
     nav.site-nav>ul>li {
       margin: 5px 80px 5px 0px;
     }
@@ -232,11 +232,11 @@
 
     nav.site-nav>ul>li a:hover {
       color: #ffffff;
-    }
+    } */
 
-    .main_category {
+    /* .main_category {
       background-color: black
-    }
+    } */
 
     .search_form .form-control:focus {
       border-color: black;
