@@ -35,10 +35,20 @@ class Message extends Component
     $this->hasAdmin = $hasAdmin;
     $search = $this->search;
 
-    $orders = Order::select('id', 'user_id', 'order_no')->with('user')
-      ->when($search, function ($query, $search) {
+    // $orders = Order::select('id', 'user_id', 'order_no')->with('user')
+    //   ->when($search, function ($query, $search) {
+    //     return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
+    //   })->orderBy('id', 'desc')->get();
+
+    $orders =  Order::with('user')->select('orders.*', DB::raw("MAX(messages.created_at) as date"))
+      ->Join('messages', function ($join) {
+        $join->on('orders.id', '=', 'messages.order_id');
+      })->when($search, function ($query, $search) {
         return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
-      })->orderBy('id', 'desc')->get();
+      })
+      ->orderBy('date', 'DESC')
+      ->groupBy('orders.id')
+      ->get();
 
 
     // $this->users = $users;

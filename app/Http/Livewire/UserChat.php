@@ -33,10 +33,21 @@ class UserChat extends Component
   public function render()
   {
     $search = $this->search;
-    $orders = Order::select('id', 'user_id', 'order_no')->where('user_id', auth()->id())->with('user')
-      ->when($search, function ($query, $search) {
+    // $orders = Order::select('id', 'user_id', 'order_no')->where('user_id', auth()->id())->with('user')
+    //   ->when($search, function ($query, $search) {
+    //     return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
+    //   })->orderBy('id', 'DESC')->get();
+
+    $orders =  Order::with('user')->select('orders.*', DB::raw("MAX(messages.created_at) as date"))
+      ->where('orders.user_id', auth()->id())
+      ->Join('messages', function ($join) {
+        $join->on('orders.id', '=', 'messages.order_id');
+      })->when($search, function ($query, $search) {
         return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
-      })->orderBy('id', 'DESC')->get();
+      })
+      ->orderBy('date', 'DESC')
+      ->groupBy('orders.id')
+      ->get();
 
     $this->orders = $orders;
 
