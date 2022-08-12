@@ -18,7 +18,7 @@ class MessageController extends Controller
    */
   public function index()
   {
-
+    
     $orders = Order::select('id', 'user_id', 'order_number')->with('user')->get();
 
     $this->data['title'] = 'Chat';

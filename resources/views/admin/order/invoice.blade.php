@@ -3,6 +3,11 @@
 
 <head>
   <style>
+    .main_invoice span,
+    td {
+      font-size: 20px;
+    }
+
     .w-12 {
       width: 12%;
     }
@@ -149,8 +154,8 @@
             </div>
             <div class="content-body">
               <div class="left_part">
-                <p><i class="fa fa-gift" aria-hidden="true"></i> Marked as gift</p>
-                <p><i class="fa fa-wallet" aria-hidden="true"></i> Gift message included</p>
+                <span><i class="fa fa-gift" aria-hidden="true"></i> Marked as gift</span><br>
+                <span><i class="fa fa-shopping-bag" aria-hidden="true"></i> Gift message included</span>
 
                 <div class="shipping">
                   <b>Ship to</b>
@@ -173,7 +178,7 @@
                     <tr>
                       <td>
                         @if (isset($order->shipping_date))
-                          {{   date('F j, Y', strtotime($order->shipping_date)) }}
+                          {{ date('F j, Y', strtotime($order->shipping_date)) }}
                         @endif
                       </td>
                     </tr>

@@ -38,7 +38,7 @@ class Message extends Component
     $orders = Order::select('id', 'user_id', 'order_no')->with('user')
       ->when($search, function ($query, $search) {
         return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
-      })->get();
+      })->orderBy('id', 'desc')->get();
 
 
     // $this->users = $users;

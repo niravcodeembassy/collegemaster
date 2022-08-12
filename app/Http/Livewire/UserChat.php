@@ -36,7 +36,7 @@ class UserChat extends Component
     $orders = Order::select('id', 'user_id', 'order_no')->where('user_id', auth()->id())->with('user')
       ->when($search, function ($query, $search) {
         return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
-      })->get();
+      })->orderBy('id', 'DESC')->get();
 
     $this->orders = $orders;
 

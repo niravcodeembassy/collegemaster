@@ -92,7 +92,7 @@ class Helper
   {
     $setting = Setting::first()->response;
     $orderNum = \DB::table('orders')->select('order_no')->orderBy('id', 'DESC')->first();
-    $incrementOrderNum = (!empty($orderNum)) ? $orderNum->order_no + 1 : 1000;
+    $incrementOrderNum = (!empty($orderNum)) ? preg_replace("/[\n\r]/", "", $orderNum->order_no) + 1 : 1000;
 
     return [
       'order_number' => ($setting->order_prefix ?? '') . str_pad($incrementOrderNum,  4, "0", STR_PAD_LEFT) . ($setting->order_suffix ?? ''),

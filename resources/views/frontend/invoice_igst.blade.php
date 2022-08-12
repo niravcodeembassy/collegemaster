@@ -229,6 +229,7 @@
     </div>
 </div>
 
+@include('admin.order.invoice')
 
 @endsection
 
@@ -262,7 +263,7 @@
         // New Promise-based usage:
 
         $('.printPDF').on('click', function() {
-            const a =  $('#invoice-page').printThis({
+            const a =  $('#order-page').printThis({
                 importStyle : true,
                 beforePrintEvent : function(a)  {
                     console.log(a);
@@ -276,6 +277,11 @@
 @push('style')
 <style>
     /* Template Name: Professional  */
+
+
+    .main_invoice {
+      display: none;
+    }
 
     .font-size-div * {
         line-height: 21px;

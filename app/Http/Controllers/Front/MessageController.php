@@ -18,7 +18,7 @@ class MessageController extends Controller
   public function index()
   {
     $id = auth('web')->id();
-    $orders = Order::where('user_id', $id)->get();
+    $orders = Order::where('user_id', $id)->orderBy('id', 'DESC')->get();
     $messages = Message::where('user_id', $id)->orWhere('receiver', $id)->orderBy('id', 'DESC')->get();
 
     $this->data['title'] = 'Chat';
