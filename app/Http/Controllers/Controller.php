@@ -55,7 +55,7 @@ class Controller extends BaseController
       $products =  Product::select('id', 'name')
         ->where('name', 'LIKE',  $term . '_%')
         ->orWhere('sku', 'LIKE', $term . '_%')
-        ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
+        ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(20);
 
       $morePages = true;
       $pagination_obj = json_encode($products);
