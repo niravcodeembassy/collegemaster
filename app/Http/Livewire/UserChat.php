@@ -40,7 +40,7 @@ class UserChat extends Component
 
     $orders =  Order::with('user')->select('orders.*', DB::raw("MAX(messages.created_at) as date"))
       ->where('orders.user_id', auth()->id())
-      ->Join('messages', function ($join) {
+      ->leftJoin('messages', function ($join) {
         $join->on('orders.id', '=', 'messages.order_id');
       })->when($search, function ($query, $search) {
         return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
