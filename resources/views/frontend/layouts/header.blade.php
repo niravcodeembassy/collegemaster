@@ -1,4 +1,4 @@
-<header class="header header-without-topbar header-sticky">
+<header class="header header-sticky">
   <div class="header-bottom pt-md-20 pb-md-20 pt-sm-20 pb-sm-20 pt-20">
     <div class="container wide">
       <div class="header-bottom-container">
@@ -78,37 +78,6 @@
           <!--=======  End of header right icons  =======-->
         </div>
       </div>
-      <div class="">
-        <div class="header-bottom-navigation d-none d-lg-block  my-lg-2">
-          <nav class="site-nav center-menu">
-            <ul>
-              @foreach ($forntcategory->whereBetween('id', [1, 8])->where('name', '!=', 'All') as $item)
-                <li class="menu-item-has-children mx-4">
-                  <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
-                  <ul class="sub-menu single-column-menu">
-                    @foreach ($item->subCategory as $list)
-                      <li>
-                        <a href="{{ route('product.details', ['cat_slug' => $item->slug, 'product_subcategory_slug' => $list->slug, 'slug' => null]) }}">
-                          {{ ucfirst($list->name) }}
-                        </a>
-                      </li>
-                    @endforeach
-                  </ul>
-                </li>
-              @endforeach
-              <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}">All</a>
-                <ul class="sub-menu single-column-menu">
-                  @foreach ($forntcategory->whereNotBetween('id', [1, 8])->where('name', '!=', 'All') as $item)
-                    <li>
-                      <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
-                    </li>
-                  @endforeach
-                </ul>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
       <div class="single-icon search d-lg-none py-2 d-flex justify-content-between">
         <a href="javascript:void(0)" id="offcanvas-about-icon" class="pt-5 mr-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false">
@@ -128,6 +97,39 @@
           </form>
         </div>
         @include('frontend.layouts.category_ovelay')
+      </div>
+    </div>
+    <div class="main_category">
+      <div class="container wide">
+        <div class="header-bottom-navigation d-none d-lg-block mt-lg-2">
+          <nav class="site-nav">
+            <ul class="main_list">
+              @foreach ($forntcategory->whereBetween('id', [1, 11])->where('name', '!=', 'All') as $item)
+                <li class="menu-item-has-children">
+                  <a href="{{ route('category.product', $item->slug) }}" class="category_link">{{ ucfirst($item->name) }}</a>
+                  <ul class="sub-menu single-column-menu">
+                    @foreach ($item->subCategory as $list)
+                      <li>
+                        <a href="{{ route('product.details', ['cat_slug' => $item->slug, 'product_subcategory_slug' => $list->slug, 'slug' => null]) }}">
+                          {{ ucfirst($list->name) }}
+                        </a>
+                      </li>
+                    @endforeach
+                  </ul>
+                </li>
+              @endforeach
+              <li class="menu-item-has-children "><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
+                <ul class="sub-menu single-column-menu">
+                  @foreach ($forntcategory->whereNotBetween('id', [1, 11])->where('name', '!=', 'All') as $item)
+                    <li>
+                      <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
+                    </li>
+                  @endforeach
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
 </header>

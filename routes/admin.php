@@ -151,6 +151,9 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::get('order/download/{id}', 'OrderController@orderImageDownload')->name('order.download');
   Route::get('order/rmeove-image/{id}', 'OrderController@orderRemovePic')->name('order.removepic');
   Route::get('order/invoice/{id}', 'OrderController@orderInvoice')->name('order.inv');
+
+  Route::get('order/pdf/{id}', 'OrderController@orderPdf')->name('order.pdf');
+
   Route::resource('order', 'OrderController');
   Route::post('orders-msg', 'OrderController@orderMsg')->name('orders.msg');
 

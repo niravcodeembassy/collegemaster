@@ -193,6 +193,9 @@ and (max-device-width : 1020px)
   .scroll_div{
     max-height: 250px;
   }
+  img.overlay-wrapper{
+    height: 150px !important;
+  }
 }
 
 .symbol.symbol-circle, .symbol.symbol-circle .symbol-label, .symbol.symbol-circle>img {

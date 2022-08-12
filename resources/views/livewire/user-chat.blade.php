@@ -49,7 +49,7 @@
         </div>
         <div class="col-12 col-lg-8 header-div">
           @if ($show)
-            <div class="py-2 px-4 border-bottom d-none d-lg-block">
+            <div class="py-2 px-4 border-bottom">
               <div class="d-flex align-items-center py-1">
                 <div class="position-relative">
                   <img src="{{ $admin->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">

@@ -30,6 +30,10 @@
       width: 290px;
       padding: 55px 20px;
     }
+
+    h1 span {
+      border-bottom: 1px dotted black;
+    }
   </style>
 @endpush
 
@@ -62,13 +66,12 @@
     </div>
   </div>
 
-  <div class="breadcrumb-area pt-50 pb-70 mb-50">
+  <div class="pt-40 mb-20">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <h1 class="text-white">{{ ucfirst($subCategory->name) ?? '' }}</h1>
-          {{-- <h2> {{ Str::limit($subCategory->description,230)}}</h2> --}}
-          <h2 class="text-white"> {{ $subCategory->description ?? '' }}</h2>
+        <div class="col-lg-12 border-bottom">
+          <h1 class="text-center h2 pb-3"><span><b>{{ ucwords($subCategory->name) ?? '' }}</b></span></h1>
+          <h4 class="text-center pb-3"> {{ Str::limit($subCategory->description, 250) }}</h4>
         </div>
       </div>
     </div>
@@ -126,8 +129,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                =            shop page content         =
-                                                =============================================-->
+                                                  =            shop page content         =
+                                                  =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">

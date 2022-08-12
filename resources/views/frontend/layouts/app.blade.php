@@ -221,22 +221,32 @@
       padding: 20px;
       border: 2px solid black;
     }
-/*
+
     nav.site-nav>ul>li {
       margin: 5px 80px 5px 0px;
     }
 
-    nav.site-nav>ul>li a {
-      color: #ffffff;
+
+
+
+    @media screen and (max-width: 1024px) {
+      nav.site-nav>ul>li ul.single-column-menu {
+        min-width: auto;
+      }
     }
 
-    nav.site-nav>ul>li a:hover {
-      color: #ffffff;
-    } */
+    .category_link {
+      color: #ffffff !important;
+    }
 
-    /* .main_category {
+    .category_link :hover {
+      color: #ffffff !important;
+    }
+
+
+    .main_category {
       background-color: black
-    } */
+    }
 
     .search_form .form-control:focus {
       border-color: black;
@@ -394,7 +404,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-  <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+  <script src="https://cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
   <script>
     var lodingImage = '<div class="lds-ellipsis"> <div></div> <div></div> <div></div> <div></div> </div>';
     $.ajaxSetup({
@@ -423,15 +433,19 @@
       $(this).alert('close');
     });
 
-    // //ask why error
-    // document.querySelectorAll('oembed[url]').forEach(element => {
-    //   const anchor = document.createElement('a');
 
-    //   anchor.setAttribute('href', element.getAttribute('url'));
-    //   anchor.className = 'embedly-card';
 
-    //   element.appendChild(anchor);
-    // });
+
+    //ask why error
+    document.querySelectorAll('oembed[url]').forEach(element => {
+      const anchor = document.createElement('a');
+
+      anchor.setAttribute('href', element.getAttribute('url'));
+      var a = [];
+      anchor.className = 'embedly-card';
+
+      element.appendChild(anchor);
+    });
 
     //mobile_view
     $('#live_search_mobile').on('keyup', function() {

@@ -190,7 +190,8 @@ class ProductController extends Controller
       });
     }
 
-    $review = ProductReview::where('product_id', $product->id)->inRandomOrder()->orderBy('id', 'DESC')->limit(3)->get();
+    $review = ProductReview::where('product_id', $product->id)->paginate(2);
+
     $product_review = $product->product_review;
     $review_rating = intval($product_review->pluck('rating')->avg());
     $this->data['product_review'] = $product_review;
@@ -282,6 +283,9 @@ class ProductController extends Controller
 
         $new_price = "";
         $mrp_price = "";
+        $discount  = "";
+
+
 
         foreach ($productvariants as $key => $productvariant) {
           if ($productvariant->type == 'variant') {
@@ -293,6 +297,10 @@ class ProductController extends Controller
               if (($array['size'] == $selectBoxval['size']) && ($array['printing options'] == $selectBoxval['printing options'])) {
                 $new_price = $productvariant->offer_price;
                 $mrp_price = $productvariant->mrp_price;
+                if ($productvariant->offer_price) {
+                  $discount = (100 * $productvariant->offer_price) /  $productvariant->mrp_price;
+                  $discount = 100 - round($discount, 2);
+                }
               }
             }
             if (in_array('printing options', $properties)) {
@@ -318,7 +326,7 @@ class ProductController extends Controller
         }
 
 
-        return view('frontend.product.partial.both-varient', compact('size_new_option', 'size_price', 'printing_new_option', 'printing_price', 'new_price', 'mrp_price', 'selectBoxval', 'product_id'));
+        return view('frontend.product.partial.both-varient', compact('size_new_option', 'size_price', 'printing_new_option', 'printing_price', 'new_price', 'mrp_price', 'selectBoxval', 'product_id', 'discount'));
 
         // return view('frontend.product.partial.variant',compact('option','optionVal','new_option','price'));
       }

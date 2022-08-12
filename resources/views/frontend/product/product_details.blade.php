@@ -7,12 +7,31 @@
       color: black;
     }
 
+    .bt {
+      border-bottom: 1px dotted black;
+    }
+
+    .popover-header {
+      color: blue;
+      font-size: 15px;
+    }
+
     .nice-select.open .list {
       width: 100% !important;
     }
 
+
+    .delivery_truck {
+      width: 60px;
+    }
+
     .discounted-price {
-      font-size: 1.1rem !important;
+      font-size: 1.35rem !important;
+    }
+
+    .discount-percentage {
+      font-size: 15px !important;
+      color: #aaa;
     }
 
     .social-share-link {
@@ -52,7 +71,11 @@
 
     .breadcrumb-list__item:after {
       content: ">" !important;
+    }
 
+    .collapse_border {
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
     }
 
     li.breadcrumb-list__item {
@@ -75,13 +98,23 @@
     }
 
     .faq-title {
-      font-size: 25px !important;
-      line-height: 10px;
+      font-size: 28px !important;
+      line-height: 16px;
+      color: #333;
     }
 
-    .collapse_border {
-      border: 1px solid grey;
+    .review_btn {
+      text-decoration: underline;
     }
+
+    .review_btn:hover {
+      text-decoration: none;
+    }
+
+    .pb-bottom {
+      padding-bottom: 3.5rem !important;
+    }
+
 
     @media only screen and (max-width: 600px) {
       .tab-product-navigation .nav {
@@ -119,152 +152,147 @@
 
 
 @section('content')
-  <div class="breadcrumb-area d-none   pt-20 pb-20" style="background-color: #f5f5f5;">
-    <div class="container">
+  <div class="mt-25">
+    <div class="container wide">
       <div class="row">
-        <div class="col-lg-12">
-          <h1 class="breadcrumb-title">Shop</h1>
-          <ul class="breadcrumb-list">
-            <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-            <li class="breadcrumb-list__item">
-              <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
-            </li>
-            {{-- @php
-          $sub = $product->subcategory;
-          @endphp
-          <li class="breadcrumb-list__item breadcrumb-list__item--active">
-            <a href="{{ route('subcategory.product', ['id' => $sub->id, $sub->slug]) }}">{{ $sub->name }}
-            </a>
-          </li> --}}
-          </ul>
+        <div class="col-xl-6 col-lg-6">
+          <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+              <div class="breadcrumb-area pb-20">
+                <ul class="breadcrumb-list">
+                  <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
+                  <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active' : '' }}">
+                    <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
+                  </li>
+                  @php
+                    $routeParameter = Helper::productRouteParameter($product);
+                    $sub = $product->subcategory;
+                    unset($routeParameter['slug']);
+                  @endphp
+                  @if (isset($sub) && !is_null($sub))
+                    <li class="breadcrumb-list__item breadcrumb-list__item--active">
+                      <a href="{{ route('product.details', $routeParameter) }}">{{ $sub->name }}
+                      </a>
+                    </li>
+                  @endif
+                  <li class="breadcrumb-list__item breadcrumb-list__item--active d-none">
+                    <a href="javascript:void(0)">
+                      {{-- {{ Str::words($product->name,8, '...') }} --}}
+                      {{ $product->name }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+
     </div>
   </div>
+
+
+
+
   <!--==============================================            shop page content         ==============================================-->
 
-  <div class="shop-page-wrapper mt-50 mb-50 mt-sm-40 mb-sm-40">
-    <div class="container">
+  <div class="shop-page-wrapper">
+    <div class="container wide">
       <div class="row">
         <div class="col-lg-12">
-          <div class="breadcrumb-area pb-30">
-            <ul class="breadcrumb-list">
-              <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-              <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active' : '' }}">
-                <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
-              </li>
-              @php
-                $routeParameter = Helper::productRouteParameter($product);
-                $sub = $product->subcategory;
-                unset($routeParameter['slug']);
-              @endphp
-              @if (isset($sub) && !is_null($sub))
-                <li class="breadcrumb-list__item breadcrumb-list__item--active">
-                  <a href="{{ route('product.details', $routeParameter) }}">{{ $sub->name }}
-                  </a>
-                </li>
-              @endif
-              <li class="breadcrumb-list__item breadcrumb-list__item--active d-none">
-                <a href="javascript:void(0)">
-                  {{-- {{ Str::words($product->name,8, '...') }} --}}
-                  {{ $product->name }}
-                </a>
-              </li>
-            </ul>
-          </div>
           <!--=======  shop product content  =======-->
-
           <div class="shop-product">
-            <div class="row pb-50">
-              <div class="col-lg-6 mb-md-70 mb-sm-30">
-                <!--=======  shop product big image gallery  =======-->
-
-                <div class="shop-product__big-image-gallery-wrapper mb-30">
-
-                  <!--=======  shop product gallery icons  =======-->
-
-                  <div class="single-product__floating-badges single-product__floating-badges--shop-product">
-                    {{-- <span class="hot">hot</span> --}}
-                    <input type="hidden" value="{{ route('product.varients') }}" id="varient_url">
-                  </div>
-
-
-                  <div class="shop-product-rightside-icons">
-
-                    <span class="wishlist-icon">
-                      @if (isset($wishList))
-                        @auth
-                          <a href="javascript:void(0)" class="has-wish-lists bg-danger p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
-                            <i class="ion-android-favorite-outline text-white"></i>
-                          </a>
-                        @else
-                          <a href="javascript:void(0)" class="has-wish-lists p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
-                            <i class="ion-android-favorite-outline"></i>
-                          </a>
-                        @endif
-                      @endauth
-
-                    </span>
-                    <span class="enlarge-icon">
-                      <a class="btn-zoom-popup p-1" href="#" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                        data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
-                    </span>
-                  </div>
-                  @php
-                    $images = $product->images;
-                    if ($productVarinat->productimage_id !== null) {
-                        $findImage = $images->where('id', $productVarinat->productimage_id)->first();
-                        $images = $images->reject(function ($value, $key) use ($productVarinat) {
-                            return $productVarinat->productimage_id == $value->id;
-                        });
-                        $images->splice(0, 0, [$findImage]);
-                    }
-                    $images = $product->images;
-                  @endphp
-                  {{-- @dump($images,$productVarinat) --}}
-                  <!--=======  End of shop product gallery icons  =======-->
-
-                  <div class="shop-product__big-image-gallery-slider lazy">
-                    <!--=======  single image  =======-->
-                    @foreach ($images as $key => $item)
-                      <div class="single-image main_big_img" id="slick_image_id_{{ $item->id }}">
-                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+            <div class="row pb-100 pb-md-0 pb-sm-0 pb-xs-0 pb-xxs-0">
+              <div class="col-xl-6 col-lg-6 mb-md-70 mb-sm-70">
+                @php
+                  $images = $product->images;
+                  if ($productVarinat->productimage_id !== null) {
+                      $findImage = $images->where('id', $productVarinat->productimage_id)->first();
+                      $images = $images->reject(function ($value, $key) use ($productVarinat) {
+                          return $productVarinat->productimage_id == $value->id;
+                      });
+                      $images->splice(0, 0, [$findImage]);
+                  }
+                  $images = $product->images;
+                @endphp
+                <div class="row">
+                  <div class="col-md-3 order-2 order-md-1">
+                    <div class="shop-product__small-image-gallery-wrapper">
+                      <div class="shop-product__small-image-gallery-slider--vertical lazy">
+                        @foreach ($images as $key => $item)
+                          <!--=======  single image  =======-->
+                          <div class="single-image" id="slick_id_{{ $item->id }}">
+                            <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                          </div>
+                          <!--=======  End of single image  =======-->
+                        @endforeach
                       </div>
-                    @endforeach
-                    <!--=======  End of single image  =======-->
+                    </div>
                   </div>
+                  <div class="col-md-9 order-1 order-sm-1">
+                    <div class="shop-product__big-image-gallery-wrapper mb-30">
 
-                </div>
+                      <!--=======  shop product gallery icons  =======-->
 
-                <!--=======  End of shop product big image gallery  =======-->
-
-                <!--=======  shop product small image gallery  =======-->
-
-                <div class="shop-product__small-image-gallery-wrapper">
-                  <div class="shop-product__small-image-gallery-slider lazy">
-                    @foreach ($images as $key => $item)
-                      <!--=======  single image  =======-->
-                      <div class="single-image" id="slick_id_{{ $item->id }}">
-                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                      <div class="single-product__floating-badges single-product__floating-badges--shop-product">
+                        {{-- <span class="hot">hot</span> --}}
+                        <input type="hidden" value="{{ route('product.varients') }}" id="varient_url">
                       </div>
-                      <!--=======  End of single image  =======-->
-                    @endforeach
+
+
+                      <div class="shop-product-rightside-icons">
+
+                        <span class="wishlist-icon">
+                          @if (isset($wishList))
+                            @auth
+                              <a href="javascript:void(0)" class="has-wish-lists bg-danger p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
+                                <i class="ion-android-favorite-outline text-white"></i>
+                              </a>
+                            @else
+                              <a href="javascript:void(0)" class="has-wish-lists p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
+                                <i class="ion-android-favorite-outline"></i>
+                              </a>
+                            @endif
+                          @endauth
+
+                        </span>
+                        <span class="enlarge-icon">
+                          <a class="btn-zoom-popup p-1" href="#" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                            data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
+                        </span>
+                      </div>
+
+                      {{-- @dump($images,$productVarinat) --}}
+                      <!--=======  End of shop product gallery icons  =======-->
+
+                      <div class="shop-product__big-image-gallery-slider lazy">
+                        <!--=======  single image  =======-->
+                        @foreach ($images as $key => $item)
+                          <div class="single-image main_big_img" id="slick_image_id_{{ $item->id }}">
+                            <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                          </div>
+                        @endforeach
+                        <!--=======  End of single image  =======-->
+                      </div>
+
+                    </div>
                   </div>
                 </div>
-
-                <!--=======  End of shop product small image gallery  =======-->
               </div>
 
-              <div class="col-lg-6">
-                <!--=======  shop product description  =======-->
+              <div class="col-xl-4 col-lg-4 mb-md-70 mb-sm-70">
                 <div class="shop-product__description shop-product-url " data-url="{{ route('product.details', $routeParameter) }}">
                   <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                   <!--=======  shop product navigation  =======-->
 
                   {{-- <div class="shop-product__navigation">
-                  <a href="shop-product-basic.html"><i class="ion-ios-arrow-thin-left"></i></a>
-                  <a href="shop-product-basic.html"><i class="ion-ios-arrow-thin-right"></i></a>
-                </div> --}}
+                      <a href="shop-product-basic.html"><i class="ion-ios-arrow-thin-left"></i></a>
+                      <a href="shop-product-basic.html"><i class="ion-ios-arrow-thin-right"></i></a>
+                    </div> --}}
 
                   <!--=======  End of shop product navigation  =======-->
 
@@ -308,10 +336,11 @@
                   @endphp
 
                   <div class="shop-product__price mb-30">
+                    <span class="discounted-price">{{ 'US' . $priceData->price . '+' }}</span>
                     @if ($priceData->offer_price)
-                      <span class="main-price discounted">{{ $priceData->offer_price }}</span>
+                      <span class="main-price discounted">{{ 'US' . $priceData->offer_price . '+' }}</span>
+                      <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
                     @endif
-                    <span class="discounted-price">{{ $priceData->price }}</span>
                   </div>
 
                   <!--=======  End of shop product price  =======-->
@@ -434,15 +463,20 @@
                       <div class="shop-product__block__title">Personalization: </div>
                       <textarea name="personalization" class="form-control" id="personalization" cols="50" rows="2">{{ $cart_product->notes ?? '' }}</textarea>
                     </div>
-                    @auth
+                    {{-- @auth
                       <div class="shop-product__buttons mb-40">
                         <a class="lezada-button add-to-cart lezada-button--medium" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
                       </div>
-                    @else
-                      <div class="shop-product__buttons mb-40">
-                        <a class="lezada-button add-to-cart lezada-button--medium" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      </div>
-                    @endauth
+                    @endauth --}}
+
+
+                    <div class="shop-product__buttons mb-40">
+                      <a class="lezada-button lezada-button--medium add-to-cart" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
+                      <a href="javascript:void(0)" class="mx-lg-4 truck" data-placement="right" data-toggle="popover" data-content="<b>Arrives by <span class='bt'>12-20 Aug:</span></b><br/>if you order today.">
+                        <img src="{{ asset('front/assets/images/delivery-truck.png') }}" class="delivery_truck img-fluid">
+                      </a>
+
+                    </div>
                   </div>
 
                   <!--=======  End of shop product buttons  =======-->
@@ -530,25 +564,22 @@
 
                   <!--=======  End of other info table  =======-->
                 </div>
-                <!--=======  End of shop product description  =======-->
               </div>
             </div>
-
             <div class="row">
               <div class="col-lg-12">
                 <!--=======  shop product description tab  =======-->
 
-                <div class="shop-product__description-tab pt-30">
+                <div class="shop-product__description-tab pt-30 mb-100">
                   <!--=======  tab navigation  =======-->
 
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
                     <div class="nav nav-tabs justify-content-center flex-lg-row" id="nav-tab2" role="tablist">
                       <a class="nav-item nav-link mx-5 active" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
                       <a class="nav-item nav-link mx-5" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
-                        ({{ $faqList->count() }})
                       </a>
                       <a class="nav-item nav-link mx-5" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
-                        ({{ $review->count() }})</a>
+                        ({{ $product_review->count() }})</a>
                     </div>
                   </div>
 
@@ -558,122 +589,33 @@
 
                   <div class="tab-content" id="nav-tabContent2">
 
-                    <div class="tab-pane fade show active" id="product-series-1" role="tabpanel" aria-labelledby="product-tab-1">
+                    <div class="tab-pane fade active show" id="product-series-1" role="tabpanel" aria-labelledby="product-tab-1">
                       <!--=======  shop product long description  =======-->
 
                       <div class="shop-product__long-desc mb-30">
-                        <p>{!! $product->content !!}</p>
+                        <div class="container">
+                          <p>{!! $product->content !!}</p>
+                        </div>
                       </div>
 
                       <!--=======  End of shop product long description  =======-->
                     </div>
 
                     <div class="tab-pane fade" id="product-series-2" role="tabpanel" aria-labelledby="product-tab-2">
+                      <!--=======  shop product additional information  =======-->
 
-                      @include('frontend.product.partial.specification')
+                      <div class="container">
+                        @include('frontend.product.partial.specification')
+                      </div>
 
+                      <!--=======  End of shop product additional information  =======-->
                     </div>
-
 
                     <div class="tab-pane fade" id="product-series-3" role="tabpanel" aria-labelledby="product-tab-3">
                       <!--=======  shop product reviews  =======-->
 
-                      <div class="shop-product__review">
-                        @if ($review->count() > 0 && $review != null)
-
-                          <h2 class="review-title mb-20">{{ $review->count() }} reviews for
-                            High-waist
-                            Trousers</h2>
-
-                          <!--=======  single review  =======-->
-                          @foreach ($review as $item)
-                            <div class="single-review">
-                              <div class="single-review__image">
-                                <img src="{{ $item->user->profile_src }}" class="img-fluid" alt="user image">
-                              </div>
-                              <div class="single-review__content">
-                                <!--=======  rating  =======-->
-
-                                <div class="shop-product__rating">
-                                  <span class="product-rating">
-                                    @foreach (range(1, $item->rating) as $rating)
-                                      <i class="active ion-android-star"></i>
-                                    @endforeach
-                                  </span>
-                                </div>
-
-                                <!--=======  End of rating  =======-->
-
-                                <!--=======  username and date  =======-->
-
-                                <p class="username">{{ $item->name == null ? $item->user->name : $item->name }} <span class="date">/
-                                    {{ $item->created_at->format('M d Y') }}</span>
-                                </p>
-
-                                <!--=======  End of username and date  =======-->
-
-                                <!--=======  message  =======-->
-
-                                <p class="message">
-                                  {{ $item->message }}
-                                </p>
-
-                                <!--=======  End of message  =======-->
-                              </div>
-
-
-                            </div>
-                          @endforeach
-                          <div class="text-center mb-40">
-                            <button class="lezada-button show-reviewPopup lezada-button--small" data-url="{{ route('product.review.list', ['product' => $product->id]) }}">Load
-                              More</button>
-                          </div>
-                          <!--=======  End of single review  =======-->
-
-                        @endif
-                        <h2 class="review-title mb-20">Add a review</h2>
-                        <p class="text-center">Your email address will not be published. Required
-                          fields are marked *
-                        </p>
-
-                        <!--=======  review form  =======-->
-
-                        <div class="lezada-form lezada-form--review">
-                          <form method="POST" action="{{ route('product.review', $product->id) }}">
-                            @csrf
-                            <div class="row">
-                              <div class="col-lg-6 mb-20">
-                                <input type="text" name="name" required placeholder="Name *" required>
-                              </div>
-                              <div class="col-lg-6 mb-20">
-                                <input type="email" name="email" required placeholder="Email *" required>
-                              </div>
-                              <div class="col-lg-12 mb-20">
-                                <span class="rating-title mr-30">YOUR RATING</span>
-                                <span class="product-rating">
-
-                                  <select id="rating" name="rating">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                  </select>
-                                </span>
-                              </div>
-                              <div class="col-lg-12 mb-20">
-                                <textarea cols="30" rows="10" required name="message" placeholder="Your review *"></textarea>
-                              </div>
-                              <div class="col-lg-12 text-center">
-                                <button type="submit" class="lezada-button lezada-button--medium">submit</button>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-
-                        <!--=======  End of review form  =======-->
-
-
+                      <div class="container">
+                        @include('frontend.product.partial.review')
                       </div>
 
                       <!--=======  End of shop product reviews  =======-->
@@ -690,7 +632,6 @@
             @include('frontend.product.related_product', [
                 'product' => $product,
             ])
-
           </div>
 
           <!--=======  End of shop product content  =======-->
@@ -773,6 +714,11 @@
     }
   </style>
 @endpush
+
+@push('js')
+  <script src="{{ asset('front/assets/js/review.js') }}"></script>
+@endpush
+
 @push('script')
   <script>
     let productCombination = @json($variantCombination);
@@ -789,9 +735,16 @@
       $(window).scrollTop(sessionStorage.scrollPos || 0)
     };
 
+
+
     window.onload = init;
 
     $(document).ready(function() {
+
+      $('[data-toggle="popover"]').popover({
+        html: true,
+        container: 'body'
+      });
 
       $('#rating').barrating({
         theme: 'fontawesome-stars'
