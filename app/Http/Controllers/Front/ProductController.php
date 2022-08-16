@@ -59,6 +59,9 @@ class ProductController extends Controller
   }
   public function getProductQuery(Request $request, $slug, $category = null, $sub_category_id = null)
   {
+    $cat = Category::when($request->term, function ($query) use ($request) {
+      return $query->where('name', 'like', "%$request->term%");
+    })->first();
     return Product::productList()->when($slug !== 'all' && isset($category), function ($q) use ($category) {
       return $q->where('category_id', $category->id);
     })
@@ -82,9 +85,18 @@ class ProductController extends Controller
         return $q->Where('products.name', 'like', $request->search . '_%')
           ->orWhere('products.sku', 'like', "%$request->search%");
       })
-      ->when($request->product, function ($q) use ($request) {
-        return $q->Where('products.name', 'like', $request->product . '_%')
-          ->orWhere('products.sku', 'like', "%$request->product%");
+      ->when($request->term, function ($q) use ($request, $cat) {
+        $q->when($cat !== null, function ($query) use ($request) {
+          return $query->Join('categories', function ($join) use ($request) {
+            return $join->on('products.category_id', '=', 'categories.id')
+              ->where('categories.name', 'like', "%$request->term%");
+          });
+        }, function ($query) use ($request) {
+          return $query->Join('sub_categories', function ($join) use ($request) {
+            return $join->on('products.sub_category_id', '=', 'sub_categories.id')
+              ->where('sub_categories.name', 'like', "%$request->term%");
+          });
+        });
       })
       ->with('category', 'subcategory')
       ->paginate(12);
@@ -173,7 +185,7 @@ class ProductController extends Controller
       ->pinterest()
       ->getRawLinks();
 
-    
+
     $product = Product::with([
       'productvariants',
       'images:id,product_id,image_name,image_alt',

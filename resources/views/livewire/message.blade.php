@@ -59,7 +59,8 @@
                   <!--end::Avatar-->
                   <!--begin::Details-->
                   <div class="ms-5">
-                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="javscript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">Order # {{ $order->order_no ?? '' }}</a>
+                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="javscript:void(0)" class="fs-7 fw-bolder text-gray-900 text-hover-primary mb-2">Order # {{ $order->order_no ?? '' }}<br />
+                      <span class="text-muted">{{ $order->user->name ?? '' }}</span></a>
                     {{-- <div class="fw-bold text-muted">{{ $order->user->email ?? '' }}</div> --}}
                   </div>
                   <!--end::Details-->
@@ -79,8 +80,6 @@
               </div>
               <div class="separator separator-dashed"></div>
             @endforeach
-
-
           </div>
           <!--end::List-->
         </div>
@@ -101,8 +100,8 @@
           <!--begin::User-->
           <div class="d-flex justify-content-center flex-column me-3">
             @if (isset($clicked_user))
-              <span class="text-bold pb-2"><a href="{{ route('admin.order.show', $clicked_user->id) }}" class="text-gray-900 text-hover-primary">Order No # <b>{{ $clicked_user->order_no ?? '' }}</b></a></span>
-              <a href="{{ route('admin.customer.show', $clicked_user->user_id) }}" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ ucwords($clicked_user->user->name) ?? '' }}</a>
+              <span class="pb-2"><a href="{{ route('admin.order.show', $clicked_user->id) }}" class="text-gray-900 text-hover-primary">Order No # <b>{{ $clicked_user->order_no ?? '' }}</b></a></span>
+              <a href="{{ route('admin.customer.show', $clicked_user->user_id) }}" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ ucwords($clicked_user->user->name) ?? '' }}</a>
             @elseif ($admin_user)
               <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">Admin</a>
             @else
@@ -146,7 +145,7 @@
                       <!--end::Avatar-->
                       <!--begin::Details-->
                       <div class="ms-3">
-                        <a href="javascript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
+                        <a href="javascript:void(0)" class="fs-7 fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
                         <span class="text-muted fs-7 mb-1">{{ $message->created_at->diffForHumans() ?? '' }}</span>
                       </div>
                       <!--end::Details-->
@@ -243,7 +242,7 @@
                       </button>
                     @endif
                   </div>
-                  <button class="btn btn-primary" type="submit" data-kt-element="send">Send</button>
+                  <button class="btn btn-primary btn-sm" type="submit" data-kt-element="send">Send</button>
                 </div>
               </div>
             </div>

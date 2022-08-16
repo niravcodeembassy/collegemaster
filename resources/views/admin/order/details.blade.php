@@ -14,6 +14,13 @@
       ])
   @endcomponent
   {{-- @dump($order) --}}
+
+  @php
+  $address = json_decode($order->address);
+  $shipping = $address->shipping_address;
+  // dd($shipping);
+  $billing = $address->billing_address;
+  @endphp
   <div class="row">
     <div class="col-md-8 mb-8">
       <h5 class="d-flex justify-content-between align-items-center mb-3">
@@ -120,7 +127,15 @@
         @endif
       </ul>
 
-      <style>
+      <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
+      <div class="card shadow-none border">
+        <div class="card-body">
+          <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
+          <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
+          <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
+        </div>
+      </div>
+      {{-- <style>
         /* width */
         ::-webkit-scrollbar {
           width: 2px;
@@ -240,15 +255,10 @@
             </form>
           </div>
         </li>
-      </ul>
+      </ul> --}}
     </div>
     <div class="col-md-4 ">
-      @php
-        $address = json_decode($order->address);
-        $shipping = $address->shipping_address;
-        // dd($shipping);
-        $billing = $address->billing_address;
-      @endphp
+
 
       <h5 class="card-title w-100 text-muted my-3">Shipping Address</h5>
       <div class="card shadow-none border">
@@ -289,15 +299,6 @@
           </div>
         </div>
       @endif
-
-      <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
-      <div class="card shadow-none border">
-        <div class="card-body">
-          <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
-          <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
-          <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
-        </div>
-      </div>
 
       <h5 class="card-title w-100 text-muted my-3">Payment Details </h5>
       <div class="card shadow-none border">

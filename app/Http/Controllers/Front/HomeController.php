@@ -10,6 +10,8 @@ use App\Model\Product;
 use App\Blog;
 use App\Model\Testimonial;
 use Illuminate\Http\Request;
+use App\Category;
+use App\Model\Subcategory;
 
 class HomeController extends Controller
 {
@@ -46,7 +48,7 @@ class HomeController extends Controller
     $newsletter->save();
     return response()->json([
       'success' => true,
-      'message' => 'Newsletter successcribe successfull'
+      'message' => 'Newsletter subscribe successfully'
     ], 200);
   }
 
@@ -75,10 +77,12 @@ class HomeController extends Controller
 
   public function liveSearch(Request $request)
   {
-    $query = $request->get('query');
+    $term = $request->get('term');
 
-    $filter_result = Product::where('is_active', 'Yes')->where('name', 'like', $query . '_%')
-      ->select('id', 'name', 'slug', 'sku')->get();
+    $category = Category::whereNull('is_active')->select('id', 'name')->where('name', 'like', "%$term%");
+    $sub_category = Subcategory::whereNull('is_active')->select('id', 'name')->where('name', 'like', "%$term%");
+
+    $filter_result = $sub_category->union($category)->get();
 
     return response()->json($filter_result);
   }

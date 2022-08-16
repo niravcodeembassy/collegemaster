@@ -59,7 +59,8 @@
                   <strong>{{ ucwords($admin->name) ?? '' }}</strong>
                 </div>
               </div>
-              <strong class="text-bold pb-2">Order No # <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></strong>
+                
+              <strong class="text-bold pb-2"><a href="{{ route('orders.show', $clicked_user->id) }}" class="text-gray-900 text-hover-primary">Order No # <b>{{ $clicked_user->order_no ?? '' }}</b></a></strong>
             </div>
             <div class="position-relative">
               <div class="chat-messages p-4 scroll_div">

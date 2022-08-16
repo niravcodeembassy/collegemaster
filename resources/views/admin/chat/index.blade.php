@@ -11,7 +11,7 @@
 @push('style')
   <style>
     .chat_content {
-      font-size: 0.85rem !important;
+      font-size: 0.80rem !important;
     }
   </style>
 @endpush

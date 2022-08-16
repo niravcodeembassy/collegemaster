@@ -28,7 +28,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 border-bottom">
-          <h1 class="text-center h2 pb-3"><span><b>{{ ucwords($category->name) ?? '' }}</b></span></h1>
+          @if (request('term'))
+            <h1 class="text-center h2 pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
+          @endif
           <h4 class="text-center pb-3"> {{ Str::limit($category->description, 250) }}</h4>
           {{-- <h4 class="text-center pb-3 d-lg-none"> {{ Str::limit($category->description,100) }}</h4> --}}
         </div>
@@ -93,8 +95,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                              =            shop page content         =
-                                                                                                                                              =============================================-->
+                                                                                                                                                    =            shop page content         =
+                                                                                                                                                    =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">
           <div class="row">
@@ -132,7 +134,7 @@
                 </div>
               </div>
             @endif
-            <div class="{{ request('product') !== null ? 'col-lg-12' : 'col-lg-9' }} order-1 order-lg-2 mb-md-80 mb-sm-80">
+            <div class="{{ request('term') !== null ? 'col-lg-12' : 'col-lg-9' }} order-1 order-lg-2 mb-md-80 mb-sm-80">
               @php
                 $type = 'list';
                 if (request('type', 'grid') == 'grid') {
@@ -144,7 +146,7 @@
               <div class="row product-isotope shop-product-wrap {{ $type }} ">
                 @foreach ($product as $item)
                   <!--=======  single product  =======-->
-                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale  {{ request('type') == 'grid-four' || request('product') !== null ? 'col-lg-3' : 'col-lg-4' }} ">
+                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale  {{ request('type') == 'grid-four' || request('term') !== null ? 'col-lg-3' : 'col-lg-4' }} ">
                     @if (request('type', 'grid') == 'grid' || request('type') == 'grid-four')
                       @include('frontend.product.partial.singleproduct', [
                           'product' => $item,
