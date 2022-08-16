@@ -45,7 +45,6 @@ class ContactUsController extends Controller
   public function about(Request $request)
   {
     $page = Page::findOrFail(1);
-    $d =  Page::whereIn('id', [1, 2, 3])->get();
     $this->data['page'] = $page;
     $this->data['title'] = 'About';
     $this->data['testimonial'] = Testimonial::whereNull('is_active')->get();

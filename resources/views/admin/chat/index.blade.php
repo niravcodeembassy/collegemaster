@@ -22,7 +22,7 @@
     @component('component.heading',
         [
             'page_title' => 'Order Chat',
-            'icon' => 'fas fa-comment-dots fa-2x',
+            'icon' => '',
             'action' => route('admin.home'),
             'action_icon' => 'fa fa-arrow-left',
             'text' => 'Back',

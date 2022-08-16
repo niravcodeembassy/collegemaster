@@ -152,7 +152,8 @@
 
 
 @section('content')
-  <div class="mt-25">
+
+  <div class="mt-15">
     <div class="container wide">
       <div class="row">
         <div class="col-xl-6 col-lg-6">
@@ -285,7 +286,7 @@
               </div>
 
               <div class="col-xl-4 col-lg-4 mb-md-70 mb-sm-70">
-                <div class="shop-product__description shop-product-url " data-url="{{ route('product.details', $routeParameter) }}">
+                <div class="shop-product__description shop-product-url" data-url="{{ route('product.details', $routeParameter) }}">
                   <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                   <!--=======  shop product navigation  =======-->
 
@@ -472,10 +473,10 @@
 
                     <div class="shop-product__buttons mb-40">
                       <a class="lezada-button lezada-button--medium add-to-cart" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <a href="javascript:void(0)" class="mx-lg-4 truck" data-placement="right" data-toggle="popover" data-content="<b>Arrives by <span class='bt'>12-20 Aug:</span></b><br/>if you order today.">
-                        <img src="{{ asset('front/assets/images/delivery-truck.png') }}" class="delivery_truck img-fluid">
+                      <a href="javascript:void(0)" class="mx-lg-4 truck" data-placement="right" data-toggle="popover"
+                        data-content="<b>Arrives by <span class='bt'>{{ $frontsetting->delivery_expected_date }} :</span></b><br/>{{ $frontsetting->delivery_caption ?? '' }}">
+                        <img src="{{ asset('front/assets/images/truck-64.png') }}" class="delivery_truck img-fluid">
                       </a>
-
                     </div>
                   </div>
 
@@ -527,6 +528,11 @@
                             <li><a href="{{ $social_link['whatsapp'] }}" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
                             <li><a href="{{ $social_link['linkedin'] }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                             <li><a href="{{ $social_link['pinterest'] }}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                            <li>
+                              <a href="javascript:void(0)" class="copy_link" data-url="{{ url()->current() }}" data-tippy="Copy Link" data-tippy-placement="right" data-tippy-inertia="true" data-tippy-animation="shift-away"
+                                data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-link"></i></a>
+                            </li>
+                            <span style="display: none" id="link_copied">Link Copied</span>
                           </ul>
                         </td>
                       </tr>
@@ -671,6 +677,10 @@
       display: inline;
     }
 
+    .quick-view-other-info table tr td .quickview-social-icons li {
+      margin-right: 18px;
+    }
+
     .br-theme-fontawesome-stars .br-widget a {
       font: normal normal normal 20px/1 FontAwesome;
       text-rendering: auto;
@@ -740,6 +750,18 @@
     window.onload = init;
 
     $(document).ready(function() {
+
+      $('a.copy_link').click(function(e) {
+        $url = $(this).data('url');
+        navigator.clipboard.writeText($url);
+        $.toast({
+          text: "Link Copied",
+          showHideTransition: "slide",
+          icon: "success",
+          loaderBg: "#f96868",
+          position: "top-right",
+        });
+      });
 
       $('[data-toggle="popover"]').popover({
         html: true,

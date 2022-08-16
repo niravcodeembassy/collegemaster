@@ -27,6 +27,7 @@
               @if (filled($not_seen))
                 <div class="badge bg-warning float-right"> {{ $not_seen->count() }}</div>
               @endif
+
               <div class="d-flex align-items-start">
                 <div class="symbol symbol-45px symbol-circle">
                   <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
@@ -35,7 +36,7 @@
                   @endif
                 </div>
                 <div class="flex-grow-1 ml-3">
-                  {{ ucwords($order->user->name) ?? '' }}
+                  Order #{{ $order->order_no ?? '' }}
                   @if (!is_null($latest))
                     <div class="small"> {{ $latest->created_at->diffForHumans(null, true) }}</div>
                   @endif
@@ -58,7 +59,7 @@
                   <strong>{{ ucwords($admin->name) ?? '' }}</strong>
                 </div>
               </div>
-              <strong class="text-bold pb-2">Order No : <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></strong>
+              <strong class="text-bold pb-2">Order No # <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></strong>
             </div>
             <div class="position-relative">
               <div class="chat-messages p-4 scroll_div">

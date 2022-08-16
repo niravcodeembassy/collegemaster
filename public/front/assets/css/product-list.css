@@ -1,0 +1,29 @@
+a.active {
+  opacity: 1 !important;
+  color: black;
+}
+
+.irs--round .irs-from:before,
+.irs--round .irs-to:before,
+.irs--round .irs-single:before {
+  border-top-color: #212529;
+}
+
+.page-item.active .page-link {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.breadcrumb-area h2 {
+  font-size: 17px !important;
+}
+
+
+.about-overlay .overlay-content {
+  width: 290px;
+  padding: 55px 20px;
+}
+
+h1 span {
+  border-bottom: 1px dotted black;
+}

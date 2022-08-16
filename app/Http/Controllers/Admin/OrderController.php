@@ -25,6 +25,7 @@ use Dompdf\Dompdf as Pdf;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
+use Twilio\Rest\Client;
 
 class OrderController extends Controller
 {
@@ -292,6 +293,7 @@ class OrderController extends Controller
 
     $order = Order::findorfail($id);
     $user = $order->user;
+
     $order->order_status = $request->delivery_status;
 
     if ($request->delivery_status == 'dispatched') {
@@ -300,6 +302,12 @@ class OrderController extends Controller
       $strDate = $request->shipping_date;
       $order->shipping_date = date('Y-m-d', strtotime($strDate));
       $order->order_status = 'dispatched';
+
+      $date = date('F j, Y', strtotime($order->shipping_date));
+
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in' . $date;
+
+      $this->sendMessage($user->phone, $body);
 
 
       try {
@@ -317,6 +325,10 @@ class OrderController extends Controller
       $order->deleverd_date = date('Y-m-d H:i:s', strtotime($strDate));
       $order->deleverd_to_name = $request->user_name;
       $order->order_status = 'delivered';
+
+      $date = date('F j, Y', strtotime($order->deleverd_date));
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Delivered in ' . $date;
+      $this->sendMessage($user->phone, $body);
     }
 
     if ($request->delivery_status == 'cancelled') {
@@ -334,6 +346,10 @@ class OrderController extends Controller
 
     $order->payment_status = $request->payment_status;
 
+    // if ($request->payment_status == 'completed') {
+    //   $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you Payment has been completed';
+    //   $this->sendMessage($user->phone, $body);
+    // }
 
     $order->save();
 
@@ -577,5 +593,26 @@ class OrderController extends Controller
       'type' => $type
     ];
     return $invoice_arr;
+  }
+
+  public function sendMessage($mobile, $body)
+  {
+    $sid = env('TWILIO_AUTH_SID');
+    $token = env('TWILIO_AUTH_TOKEN');
+    $wa = env('TWILIO_WHATSAPP_FROM');
+
+    $client = new Client($sid, $token);
+
+    $client->messages->create(
+      // the number you'd like to send the message to
+      "whatsapp:$mobile",
+      [
+        // A Twilio phone number you purchased at twilio.com/console
+        'from' => "whatsapp:$wa",
+        // the body of the text message you'd like to send
+        'body' => $body,
+        // 'mediaurl' => 'https://demo.twilio.com/owl.png'
+      ]
+    );
   }
 }

@@ -49,13 +49,15 @@ class Controller extends BaseController
   public function getSearchProduct(Request $request)
   {
 
+
+
     if ($request->ajax()) {
 
       $term = trim($request->search);
-      $products =  Product::select('id', 'name')
-        ->where('name', 'LIKE',  $term . '_%')
-        ->orWhere('sku', 'LIKE', $term . '_%')
-        ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(20);
+      $products = Product::select('id', 'name')->where('name', 'like', $term . '_%')
+        ->orWhere(function ($query) use ($term) {
+          $query->Where('sku', 'like', "%$term%");
+        })->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
 
       $morePages = true;
       $pagination_obj = json_encode($products);

@@ -51,7 +51,7 @@
                 <div class="d-flex align-items-center">
                   <!--begin::Avatar-->
                   <div class="symbol symbol-45px symbol-circle">
-                    <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
+                    <img alt="Pic" src="{{ $order->user->profile_src ?? '' }}" />
                     @if (isset($clicked_user) && $clicked_user->id == $order->id)
                       <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
                     @endif
@@ -59,7 +59,7 @@
                   <!--end::Avatar-->
                   <!--begin::Details-->
                   <div class="ms-5">
-                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="javscript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">{{ ucwords($order->user->name) ?? '' }}</a>
+                    <a wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" style="cursor: pointer" href="javscript:void(0)" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">Order # {{ $order->order_no ?? '' }}</a>
                     {{-- <div class="fw-bold text-muted">{{ $order->user->email ?? '' }}</div> --}}
                   </div>
                   <!--end::Details-->
@@ -101,8 +101,8 @@
           <!--begin::User-->
           <div class="d-flex justify-content-center flex-column me-3">
             @if (isset($clicked_user))
-              <span class="text-bold pb-2">Order No : <span class="badge badge-info rounded">{{ $clicked_user->order_no ?? '' }}</span></span>
-              <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ ucwords($clicked_user->user->name) ?? '' }}</a>
+              <span class="text-bold pb-2"><a href="{{ route('admin.order.show', $clicked_user->id) }}" class="text-gray-900 text-hover-primary">Order No # <b>{{ $clicked_user->order_no ?? '' }}</b></a></span>
+              <a href="{{ route('admin.customer.show', $clicked_user->user_id) }}" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">{{ ucwords($clicked_user->user->name) ?? '' }}</a>
             @elseif ($admin_user)
               <a href="javascript:void(0)" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 text-capitalize">Admin</a>
             @else

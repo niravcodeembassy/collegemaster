@@ -78,7 +78,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
     Route::get('/chat', 'MessageController@index')->name('order.chat');
 
     Route::post('/checkEmail', 'UserProfileController@checkEmail')->name('mailcheck');
-    Route::get('/change-password', 'UserProfileController@changePasswordGet')->name('changePassword.get');
+    Route::get('/change-password', 'UserProfileController@changePasswordGet')->name('changepassword.get');
     Route::post('/change-password', 'UserProfileController@changePassword')->name('changePassword');
     Route::post('checkOldPassword', 'UserProfileController@checkOldPassword')->name('checkuserPassword');
     Route::get('orders-show/{id}', 'UserProfileController@ordersShow')->name('orders.show');

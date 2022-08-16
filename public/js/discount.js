@@ -31,7 +31,6 @@ $(document).ready(function () {
     // minimumInputLength: 1,
   });
   discountProduct.select2({
-    allowClear: true,
     ajax: {
       url: discountProduct.data("url"),
       data: function (params) {
@@ -44,7 +43,7 @@ $(document).ready(function () {
       dataType: "json",
       processResults: function (data) {
         return {
-          results: data.data.map(function (item) {
+          results: data.results.map(function (item) {
             return {
               id: item.id,
               text: item.name,

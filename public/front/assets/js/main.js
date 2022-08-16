@@ -1181,10 +1181,11 @@
       : 1;
     $this.slick({
       infinite: true,
-      arrows: true,
+      arrows: false,
       dots: false,
       slidesToShow: 3,
       slidesToScroll: 1,
+      autoplay:true,
       vertical: true,
       centerMode: true,
       rows: $row,

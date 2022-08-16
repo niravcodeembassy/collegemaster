@@ -5,7 +5,7 @@
 @section('content')
   @component('component.heading',
       [
-          'page_title' => 'Edit Story',
+          'page_title' => 'Story',
           'icon' => 'fa fa-pen',
           'tagline' => 'Lorem ipsum dolor sit amet.',
           'action' => route('admin.story.index'),

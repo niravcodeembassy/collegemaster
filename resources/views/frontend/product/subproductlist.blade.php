@@ -1,40 +1,7 @@
 @extends('frontend.layouts.app')
 
-@push('style')
-  <style>
-    a.active {
-      opacity: 1 !important;
-      color: black;
-    }
-
-    .irs--round .irs-from:before,
-    .irs--round .irs-to:before,
-    .irs--round .irs-single:before {
-      border-top-color: #212529;
-    }
-
-    .page-item.active .page-link {
-      background-color: #333333;
-      border-color: #333333;
-    }
-
-    .breadcrumb-area h2 {
-      font-size: 17px !important;
-    }
-
-    .breadcrumb-area {
-      background-image: url({{ $subCategory->image_src ?? '' }})
-    }
-
-    .about-overlay .overlay-content {
-      width: 290px;
-      padding: 55px 20px;
-    }
-
-    h1 span {
-      border-bottom: 1px dotted black;
-    }
-  </style>
+@push('css')
+  <link href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
 @section('title', $subCategory->meta_title)
@@ -129,8 +96,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                  =            shop page content         =
-                                                  =============================================-->
+                                                    =            shop page content         =
+                                                    =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">
@@ -160,7 +127,7 @@
               </div> --}}
                 @if (request()->has('search') || request()->has('sort') || request()->has('range'))
                   <div class=" text-center">
-                    <a class="lezada-button  lezada-button--small btn-sm" href="{{ route('product.details', ['cat_slug' => $category->slug, 'product_subcategory_slug' => $subCategory->slug, 'slug' => null]) }}" role="button">Clear Fitler</a>
+                    <a class="lezada-button  lezada-button--small btn-sm" href="{{ route('product.details', ['cat_slug' => $category->slug, 'product_subcategory_slug' => $subCategory->slug, 'slug' => null]) }}" role="button">Clear Filter</a>
                   </div>
                 @endif
               </div>

@@ -6,7 +6,7 @@
         My account
       </span>
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'profile.index') {{ 'active' }} @endif" href="{{ route('profile.index') }}"> <i class="fa fa-user"></i> Profile</a>
-      <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'changePassword.get') {{ 'active' }} @endif" href="{{ route('changePassword.get') }}"> <i class="fa fa-lock"></i> Change Password</a>
+      <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'changepassword.get') {{ 'active' }} @endif" href="{{ route('changepassword.get') }}"> <i class="fa fa-lock"></i> Change Password</a>
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'orders.list') {{ 'active' }} @endif" href="{{ route('orders.list') }}"><i class="fa fa-truck"></i> Order</a>
       <a class="list-group-item @if (strtolower(\Request::route()->getName()) == 'wishlist.index') {{ 'active' }} @endif" href="{{ route('wishlist.index') }}"><i class="fa fa-list"></i> Wish List</a>
       @livewire('order-counter')

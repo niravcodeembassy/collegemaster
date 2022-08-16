@@ -4,6 +4,7 @@ $(document).ready(function () {
         const el = $(this);
         const url = el.data('url');
         const coupon_code = $('#coupon_code').val();
+        
         if (!coupon_code) {
             toast.fire({
                 icon: 'error',
@@ -12,6 +13,7 @@ $(document).ready(function () {
             return;
         }
         let newUlr = url + '?discount_code=' + coupon_code;
+       window.location.href = newUlr
         $('.checkout-payment-method').find(':input').removeAttr('data-rule-required',false);
 
         if($('#checkout').valid()) {
@@ -20,7 +22,7 @@ $(document).ready(function () {
         }else{
             $('.checkout-payment-method').find(':input').attr('data-rule-required',true);
         }
-        // window.location.href = newUlr
+
     });
 
     $('.remove-coupon-btn').on('click', function (e) {

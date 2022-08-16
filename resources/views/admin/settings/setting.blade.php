@@ -224,7 +224,7 @@
             </div>
             <hr style="margin: 15px -20px">
             <div class="row">
-              <h5 class="pl-2 mb-3">website Review Link</h5>
+              <h5 class="pl-2 mb-3">Website Review Link</h5>
               <div class="col-12">
                 <div class="form-group">
                   <label for="offertext">Google Review <span class="text-danger">*</span></label>
@@ -246,6 +246,24 @@
             </div>
 
 
+
+            <div class="row d-none">
+              <h5 class="pl-2 mb-3">Offer Info</h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Offer Info <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="offer_info" value="{{ $setting->response->offer_info ?? '' }}">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Offer Info Link<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="offer_info_link" value="{{ $setting->response->offer_info_link ?? '' }}">
+                </div>
+              </div>
+            </div>
+
+
             <hr style="margin: 15px -20px">
             <div class="row">
               <div class="col">
@@ -256,6 +274,22 @@
                 </div>
               </div>
             </div>
+
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="pl-2 mb-3">Delivery</h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Expected date<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="delivery_expected_date" value="{{ $setting->response->delivery_expected_date ?? '' }}">
+                </div>
+                <div class="form-group">
+                  <label for="offertext">Caption<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="delivery_caption" value="{{ $setting->response->delivery_caption ?? '' }}">
+                </div>
+              </div>
+            </div>
+
             <hr style="margin: 15px -20px">
             <div class="row">
               <h5 class="pl-2 mb-3"><strong>Shipping Charge For India</strong></h5><br>
