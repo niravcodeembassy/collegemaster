@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @push('css')
-  <link href="{{ asset('front/assets/css/product-list.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
 @section('title', $subCategory->meta_title)
@@ -99,8 +99,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                            =            shop page content         =
-                                                            =============================================-->
+                                                              =            shop page content         =
+                                                              =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">

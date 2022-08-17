@@ -69,7 +69,6 @@
     $("body").addClass("active-body-search-overlay");
   });
 
-
   $("#category-close-icon, .overlay-close").on("click", function () {
     $("#category-overlay").toggleClass("active-about-overlay");
     $(".overlay-close").addClass("inactive").removeClass("active");
@@ -1183,9 +1182,9 @@
       infinite: true,
       arrows: false,
       dots: false,
-      slidesToShow: 3,
+      slidesToShow: 5,
       slidesToScroll: 1,
-      autoplay:true,
+      autoplay: true,
       vertical: true,
       centerMode: true,
       rows: $row,
@@ -1199,7 +1198,7 @@
         {
           breakpoint: 1499,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: 5,
           },
         },
         {

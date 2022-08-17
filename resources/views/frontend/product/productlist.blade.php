@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @push('css')
-  <link href="{{ asset('front/assets/css/product-list.css') }}">
+  <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
 @section('title')
@@ -31,8 +31,8 @@
           @if (request('term'))
             <h1 class="text-center h2 pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
           @endif
+          <h1 class="text-center h2 pb-3"><span><b>{{ ucwords($category->name ?? '') }}</b></span></h1>
           <h4 class="text-center pb-3"> {{ Str::limit($category->description, 250) }}</h4>
-          {{-- <h4 class="text-center pb-3 d-lg-none"> {{ Str::limit($category->description,100) }}</h4> --}}
         </div>
       </div>
     </div>
@@ -95,8 +95,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                    =            shop page content         =
-                                                                                                                                                    =============================================-->
+                                                                                                                                                            =            shop page content         =
+                                                                                                                                                            =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="container">
           <div class="row">

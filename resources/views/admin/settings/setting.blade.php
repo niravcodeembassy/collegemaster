@@ -275,20 +275,7 @@
               </div>
             </div>
 
-            <hr style="margin: 15px -20px">
-            <div class="row">
-              <h5 class="pl-2 mb-3">Delivery</h5>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="offertext">Expected date<span class="text-danger">*</span></label>
-                  <input class="form-control" type="text" name="delivery_expected_date" value="{{ $setting->response->delivery_expected_date ?? '' }}">
-                </div>
-                <div class="form-group">
-                  <label for="offertext">Caption<span class="text-danger">*</span></label>
-                  <input class="form-control" type="text" name="delivery_caption" value="{{ $setting->response->delivery_caption ?? '' }}">
-                </div>
-              </div>
-            </div>
+
 
             <hr style="margin: 15px -20px">
             <div class="row">
@@ -343,6 +330,17 @@
 
               </div>
             </div>
+
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="pl-2 mb-3">Delivery Terms & Condition</h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <textarea class="form-control" id="delivery_caption" name="delivery_caption">{{ $setting->response->delivery_caption ?? '' }}</textarea>
+                </div>
+              </div>
+            </div>
+
             <hr style="margin: 15px -20px">
 
             <div class="row">
@@ -432,6 +430,27 @@
               </div>
 
             </div>
+
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="mb-3"><strong>Twilio Whatsapp Credentials</strong></h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Twilio SID<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="twilio_auth_sid" value="{{ $setting->response->twilio_auth_sid ?? '' }}">
+                </div>
+                <div class="form-group">
+                  <label for="offertext">Twilio Auth Token<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="twilio_auth_token" value="{{ $setting->response->twilio_auth_token ?? '' }}">
+                </div>
+                <div class="form-group">
+                  <label for="offertext">Twilio Whastapp Number<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="twilio_whatsapp_form" value="{{ $setting->response->twilio_whatsapp_form ?? '' }}">
+                </div>
+              </div>
+            </div>
+
+
             <hr style="margin: 15px -20px">
             <div class="row">
               <h5 class="mb-3"><strong>Trust Pilot Details</strong></h5>

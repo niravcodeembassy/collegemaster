@@ -7,6 +7,13 @@
       color: black;
     }
 
+
+    h1 {
+      font-size: 24px;
+      line-height: 34px;
+      font-weight: 600;
+    }
+
     .bt {
       border-bottom: 1px dotted black;
     }
@@ -22,7 +29,12 @@
 
 
     .delivery_truck {
-      width: 60px;
+      width: 50px;
+      height: 45px;
+    }
+
+    .stock {
+      width: 80px;
     }
 
     .discounted-price {
@@ -129,6 +141,12 @@
         border: none !important;
       }
     }
+
+    /* @media only screen and (min-width: 992px) and (max-width: 1199px) {
+                .shop-product__buttons {
+                  display: block !important;
+                }
+              } */
   </style>
 @endpush
 
@@ -285,7 +303,7 @@
                 </div>
               </div>
 
-              <div class="col-xl-4 col-lg-4 mb-md-70 mb-sm-70">
+              <div class="col-xl-4 col-lg-6 mb-md-70 mb-sm-70">
                 <div class="shop-product__description shop-product-url" data-url="{{ route('product.details', $routeParameter) }}">
                   <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                   <!--=======  shop product navigation  =======-->
@@ -300,7 +318,7 @@
                   <!--=======  shop product rating  =======-->
                   @auth
                     @if ($product_review->count() > 0)
-                      <div class="shop-product__rating mb-15 text-right">
+                      <div class="shop-product__rating mb-15 text-right d-none">
                         <span class="review-link ">
                           {{-- <a href="javascript:void(0)">({{ $product_review->count() }} customer
                       reviews)</a> --}}
@@ -336,31 +354,33 @@
                     }
                   @endphp
 
-                  <div class="shop-product__price mb-30">
+                  <div class="shop-product__price mb-25">
                     <span class="discounted-price">{{ 'US' . $priceData->price . '+' }}</span>
                     @if ($priceData->offer_price)
                       <span class="main-price discounted">{{ 'US' . $priceData->offer_price . '+' }}</span>
                       <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
                     @endif
+                    <div class="float-right"><img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid"></div>
+                    <p class="h6" style="line-height: 25px;">Hooray! This item delivers for free.</p>
                   </div>
 
                   <!--=======  End of shop product price  =======-->
 
                   <!--=======  shop product short description  =======-->
 
-                  <div class="shop-product__short-desc">
+                  {{-- <div class="shop-product__short-desc">
                     {!! $product->short_content ?? '' !!}
-                  </div>
+                  </div> --}}
                   <!--=======  End of shop product short description  =======-->
                   @if (isset($variatoinList))
                     <div id="block-varient">
                       @foreach ($variatoinList as $key => $variatoins)
-                        <div class="form-group mb-25">
+                        <div class="form-group mb-20">
                           @php
                             $option = \App\Model\Option::find($key);
                             $productvariants = \App\Model\ProductVariant::whereProductId($product->id)->get();
                           @endphp
-                          <label for="variatoins_{{ $key }}" class="d-block shop-product__block__title">{{ ucfirst($option->name) }}</label>
+                          <label for="variatoins_{{ $key }}" class="d-block shop-product__block__title h5">{{ ucfirst($option->name) }} <span class="text-danger">*</span></label>
                           <div class="d-block clearfix " style="width: 30%;">
                             <select name="variatoins" class="form-control change-combination " id="variatoins_{{ $key }}" style="width: 250px;">
                               @foreach ($variatoins as $item)
@@ -452,7 +472,7 @@
                   @endphp
                   <!--=======  shop product quantity block  =======-->
                   <div id="changeEvent" style="{{ $style }}">
-                    <div class="shop-product__block shop-product__block--quantity mb-40">
+                    <div class="shop-product__block shop-product__block--quantity mb-20">
                       <div class="shop-product__block__title">Quantity: </div>
                       <div class="shop-product__block__value">
                         <div class="pro-qty d-inline-block mx-0 pt-0">
@@ -470,12 +490,23 @@
                       </div>
                     @endauth --}}
 
+                    @php
+                      $c = strtotime('+14 day');
+                      $a = date('d', time());
+                      $b = date('d', $c);
+                      $d = date('M', time());
+                      $str = $a . '-' . $b . ' ' . $d . '.';
+                    @endphp
 
-                    <div class="shop-product__buttons mb-40">
-                      <a class="lezada-button lezada-button--medium add-to-cart" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <a href="javascript:void(0)" class="mx-lg-4 truck" data-placement="right" data-toggle="popover"
-                        data-content="<b>Arrives by <span class='bt'>{{ $frontsetting->delivery_expected_date }} :</span></b><br/>{{ $frontsetting->delivery_caption ?? '' }}">
-                        <img src="{{ asset('front/assets/images/truck-64.png') }}" class="delivery_truck img-fluid">
+                    <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
+                      <a class="lezada-button lezada-button--medium add-to-cart mr-4" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
+                      <img src="{{ asset('front/assets/images/truck.png') }}" class="ml-4 mr-3 delivery_truck img-fluid">
+                      <a href="javascript:void(0)" data-placement="right" class="mt-lg-0 mt-md-0 mt-2" data-toggle="popover" data-content="{{ $frontsetting->delivery_caption ?? '' }}">
+                        <b class="mt-lg-0 mt-2">Arrives By
+                          <span class="bt">
+                            {{ $str }}
+                          </span></b><br />
+                        <span>If you order today.</span>
                       </a>
                     </div>
                   </div>

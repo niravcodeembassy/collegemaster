@@ -4770,7 +4770,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 }
 .shop-product__small-image-gallery-slider--vertical .single-image img {
   border: 1px solid transparent;
-  width: 100%;
+  width: 50%;
 }
 @media only screen and (max-width: 767px) {
   .shop-product__small-image-gallery-slider--vertical .single-image {
@@ -4858,12 +4858,28 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   .shop-product__small-image-gallery-slider .slick-arrow.slick-prev {
     left: -15px;
   }
+  .shop-product__small-image-gallery-slider--vertical .single-image img {
+    width: 85%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .shop-product__small-image-gallery-slider--vertical .single-image img {
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 767px) {
   .shop-product__small-image-gallery-slider .slick-arrow.slick-prev {
     left: 0;
   }
 }
+.shop-product__small-image-gallery-slider--vertical .slick-slide{
+  opacity: 0.7;
+}
+
+.shop-product__small-image-gallery-slider--vertical .slick-current{
+  opacity: 1;
+}
+
 .shop-product__small-image-gallery-slider:hover .slick-arrow {
   visibility: visible;
   opacity: 1;
@@ -4879,6 +4895,9 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .shop-product__small-image-gallery-slider:hover .slick-arrow.slick-next {
     right: 10px;
+  }
+  .shop-product__small-image-gallery-slider--vertical .single-image img {
+    width: 78%;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
