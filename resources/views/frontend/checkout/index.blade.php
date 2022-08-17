@@ -499,7 +499,8 @@
             let user = {
               order_id: order_id
             };
-            var stripe_key = '{{ env('STRIPE_KEY') }}'
+            var stripe_key = '{{ env('STRIPE_KEY') }}';
+            alert(stripe_key);
             var stripe = Stripe(
               stripe_key
             );
