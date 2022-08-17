@@ -123,6 +123,17 @@ return [
 
   'cipher' => 'AES-256-CBC',
 
+  'twilio' => [
+    'twilio_auth_sid' => env('TWILIO_AUTH_SID'),
+    'twilio_auth_token'  => env('TWILIO_AUTH_TOKEN'),
+    'twilio_whatsapp_form'  =>  env('TWILIO_WHATSAPP_FROM')
+  ],
+
+  'stripe' => [
+    'stripe_key' => env('STRIPE_KEY'),
+    'stripe_secret'  => env('STRIPE_SECRET'),
+    'stripe_enable'  =>  env('stripe_enable')
+  ],
   /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -178,6 +189,7 @@ return [
     App\Providers\RouteServiceProvider::class,
     App\Providers\ComposerServiceProvider::class,
     App\Providers\MailConfigServiceProvider::class,
+    App\Providers\ApiConfigServiceProvider::class,
   ],
 
   /*

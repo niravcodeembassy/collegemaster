@@ -77,12 +77,7 @@ class PaymentController extends Controller
     $env_update = $this->changeEnv([
       'STRIPE_KEY' => $request->stripe_key,
       'STRIPE_SECRET' => $request->stripe_secrete,
-      'STRIPE_ENABLE' => $request->cash ? 'Yes' : 'No',
-
-      'TWILIO_AUTH_SID' => $request->twilio_auth_sid,
-      'TWILIO_AUTH_TOKEN' => $request->twilio_auth_token,
-      'TWILIO_WHATSAPP_FROM' => $request->twilio_whatsapp_form,
-      'TWILIO_ENABLE' =>  $request->twilio ? 'Yes' : 'No',
+      'STRIPE_ENABLE' => $request->cash ? 'Yes' : 'No'
     ]);
 
 

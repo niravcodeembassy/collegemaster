@@ -247,6 +247,23 @@ nav.site-nav>ul>li>a:after {
   }
 }
 
+#category_scroll{
+  overflow:auto;
+  white-space: nowrap;
+  box-sizing: content-box;
+}
+
+#category_scroll::-webkit-scrollbar{
+  display: none;
+  width: 0px;
+}
+
+
+
+
+
+
+
 a.dropdown-item {
   white-space: normal;
 }

@@ -783,9 +783,10 @@ class CheckOutController extends Controller
 
   public function sendMessage($mobile, $body)
   {
-    $sid = env('TWILIO_AUTH_SID');
-    $token = env('TWILIO_AUTH_TOKEN');
-    $wa = env('TWILIO_WHATSAPP_FROM');
+    $sid =  config("app.twilio.twilio_auth_sid");
+    $token = config('app.twilio.twilio_auth_token');
+    $wa = config("app.twilio.twilio_whatsapp_form");
+
     $client = new Client($sid, $token);
 
     return   $client->messages->create(

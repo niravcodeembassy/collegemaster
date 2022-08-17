@@ -127,6 +127,28 @@
       padding-bottom: 3.5rem !important;
     }
 
+    .ck_editor_data>ul {
+      list-style-type: disc;
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      padding-inline-start: 40px;
+    }
+
+    .ck_editor_data h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      padding-top: 5px;
+    }
+
+    .ck_editor_data p {
+      max-width: none;
+    }
 
     @media only screen and (max-width: 600px) {
       .tab-product-navigation .nav {
@@ -141,12 +163,6 @@
         border: none !important;
       }
     }
-
-    /* @media only screen and (min-width: 992px) and (max-width: 1199px) {
-                .shop-product__buttons {
-                  display: block !important;
-                }
-              } */
   </style>
 @endpush
 
@@ -380,7 +396,7 @@
                             $option = \App\Model\Option::find($key);
                             $productvariants = \App\Model\ProductVariant::whereProductId($product->id)->get();
                           @endphp
-                          <label for="variatoins_{{ $key }}" class="d-block shop-product__block__title h5">{{ ucfirst($option->name) }} <span class="text-danger">*</span></label>
+                          <label for="variatoins_{{ $key }}" class="d-block shop-product__block__title"><b>{{ ucfirst($option->name) }}</b> <span class="text-danger">*</span></label>
                           <div class="d-block clearfix " style="width: 30%;">
                             <select name="variatoins" class="form-control change-combination " id="variatoins_{{ $key }}" style="width: 250px;">
                               @foreach ($variatoins as $item)
@@ -630,8 +646,8 @@
                       <!--=======  shop product long description  =======-->
 
                       <div class="shop-product__long-desc mb-30">
-                        <div class="container">
-                          <p>{!! $product->content !!}</p>
+                        <div class="container ck_editor_data">
+                          {!! $product->content !!}
                         </div>
                       </div>
 

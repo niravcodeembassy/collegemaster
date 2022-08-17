@@ -31,7 +31,8 @@
                   <div class="col ">
                     <div class="form-group border-checkbox-section">
                       <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input class="border-checkbox custom-check custom-control-input" type="checkbox" id="paypal" data-target="#paypal_section" data-off="#payumoney" {{ $mailsetup->paypal == 'Yes' ? 'checked' : '' }} name="paypal" value="paypal">
+                        <input class="border-checkbox custom-check custom-control-input" type="checkbox" id="paypal" data-target="#paypal_section" data-off="#payumoney" {{ $mailsetup->paypal == 'Yes' ? 'checked' : '' }} name="paypal"
+                          value="paypal">
                         <label class="custom-control-label" for="paypal">Use Paypal For Payment</label>
                       </div>
                     </div>
@@ -220,61 +221,6 @@
                       <div class="form-group">
                         <label for="razorpay_secrete">Secret<span class="text-danger">*</span></label>
                         <input id="razorpay_secrete" class="form-control" {{ $mailsetup->Razorpay == 'No' ? 'readonly' : '' }} type="password" name="razorpay_secrete" data-rule-required="true" value="{{ $mailsetup->razorpay_secrete ?? '' }}">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <hr style="margin-right:-20px;margin-left:-20px;">
-
-              <div class="">
-                <div class="form-row">
-                  <div class="col border-checkbox-section">
-                    <div class="form-group">
-                      <div class="custom-control custom-switch custom-switch-off-default custom-switch-on-success">
-                        <input class="border-checkbox custom-check custom-control-input" type="checkbox" {{ $mailsetup->twilio == 'Yes' ? 'checked' : '' }} id="twilio" data-off="#paypal" data-target="#twilio_section" name="twilio"
-                          value="twilio">
-                        <label class="custom-control-label" for="twilio">Twilio </label>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-switch custom-switch-off-default custom-switch-on-success">
-                        <input class="border-checkbox custom-check custom-control-input" type="checkbox" id="twilio_enable" data-off="#paypal,#payu" data-target="#twilio_section" {{ $mailsetup->twilio_enable == 'Yes' ? 'checked' : '' }}
-                          name="twilio_enable" value="sandbox">
-                        <label class="custom-control-label" for="twilio_enable">Change Key And Secret
-                        </label>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-                <div id="twilio_section">
-                  <div class="form-row">
-                    <div class="col ">
-                      <div class="form-group">
-                        <label for="twilio_auth_sid">SID <span class="text-danger">*</span></label>
-                        <input id="twilio_auth_sid" class="form-control" {{ $mailsetup->twilio == 'No' ? 'readonly' : '' }} type="text" name="twilio_auth_sid" data-rule-required="true" data-msg-required="Sid is required"
-                          value="{{ $mailsetup->twilio_auth_sid ?? '' }}">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-row">
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="twilio_auth_token">Token<span class="text-danger">*</span></label>
-                        <input id="twilio_auth_token" class="form-control" {{ $mailsetup->twilio == 'No' ? 'readonly' : '' }} type="password" name="twilio_auth_token" data-rule-required="true" value="{{ $mailsetup->twilio_auth_token ?? '' }}">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-row">
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="twilio_whatsapp_form">Whatsapp Form<span class="text-danger">*</span></label>
-                        <input id="twilio_whatsapp_form" class="form-control" {{ $mailsetup->twilio == 'No' ? 'readonly' : '' }} type="password" name="twilio_whatsapp_form" data-rule-required="true"
-                          value="{{ $mailsetup->twilio_whatsapp_form ?? '' }}">
                       </div>
                     </div>
                   </div>
