@@ -126,24 +126,32 @@
   position: relative;
 }
 
+.search_form .form-control{
+  font-weight: 200;
+}
+
+.search_form_mobile .form-control{
+  font-weight: 100;
+  font-size: 0.85rem;
+}
+
 .search_form input,
 .search_form_mobile input {
-  border-radius: 96px;
+  border-radius: 6px;
   padding: 20px;
-  border: 2px solid black;
+  border: 1px solid #b9b9b9;
+}
+
+.pt-20 {
+  padding-top: 12px !important;
 }
 
 nav.site-nav>ul>li {
-  margin: 5px 80px 5px 0px;
+  margin: 5px 50px 5px 0px;
+  line-height: 24px;
 }
-
-
-
-
-@media screen and (max-width: 1024px) {
-  nav.site-nav>ul>li ul.single-column-menu {
-    min-width: auto;
-  }
+nav.site-nav > ul > li.menu-item-has-children > a {
+font-size: 14px;
 }
 
 .category_link {
@@ -157,7 +165,8 @@ nav.site-nav>ul>li {
 
 .main_category {
   background-color: black;
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 12px;
 }
 
 .search_form .form-control:focus {
@@ -205,9 +214,7 @@ nav.site-nav>ul>li {
 }
 
 
-nav.site-nav>ul>li {
-  line-height: 30px;
-}
+
 
 nav.site-nav>ul>li>a:after {
   bottom: 0px;
@@ -235,18 +242,6 @@ nav.site-nav>ul>li>a:after {
   color: white;
 }
 
-@media only screen and (max-width: 600px) {
-
-  .header-bottom {
-    padding-top: 0px !important;
-  }
-
-  .offer_info {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
-
 #category_scroll{
   overflow-x:auto;
   white-space: nowrap;
@@ -256,11 +251,6 @@ nav.site-nav>ul>li>a:after {
   display: none;
   width: 0px;
 }
-
-
-
-
-
 
 
 a.dropdown-item {
@@ -280,20 +270,50 @@ a.login_link:hover {
   width: 100%;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .header-right-icons {
-    float: right;
-  }
 
-  .header-bottom-container .logo-with-offcanvas {
-    flex-basis: 40%;
-  }
-
-  .header-bottom-container .header-right-container {
-    flex-basis: 60%;
-  }
+/* Clever & unique ideas */
+.single-category__image {
+  height: 220px;
+  border-radius: 4px;
 }
 
+.single-category__content--three--creativehome .title p>a {
+  font-size: 16px !important;
+  line-height: 22px;
+}
+
+.single-category__content--three--banner .title > a {
+  border: 1px solid #7e7a7a;
+  line-height: 21px;
+  color: #000000 !important;
+  background: none;
+}
+
+.single-category__content--three--creativehome .title a {
+    transform: translateY(0);
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.single-category__content--three--creativehome {
+  bottom: 30px;
+  left: 24px;
+}
+.caption_button{
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  border-color: #333;
+}
+a.caption_button:hover{
+  background: black;
+  color: white !important;
+}
+
+/* header media query */
 @media only screen and (max-width: 767px) {
   .header-bottom-container .header-right-container {
     flex-basis: 72%;
@@ -312,4 +332,66 @@ a.login_link:hover {
   .header-right-icons {
     float: right;
   }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .header-right-icons {
+    float: right;
+  }
+
+  .header-bottom-container .logo-with-offcanvas {
+    flex-basis: 40%;
+  }
+
+  .header-bottom-container .header-right-container {
+    flex-basis: 60%;
+  }
+}
+@media only screen and (max-width: 600px) {
+
+  .header-bottom {
+    padding-top: 0px !important;
+  }
+
+  .offer_info {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  nav.site-nav>ul>li ul.single-column-menu {
+    min-width: auto;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .single-category__image {
+    height: auto;
+  }
+  .single-category__content--three--creativehome {
+    bottom: 10px;
+    left: 15px;
+}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+  .single-category__image {
+    height: auto;
+  }
+  .single-category__content--three--creativehome {
+    bottom: 0px;
+    left: 15px;
+}
+}
+
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+.single-category__image {
+  display: flex;
+}
+}
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1499px) {
+.single-category__image {
+  display: flex;
+}
 }

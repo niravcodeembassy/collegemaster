@@ -27,3 +27,18 @@ a.active {
 h1 span {
   border-bottom: 1px dotted black;
 }
+
+@media only screen and (max-width: 375px) {
+  .page-link  {
+    padding: 0.3rem 0.35rem;
+    margin-left: -2px
+  }
+}
+@media only screen and (min-width: 376px) and (max-width: 480px) {
+  .page-link  {
+    padding: 0.4rem 0.4rem;
+    margin-left: -2px
+  }
+}
+
+

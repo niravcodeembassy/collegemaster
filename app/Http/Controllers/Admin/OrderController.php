@@ -305,7 +305,7 @@ class OrderController extends Controller
 
       $date = date('F j, Y', strtotime($order->shipping_date));
 
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in' . $date;
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
 
       $this->sendMessage($user->phone, $body);
 
@@ -431,6 +431,7 @@ class OrderController extends Controller
     $this->data['shipping_address'] = $data['shipping_address'];
     $this->data['belling_address'] =  $data['belling_address'];
     $this->data['title'] = 'Invoice';
+
     return $this->view('admin.order.invoice_' . $data['type']);
   }
 

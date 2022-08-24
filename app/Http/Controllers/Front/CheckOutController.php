@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Mail;
-use Helper;
+use Helper;  
 use App\Setting;
 use App\Model\Order;
 use App\Model\State;
@@ -711,14 +711,6 @@ class CheckOutController extends Controller
     $order = Order::findOrfail(decrypt($id));
     $name = Auth::user()->name;
 
-    // try {
-    //   $mobile = Auth::user()->phone;
-    //   $order  = $order;
-    //   $this->sendMessage($mobile, $order);
-    // } catch (\Exception $th) {
-    //   dd($th);
-    // }
-
     return redirect()->route('orders.list')->with('success', "Hi $name , Your Order Successfully Placed & Your Order No. is $order->order_number");
     // return view('frontend.payment.thankyou', ['order' => $order]);
   }
@@ -773,7 +765,7 @@ class CheckOutController extends Controller
   public function stripe_data($checkout_session)
   {
     $stripe = new \Stripe\StripeClient(
-      env('STRIPE_SECRET')
+      config('app.stripe.stripe_secret')
     );
     $stripe_data = $stripe->checkout->sessions->retrieve(
       $checkout_session,

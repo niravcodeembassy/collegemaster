@@ -28,7 +28,7 @@
     }
 
 
-    .delivery_truck {
+    img.delivery_truck {
       width: 50px;
       height: 45px;
     }
@@ -127,6 +127,7 @@
       padding-bottom: 3.5rem !important;
     }
 
+
     .ck_editor_data>ul {
       list-style-type: disc;
       display: block;
@@ -150,7 +151,6 @@
       max-width: 100%;
     }
 
-
     .ck_editor_data blockquote p {
       max-width: 95%;
     }
@@ -165,6 +165,12 @@
     .ck_editor_data th,
     .ck_editor_data td {
       border: 1px solid black;
+    }
+
+    @media only screen and (max-width: 480px) {
+      .delivery_truck {
+        margin-top: -27px;
+      }
     }
 
     @media only screen and (max-width: 600px) {
@@ -533,8 +539,8 @@
                     @endphp
 
                     <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
-                      <a class="lezada-button lezada-button--medium add-to-cart mr-4" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <img src="{{ asset('front/assets/images/truck.png') }}" class="ml-4 mr-3 delivery_truck img-fluid">
+                      <a class="lezada-button lezada-button--medium add-to-cart mr-3" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
+                      <img src="{{ asset('front/assets/images/truck.png') }}" class="ml-2 mr-3 delivery_truck img-fluid" data-placement="right" data-toggle="popover" data-content="{{ $frontsetting->delivery_caption ?? '' }}">
                       <a href="javascript:void(0)" data-placement="right" class="mt-lg-0 mt-md-0 mt-2" data-toggle="popover" data-content="{{ $frontsetting->delivery_caption ?? '' }}">
                         <b class="mt-lg-0 mt-2">Arrives By
                           <span class="bt">

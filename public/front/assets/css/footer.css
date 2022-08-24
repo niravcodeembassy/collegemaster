@@ -50,6 +50,70 @@ h4{
   }
 }
 
+.review_widget {
+  margin-right: 35px;
+}
 
+.shop_widget{
+  margin-right: 40px;
+}
 
+@media only screen and (min-width: 768px) and (max-width: 991px){
+  .review_widget {
+    margin-right: 0px;
+  }
 
+  .shop_widget{
+    margin-right: 0px;
+  }
+}
+
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .shop_widget{
+      margin-right: 0px;
+    }
+    .footer_grid .col-lg-1{
+      margin-left: -20px;
+      max-width: 10.333333% !important;
+      flex: 0 0  10.333333% !important;
+    }
+    .review_widget {
+      margin-right: 0px;
+    }
+    .footer_grid{
+      margin-left: 0px !important;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) and (max-width: 1499px) {
+    .shop_widget{
+      margin-right: 0px;
+    }
+    .review_widget {
+      margin-right: 0px;
+    }
+    .footer_grid .col-xl-1{
+      max-width: 10.333333% !important;
+      flex: 0 0  10.333333% !important;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .review_widget {
+      margin-right: 0px;
+    }
+
+    .shop_widget{
+      margin-right: 0px;
+    }
+  }
+
+  @media only screen and (max-width: 540px) {
+    .review_widget {
+      margin-right: 0px;
+    }
+
+    .shop_widget{
+      margin-right: 0px;
+    }
+  }

@@ -47,7 +47,7 @@ class ApiConfigServiceProvider extends ServiceProvider
         $stripe = array(
           'stripe_key' => $payment->stripe_key,
           'stripe_secret'  => $payment->stripe_secrete,
-          'stripe_enable'  => $payment->twilio_whatsapp_form
+          'stripe_enable'  => $payment->stripe_enable
         );
         \Config::set('app.stripe', $stripe);
       }

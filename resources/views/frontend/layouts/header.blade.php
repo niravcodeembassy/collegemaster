@@ -21,7 +21,8 @@
 
         <div class="search_form d-none d-lg-block">
           <form method="get" action="{{ route('category.product', 'all') }}" id="search_form">
-            <input class="form-control mr-sm-2" name="term" value="{{ request('term', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" name="term" value="{{ request('term', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search" placeholder="Find Something You'll Love!"
+              aria-label="Search">
             <input type="hidden" name="flag" value="false">
             <div class="d-flex justify-content-between main_div">
               <button type="button" id="search_btn" class="{{ request('term') ? '' : 'd-none' }}"><i class="fa fa-close"></i></button>
@@ -93,7 +94,8 @@
         </a>
         <div class="search_form_mobile">
           <form method="get" action="{{ route('category.product', 'all') }}">
-            <input class="form-control mr-sm-2" name="term" value="{{ request('term', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search_mobile" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" name="term" value="{{ request('term', null) }}" data-provide="typeahead" type="text" data-url="{{ route('live.search') }}" id="live_search_mobile" placeholder="Find Something You'll Love!"
+              aria-label="Search">
             <input type="hidden" name="flag" value="false">
             <div class="d-flex justify-content-between main_div">
               <button type="button" id="search_mobile_btn" class="{{ request('term') ? '' : 'd-none' }}"><i class="fa fa-close"></i></button>
@@ -106,10 +108,10 @@
     </div>
     <div class="main_category  d-none d-lg-block">
       <div class="container wide">
-        <div class="header-bottom-navigation  d-none d-lg-block mt-lg-2 ">
+        <div class="header-bottom-navigation text-center d-none d-lg-block mt-lg-2 ">
           <nav class="site-nav">
             <ul class="main_list" id="category_scroll">
-              @foreach ($forntcategory->whereBetween('id', [1, 13])->where('name', '!=', 'All') as $item)
+              @foreach ($forntcategory->whereBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
                 <li class="menu-item-has-children">
                   <a href="{{ route('category.product', $item->slug) }}" class="category_link">{{ ucfirst($item->name) }}</a>
                   <ul class="sub-menu single-column-menu">
@@ -125,7 +127,7 @@
               @endforeach
               <li class="menu-item-has-children "><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
                 <ul class="sub-menu single-column-menu">
-                  @foreach ($forntcategory->whereNotBetween('id', [1, 13])->where('name', '!=', 'All') as $item)
+                  @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
                     <li>
                       <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
                     </li>

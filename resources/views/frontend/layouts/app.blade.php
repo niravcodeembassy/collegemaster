@@ -169,6 +169,23 @@
     });
 
 
+    const scroller = document.querySelector(".main_list");
+    const dropDown = document.querySelectorAll(".sub-menu");
+    scroller.addEventListener("scroll", checkScroll);
+
+    function checkScroll() {
+      for (let i = 0; i < dropDown.length; i++) {
+        if (i === dropDown.length - 1) {
+          var scr = scroller.scrollLeft + 181;
+          dropDown[i].style.transform =
+            "translateX(-" + scr + "px)";
+        } else {
+          dropDown[i].style.transform =
+            "translateX(-" + scroller.scrollLeft + "px)";
+        }
+      }
+    }
+
 
 
     //ask why error

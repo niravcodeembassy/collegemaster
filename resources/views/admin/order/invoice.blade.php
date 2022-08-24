@@ -173,16 +173,18 @@
                   </table>
                 </div>
                 <div class="scheduled">
-                  <b>Scheduled to ship by</b>
-                  <table>
-                    <tr>
-                      <td>
-                        @if (isset($order->shipping_date))
+                  @if (isset($order->shipping_date))
+                    <b>Scheduled to ship by</b>
+                    <table>
+                      <tr>
+                        <td>
+
                           {{ date('F j, Y', strtotime($order->shipping_date)) }}
-                        @endif
-                      </td>
-                    </tr>
-                  </table>
+
+                        </td>
+                      </tr>
+                    </table>
+                  @endif
                 </div>
                 <div class="shop">
                   <b>Shop</b>
@@ -344,7 +346,6 @@
                                 <tr>
                                   <td>
                                     - {!! Helper::showPrice($order->discount ?? 0, $order->currency, $order->currency) !!}
-                                    {{-- - {!! Helper::showPrice($data->discount ?? 0, $order->currency, $order->currency) !!} --}}
                                   </td>
                                 </tr>
                                 <tr>
@@ -388,7 +389,7 @@
                     <b>Gift message</b>
                     <table>
                       <tr>
-                        <td> <span>The most wonderful thing I decided to do was to share my life and heart with you.</span></td>
+                        <td><span>{{ $order->gift ?? 'The most wonderful thing I decided to do was to share my life and heart with you.' }}</span></td>
                       </tr>
                       <tr>
                         <td> <span>Happy anniversary dear husband!</span>

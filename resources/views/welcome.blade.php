@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                                                                                                             =            slider area         =
-                                                                                                                                             =============================================-->
+                                                                                                                                                   =            slider area         =
+                                                                                                                                                   =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -181,7 +181,7 @@
       <div class="container wide">
         <div class="row">
           @foreach ($commonBanner as $item)
-            <div class="col-lg-4 col-sm-6 mb-30">
+            <div class="col-xl-3 col-sm-6 col-md-4 mb-30">
               <!--=======  single category  =======-->
               <div class="single-category single-category--three">
                 <!--=======  single category image  =======-->
@@ -193,7 +193,7 @@
                   <div class="title">
                     <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
                     @if ($item->url)
-                      <a class="lezada-button lezada-button--small lezada-button--custom" href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
+                      <a class="lezada-button caption_button lezada-button--custom" href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
                     @endif
                   </div>
                 </div>
@@ -475,8 +475,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                     =            instagram slider area         =
-                                                                                                                                                     =============================================-->
+                                                                                                                                                           =            instagram slider area         =
+                                                                                                                                                           =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
