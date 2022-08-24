@@ -248,9 +248,8 @@ nav.site-nav>ul>li>a:after {
 }
 
 #category_scroll{
-  overflow:auto;
+  overflow-x:auto;
   white-space: nowrap;
-  box-sizing: content-box;
 }
 
 #category_scroll::-webkit-scrollbar{

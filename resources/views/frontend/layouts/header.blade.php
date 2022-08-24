@@ -4,6 +4,7 @@
       <div class="offer_info text-center mx-sm-2">
         <a href="{{ $frontsetting->offer_info_link ?? '' }}" class="offer_info_link py-1"><span class="offer_info_text">{{ $frontsetting->offer_info ?? '' }}</span></a>
       </div>
+
     </div> --}}
     <div class="container wide mt-lg-0 mt-md-0 mt-3">
       <div class="header-bottom-container">
@@ -105,10 +106,10 @@
     </div>
     <div class="main_category  d-none d-lg-block">
       <div class="container wide">
-        <div class="header-bottom-navigation text-center d-none d-lg-block mt-lg-2 ">
+        <div class="header-bottom-navigation  d-none d-lg-block mt-lg-2 ">
           <nav class="site-nav">
-            <ul class="main_list">
-              @foreach ($forntcategory->whereBetween('id', [1, 10])->where('name', '!=', 'All') as $item)
+            <ul class="main_list" id="category_scroll">
+              @foreach ($forntcategory->whereBetween('id', [1, 13])->where('name', '!=', 'All') as $item)
                 <li class="menu-item-has-children">
                   <a href="{{ route('category.product', $item->slug) }}" class="category_link">{{ ucfirst($item->name) }}</a>
                   <ul class="sub-menu single-column-menu">
@@ -124,7 +125,7 @@
               @endforeach
               <li class="menu-item-has-children "><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
                 <ul class="sub-menu single-column-menu">
-                  @foreach ($forntcategory->whereNotBetween('id', [1, 10])->where('name', '!=', 'All') as $item)
+                  @foreach ($forntcategory->whereNotBetween('id', [1, 13])->where('name', '!=', 'All') as $item)
                     <li>
                       <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
                     </li>

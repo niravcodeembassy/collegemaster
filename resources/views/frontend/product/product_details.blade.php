@@ -147,7 +147,24 @@
     }
 
     .ck_editor_data p {
-      max-width: none;
+      max-width: 100%;
+    }
+
+
+    .ck_editor_data blockquote p {
+      max-width: 95%;
+    }
+
+    .ck_editor_data blockquote {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+
+    .ck_editor_data table,
+    .ck_editor_data th,
+    .ck_editor_data td {
+      border: 1px solid black;
     }
 
     @media only screen and (max-width: 600px) {
@@ -511,7 +528,8 @@
                       $a = date('d', time());
                       $b = date('d', $c);
                       $d = date('M', time());
-                      $str = $a . '-' . $b . ' ' . $d . '.';
+                      $e = date('M', $c);
+                      $str = $a . ' ' . $d . ' - ' . $b . ' ' . $e . '.';
                     @endphp
 
                     <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">

@@ -132,7 +132,7 @@ return [
   'stripe' => [
     'stripe_key' => env('STRIPE_KEY'),
     'stripe_secret'  => env('STRIPE_SECRET'),
-    'stripe_enable'  =>  env('stripe_enable')
+    'stripe_enable'  =>  env('STRIPE_ENABLE')
   ],
   /*
     |--------------------------------------------------------------------------
