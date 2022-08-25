@@ -110,8 +110,15 @@
     </div>
   </div>
 
-  <div class="section-title section-title--one text-center mb-20">
-    <h1>Creative team</h1>
+  <div class="section-title section-title--one text-center mb-30">
+    <h2>Creative team</h2>
+    <div class="divider-custom">
+      <div class="divider-custom-line-1"></div>
+      <div class="divider-custom-icon">
+        <i class="fa fa-circle" aria-hidden="true"></i>
+      </div>
+      <div class="divider-custom-line-1"></div>
+    </div>
   </div>
 
 
