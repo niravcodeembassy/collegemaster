@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                                                                                                                                                                                               =            slider area         =
-                                                                                                                                                                                                                               =============================================-->
+                                                                                                                                                                                                                                             =            slider area         =
+                                                                                                                                                                                                                                             =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -114,7 +114,7 @@
           <div class="col-lg-12">
             <!--=======  section title  =======-->
             <div class="section-title section-title--one text-center">
-              <h2 class="text-uppercase font-weight-bold quality_h2">We Guarantee you'll love it</h2>
+              <h3 class="text-uppercase font-weight-bold quality_h3">We Guarantee you'll love it</h3>
               <span class="text-muted quality_span">Quality you can trust!</span>
               <div class="divider-custom">
                 <div class="divider-custom-line"></div>
@@ -133,7 +133,7 @@
       <div class="row">
         <div class="col-lg-12">
           <!--=======  product carousel  =======-->
-          <div class="row lezada-slick-slider trust_slider product-carousel product-carousel--smarthome"
+          <div class="row website_trust lezada-slick-slider trust_slider product-carousel product-carousel--smarthome"
             data-slick-setting='{
             "slidesToShow": 4,
             "slidesToScroll": 2,
@@ -148,31 +148,31 @@
             data-slick-responsive='[
             {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
             {"breakpoint":1199, "settings": {"slidesToShow": 3, "arrows": false} },
-            {"breakpoint":991, "settings": {"slidesToShow": 3,"slidesToScroll": 2,   "autoplay": true,"autoplaySpeed": 5000, "arrows": false} },
-            {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":991, "settings": {"slidesToShow": 2,"slidesToScroll": 2,   "autoplay": true,"autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":767, "settings": {"slidesToShow": 3, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} }
           ]'>
 
-            <div class="trust_icon col-lg-12 col-xl-9">
+            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Ready to ship within 48 hours</h5>
               <p>All Our custom products are ready to ship within 48 hours.</p>
             </div>
 
-            <div class="trust_icon col-lg-12 col-xl-9">
+            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/print.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Long-Lasting Prints</h5>
               <p>you are assured to maintain and preserve those special moments for a longer time</p>
             </div>
 
-            <div class="trust_icon col-lg-10 col-xl-9">
+            <div class="trust_icon col-lg-10 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Over 25000+ Prints sold</h5>
               <p>Since 2019 we've sold 25k custom photo gifts to worldwide.</p>
             </div>
 
-            <div class="trust_icon col-lg-12 col-xl-9">
+            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">100% Love-it Guarantee</h5>
               <p>Love it or send it back! We guarantee a full refund with no hassle.</p>
@@ -194,7 +194,7 @@
           <div class="col-lg-12">
             <!--=======  section title  =======-->
             <div class="section-title section-title--one text-center">
-              <h2 class="text-uppercase font-weight-bold">Clever & unique ideas</h2>
+              <h3 class="text-uppercase font-weight-bold">Clever & unique ideas</h3>
               <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon">
@@ -516,8 +516,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                       =            instagram slider area         =
-                                                                                                                                                                                                                                       =============================================-->
+                                                                                                                                                                                                                                                     =            instagram slider area         =
+                                                                                                                                                                                                                                                     =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

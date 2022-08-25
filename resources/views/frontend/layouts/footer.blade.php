@@ -1,16 +1,16 @@
 <footer>
   <div class="newsletter">
     <div class="container">
-      <div class="row">
+      <div class="row d-flex align-item-center">
         <div class="col-lg-2 col-md-4 py-lg-0 py-2 text-center py-md-0 left">
           <h3 class="text-uppercase text-center text-white">
             NEWS LETTER
           </h3>
         </div>
         <div class="col-lg-4 col-md-8 py-lg-0 py-md-0 left">
-          <h4 class="text-uppercase px-md-3 px-sm-0">
-            LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY
-            SUBSCRIBING OUR NEWS LETTER.
+          <h4 class="text-uppercase px-md-3 pt-1 px-sm-0">
+            {{-- LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY --}}
+            SUBSCRIBING OUR NEWS LETTER
           </h4>
         </div>
         <div class="col-lg-6 col-md-12 right">
@@ -34,16 +34,13 @@
           <!--=======  copyright text  =======-->
           <!--=======  logo  =======-->
           <div class="logo">
-            <a href="{{ url('/') }}">
-              <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
-            </a>
-            <a href="{{ $frontsetting->google_link ?? '' }}">
-              <img class="img-fluid mt-4 my-2" src="{{ asset('front/assets/images/website_icon/google.png') }}">
+            <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
+              <img class="img-fluid mb-2" src="{{ asset('front/assets/images/website_icon/google.png') }}">
             </a>
             <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
               <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
             </a>
-            <a href="{{ $frontsetting->esty_link ?? '' }}">
+            <a href="{{ $frontsetting->esty_link ?? '' }}" target="_blank">
               <img class="img-fluid my-2" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
             </a>
           </div>
@@ -52,7 +49,7 @@
           <!--=======  End of copyright text  =======-->
           <!--=======  End of copyright text  =======-->
         </div>
-        <div class="col-xl-1 col-lg-2 col-md-4 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-2 col-md-3 footer-single-widget shop_widget">
           <h5 class="widget-title">Shop</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -77,7 +74,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-1 col-lg-1 col-md-4 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-2 col-md-3 footer-single-widget shop_widget">
           <h5 class="widget-title">ABOUT</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -134,7 +131,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-4 footer-single-widget">
+        <div class="col-xl-3 col-lg-6 col-md-4 footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
             <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>
@@ -148,31 +145,40 @@
               We are here to help you on all working days between 10:00 AM to
               07:00 PM
             </p>
-            <h4 class="footer-title d-none">We Accept</h4>
+            <h5 class="footer-title d-none">We Accept</h5>
             <ul class="footer-links d-none">
               <li><img src="{{ asset('front/assets/images/payment/payment_icon.png') }}" alt="Payment" class="img-responsive"></li>
             </ul>
-            <h5 class="footer_heading">Foolow us</h5>
-            <ul class="footer-links list-inline social-link">
-              @if ($frontsetting->facebook)
-                <li><a href="{{ $frontsetting->facebook }}"> <i class="fa fa-facebook"></i></a></li>
-              @endif
-              @if ($frontsetting->instagram)
-                <li><a href="{{ $frontsetting->instagram }}"> <i class="fa fa-instagram"></i></a></li>
-              @endif
-              @if ($frontsetting->whatsapp)
-                <li><a href="{{ $frontsetting->whatsapp }}"> <i class="fa fa-whatsapp"></i></a></li>
-              @endif
-              @if ($frontsetting->linkedin)
-                <li><a href="{{ $frontsetting->linkedin }}"> <i class="fa fa-linkedin"></i></a></li>
-              @endif
-              @if ($frontsetting->twitter)
-                <li><a href="{{ $frontsetting->twitter }}"> <i class="fa fa-twitter"></i></a></li>
-              @endif
-              @if ($frontsetting->pinterest)
-                <li><a href="{{ $frontsetting->pinterest }}"> <i class="fa fa-pinterest"></i></a></li>
-              @endif
-            </ul>
+            <div class="d-flex">
+              <section class="f-50">
+                <h5 class="footer_heading">Follow us</h5>
+                <ul class="footer-links list-inline social-link">
+                  @if ($frontsetting->facebook)
+                    <li><a href="{{ $frontsetting->facebook }}"> <i class="fa fa-facebook"></i></a></li>
+                  @endif
+                  @if ($frontsetting->instagram)
+                    <li><a href="{{ $frontsetting->instagram }}"> <i class="fa fa-instagram"></i></a></li>
+                  @endif
+                  @if ($frontsetting->whatsapp)
+                    <li><a href="{{ $frontsetting->whatsapp }}"> <i class="fa fa-whatsapp"></i></a></li>
+                  @endif
+                  @if ($frontsetting->linkedin)
+                    <li><a href="{{ $frontsetting->linkedin }}"> <i class="fa fa-linkedin"></i></a></li>
+                  @endif
+                  @if ($frontsetting->twitter)
+                    <li><a href="{{ $frontsetting->twitter }}"> <i class="fa fa-twitter"></i></a></li>
+                  @endif
+                  @if ($frontsetting->pinterest)
+                    <li><a href="{{ $frontsetting->pinterest }}"> <i class="fa fa-pinterest"></i></a></li>
+                  @endif
+                </ul>
+              </section>
+              <section class="f-50-logo">
+                <a href="{{ url('/') }}" target="_blank">
+                  <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
+                </a>
+              </section>
+            </div>
           </div>
           <!--=======  End of single widget  =======-->
         </div>

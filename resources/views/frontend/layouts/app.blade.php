@@ -187,6 +187,31 @@
     }
 
 
+   function leftScroll() {
+      const element = document.querySelector("#category_scroll");
+      sideScroll(element, 'left', 25, 300, 80);
+    }
+
+    function rightScroll() {
+      const element = document.querySelector("#category_scroll");
+      sideScroll(element, 'right', 25, 300, 80);
+    }
+
+    function sideScroll(element, direction, speed, distance, step) {
+      scrollAmount = 0;
+      var slideTimer = setInterval(function() {
+        if (direction == 'left') {
+          element.scrollLeft -= step;
+        } else {
+          element.scrollLeft += step;
+        }
+        scrollAmount += step;
+        if (scrollAmount >= distance) {
+          window.clearInterval(slideTimer);
+        }
+      }, speed);
+    }
+
 
     //ask why error
     document.querySelectorAll('oembed[url]').forEach(element => {

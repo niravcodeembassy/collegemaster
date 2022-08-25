@@ -178,6 +178,7 @@
                       </div>
 
                       <div class="col-md-6 col-12 mb-20">
+                        <input type="hidden" name="old_billing_state" id="old_billing_state" value="{{ isset($sessionData['billing_state']) && $sessionData['billing_state'] != '' ? strtolower($sessionData['billing_state']) : '' }}">
                         <label>State*</label>
                         <select class="nice-select billing_state" placeholder="State" name="billing_state" style="display: none;" id="billing_state">
                           <option value="">Select State</option>
@@ -397,9 +398,23 @@
         function(data) {
           if (data.length != "") {
             $('.billing_state').html(null);
+
+            var old_billing_state = $('#old_billing_state').val();
+
             var html = "";
             for (var i = 0; i < data.length; i++) {
-              html += '<option>' + data.stateData[i].name + '</option>';
+
+              var state_name = data.stateData[i].name.toLowerCase();
+              if (state_name == old_billing_state) {
+                var var_selected = "selected";
+              } else {
+                var var_selected = "";
+              }
+              html += '<option value="' + data.stateData[i].id + '" ' + var_selected + '>' + data
+                .stateData[i].name + '</option>';
+
+
+              // html += '<option>' + data.stateData[i].name + '</option>';
             }
             $('.billing_state').html(html);
             $('select.billing_state').niceSelect();

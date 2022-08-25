@@ -25,6 +25,9 @@
       }
     }
   </style>
+  @section('title')
+    {{ $title }}
+  @endsection
   @section('content')
     <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-100">
       <div class="container">

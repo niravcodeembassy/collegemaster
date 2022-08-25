@@ -50,6 +50,15 @@ h4{
   }
 }
 
+.f-50{
+  flex-basis: 50%;
+}
+
+.f-50-logo{
+  flex-basis: 50%;
+}
+
+
 .review_widget {
   margin-right: 35px;
 }
@@ -59,17 +68,21 @@ h4{
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
-  .review_widget {
-    margin-right: 0px;
+  .footer-top .footer-links.list-inline li {
+    margin-right: 3px;
   }
 
-  .shop_widget{
-    margin-right: 0px;
+  .f-50{
+    flex-basis: 60%;
+  }
+
+  .f-50-logo{
+    flex-basis: 40%;
   }
 }
 
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .shop_widget{
+    /* .shop_widget{
       margin-right: 0px;
     }
     .footer_grid .col-lg-1{
@@ -79,9 +92,21 @@ h4{
     }
     .review_widget {
       margin-right: 0px;
+    } */
+
+    /* .footer-top .footer-links.list-inline li {
+      margin-right: 2px;
     }
-    .footer_grid{
-      margin-left: 0px !important;
+
+    .f-50{
+      flex-basis: 58%;
+    }
+
+    .f-50-logo{
+      flex-basis: 42%;
+    } */
+    .newsletter h3{
+      font-size: 18px;
     }
   }
 
@@ -106,6 +131,18 @@ h4{
     .shop_widget{
       margin-right: 0px;
     }
+
+    .f-50{
+      flex-basis: 60%;
+    }
+
+    .f-50-logo{
+      flex-basis: 40%;
+    }
+
+    .footer-top .footer-links.list-inline li {
+      margin-right: 5px;
+  }
   }
 
   @media only screen and (max-width: 540px) {

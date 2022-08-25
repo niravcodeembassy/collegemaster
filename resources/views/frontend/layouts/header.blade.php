@@ -106,10 +106,12 @@
         @include('frontend.layouts.category_ovelay')
       </div>
     </div>
+
     <div class="main_category  d-none d-lg-block">
       <div class="container wide">
         <div class="header-bottom-navigation text-center d-none d-lg-block mt-lg-2 ">
           <nav class="site-nav">
+            <button class="left_scroll d-xl-none d-lg-block" onclick="leftScroll()"><i class="fa fa-angle-left fa-lg" aria-hidden="true"></i></button>
             <ul class="main_list" id="category_scroll">
               @foreach ($forntcategory->whereBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
                 <li class="menu-item-has-children">
@@ -125,7 +127,7 @@
                   </ul>
                 </li>
               @endforeach
-              <li class="menu-item-has-children "><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
+              <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
                 <ul class="sub-menu single-column-menu">
                   @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
                     <li>
@@ -135,6 +137,7 @@
                 </ul>
               </li>
             </ul>
+            <button class="right_scroll d-xl-none d-lg-block" onclick="rightScroll()"><i class="fa fa-angle-right fa-lg" aria-hidden="true"></i></button>
           </nav>
         </div>
       </div>

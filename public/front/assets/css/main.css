@@ -65,6 +65,10 @@ html, body {
   overflow-x: hidden;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: #ffffff;
   line-height: 24px;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Mail;
-use Helper;  
+use Helper;
 use App\Setting;
 use App\Model\Order;
 use App\Model\State;
@@ -119,14 +119,13 @@ class CheckOutController extends Controller
 
       $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
 
+      //whatsapp sent message
       try {
         $this->sendMessage($this->user->phone, $body);
       } catch (\Exception $e) {
         dump($e);
       }
 
-
-      //whatsapp message
       try {
         $mail = Setting::where('name', 'mail')->first();
 
@@ -332,7 +331,6 @@ class CheckOutController extends Controller
     $address['shipping_address'] = $shippingAddress;
     // if billing address is different then set in session
     if ($this->request->different_billing_address == 'on') {
-
       $state = State::find($this->request->billing_state);
       $country = Country::find($this->request->billing_country);
 
@@ -603,13 +601,14 @@ class CheckOutController extends Controller
 
         $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
 
+        //whatsapp message
         try {
           $this->sendMessage($this->user->phone, $body);
         } catch (\Exception $e) {
           dump($e);
         }
 
-        //whatsapp message
+
         try {
           Mail::to($this->user->email)->send(new OrderPlaced($this->order));
         } catch (\Exception $th) {

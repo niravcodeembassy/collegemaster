@@ -111,7 +111,7 @@
   </div>
 
   <div class="section-title section-title--one text-center mb-30">
-    <h2>Creative team</h2>
+    <h2 class="font-weight-bold">Creative team</h2>
     <div class="divider-custom">
       <div class="divider-custom-line-1"></div>
       <div class="divider-custom-icon">
