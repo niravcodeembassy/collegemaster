@@ -298,6 +298,27 @@ a.login_link:hover {
   border-radius: 4px;
 }
 
+nav.site-nav > ul > li ul.single-column-menu {
+  max-height: 700px;
+  white-space: nowrap;
+  overflow-y: scroll;
+}
+
+ul.single-column-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* ul.single-column-menu::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+} */
+
+ul.single-column-menu::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #6d6d6d;
+}
+
 /* Clever & unique ideas */
 
 .single-category__content--three--creativehome .title p>a {
@@ -513,10 +534,16 @@ nav.site-nav .d-xl-none{
     margin-left: 40px;
     margin-right: 40px;
   }
+  nav.site-nav > ul > li ul.single-column-menu {
+    max-height: 610px;
+  }
 }
 @media  screen and (max-width: 1366px) {
   .single-category__content--three--creativehome {
     bottom: 30px;
     left: 24px;
+  }
+  nav.site-nav > ul > li ul.single-column-menu {
+    max-height: 500px;
   }
 }
