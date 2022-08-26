@@ -211,45 +211,36 @@
 @section('content')
 
   <div class="mt-15">
-    <div class="container wide">
+    <div class="container">
       <div class="row">
-        <div class="col-xl-6 col-lg-6">
-          <div class="row">
-            <div class="col-md-3">
-
-            </div>
-            <div class="col-md-9">
-              <div class="breadcrumb-area pb-20">
-                <ul class="breadcrumb-list">
-                  <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-                  <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active' : '' }}">
-                    <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
-                  </li>
-                  @php
-                    $routeParameter = Helper::productRouteParameter($product);
-                    $sub = $product->subcategory;
-                    unset($routeParameter['slug']);
-                  @endphp
-                  @if (isset($sub) && !is_null($sub))
-                    <li class="breadcrumb-list__item breadcrumb-list__item--active">
-                      <a href="{{ route('product.details', $routeParameter) }}">{{ $sub->name }}
-                      </a>
-                    </li>
-                  @endif
-                  <li class="breadcrumb-list__item breadcrumb-list__item--active d-none">
-                    <a href="javascript:void(0)">
-                      {{-- {{ Str::words($product->name,8, '...') }} --}}
-                      {{ $product->name }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <div class="col-lg-12">
+          <div class="breadcrumb-area pb-20">
+            <ul class="breadcrumb-list">
+              <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
+              <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active' : '' }}">
+                <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
+              </li>
+              @php
+                $routeParameter = Helper::productRouteParameter($product);
+                $sub = $product->subcategory;
+                unset($routeParameter['slug']);
+              @endphp
+              @if (isset($sub) && !is_null($sub))
+                <li class="breadcrumb-list__item breadcrumb-list__item--active">
+                  <a href="{{ route('product.details', $routeParameter) }}">{{ $sub->name }}
+                  </a>
+                </li>
+              @endif
+              <li class="breadcrumb-list__item breadcrumb-list__item--active d-none">
+                <a href="javascript:void(0)">
+                  {{-- {{ Str::words($product->name,8, '...') }} --}}
+                  {{ $product->name }}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 
@@ -259,13 +250,13 @@
   <!--==============================================            shop page content         ==============================================-->
 
   <div class="shop-page-wrapper">
-    <div class="container wide">
+    <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <!--=======  shop product content  =======-->
           <div class="shop-product">
-            <div class="row pb-100 pb-md-0 pb-sm-0 pb-xs-0 pb-xxs-0">
-              <div class="col-xl-6 col-lg-6 mb-md-70 mb-sm-70">
+            <div class="row pb-100">
+              <div class="col-xl-6 col-lg-6 mb-md-70 mb-sm-70 d-none">
                 @php
                   $images = $product->images;
                   if ($productVarinat->productimage_id !== null) {
@@ -342,7 +333,86 @@
                 </div>
               </div>
 
-              <div class="col-xl-4 col-lg-6 mb-md-70 mb-sm-70">
+              <div class="col-lg-6 mb-md-70 mb-sm-70">
+                <!--=======  shop product big image gallery  =======-->
+
+                <div class="shop-product__big-image-gallery-wrapper mb-30">
+
+                  <!--=======  shop product gallery icons  =======-->
+
+                  <div class="single-product__floating-badges single-product__floating-badges--shop-product">
+                    {{-- <span class="hot">hot</span> --}}
+                    <input type="hidden" value="{{ route('product.varients') }}" id="varient_url">
+                  </div>
+
+
+                  <div class="shop-product-rightside-icons">
+
+                    <span class="wishlist-icon">
+                      @if (isset($wishList))
+                        @auth
+                          <a href="javascript:void(0)" class="has-wish-lists bg-danger p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
+                            <i class="ion-android-favorite-outline text-white"></i>
+                          </a>
+                        @else
+                          <a href="javascript:void(0)" class="has-wish-lists p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                        @endif
+                      @endauth
+
+                    </span>
+                    <span class="enlarge-icon">
+                      <a class="btn-zoom-popup p-1" href="#" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                        data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
+                    </span>
+                  </div>
+                  @php
+                    $images = $product->images;
+                    if ($productVarinat->productimage_id !== null) {
+                        $findImage = $images->where('id', $productVarinat->productimage_id)->first();
+                        $images = $images->reject(function ($value, $key) use ($productVarinat) {
+                            return $productVarinat->productimage_id == $value->id;
+                        });
+                        $images->splice(0, 0, [$findImage]);
+                    }
+                    $images = $product->images;
+                  @endphp
+                  {{-- @dump($images,$productVarinat) --}}
+                  <!--=======  End of shop product gallery icons  =======-->
+
+                  <div class="shop-product__big-image-gallery-slider lazy">
+                    <!--=======  single image  =======-->
+                    @foreach ($images as $key => $item)
+                      <div class="single-image main_big_img" id="slick_image_id_{{ $item->id }}">
+                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                      </div>
+                    @endforeach
+                    <!--=======  End of single image  =======-->
+                  </div>
+
+                </div>
+
+                <!--=======  End of shop product big image gallery  =======-->
+
+                <!--=======  shop product small image gallery  =======-->
+
+                <div class="shop-product__small-image-gallery-wrapper">
+                  <div class="shop-product__small-image-gallery-slider lazy">
+                    @foreach ($images as $key => $item)
+                      <!--=======  single image  =======-->
+                      <div class="single-image" id="slick_id_{{ $item->id }}">
+                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                      </div>
+                      <!--=======  End of single image  =======-->
+                    @endforeach
+                  </div>
+                </div>
+
+                <!--=======  End of shop product small image gallery  =======-->
+              </div>
+
+              <div class="col-lg-6">
                 <div class="shop-product__description shop-product-url" data-url="{{ route('product.details', $routeParameter) }}">
                   <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                   <!--=======  shop product navigation  =======-->
@@ -670,7 +740,7 @@
                       <!--=======  shop product long description  =======-->
 
                       <div class="shop-product__long-desc mb-30">
-                        <div class="container ck_editor_data">
+                        <div class="ck_editor_data">
                           {!! $product->content !!}
                         </div>
                       </div>
@@ -681,9 +751,7 @@
                     <div class="tab-pane fade" id="product-series-2" role="tabpanel" aria-labelledby="product-tab-2">
                       <!--=======  shop product additional information  =======-->
 
-                      <div class="container">
-                        @include('frontend.product.partial.specification')
-                      </div>
+                      @include('frontend.product.partial.specification')
 
                       <!--=======  End of shop product additional information  =======-->
                     </div>
@@ -691,9 +759,7 @@
                     <div class="tab-pane fade" id="product-series-3" role="tabpanel" aria-labelledby="product-tab-3">
                       <!--=======  shop product reviews  =======-->
 
-                      <div class="container">
-                        @include('frontend.product.partial.review')
-                      </div>
+                      @include('frontend.product.partial.review')
 
                       <!--=======  End of shop product reviews  =======-->
                     </div>

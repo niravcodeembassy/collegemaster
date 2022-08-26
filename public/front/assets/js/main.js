@@ -1118,7 +1118,7 @@
       infinite: true,
       arrows: true,
       dots: false,
-      slidesToShow: 4,
+      slidesToShow: 5,
       centerMode: false,
       focusOnSelect: true,
       centerPadding: "0",

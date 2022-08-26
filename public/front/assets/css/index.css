@@ -109,6 +109,9 @@
   margin-bottom: 6px !important;
 }
 
+.main_list li:last-child ul.sub-menu{
+  transform: translateX(-180px);
+}
 
 
 /* //header css */
@@ -384,6 +387,10 @@ h3.quality_h3{
   line-height: 8px;
 }
 
+.single-category__image img{
+  object-fit: cover;
+  height: 250px;
+}
 
 @media only screen and (max-width: 480px) {
   h3.quality_h3{
@@ -436,24 +443,20 @@ h3.quality_h3{
     margin-right: 10px;
   }
 }
+
 @media screen and (max-width: 1024px) {
   nav.site-nav>ul>li ul.single-column-menu {
     min-width: auto;
   }
 }
-@media only screen and (max-width: 480px) {
-  .single-category__content--three--creativehome {
-    bottom: 10px;
-    left: 15px;
-}
-}
+
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
 .single-category__content--three--creativehome {
-  bottom: 30px !important;
+  bottom: 0px !important;
   left: 18px !important;
 }
-.single-category {
+.single-category{
   height: 150px !important;
 }
 }
@@ -472,17 +475,12 @@ ul.main_list{
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1499px) {
-.single-category__content--three--creativehome {
-  bottom: 90px !important;
-}
-.single-category {
-  height: 220px;
-}
-
-
 .website_trust .col-xl-9{
   flex: 0 0 91.666667%;
   max-width: 91.666667%;
+}
+.single-category__content--three--creativehome {
+  bottom: 30px !important;
 }
 ul.main_list{
   margin-left: 30px;
@@ -491,33 +489,17 @@ ul.main_list{
 nav.site-nav .d-xl-none{
   display: block !important;
 }
-
 }
-@media  screen and (max-width: 1600px) {
+
+/* @media  screen and (max-width: 1600px) {
   .single-category__content--three--creativehome {
     bottom: 70px;
   }
-  .single-category__image img{
-    object-fit: cover;
-  }
-  .hover-banner-area .mb-30{
-    margin-bottom: 0px !important;
-  }
-}
+} */
 
 @media  screen and (max-width: 1366px) {
   .single-category__content--three--creativehome {
-    bottom: 50px;
+    bottom: 30px;
     left: 24px;
-  }
-  .single-category__image img{
-    object-fit: cover;
-  }
-  .single-category {
-    height: 200px;
-  }
-
-  .hover-banner-area .mb-30{
-    margin-bottom: 0px !important;
   }
 }

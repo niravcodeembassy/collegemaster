@@ -2,12 +2,12 @@
   <div class="newsletter">
     <div class="container">
       <div class="row d-flex align-item-center">
-        <div class="col-lg-2 col-md-4 py-lg-0 py-2 text-center py-md-0 left">
-          <h3 class="text-uppercase text-center text-white">
+        <div class="col-lg-2 col-md-4 text-center left">
+          <h3 class="text-uppercase text-center text-white p-0">
             NEWS LETTER
           </h3>
         </div>
-        <div class="col-lg-4 col-md-8 py-lg-0 py-md-0 left">
+        <div class="col-lg-4 col-md-8 left">
           <h4 class="text-uppercase px-md-3 pt-1 px-sm-0">
             {{-- LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY --}}
             SUBSCRIBING OUR NEWS LETTER
@@ -49,7 +49,7 @@
           <!--=======  End of copyright text  =======-->
           <!--=======  End of copyright text  =======-->
         </div>
-        <div class="col-xl-1 col-lg-2 col-md-3 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-2 col-md-4 footer-single-widget shop_widget">
           <h5 class="widget-title">Shop</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -74,7 +74,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-1 col-lg-2 col-md-3 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-2 col-md-4 footer-single-widget shop_widget">
           <h5 class="widget-title">ABOUT</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
