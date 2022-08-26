@@ -1,14 +1,14 @@
 <footer>
   <div class="newsletter">
     <div class="container">
-      <div class="row d-flex align-item-center">
-        <div class="col-lg-2 col-md-4 text-center left">
-          <h3 class="text-uppercase text-center text-white p-0">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-2 col-md-4 text-center left pb-lg-0 pb-xl-0 pb-md-2 pb-1">
+          <h3 class="text-uppercase text-center text-white p-0 m-0">
             NEWS LETTER
           </h3>
         </div>
-        <div class="col-lg-4 col-md-8 left">
-          <h4 class="text-uppercase px-md-3 pt-1 px-sm-0">
+        <div class="col-lg-4 col-md-8 left pb-lg-0 pb-xl-0 pb-2">
+          <h4 class="text-uppercase px-md-3 px-sm-0 p-0 m-0">
             {{-- LIKED OUR PRODUCTS? GET PROMO CODES &amp; <br>COUPONS BY --}}
             SUBSCRIBING OUR NEWS LETTER
           </h4>
@@ -29,7 +29,7 @@
 
   <div class="footer-top footer-container footer-one pt-70 pb-20 pb-sm-10 pt-sm-50">
     <div class="container-fluid">
-      <div class="row clearfix footer_grid mx-lg-5 mx-0">
+      <div class="row clearfix footer_grid mx-xl-5 mx-2">
         <div class="col-xl-2 col-lg-2 col-md-4 footer-single-widget review_widget">
           <!--=======  copyright text  =======-->
           <!--=======  logo  =======-->
@@ -74,7 +74,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-1 col-lg-2 col-md-4 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-1 col-md-4 footer-single-widget shop_widget">
           <h5 class="widget-title">ABOUT</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -116,7 +116,7 @@
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
-              <ul>
+              <ul class="footer-links">
                 <li><a href="{{ route('page.order.place') }}">How To Place Order</a></li>
                 <li><a href="{{ route('page.send.photo') }}">How To Send Us Photos</a></li>
                 <li><a href="{{ route('page.photo.send') }}">How Many Photos To Send</a></li>
@@ -131,7 +131,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-4 footer-single-widget">
+        <div class="col-xl-3 col-lg-3 col-md-4 footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
             <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>

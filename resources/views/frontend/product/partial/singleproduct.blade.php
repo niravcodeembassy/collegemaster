@@ -51,10 +51,11 @@
       </a>
     </div>
     <div class="price">
+      <span class="main-price" style="font-size: 18px;">{{ 'US' . $priceData->price . '+' }}</span>
       @if ($priceData->offer_price)
-        <span class="main-price discounted" style="font-size: 16px;">{{ $priceData->offer_price }}</span>
+        <span class="main-price discounted" style="font-size: 14px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
+        <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
       @endif
-      <span class="main-price" style="font-size: 20px;">{{ $priceData->price }}</span>
     </div>
   </div>
 

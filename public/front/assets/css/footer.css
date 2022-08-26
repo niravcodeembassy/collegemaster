@@ -91,7 +91,10 @@ h4{
 }
 
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    /* .shop_widget{
+  .newsletter h3{
+      font-size: 18px;
+    }
+    .review_widget {
       margin-right: 0px;
     }
     .footer_grid .col-lg-1{
@@ -99,23 +102,17 @@ h4{
       max-width: 10.333333% !important;
       flex: 0 0  10.333333% !important;
     }
-    .review_widget {
-      margin-right: 0px;
-    } */
-
-    /* .footer-top .footer-links.list-inline li {
+    .f-50{
+      flex-basis: 60%;
+    }
+    .footer-top .footer-links.list-inline li {
       margin-right: 2px;
     }
-
-    .f-50{
-      flex-basis: 58%;
-    }
-
     .f-50-logo{
-      flex-basis: 42%;
-    } */
-    .newsletter h3{
-      font-size: 18px;
+      flex-basis: 40%;
+    }
+    .shop_widget{
+      margin-right: 0px;
     }
   }
 
@@ -141,8 +138,6 @@ h4{
     .f-50{
       flex-basis: 60%;
     }
-
-
     .footer-top .footer-links.list-inline li {
       margin-right: 5px;
   }

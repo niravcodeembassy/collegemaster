@@ -151,6 +151,7 @@
       max-width: 100%;
     }
 
+
     .ck_editor_data blockquote p {
       max-width: 95%;
     }
@@ -256,82 +257,6 @@
           <!--=======  shop product content  =======-->
           <div class="shop-product">
             <div class="row pb-100">
-              <div class="col-xl-6 col-lg-6 mb-md-70 mb-sm-70 d-none">
-                @php
-                  $images = $product->images;
-                  if ($productVarinat->productimage_id !== null) {
-                      $findImage = $images->where('id', $productVarinat->productimage_id)->first();
-                      $images = $images->reject(function ($value, $key) use ($productVarinat) {
-                          return $productVarinat->productimage_id == $value->id;
-                      });
-                      $images->splice(0, 0, [$findImage]);
-                  }
-                  $images = $product->images;
-                @endphp
-                <div class="row">
-                  <div class="col-md-3 order-2 order-md-1">
-                    <div class="shop-product__small-image-gallery-wrapper">
-                      <div class="shop-product__small-image-gallery-slider--vertical lazy">
-                        @foreach ($images as $key => $item)
-                          <!--=======  single image  =======-->
-                          <div class="single-image" id="slick_id_{{ $item->id }}">
-                            <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
-                          </div>
-                          <!--=======  End of single image  =======-->
-                        @endforeach
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-9 order-1 order-sm-1">
-                    <div class="shop-product__big-image-gallery-wrapper mb-30">
-
-                      <!--=======  shop product gallery icons  =======-->
-
-                      <div class="single-product__floating-badges single-product__floating-badges--shop-product">
-                        {{-- <span class="hot">hot</span> --}}
-                        <input type="hidden" value="{{ route('product.varients') }}" id="varient_url">
-                      </div>
-
-
-                      <div class="shop-product-rightside-icons">
-
-                        <span class="wishlist-icon">
-                          @if (isset($wishList))
-                            @auth
-                              <a href="javascript:void(0)" class="has-wish-lists bg-danger p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
-                                <i class="ion-android-favorite-outline text-white"></i>
-                              </a>
-                            @else
-                              <a href="javascript:void(0)" class="has-wish-lists p-1" data-url="{{ route('wishlist.add.remove', ['variant_id' => $productVarinat->id]) }}">
-                                <i class="ion-android-favorite-outline"></i>
-                              </a>
-                            @endif
-                          @endauth
-
-                        </span>
-                        <span class="enlarge-icon">
-                          <a class="btn-zoom-popup p-1" href="#" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                            data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
-                        </span>
-                      </div>
-
-                      {{-- @dump($images,$productVarinat) --}}
-                      <!--=======  End of shop product gallery icons  =======-->
-
-                      <div class="shop-product__big-image-gallery-slider lazy">
-                        <!--=======  single image  =======-->
-                        @foreach ($images as $key => $item)
-                          <div class="single-image main_big_img" id="slick_image_id_{{ $item->id }}">
-                            <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
-                          </div>
-                        @endforeach
-                        <!--=======  End of single image  =======-->
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               <div class="col-lg-6 mb-md-70 mb-sm-70">
                 <!--=======  shop product big image gallery  =======-->
@@ -889,8 +814,8 @@
     $(document).ready(function() {
 
       $('a.copy_link').click(function(e) {
-        $url = $(this).data('url');
-        navigator.clipboard.writeText($url);
+        var url = $(this).data('url');
+        navigator.clipboard.writeText(url);
         $.toast({
           text: "Link Copied",
           showHideTransition: "slide",

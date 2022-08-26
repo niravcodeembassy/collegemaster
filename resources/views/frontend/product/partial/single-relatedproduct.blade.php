@@ -1,12 +1,10 @@
-<div class="single-product--list">
+<div class="single-product">
   <!--=======  single product image  =======-->
   @php
-    $priceData = Helper::productPrice($product);
+    $priceData = Helper::productPrice($product->productdefaultvariant);
     $routeParameter = Helper::productRouteParameter($product);
     $route = route('product.details', $routeParameter);
   @endphp
-
-
   <div class="single-product__image">
     <a class="image-wrap" href="{{ $route }}">
       @foreach ($product->images->take(1) as $item)
@@ -31,37 +29,35 @@
         @else
           <a href="{{ route('login') }}" class="" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder" data-tippy-placement="left"
             data-url="#">
-            <i class="ion-android-favorite-outline "></i>
+            <i class="ion-android-favorite-outline"></i>
           </a>
         @endauth
       </span>
     </div>
-
-
 
   </div>
 
   <!--=======  End of single product image  =======-->
 
   <!--=======  single product content  =======-->
-  <div class="single-product__content">
 
+  <div class="single-product__content">
     <div class="title">
-      <h3> <a href="{{ $route }}">{{ $product->name }}</a></h3>
+      <h3>
+        <a href="{{ $route }}">{{ Str::words($product->name, 8, '...') }}</a>
+      </h3>
+      <a href="{{ $route }}">
+        VIEW PRODUCT
+      </a>
     </div>
     <div class="price">
-      <span class="main-price" style="font-size: 20px;">{{ 'US' . $priceData->price . '+' }}</span>
+      <span class="main-price" style="font-size: 16px;">{{ 'US' . $priceData->price . '+' }}</span>
       @if ($priceData->offer_price)
-        <span class="main-price discounted" style="font-size: 16px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
+        <span class="main-price discounted" style="font-size: 12px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
         <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
       @endif
     </div>
-    <p class="short-desc">
-      {!! $product->content !!}
-    </p>
-
-    <a href="{{ $route }}" class="lezada-button lezada-button--medium">VIEW PRODUCT</a>
-
   </div>
+
   <!--=======  End of single product content  =======-->
 </div>
