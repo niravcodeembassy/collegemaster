@@ -430,9 +430,16 @@ h3.quality_h3{
   }
 }
 
+@media only screen and (max-width: 280px) {
+  h3.quality_h3{
+    line-height: 30px;
+    font-size: 24px !important;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   h3.quality_h3{
-    font-size: 22px;
+    line-height: 30px;
   }
   .single-category{
     height: 180px !important;
@@ -497,6 +504,16 @@ nav.site-nav .d-xl-none{
 }
 }
 
+
+@media  screen and (max-width: 1600px) {
+  nav.site-nav .d-xl-none {
+    display: block !important;
+  }
+  ul.main_list{
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+}
 @media  screen and (max-width: 1366px) {
   .single-category__content--three--creativehome {
     bottom: 30px;
