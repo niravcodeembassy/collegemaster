@@ -298,6 +298,11 @@ a.login_link:hover {
   border-radius: 4px;
 }
 
+/* .single-category__image img{
+  height: 220px;
+  object-fit: cover;
+} */
+
 nav.site-nav > ul > li ul.single-column-menu {
   max-height: 700px;
   white-space: nowrap;
@@ -405,10 +410,7 @@ h3.quality_h3{
   line-height: 8px;
 }
 
-.single-category__image img{
-  /* object-fit: cover; */
-  height: 220px;
-}
+
 
 
 
@@ -462,15 +464,21 @@ h3.quality_h3{
   h3.quality_h3{
     line-height: 30px;
   }
-  /* .single-category{
-    height: 180px !important;
-  }
-
-  .single-category__content--three--creativehome {
-    bottom: 6px !important;
+  /* .single-category__content--three--creativehome {
+    bottom: 10px;
   } */
+  .single-category{
+    height: 220px !important;
+    width: auto;
+  }
+  .single-category__image img {
+    height: 220px !important;
+  }
+  .banner_side {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
 }
-
+}
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
 .header-right-icons {
@@ -484,25 +492,10 @@ h3.quality_h3{
 .header-bottom-container .header-right-container {
   flex-basis: 60%;
 }
-/* .single-category{
-  height: auto !important;
-}
-.single-category__image img {
-  height: auto;
-}
-.single-category__content--three--creativehome {
-  bottom: 10px !important;
-} */
-
 }
 
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-/* .single-category__content--three--creativehome {
-  bottom: 100px;
-  left: 18px;
-} */
-
 ul.main_list{
   margin-left: 30px;
   margin-right: 30px;
@@ -521,9 +514,16 @@ ul.main_list{
 nav.site-nav .d-xl-none{
   display: block !important;
 }
+.single-category{
+  width: auto !important;
+}
+.hover-banner-area .mb-30 {
+  padding-bottom: 15px;
+}
 }
 
 
+/* screen 1600*900 */
 @media  screen and (max-width: 1600px) {
   nav.site-nav .d-xl-none {
     display: block !important;
@@ -535,20 +535,119 @@ nav.site-nav .d-xl-none{
   nav.site-nav > ul > li ul.single-column-menu {
     max-height: 610px;
   }
+  .single-category{
+    height: 207px;
+    width: 363px;
+  }
+  .single-category__content--three--creativehome {
+    left: 28px;
+  }
+  .single-category__image img {
+    height: 207px;
+  }
+  .hover-banner-area .mb-30{
+    margin-bottom:18px !important;
+  }
 }
 
+/* screen 1366*768 */
 @media  screen and (max-width: 1366px) {
   nav.site-nav > ul > li ul.single-column-menu {
     max-height: 500px;
   }
+  .single-category{
+    height:175px;
+    width: auto;
+  }
+  .single-category__image img {
+    height:175px;
+  }
+  .hover-banner-area .mb-30{
+    margin-bottom: 16px !important;
+    padding-bottom: 0px;
+  }
+  .banner_side{
+    width: 100%;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+  .single-category__content--three--creativehome {
+    left: 18px;
+  }
 }
 
+/* screen 1920*1080 */
+@media  screen and (min-device-width: 1920px) {
+  .single-category{
+    height: 250px;
+  }
+  .single-category__content--three--creativehome {
+    left: 42px;
+  }
+  .caption_button {
+    font-size: 14px !important;
+  }
+  .hover-banner-area .mb-30{
+    margin-bottom: 16px !important;
+  }
+  .banner_side{
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+  .single-category__content--three--banner .title > a {
+  line-height: 26px;
+  }
+  .single-category__content--three--creativehome .title p>a {
+    font-size: 22px !important;
+    line-height: 30px;
+  }
+}
 
+/* (640x360 and 667x375) */
 @media only screen and (min-width: 640px) and (max-width: 667px) {
   .trust_icon p{
     font-size: 13px !important;
   }
   .header-right-icons{
     float:right;
+  }
+  .single-category__content--three--creativehome {
+    bottom: 10px;
+  }
+  /* .single-category{
+    height: 220px;
+    width: auto;
+  }
+  .single-category__image img {
+    height: 220px;
+  } */
+  .banner_side {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .hover-banner-area .mb-30{
+    padding-bottom: 15px;
+  }
+}
+
+/* (768x1024) iPad 1 & 2, Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .single-category{
+    height: 220px;
+    width: auto;
+  }
+  .single-category__image img {
+    height: 220px;
+  }
+}
+
+/* (1024x768) iPad 1 & 2, Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .single-category{
+    height: 220px;
+    width: auto;
+  }
+  .single-category__image img {
+    height: 220px;
   }
 }

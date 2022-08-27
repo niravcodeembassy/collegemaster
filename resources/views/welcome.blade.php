@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                                                                                                                                                                                                               =            slider area         =
-                                                                                                                                                                                                                                               =============================================-->
+                                                                                                                                                                                                                                                 =            slider area         =
+                                                                                                                                                                                                                                                 =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -153,7 +153,7 @@
             {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} }
           ]'>
-            
+
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Ready to ship within 48 hours</h5>
@@ -222,7 +222,7 @@
       <div class="container wide">
         <div class="row">
           @foreach ($commonBanner as $item)
-            <div class="col-xl-3 col-lg-4 col-sm-6 col-md-6 mb-30">
+            <div class="col-xl-3 col-lg-4 col-sm-6 col-md-6 mb-30 banner_side">
               <!--=======  single category  =======-->
               <div class="single-category single-category--three">
                 <!--=======  single category image  =======-->
@@ -516,8 +516,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                                       =            instagram slider area         =
-                                                                                                                                                                                                                                                       =============================================-->
+                                                                                                                                                                                                                                                         =            instagram slider area         =
+                                                                                                                                                                                                                                                         =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
