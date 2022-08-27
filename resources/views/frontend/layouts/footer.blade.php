@@ -30,7 +30,7 @@
   <div class="footer-top footer-container footer-one pt-70 pb-20 pb-sm-10 pt-sm-50">
     <div class="container-fluid">
       <div class="row clearfix footer_grid mx-xl-5 mx-2">
-        <div class="col-xl-2 col-lg-2 col-md-4 footer-single-widget review_widget">
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 footer-single-widget review_widget">
           <!--=======  copyright text  =======-->
           <!--=======  logo  =======-->
           <div class="logo">
@@ -49,7 +49,7 @@
           <!--=======  End of copyright text  =======-->
           <!--=======  End of copyright text  =======-->
         </div>
-        <div class="col-xl-1 col-lg-2 col-md-4 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-2 col-md-4 col-sm-6 footer-single-widget shop_widget">
           <h5 class="widget-title">Shop</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -74,7 +74,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-1 col-lg-1 col-md-4 footer-single-widget shop_widget">
+        <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 footer-single-widget shop_widget">
           <h5 class="widget-title">ABOUT</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -92,7 +92,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-4 footer-single-widget">
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 footer-single-widget">
           <h5 class="widget-title">policies</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -111,7 +111,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-4 footer-single-widget">
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 footer-single-widget">
           <h5 class="widget-title"> help topics</h5>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
@@ -131,7 +131,7 @@
           <!--=======  End of footer navigation container  =======-->
           <!--=======  single widget  =======-->
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-4 footer-single-widget">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
             <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>

@@ -149,11 +149,11 @@
             {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
             {"breakpoint":1199, "settings": {"slidesToShow": 3, "arrows": false} },
             {"breakpoint":991, "settings": {"slidesToShow": 2,"slidesToScroll": 2,   "autoplay": true,"autoplaySpeed": 5000, "arrows": false} },
-            {"breakpoint":767, "settings": {"slidesToShow": 3, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
+            {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} }
           ]'>
-
+            
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Ready to ship within 48 hours</h5>
@@ -169,7 +169,7 @@
             <div class="trust_icon col-lg-10 col-xl-9 col-md-12 p-0">
               <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" class="img-fluid">
               <h5 class="font-weight-bold">Over 25000+ Prints sold</h5>
-              <p>Since 2019 we've sold 25k custom photo gifts to worldwide.</p>
+              <p>Since 2019, we've sold 25k custom photo gifts to worldwide.</p>
             </div>
 
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
@@ -203,7 +203,7 @@
                 <div class="divider-custom-line"></div>
               </div>
               <p class="idea_content d-xl-block d-none">
-                <span>Collage Master is a one-of-a-kind gifting service that has revolutinized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master</span>
+                <span>Collage Master is a one-of-a-kind gifting service that has revolutionized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master</span>
                 <br /><span> refined this concept and added our own twist to it. We have come up with a new way of capturing your memories and portraying them</span><br />
                 <span>in a beautiful manner. We are more than just a collage-making service.</span>
               </p>

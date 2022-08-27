@@ -125,6 +125,24 @@ h4{
       flex: 0 0  10.333333% !important;
     }
   }
+  @media only screen and (max-width: 767px){
+.newsletter h4{
+      border-left : none;
+    }
+  }
+
+  @media only screen and (min-width: 576px){
+
+    .shop_widget{
+      margin-right: 0px;
+    }
+    .review_widget {
+      margin-right: 0px;
+    }
+    .f-50{
+      flex-basis: 54%;
+    }
+  }
 
   @media only screen and (max-width: 480px) {
     .review_widget {

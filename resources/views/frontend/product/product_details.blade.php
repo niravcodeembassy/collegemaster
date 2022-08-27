@@ -7,7 +7,6 @@
       color: black;
     }
 
-
     h1 {
       font-size: 24px;
       line-height: 34px;
@@ -34,7 +33,7 @@
     }
 
     .stock {
-      width: 80px;
+      width: 80px; 
     }
 
     .discounted-price {
@@ -815,14 +814,22 @@
 
       $('a.copy_link').click(function(e) {
         var url = $(this).data('url');
-        navigator.clipboard.writeText(url);
-        $.toast({
-          text: "Link Copied",
-          showHideTransition: "slide",
-          icon: "success",
-          loaderBg: "#f96868",
-          position: "top-right",
-        });
+        var clipboard = navigator.clipboard;
+        if (clipboard == undefined) {
+          console.log('clipboard is undefined');
+        } else {
+          clipboard.writeText(url).then(function() {
+            $.toast({
+              text: "Link Copied",
+              showHideTransition: "slide",
+              icon: "success",
+              loaderBg: "#f96868",
+              position: "top-right",
+            });
+          }, function() {
+            console.error('Unable to write to clipboard. :-(');
+          });
+        }
       });
 
       $('[data-toggle="popover"]').popover({
