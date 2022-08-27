@@ -543,14 +543,12 @@ nav.site-nav .d-xl-none{
   }
 }
 
-@media only screen and (min-width: 576px){
-  .header-right-icons{
-    float:right;
-  }
-}
 
 @media only screen and (min-width: 640px) and (max-width: 667px) {
   .trust_icon p{
     font-size: 13px !important;
+  }
+  .header-right-icons{
+    float:right;
   }
 }

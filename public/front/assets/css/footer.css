@@ -139,9 +139,6 @@ h4{
     .review_widget {
       margin-right: 0px;
     }
-    .f-50{
-      flex-basis: 54%;
-    }
   }
 
   @media only screen and (max-width: 480px) {
@@ -168,5 +165,8 @@ h4{
 
     .shop_widget{
       margin-right: 0px;
+    }
+    .f-50{
+      flex-basis: 54%;
     }
   }
