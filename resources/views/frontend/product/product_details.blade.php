@@ -47,8 +47,8 @@
 
     .stock {
       width: 80px;
-      /* margin-left: 10px;
-                            padding-top: 25px; */
+      margin-left: 10px;
+      padding-top: 25px;
     }
 
     .discounted-price {
@@ -213,6 +213,12 @@
       line-height: 40px;
       margin-right: 4rem;
       margin-left: 4rem;
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 667px) {
+      .tooltip_truck {
+        display: contents !important;
+      }
     }
 
 
@@ -452,8 +458,9 @@
                       <span class="main-price discounted">{{ 'US' . $priceData->offer_price . '+' }}</span>
                       <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
                     @endif
-                    <div class="float-right"><img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid"></div>
-                    <p class="h6" style="line-height: 20px;">Hooray! This item delivers for free.</p>
+                    <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid">
+                    {{-- <div class="float-right"></div> --}}
+                    <p class="h6" style="line-height: 20px;">HOORAY! This item delivers for free.</p>
                   </div>
 
                   <!--=======  End of shop product price  =======-->
@@ -600,21 +607,21 @@
 
                     <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
                       <a class="lezada-button lezada-button--medium add-to-cart mr-3" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <a href="javascript:void(0)" class="d-none d-lg-block d-md-block ml-2 mr-3" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="right" data-tippy-inertia="true" data-tippy-animation="shift-away"
-                        data-tippy-delay="50" data-tippy-arrow="true">
-                        <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
-                      </a>
-                      <a href="javascript:void(0)" class="d-lg-none d-md-none  ml-2 mr-3" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away"
-                        data-tippy-delay="50" data-tippy-arrow="true">
-                        <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
-                      </a>
-                      <a href="javascript:void(0)" class="mt-lg-0 mt-md-0 mt-2 delivery_truck_link">
-                        <b class="mt-lg-0 mt-2">Arrives By
-                          <span class="bt">
-                            {{ $str }}
-                          </span></b><br />
-                        <span>If you order today.</span>
-                      </a>
+                      <div class="d-lg-flex d-sm-block tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
+                        data-tippy-arrow="true">
+                        <a href="javascript:void(0)" class="ml-2 mr-3">
+                          <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
+                        </a>
+                        <a href="javascript:void(0)" class="mt-lg-0 mt-md-0 mt-2 delivery_truck_link">
+                          <b class="mt-lg-0 mt-2">Arrives By
+                            <span class="bt">
+                              {{ $str }}
+                            </span></b><br />
+                          <span>If you order today.</span>
+                        </a>
+                      </div>
+
+
                     </div>
                   </div>
 

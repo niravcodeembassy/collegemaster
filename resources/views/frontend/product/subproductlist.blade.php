@@ -100,11 +100,11 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                =            shop page content         =
-                                                                =============================================-->
+                                                                    =            shop page content         =
+                                                                    =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
-        <div class="container">
+        <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
             @if (request('flag') == false)
               <div class="col-lg-3 order-1 order-lg-2 mb-md-80 mb-sm-80">
@@ -150,7 +150,7 @@
               <div class="row product-isotope shop-product-wrap {{ $type }} ">
                 @foreach ($product as $item)
                   <!--=======  single product  =======-->
-                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale  {{ request('type') == 'grid-four' || request('term') !== null ? 'col-lg-3' : 'col-lg-4' }} ">
+                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale col-xl-3 col-lg-4">
                     @if (request('type', 'grid') == 'grid' || request('type') == 'grid-four')
                       @include('frontend.product.partial.singleproduct', [
                           'product' => $item,

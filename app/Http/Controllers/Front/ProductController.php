@@ -339,7 +339,7 @@ class ProductController extends Controller
             }
           }
         }
-
+        
 
         return view('frontend.product.partial.both-varient', compact('size_new_option', 'size_price', 'printing_new_option', 'printing_price', 'new_price', 'mrp_price', 'selectBoxval', 'product_id', 'discount'));
 
