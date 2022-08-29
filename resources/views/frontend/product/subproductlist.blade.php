@@ -38,9 +38,9 @@
       <div class="row">
         <div class="col-lg-12 border-bottom">
           @if (request('term'))
-            <h1 class="text-center h2 pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
+            <h1 class="text-center h2 text-uppercase pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
           @else
-            <h1 class="text-center h2 pb-3"><span><b>{{ ucwords($subCategory->name) }}</b></span></h1>
+            <h1 class="text-center text-uppercase h2 pb-3"><span><b>{{ ucwords($subCategory->name) }}</b></span></h1>
             <h4 class="text-center pb-3"> {{ Str::limit($subCategory->description, 250) }}</h4>
           @endif
         </div>

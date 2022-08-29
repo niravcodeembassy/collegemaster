@@ -103,8 +103,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
     Route::get('thankyou/{id}', 'CheckOutController@thankYou')->name('payment.thankyou');
 
     Route::post('product/review/{product}', 'ProductReviewController@store')->name('product.review');
-    Route::get('product/review/{product}/list', 'ProductReviewController@reviewList')->name('product.review.list');
   });
+  Route::get('product/review/{product}/list', 'ProductReviewController@reviewList')->name('product.review.list');
 });
 
 

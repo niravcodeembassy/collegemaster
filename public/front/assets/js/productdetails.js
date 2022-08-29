@@ -49,7 +49,12 @@ $(document).ready(function () {
             .attr("data-cart", $("#product_varient_details").text());
           var product_image = $("#product_varient_image").text();
           if (product_image != null) {
-            console.log($("#slick_id_" + product_image).parent("div").parent('div'),product_image);
+            console.log(
+              $("#slick_id_" + product_image)
+                .parent("div")
+                .parent("div"),
+              product_image
+            );
             var varient_image = $("#slick_id_" + product_image)
               .parent("div")
               .parent("div")
@@ -59,14 +64,20 @@ $(document).ready(function () {
               $(".lazy").slick("slickGoTo", varient_image);
             }
           }
+          let isMobile = window.matchMedia(
+            "only screen and (max-width: 912px)"
+          ).matches;
+          if (isMobile) {
+            $("html, body").animate(
+              {
+                scrollTop: $(".slick-initialized").offset().top,
+              },
+              1000
+            );
+          }
 
           /*---------- SCROLL TO TOP ON VARINET SELCETION ----------*/
-          $("html, body").animate(
-            {
-              scrollTop: $(".slick-initialized").offset().top,
-            },
-            1000
-          );
+
           /*---------- END DHARM ----------*/
         } else {
           $("#block-varient").html(respons);

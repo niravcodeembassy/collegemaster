@@ -82,6 +82,7 @@
 }
 
 
-.trust_slider .slick-list{
-  text-align: -webkit-center;
+
+  .multi-testimonial-slider-container {
+    user-select: text !important;
   }

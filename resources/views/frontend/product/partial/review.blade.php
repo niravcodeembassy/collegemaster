@@ -64,11 +64,9 @@
         @include('frontend.product.partial.review_data')
       </div>
       <h4 class="ajax-load pt-2 text-center" style="display: none"></h4>
-      @auth
-        <div class="text-center mb-40 pt-4">
-          <button class="lezada-button lezada-button--small review_load" data-url="{{ route('product.review.list', ['product' => $product->id]) }}">Load More</button>
-        </div>
-      @endauth
+      <div class="text-center mb-40 pt-4">
+        <button class="lezada-button lezada-button--small review_load" data-url="{{ route('product.review.list', ['product' => $product->id]) }}">Load More</button>
+      </div>
     @endif
   </div>
 </div>

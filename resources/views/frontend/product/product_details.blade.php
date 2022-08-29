@@ -10,7 +10,7 @@
     h1 {
       font-size: 24px;
       line-height: 34px;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .bt {
@@ -32,8 +32,18 @@
       height: 45px;
     }
 
+    a.delivery_truck_link:hover {
+      color: #444444;
+    }
+
+    a.delivery_truck_link {
+      color: #444444;
+    }
+
     .stock {
-      width: 80px; 
+      width: 80px;
+      /* margin-left: 10px;
+              padding-top: 25px; */
     }
 
     .discounted-price {
@@ -107,11 +117,18 @@
     .accordion .card-header:not(.collapsed)::after {
       content: "\f078";
     }
-
-    .faq-title {
-      font-size: 28px !important;
+    
+    span.faq-title {
+      font-size: 20px !important;
       line-height: 16px;
-      color: #333;
+    }
+
+    .accordion .card-header {
+      padding: 0.4rem 1.25rem;
+    }
+
+    span.faq_question {
+      font-size: 18px !important;
     }
 
     .review_btn {
@@ -167,9 +184,42 @@
       border: 1px solid black;
     }
 
+    .shop-product__big-image-gallery-slider .slick-arrow {
+      background: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      border: none;
+      color: black;
+    }
+
+    .single-product__floating-icons {
+      top: 8px;
+      right: 10px;
+    }
+
+    .single-product__floating-icons span a {
+      width: 36px;
+      height: 36px;
+    }
+
+    .shop-product__description-tab .tab-product-navigation--product-desc .nav-tabs a {
+      font-size: 22px;
+      line-height: 40px;
+      margin-right: 4rem;
+      margin-left: 4rem;
+    }
+
+
     @media only screen and (max-width: 480px) {
       .delivery_truck {
         margin-top: -27px;
+      }
+
+      .stock {
+        margin-left: 0px;
+        padding-top: 0px;
+        float: right;
       }
     }
 
@@ -394,7 +444,7 @@
                       <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
                     @endif
                     <div class="float-right"><img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid"></div>
-                    <p class="h6" style="line-height: 25px;">Hooray! This item delivers for free.</p>
+                    <p class="h6" style="line-height: 20px;">Hooray! This item delivers for free.</p>
                   </div>
 
                   <!--=======  End of shop product price  =======-->
@@ -506,7 +556,7 @@
                   <!--=======  shop product quantity block  =======-->
                   <div id="changeEvent" style="{{ $style }}">
                     <div class="shop-product__block shop-product__block--quantity mb-20">
-                      <div class="shop-product__block__title">Quantity: </div>
+                      <div class="shop-product__block__title"><b>Quantity:</b> </div>
                       <div class="shop-product__block__value">
                         <div class="pro-qty d-inline-block mx-0 pt-0">
                           <input type="text" id="producQty" value="1" readonly max="{{ $productVarinat->inventory_quantity }}" min="1">
@@ -514,7 +564,7 @@
                       </div>
                     </div>
                     <div class="mb-20">
-                      <div class="shop-product__block__title">Personalization: </div>
+                      <div class="shop-product__block__title pb-2"><b>Personalization:</b> </div>
                       <textarea name="personalization" class="form-control" id="personalization" cols="50" rows="2">{{ $cart_product->notes ?? '' }}</textarea>
                     </div>
                     {{-- @auth
@@ -524,18 +574,32 @@
                     @endauth --}}
 
                     @php
-                      $c = strtotime('+14 day');
-                      $a = date('d', time());
-                      $b = date('d', $c);
-                      $d = date('M', time());
-                      $e = date('M', $c);
-                      $str = $a . ' ' . $d . ' - ' . $b . ' ' . $e . '.';
+                      $start = strtotime('+4 day');
+                      $last = strtotime('+11 day');
+                      $a = date('d', $start);
+                      $b = date('d', $last);
+                      $d = date('M', $start);
+                      $e = date('M', $last);
+                      $str = null;
+                      if ($d == $e) {
+                          $str = $a . ' - ' . $b . ' ' . $e . '.';
+                      } else {
+                          $str = $a . ' ' . $d . ' - ' . $b . ' ' . $e . '.';
+                      }
+
                     @endphp
 
                     <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
                       <a class="lezada-button lezada-button--medium add-to-cart mr-3" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <img src="{{ asset('front/assets/images/truck.png') }}" class="ml-2 mr-3 delivery_truck img-fluid" data-placement="right" data-toggle="popover" data-content="{{ $frontsetting->delivery_caption ?? '' }}">
-                      <a href="javascript:void(0)" data-placement="right" class="mt-lg-0 mt-md-0 mt-2" data-toggle="popover" data-content="{{ $frontsetting->delivery_caption ?? '' }}">
+                      <a href="javascript:void(0)" class="d-none d-lg-block d-md-block ml-2 mr-3" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="right" data-tippy-inertia="true" data-tippy-animation="shift-away"
+                        data-tippy-delay="50" data-tippy-arrow="true">
+                        <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
+                      </a>
+                      <a href="javascript:void(0)" class="d-lg-none d-md-none  ml-2 mr-3" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away"
+                        data-tippy-delay="50" data-tippy-arrow="true">
+                        <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
+                      </a>
+                      <a href="javascript:void(0)" class="mt-lg-0 mt-md-0 mt-2 delivery_truck_link">
                         <b class="mt-lg-0 mt-2">Arrives By
                           <span class="bt">
                             {{ $str }}
@@ -594,8 +658,8 @@
                             <li><a href="{{ $social_link['linkedin'] }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                             <li><a href="{{ $social_link['pinterest'] }}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
                             <li>
-                              <a href="javascript:void(0)" class="copy_link" data-url="{{ url()->current() }}" data-tippy="Copy Link" data-tippy-placement="right" data-tippy-inertia="true" data-tippy-animation="shift-away"
-                                data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-link"></i></a>
+                              <a href="javascript:void(0)" id="kt_clipboard_3" class="copy_link" data-clipboard-text="{{ url()->current() }}" data-tippy="Copy Link" data-tippy-placement="right" data-tippy-inertia="true"
+                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-link"></i></a>
                             </li>
                             <span style="display: none" id="link_copied">Link Copied</span>
                           </ul>
@@ -646,10 +710,10 @@
 
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
                     <div class="nav nav-tabs justify-content-center flex-lg-row" id="nav-tab2" role="tablist">
-                      <a class="nav-item nav-link mx-5 active" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
-                      <a class="nav-item nav-link mx-5" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
+                      <a class="nav-item nav-link active text-uppercase" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
+                      <a class="nav-item nav-link text-uppercase" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
                       </a>
-                      <a class="nav-item nav-link mx-5" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
+                      <a class="nav-item nav-link text-uppercase" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
                         ({{ $product_review->count() }})</a>
                     </div>
                   </div>
@@ -788,6 +852,7 @@
 
 @push('js')
   <script src="{{ asset('front/assets/js/review.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 @endpush
 
 @push('script')
@@ -811,25 +876,26 @@
     window.onload = init;
 
     $(document).ready(function() {
+      // Select element
+      const target = document.getElementById('kt_clipboard_3');
 
-      $('a.copy_link').click(function(e) {
-        var url = $(this).data('url');
-        var clipboard = navigator.clipboard;
-        if (clipboard == undefined) {
-          console.log('clipboard is undefined');
-        } else {
-          clipboard.writeText(url).then(function() {
-            $.toast({
-              text: "Link Copied",
-              showHideTransition: "slide",
-              icon: "success",
-              loaderBg: "#f96868",
-              position: "top-right",
-            });
-          }, function() {
-            console.error('Unable to write to clipboard. :-(');
-          });
+      clipboard = new ClipboardJS(target);
+
+      // Success action handler
+      clipboard.on('success', function(e) {
+        const currentLabel = target.innerHTML;
+        // Exit label update when already in progress
+        if (target.innerHTML === 'Copied!') {
+          return;
         }
+        // Update button label
+        $.toast({
+          text: "Link Copied",
+          showHideTransition: "slide",
+          icon: "success",
+          loaderBg: "#f96868",
+          position: "top-right",
+        });
       });
 
       $('[data-toggle="popover"]').popover({

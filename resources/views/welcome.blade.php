@@ -147,6 +147,7 @@
           }'
             data-slick-responsive='[
             {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
+            {"breakpoint":1299, "settings": {"slidesToShow": 3, "arrows": false} },
             {"breakpoint":1199, "settings": {"slidesToShow": 3, "arrows": false} },
             {"breakpoint":991, "settings": {"slidesToShow": 2,"slidesToScroll": 2,   "autoplay": true,"autoplaySpeed": 5000, "arrows": false} },
             {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} },
