@@ -48,7 +48,7 @@
     .stock {
       width: 80px;
       /* margin-left: 10px;
-                        padding-top: 25px; */
+                            padding-top: 25px; */
     }
 
     .discounted-price {
@@ -714,7 +714,7 @@
               <div class="col-lg-12">
                 <!--=======  shop product description tab  =======-->
 
-                <div class="shop-product__description-tab pt-30 mb-80">
+                <div class="shop-product__description-tab pt-30 mb-100">
                   <!--=======  tab navigation  =======-->
 
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
