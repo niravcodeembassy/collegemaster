@@ -123,7 +123,6 @@ class CheckOutController extends Controller
       try {
         $this->sendMessage($this->user->phone, $body);
       } catch (\Exception $e) {
-        dump($e);
       }
 
       try {
@@ -605,7 +604,6 @@ class CheckOutController extends Controller
         try {
           $this->sendMessage($this->user->phone, $body);
         } catch (\Exception $e) {
-          dump($e);
         }
 
 
