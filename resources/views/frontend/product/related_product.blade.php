@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-top:-100px">
   <div class="row">
     @if ($product->buytogetherproducts->count() > 0)
       <div class="col-lg-12 order-1 order-lg-2 mb-md-80 mb-sm-80">
@@ -10,7 +10,7 @@
               <div class="col-lg-12">
                 <!--=======  product carousel  =======-->
 
-                <div class="lezada-slick-slider product-carousel product-carousel--smarthome"
+                <div class="lezada-slick-slider product-carousel product-carousel--smarthome {{ $product->buytogetherproducts->count() > 4 ? '' : 'related_margin' }}"
                   data-slick-setting='{
                 "slidesToShow": 4,
                 "slidesToScroll": 4,
@@ -30,6 +30,7 @@
                 {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2,  "arrows": false} },
                 {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "arrows": false} }
               ]'>
+
                   @foreach ($product->buytogetherproducts as $item)
                     <!--=======  single product  =======-->
                     <div class="col">
@@ -48,7 +49,6 @@
             </div>
           </div>
         </div>
-
 
       </div>
     @endif

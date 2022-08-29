@@ -26,6 +26,11 @@
       width: 100% !important;
     }
 
+    .related_margin {
+      margin-top: 25px;
+      margin-bottom: 70px;
+    }
+
 
     img.delivery_truck {
       width: 50px;
@@ -43,7 +48,7 @@
     .stock {
       width: 80px;
       /* margin-left: 10px;
-              padding-top: 25px; */
+                        padding-top: 25px; */
     }
 
     .discounted-price {
@@ -117,7 +122,7 @@
     .accordion .card-header:not(.collapsed)::after {
       content: "\f078";
     }
-    
+
     span.faq-title {
       font-size: 20px !important;
       line-height: 16px;
@@ -214,6 +219,10 @@
     @media only screen and (max-width: 480px) {
       .delivery_truck {
         margin-top: -27px;
+      }
+
+      .related_margin {
+        margin: 0px;
       }
 
       .stock {
@@ -705,7 +714,7 @@
               <div class="col-lg-12">
                 <!--=======  shop product description tab  =======-->
 
-                <div class="shop-product__description-tab pt-30 mb-100">
+                <div class="shop-product__description-tab pt-30 mb-80">
                   <!--=======  tab navigation  =======-->
 
                   <div class="tab-product-navigation tab-product-navigation--product-desc mb-20">
