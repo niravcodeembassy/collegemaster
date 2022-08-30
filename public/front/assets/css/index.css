@@ -514,18 +514,21 @@ ul.main_list{
 nav.site-nav .d-xl-none{
   display: block !important;
 }
+.single-category{
+  width: auto !important;
+}
+.hover-banner-area .mb-30{
+  margin-bottom: 16px !important;
+}
+.banner_side{
+  padding-right: 8px;
+  padding-left: 8px;
+}
 
 .hover-banner-area .mb-30 {
   padding-bottom: 15px;
 }
 }
-
-/* @media only screen and (min-width: 1280px) and (max-width: 1288px) {
-  .single-category{
-    width: auto;
-  }
-}
- */
 
 /* screen 1600*900 */
 @media  screen and (max-width: 1600px) {

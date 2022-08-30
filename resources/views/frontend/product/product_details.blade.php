@@ -34,7 +34,6 @@
 
     img.delivery_truck {
       width: 50px;
-      height: 45px;
     }
 
     a.delivery_truck_link:hover {
@@ -474,7 +473,7 @@
                   @if (isset($variatoinList))
                     <div id="block-varient">
                       @foreach ($variatoinList as $key => $variatoins)
-                        <div class="form-group mb-20">
+                        <div class="form-group mb-25">
                           @php
                             $option = \App\Model\Option::find($key);
                             $productvariants = \App\Model\ProductVariant::whereProductId($product->id)->get();
@@ -607,7 +606,7 @@
 
                     <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
                       <a class="lezada-button lezada-button--medium add-to-cart mr-3" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <div class="d-lg-flex d-sm-block tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
+                      <div class="d-md-flex d-lg-flex tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="bottom" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
                         data-tippy-arrow="true">
                         <a href="javascript:void(0)" class="ml-2 mr-3">
                           <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">

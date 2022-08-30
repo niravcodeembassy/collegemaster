@@ -43,8 +43,11 @@
 
   <div class="single-product__content">
     <div class="title">
-      <h3>
+      <h3 class="large_screen_content">
         <a href="{{ $route }}">{{ Str::words($product->name, 8, '...') }}</a>
+      </h3>
+      <h3 class="small_screen_content" style="display: none">
+        <a href="{{ $route }}">{{ Str::words($product->name, 6, '...') }}</a>
       </h3>
       <a href="{{ $route }}">
         VIEW PRODUCT

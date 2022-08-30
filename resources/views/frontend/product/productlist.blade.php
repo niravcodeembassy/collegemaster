@@ -96,8 +96,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                      =            shop page content         =
-                                                                                                                                                                                                      =============================================-->
+                                                                                                                                                                                                            =            shop page content         =
+                                                                                                                                                                                                            =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
@@ -148,9 +148,8 @@
 
               <div class="row product-isotope shop-product-wrap {{ $type }} ">
                 @foreach ($product as $item)
-                  {{-- {{ request('type') == 'grid-four' || request('term') !== null || request('flag') == 'false' ? 'col-lg-4 col-xl-3' : 'col-xl-3 col-lg-4' }} --}}
                   <!--=======  single product   =======-->
-                  <div class="col-12 col-md-6 col-sm-6 mb-45 sale col-xl-3 col-lg-4">
+                  <div class="mb-45 sale {{ request('type') == 'grid-four' || request('term') !== null || request('flag') == 'false' ? 'col-lg-3 col-12 col-md-6 col-sm-6' : 'col-lg-4 col-12 col-md-6 col-sm-6 responsive_list ' }}">
                     @if (request('type', 'grid') == 'grid' || request('type') == 'grid-four')
                       @include('frontend.product.partial.singleproduct', [
                           'product' => $item,
