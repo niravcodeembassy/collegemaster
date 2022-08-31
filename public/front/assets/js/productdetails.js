@@ -49,12 +49,6 @@ $(document).ready(function () {
             .attr("data-cart", $("#product_varient_details").text());
           var product_image = $("#product_varient_image").text();
           if (product_image != null) {
-            console.log(
-              $("#slick_id_" + product_image)
-                .parent("div")
-                .parent("div"),
-              product_image
-            );
             var varient_image = $("#slick_id_" + product_image)
               .parent("div")
               .parent("div")

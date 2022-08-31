@@ -519,14 +519,11 @@ nav.site-nav .d-xl-none{
 }
 .hover-banner-area .mb-30{
   margin-bottom: 16px !important;
+  padding-bottom: 0px !important;
 }
 .banner_side{
   padding-right: 8px;
   padding-left: 8px;
-}
-
-.hover-banner-area .mb-30 {
-  padding-bottom: 15px;
 }
 }
 
@@ -621,19 +618,14 @@ nav.site-nav .d-xl-none{
   .single-category__content--three--creativehome {
     bottom: 10px;
   }
-  /* .single-category{
-    height: 220px;
-    width: auto;
-  }
-  .single-category__image img {
-    height: 220px;
-  } */
-  .banner_side {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
   .hover-banner-area .mb-30{
-    padding-bottom: 15px;
+    margin-bottom: 16px !important;
+    padding-bottom: 0px;
+  }
+  .banner_side{
+    width: 100%;
+    padding-right: 8px;
+    padding-left: 8px;
   }
 }
 

@@ -11,7 +11,7 @@ use App\Blog;
 use App\Model\Testimonial;
 use Illuminate\Http\Request;
 use App\Category;
-use App\Model\Subcategory;
+use App\Model\SubCategory;
 
 class HomeController extends Controller
 {
@@ -81,9 +81,10 @@ class HomeController extends Controller
     $term = $request->get('term');
 
     $category = Category::whereNull('is_active')->select('id', 'name')->where('name', 'like', "%$term%");
-    $sub_category = Subcategory::whereNull('is_active')->select('id', 'name')->where('name', 'like', "%$term%");
+    $sub_category = SubCategory::whereNull('is_active')->select('id', 'name')->where('name', 'like', "%$term%");
 
-    $filter_result = $sub_category->union($category)->get();
+    $product = Product::where('is_active', 'Yes')->select('id', 'name')->where('name', 'like', "%$term%");
+    $filter_result = $category->union($sub_category)->union($product)->get();
 
     return response()->json($filter_result);
   }

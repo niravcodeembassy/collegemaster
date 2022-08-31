@@ -29,6 +29,17 @@ class ProductController extends Controller
     //   $category = Category::where('slug', $slug)->select('id', 'slug', 'image', 'name', 'description')->firstOrFail();
     // }
 
+    $is_product = Product::where('name', $request->term)->first();
+    if (isset($is_product) && $is_product !== null) {
+      if ($is_product->sub_category_id !== null) {
+        return $this->productDetails($request, $is_product->category->slug, $is_product->subCategory->slug, $is_product->slug);
+      } else {
+        return $this->productDetails($request, $is_product->category->slug, $is_product->slug);
+      }
+    }
+
+
+
     $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
 
 
@@ -38,6 +49,8 @@ class ProductController extends Controller
       }])->with(['subCategory' => function ($q) {
         $q->whereNull('is_active');
       }])->whereNull('is_active')->get();
+
+
 
     $product =  $this->getProductQuery($request, $slug, $category);
     $this->data['product'] = $product;
@@ -89,12 +102,14 @@ class ProductController extends Controller
         $q->when($cat !== null, function ($query) use ($request) {
           return $query->Join('categories', function ($join) use ($request) {
             return $join->on('products.category_id', '=', 'categories.id')
-              ->where('categories.name', 'like', "%$request->term%");
+              ->where('categories.name', 'like', "%$request->term%")
+              ->orWhere('products.name', 'like', $request->term . '_%');
           });
         }, function ($query) use ($request) {
           return $query->Join('sub_categories', function ($join) use ($request) {
             return $join->on('products.sub_category_id', '=', 'sub_categories.id')
-              ->where('sub_categories.name', 'like', "%$request->term%");
+              ->where('sub_categories.name', 'like', "%$request->term%")
+              ->orWhere('products.name', 'like', $request->term . '_%');
           });
         });
       })
@@ -339,7 +354,7 @@ class ProductController extends Controller
             }
           }
         }
-        
+
 
         return view('frontend.product.partial.both-varient', compact('size_new_option', 'size_price', 'printing_new_option', 'printing_price', 'new_price', 'mrp_price', 'selectBoxval', 'product_id', 'discount'));
 

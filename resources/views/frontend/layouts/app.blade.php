@@ -187,7 +187,7 @@
     }
 
 
-   function leftScroll() {
+    function leftScroll() {
       const element = document.querySelector("#category_scroll");
       sideScroll(element, 'left', 25, 300, 80);
     }
@@ -232,7 +232,8 @@
     $('#search_mobile_btn').on('click', function() {
       $('#live_search_mobile').val('');
       @if (url()->current() == url('/all'))
-        var url = "/all";
+        var url = "/";
+        $('#live_search_mobile').val('')
         window.location.href = url;
       @endif
       $('#search_mobile_btn').addClass('d-none');
@@ -240,6 +241,15 @@
 
     var route_second = $('#live_search_mobile').data('url');
     search('#live_search_mobile', route_second);
+    $mobile_input = $('#live_search_mobile');
+    $mobile_input.change(function() {
+      var current = $mobile_input.typeahead("getActive");
+      console.log(current);
+      if (current) {
+        var link = "/all?term=" + (current.name) + "&flag=" + false;
+        window.location.href = link;
+      }
+    });
 
 
     //desktop view
@@ -252,7 +262,8 @@
       $('#live_search').val('');
 
       @if (url()->current() == url('/all'))
-        var url = "/all";
+        var url = "/";
+        $('#live_search').val('');
         window.location.href = url;
       @endif
 
@@ -261,30 +272,32 @@
 
     //product search
     var route = $('#live_search').data('url');
+    redirectSearchPage('#live_search');
     search('#live_search', route);
 
+    function redirectSearchPage(rawId) {
+      $input = $(rawId);
+      $input.change(function() {
+        var current = $input.typeahead("getActive");
+        if (current) {
+          var link = "/all?term=" + (current.name) + "&flag=" + false;
+          window.location.href = link;
+        }
+      });
+    }
+
+
     function search(Id, route) {
-      product = [];
       $(Id).typeahead({
         hint: true,
         highlight: true,
-        // source: function(query, process) {
-        //   return $.get(route, {
-        //     query: query
-        //   }, function(data) {
-        //     $.each(data, function(i, item) {
-        //       product.push(item.name);
-        //     });
-        //     return process(product);
-        //   });
-        // },
         source: function(query, process) {
           return $.get(route, {
             query: query
           }, function(data) {
             return process(data);
           });
-        }
+        },
       });
     }
   </script>
