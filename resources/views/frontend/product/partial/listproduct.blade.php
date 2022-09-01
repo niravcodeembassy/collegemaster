@@ -3,7 +3,7 @@
   @php
     $priceData = Helper::productPrice($product);
     $routeParameter = Helper::productRouteParameter($product);
-    $route = route('product.details', $routeParameter);
+    $route = route('product.view', $product->slug);
   @endphp
 
 

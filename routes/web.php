@@ -143,6 +143,7 @@ Route::get('print', function () {
 });
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
+  Route::get('product/{slug}','ProductController@productView')->name('product.view');
   Route::get('{cat_slug}/{product_subcategory_slug}/{slug?}', 'ProductController@productDetails')->name('product.details'); //category/product
   Route::get('{slug}', 'ProductController@categoryProductList')->name('category.product'); //category page
   // Route::get('{cat_slug}/{sub_slug}/{slug}', 'ProductController@productSubDetails')->name('product.sub.details'); //category/subcategory/product

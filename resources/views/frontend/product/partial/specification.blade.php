@@ -1,5 +1,5 @@
 @if ($faqList->count() > 0)
-  
+
   @foreach ($faqList as $key => $item)
     <div class="accordion" id="info{{ $key }}">
       <div class="single-faq">
@@ -20,12 +20,12 @@
                       <div id="collapseOne{{ $child->id }}" class="collapse false" aria-labelledby="headingOne" data-parent="#shippingInfo{{ $key }}" style="">
                         <div class="card-body" style="padding: 0.25rem 1.25rem!important;">
                           {!! $child->answer !!}
-                          @if (!$loop->last)
-                            <hr />
-                          @endif
                         </div>
                       </div>
                     </div>
+                    @if (!$loop->last)
+                      <hr />
+                    @endif
                   @endforeach
                 @endif
               </div>

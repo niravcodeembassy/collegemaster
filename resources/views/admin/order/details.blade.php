@@ -160,12 +160,12 @@
           box-shadow: none !important;
           border-color: none !important;
         }
-      </style>
+      </style> --}}
 
       @php
         $chat = App\Model\OrderChat::where('order_id', $order->id)->get();
       @endphp
-      <ul class="list-group mb-3  b-0" style="border-bottom: 1px solid rgba(0,0,0,.125)">
+      {{-- <ul class="list-group mb-3  b-0" style="border-bottom: 1px solid rgba(0,0,0,.125)">
 
         <div style="max-height: 240px;overflow-y: scroll;" id="msg_block">
           @foreach ($chat as $item)

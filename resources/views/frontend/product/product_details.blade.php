@@ -128,7 +128,7 @@
     }
 
     .accordion .card-header {
-      padding: 0.4rem 1.25rem;
+      padding: 0.1rem 1.25rem;
     }
 
     span.faq_question {
@@ -214,16 +214,19 @@
       margin-left: 4rem;
     }
 
-    @media only screen and (min-width: 640px) and (max-width: 667px) {
-      .tooltip_truck {
-        display: contents !important;
-      }
-    }
-
 
     @media only screen and (max-width: 480px) {
       .delivery_truck {
         margin-top: -27px;
+      }
+
+      .shop-product__buttons {
+        display: block !important;
+      }
+
+      .shop-product__buttons .d-flex {
+        display: block !important;
+        margin-top: 10px;
       }
 
       .related_margin {
@@ -401,7 +404,7 @@
               </div>
 
               <div class="col-lg-6">
-                <div class="shop-product__description shop-product-url" data-url="{{ route('product.details', $routeParameter) }}">
+                <div class="shop-product__description shop-product-url" data-url="{{ route('product.view', $product->slug) }}">
                   <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                   <!--=======  shop product navigation  =======-->
 
@@ -604,15 +607,15 @@
 
                     @endphp
 
-                    <div class="shop-product__buttons mb-40 d-lg-flex d-md-flex">
+                    <div class="shop-product__buttons mb-40 d-flex">
                       <a class="lezada-button lezada-button--medium add-to-cart mr-3" href="javascript:void(0)" data-cart="{{ json_encode($cart) }}" data-url="{{ route('cart.add') }}">add to cart</a>
-                      <div class="d-md-flex d-lg-flex tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="bottom" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
+                      <div class="d-flex tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
                         data-tippy-arrow="true">
                         <a href="javascript:void(0)" class="ml-2 mr-3">
                           <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
                         </a>
-                        <a href="javascript:void(0)" class="mt-lg-0 mt-md-0 mt-2 delivery_truck_link">
-                          <b class="mt-lg-0 mt-2">Arrives By
+                        <a href="javascript:void(0)" class="delivery_truck_link mt-lg-0 mt-col-3">
+                          <b class="mt-lg-0">Arrives By
                             <span class="bt">
                               {{ $str }}
                             </span></b><br />

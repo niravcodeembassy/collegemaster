@@ -153,7 +153,7 @@ class OrderController extends Controller
       if ($item->total) {
         $item->total = $item->total ?? 0;
       }
-
+      
       $row['totalPrice'] = '<span class="text-right d-block" >' . Helper::showPrice($item->total, $item->currency) . '</span>';
 
       if ($item->payment_status == 'completed') {
@@ -304,9 +304,7 @@ class OrderController extends Controller
       $order->order_status = 'dispatched';
 
       $date = date('F j, Y', strtotime($order->shipping_date));
-
       $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
-
       $this->sendMessage($user->phone, $body);
 
 
@@ -344,12 +342,14 @@ class OrderController extends Controller
       }
     }
 
+    if ($request->delivery_status == 'work_in_progress') {
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that your order has been processed further information contact admin';
+      $this->sendMessage($user->phone, $body);
+    }
+
     $order->payment_status = $request->payment_status;
 
-    // if ($request->payment_status == 'completed') {
-    //   $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you Payment has been completed';
-    //   $this->sendMessage($user->phone, $body);
-    // }
+
 
     $order->save();
 

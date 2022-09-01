@@ -8,9 +8,8 @@
     @foreach ($cartList as $cart)
       @php
         $priceData = Helper::productPrice($cart->productvariant);
-        $routeParameter = Helper::productRouteParameter($cart->product);
-        $routeParameter += ['variant' => $cart->productvariant->id];
-        $route = route('product.details', $routeParameter);
+        $routeParameter = ['slug' => $cart->product->slug, 'variant' => $cart->productvariant->id];
+        $route = route('product.view', $routeParameter);
       @endphp
       <div class="single-cart-product">
         <span class="cart-close-icon">

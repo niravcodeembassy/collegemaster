@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                                                                                                                                                                                                                 =            slider area         =
-                                                                                                                                                                                                                                                 =============================================-->
+                                                                                                                                                                                                                                                   =            slider area         =
+                                                                                                                                                                                                                                                   =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -300,7 +300,7 @@
                         $product = App\Model\Product::find($dayofdeal->product_id);
                         $routeParameter = Helper::productRouteParameter($product);
                       @endphp
-                      <a href="{{ route('product.details', $routeParameter) }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
+                      <a href="{{ route('product.view', $product->slug) }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
                         <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
                     @endif
                   @endif
@@ -517,8 +517,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                                         =            instagram slider area         =
-                                                                                                                                                                                                                                                         =============================================-->
+                                                                                                                                                                                                                                                           =            instagram slider area         =
+                                                                                                                                                                                                                                                           =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

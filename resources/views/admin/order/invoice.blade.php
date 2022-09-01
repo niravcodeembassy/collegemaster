@@ -266,7 +266,7 @@
                                 <td class="pt-top pt-left">{{ $attributes['printing options'] ?? '' }}</td>
                               </tr>
                             @endif
-                            @if (isset($item->notes) && $item->notes != '')
+                            @if (isset($data->notes) && $data->notes != '')
                               <tr>
                                 <td class="pt-top">Personalization :</td>
                                 <td class="pt-top pt-left">{{ $data->notes ?? '' }}</td>

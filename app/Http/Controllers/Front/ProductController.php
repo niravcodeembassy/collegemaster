@@ -72,9 +72,16 @@ class ProductController extends Controller
   }
   public function getProductQuery(Request $request, $slug, $category = null, $sub_category_id = null)
   {
-    $cat = Category::when($request->term, function ($query) use ($request) {
-      return $query->where('name', 'like', "%$request->term%");
-    })->first();
+    $result = '';
+    if ($request->term) {
+      $cate = Category::when($request->term, function ($query) use ($request) {
+        return $query->select('id', 'name', 'slug')->where('name', $request->term);
+      });
+      $sub_cate = SubCategory::when($request->term, function ($query) use ($request) {
+        return $query->select('id', 'name', 'slug')->where('name', $request->term);
+      });
+      $result = $cate->union($sub_cate)->first();
+    }
     return Product::productList()->when($slug !== 'all' && isset($category), function ($q) use ($category) {
       return $q->where('category_id', $category->id);
     })
@@ -98,19 +105,15 @@ class ProductController extends Controller
         return $q->Where('products.name', 'like', $request->search . '_%')
           ->orWhere('products.sku', 'like', "%$request->search%");
       })
-      ->when($request->term, function ($q) use ($request, $cat) {
-        $q->when($cat !== null, function ($query) use ($request) {
+      ->when($request->term, function ($q) use ($request, $result) {
+        $q->when($result !== null, function ($query) use ($request) {
           return $query->Join('categories', function ($join) use ($request) {
-            return $join->on('products.category_id', '=', 'categories.id')
-              ->where('categories.name', 'like', "%$request->term%")
-              ->orWhere('products.name', 'like', $request->term . '_%');
-          });
+            return $join->on('products.category_id', '=', 'categories.id');
+          })->Join('sub_categories', function ($join) use ($request) {
+            return $join->on('products.sub_category_id', '=', 'sub_categories.id');
+          })->where('categories.name', $request->term)->orWhere('sub_categories.name', $request->term);
         }, function ($query) use ($request) {
-          return $query->Join('sub_categories', function ($join) use ($request) {
-            return $join->on('products.sub_category_id', '=', 'sub_categories.id')
-              ->where('sub_categories.name', 'like', "%$request->term%")
-              ->orWhere('products.name', 'like', $request->term . '_%');
-          });
+          $query->Where('products.name', 'like', $request->term . '_%');
         });
       })
       ->with('category', 'subcategory')
@@ -192,7 +195,7 @@ class ProductController extends Controller
 
     $faq = FrequentAskQuestion::with('children')->whereNull('parent_id')->get();
     $routeParameter = Helper::productRouteParameter($product);
-    $social_link =  Share::page(route('product.details', $routeParameter))
+    $social_link =  Share::page(route('product.view', $product->slug))
       ->facebook()
       ->twitter()
       ->linkedin()
@@ -220,8 +223,69 @@ class ProductController extends Controller
     }
 
     $review = ProductReview::where('product_id', $product->id)->with('user')->paginate(2);
+    $product_review = $product->product_review;
+    $review_rating = intval($product_review->pluck('rating')->avg());
+    $this->data['product_review'] = $product_review;
+    $this->data['review_rating'] = $review_rating;
+    $this->data['product'] = $product;
+    $this->data['variantCombination'] = $variantCombination;
+    $this->data['productVarinat'] = $variant;
+    $this->data['review'] = $review;
+    $this->data['social_link'] = $social_link;
+    $this->data['faqList'] = $faq;
+    return $this->view('frontend.product.product_details');
+  }
+
+  public function productView(Request $request, $slug)
+  {
+
+    $product = Product::where('slug', $slug)->firstOrFail();
+
+    $this->session_id = Session::get('cart_session');
+
+    $variant = Productvariant::when($request->variant, function ($q, $variant) use ($request) {
+      return $q->findOrfail($variant);
+    }, function ($q) use ($product) {
+      return $q->where('product_id', $product->id)->where('type', 'variant')->first();
+    });
+
+    if (Auth::check()) {
+      $this->data['wishList'] = WishList::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();
+      $this->data['cart_product'] = ShoppingCart::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();
+    } else {
+      $this->data['cart_product'] = ShoppingCart::where('session_id', $this->session_id)->where('variant_id', $variant->id)->first();
+    }
+
+    $faq = FrequentAskQuestion::with('children')->whereNull('parent_id')->get();
+    $routeParameter = Helper::productRouteParameter($product);
+    $social_link =  Share::page(route('product.view', $product->slug))
+      ->facebook()
+      ->twitter()
+      ->linkedin()
+      ->whatsapp()
+      ->pinterest()
+      ->getRawLinks();
 
 
+    $product = Product::with([
+      'productvariants',
+      'images:id,product_id,image_name,image_alt',
+      'category:id,name,slug',
+      'subcategory:id,name,slug',
+    ])->where('is_active', 'Yes')->findOrfail($variant->product_id);
+
+    $variantCombination = [];
+
+    if ($product->productvariants->count() > 0) {
+      $variantCombination =  $product->productvariants->map(function ($item, $index) {
+        $variant = json_decode($item->variants, true);
+        $variant['inventory_quantity'] = $item->inventory_quantity;
+        $variant['variant_id'] = $item->id;
+        return $variant;
+      });
+    }
+
+    $review = ProductReview::where('product_id', $product->id)->with('user')->paginate(2);
     $product_review = $product->product_review;
     $review_rating = intval($product_review->pluck('rating')->avg());
     $this->data['product_review'] = $product_review;

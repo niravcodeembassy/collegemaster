@@ -74,7 +74,7 @@
                   <label for="mobile">{{ __('Mobile number') }}</label>
                   <input id="mobile" type="tel" placeholder="Mobile number" class=" @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
                     style="background: none;padding-left:72px!important">
-
+                  <label id="mobile-error" class="error text-danger" for="phone"></label>
                   @error('mobile')
                     <span class="invalid-feedback" role="alert">
                       <strong id="mobile-error">{{ $message }}</strong>

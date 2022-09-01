@@ -3,7 +3,7 @@
   @php
     $priceData = Helper::productPrice($product->productdefaultvariant);
     $routeParameter = Helper::productRouteParameter($product);
-    $route = route('product.details', $routeParameter);
+    $route = route('product.view', $product->slug);
   @endphp
   <div class="single-product__image">
     <a class="image-wrap" href="{{ $route }}">

@@ -17,8 +17,7 @@ $subTotal = 0;
         ->join('<br />');
 
     $cartSubTotal = Helper::priceFormate(number_format($cartSubTotal, 2));
-    $routeParameter = Helper::productRouteParameter($cart->product);
-    $routeParameter += ['variant' => $cart->productvariant->id];
+    $routeParameter = ['slug' => $cart->product->slug, 'variant' => $cart->productvariant->id];
     $cartData = [
         'product_id' => $cart->product_id,
         'variant_id' => $cart->productvariant->id,
@@ -28,7 +27,7 @@ $subTotal = 0;
 
   <tr>
     <td class="product-thumbnail pb-15 px-3" colspan="2">
-      <a href="{{ route('product.details', $routeParameter) }}">
+      <a href="{{ route('product.view', $routeParameter) }}">
         @if ($cart->productvariant->productimage_id && optional($cart->image)->variant_image)
           <img src="{{ $cart->image->variant_image }}" class="img-fluid " style="width: 100px" alt="">
         @else
@@ -36,8 +35,10 @@ $subTotal = 0;
         @endif
       </a>
     </td>
+
     <td class="product-name pb-15 px-3">
-      <a class="mb-10" data-toggle="tooltip" data-placement="top" title="{{ $cart->product->name }}" href="{{ route('product.details', $routeParameter) }}">{{ Str::words($cart->product->name, 10, '...') }}</a>
+      <a class="mb-10" data-tippy="{{ $cart->product->name ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+        href="{{ route('product.view', $routeParameter) }}">{{ Str::words($cart->product->name, 10, '...') }}</a>
       {!! $variant !!}
     </td>
     <td class="product-price pb-15 px-3"><span class="price">{{ $priceData->price ?? $priceData->offer_price }}</span>

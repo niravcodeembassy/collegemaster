@@ -111,9 +111,9 @@
                           </div>
                           <div class="form-group col-md-6">
                             <label for="phone">Mobile no <span class="text-danger">*</span></label>
-                            <input type="tel" placeholder="Phone number" value="{{ $user->phone ?? '' }}" name="phone" id="telephone" data-rule-required="true" required pattern="^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$"
+                            <input type="tel" placeholder="Phone number" value="{{ $user->phone ?? '' }}" name="phone" class="telephone" id="telephone" data-rule-required="true" required pattern="^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$"
                               data-msg-required="Mobile no is required" data-rule-mobileUK="true" style="padding-left:73px!important;padding:10px">
-                            <label id="phone-error" class="error text-danger" for="phone"></label>
+                            {{-- <label id="phone-error" class="error text-danger" for="phone"></label> --}}
                             {{-- <input type="text" id="phone" name="phone" id="phone" class="" data-rule-required="true" data-msg-required="Mobile no is required" data-rule-number="true" data-rule-maxlength="10"  value="{{ $user->phone ?? ''}}"> --}}
                           </div>
                         </div>
@@ -247,12 +247,34 @@
       }
     });
 
+
+
     $(document).ready(function() {
       var country_code = $('#country').val();
       var country_url = $('#country_url').val();
 
       get_state(country_code, country_url)
 
+      $.validator.addMethod('customphone', function(value, element, params) {
+        console.log(params.test(value));
+        return params.test(value);
+      }, "Please Enter Valid Mobile No");
+
+      jQuery.validator.addClassRules("telephone", {
+        customphone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+      });
+
+      $("#update_profile_form").validate({
+        debug: false,
+        rules: {},
+        errorPlacement: function(error, element) {
+          if (element.parent('.iti ').length) {
+            error.insertAfter(element.parent()).addClass('text-danger');
+          } else {
+            error.appendTo(element.parent()).addClass('text-danger')
+          }
+        },
+      });
     });
 
 
@@ -261,7 +283,6 @@
       var country_url = $('#country_url').val();
 
       get_state(country_code, country_url)
-
     });
 
     function get_state(country_code, country_url) {
