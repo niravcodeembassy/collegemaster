@@ -9,6 +9,10 @@
 @section('published_time', $subCategory->created_at)
 @section('description', $subCategory->meta_description)
 
+@section('google_name', $subCategory->meta_title)
+@section('google_description', $subCategory->meta_description)
+@section('google_image', $subCategory->image_src)
+
 @section('og-title', $subCategory->meta_title)
 @section('og-url', url()->current())
 @section('og-image', $subCategory->image_src)
@@ -100,8 +104,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                      =            shop page content         =
-                                                                      =============================================-->
+                                                                          =            shop page content         =
+                                                                          =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
@@ -144,7 +148,7 @@
                 if (request('type', 'grid') == 'grid') {
                     $type = 'three-column';
                 } elseif (request('type', 'grid') == 'grid-four') {
-                    $type = 'four-column'; 
+                    $type = 'four-column';
                 }
               @endphp
               <div class="row product-isotope shop-product-wrap {{ $type }} ">

@@ -8,6 +8,9 @@
 @section('published_time', $page->created_at)
 @section('description', $page->meta_desc)
 
+@section('google_name', $page->meta_title)
+@section('google_description', $page->meta_description)
+
 @section('og-title', $page->page_title)
 @section('og-url', url()->current())
 @section('og-description', $page->meta_desc)

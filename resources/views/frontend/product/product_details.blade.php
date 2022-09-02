@@ -265,6 +265,10 @@
 @section('published_time', $product->created_at)
 @section('description', $product->meta_description)
 
+@section('google_name', $product->meta_title)
+@section('google_description', $product->meta_description)
+@section('google_image', $product->product_src)
+
 @section('og-title', $product->meta_title)
 @section('og-url', url()->current())
 @section('og-image', $product->product_src)

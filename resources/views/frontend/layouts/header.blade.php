@@ -1,10 +1,9 @@
-<header class="header header-sticky">
+<header class="header header-without-topbar header-sticky">
   <div class="header-bottom pt-md-20 pb-md-20 pt-sm-20 pb-sm-20 pt-20">
     {{-- <div class="main_category">
       <div class="offer_info text-center mx-sm-2">
         <a href="{{ $frontsetting->offer_info_link ?? '' }}" class="offer_info_link py-1"><span class="offer_info_text">{{ $frontsetting->offer_info ?? '' }}</span></a>
       </div>
-
     </div> --}}
     <div class="container wide mt-lg-0 mt-md-0 mt-3">
       <div class="header-bottom-container">
@@ -37,20 +36,20 @@
             <!--=======  End of single-icon  btn btn btn-outline-secondary rounded-pill =======-->
             <!--=======  single-icon  =======-->
             <div class="user-login mr-3">
-              <a href="{{ route('blog') }}" class="px-1 login_link">
-                <b>Blog</b>
+              <a href="{{ route('blog') }}" class="px-1 login_link font-weight-bold">
+                Blog
               </a>
             </div>
             @guest
               <div class="user-login">
-                <a href="{{ route('register') }}" class="px-1 login_link">
-                  <b>Join</b>
+                <a href="{{ route('register') }}" class="px-1 login_link font-weight-bold">
+                  Join
                 </a>
               </div>
               <span class="">|</span>
               <div class="user-login">
-                <a href="{{ route('login') }}" class="px-1 login_link">
-                  <b>Login</b>
+                <a href="{{ route('login') }}" class="px-1 login_link font-weight-bold">
+                  Login
                 </a>
               </div>
             @endguest
@@ -142,4 +141,5 @@
         </div>
       </div>
     </div>
+  </div>
 </header>

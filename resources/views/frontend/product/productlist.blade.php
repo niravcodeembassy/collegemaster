@@ -10,8 +10,12 @@
 
 @section('title', $category->meta_title)
 @section('keywords', $category->meta_keywords)
-@section('published_time', $category->created_at)
 @section('description', $category->meta_description)
+@section('published_time', $category->created_at)
+
+@section('google_name', $category->meta_title)
+@section('google_description', $category->meta_description)
+@section('google_image', $category->image_src)
 
 @section('og-title', $category->meta_title)
 @section('og-url', url()->current())
