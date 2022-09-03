@@ -276,7 +276,7 @@
 
 @section('twiter-title', $product->meta_title)
 @section('twiter-description', $product->meta_description)
-@section('twitter-image', $product->product_src)
+@section('twiter-image', $product->product_src)
 
 
 @section('content')

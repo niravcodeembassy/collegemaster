@@ -31,19 +31,19 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
   Route::get('contact-us', 'ContactUsController@index')->name('contact-us.index');
 
-  Route::get('page/about', 'ContactUsController@about')->name('page.about');
-  Route::get('page/our-story', 'ContactUsController@ourStory')->name('page.story');
-  Route::get('page/policy', 'ContactUsController@policy')->name('page.policy');
-  Route::get('page/photo-policy', 'ContactUsController@photoPolicy')->name('page.photo');
-  Route::get('page/cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');
-  Route::get('page/returns-policy', 'ContactUsController@returnPolicy')->name('page.returns');
-  Route::get('page/term-conditions', 'ContactUsController@term')->name('page.term');
+  Route::get('about-us', 'ContactUsController@about')->name('page.about');
+  Route::get('our-story', 'ContactUsController@ourStory')->name('page.story');
+  Route::get('privacy-policy', 'ContactUsController@policy')->name('page.policy');
+  Route::get('photo-policy', 'ContactUsController@photoPolicy')->name('page.photo');
+  Route::get('cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');
+  Route::get('returns-policy', 'ContactUsController@returnPolicy')->name('page.returns');
+  Route::get('term-conditions', 'ContactUsController@term')->name('page.term');
 
-  Route::get('page/place-order', 'ContactUsController@placeOrder')->name('page.order.place');
-  Route::get('page/send-photo', 'ContactUsController@sendPhoto')->name('page.send.photo');
-  Route::get('page/photo-send', 'ContactUsController@photoSend')->name('page.photo.send');
-  Route::get('page/send-change', 'ContactUsController@saveChange')->name('page.save.change');
-  Route::get('page/delivery-time', 'ContactUsController@deliveryTime')->name('page.delivery.time');
+  Route::get('how-to-place-order', 'ContactUsController@placeOrder')->name('page.order.place');
+  Route::get('how-to-send-photo', 'ContactUsController@sendPhoto')->name('page.send.photo');
+  Route::get('how-many-photo-send', 'ContactUsController@photoSend')->name('page.photo.send');
+  Route::get('how-to-send-change', 'ContactUsController@saveChange')->name('page.save.change');
+  Route::get('estimate-delivery-time', 'ContactUsController@deliveryTime')->name('page.delivery.time');
   // Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');
 
   Route::post('contact-us', 'ContactUsController@store')->name('contact-us.stroe');
@@ -143,7 +143,7 @@ Route::get('print', function () {
 });
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
-  Route::get('product/{slug}','ProductController@productView')->name('product.view');
+  Route::get('product/{slug}', 'ProductController@productView')->name('product.view');
   Route::get('{cat_slug}/{product_subcategory_slug}/{slug?}', 'ProductController@productDetails')->name('product.details'); //category/product
   Route::get('{slug}', 'ProductController@categoryProductList')->name('category.product'); //category page
   // Route::get('{cat_slug}/{sub_slug}/{slug}', 'ProductController@productSubDetails')->name('product.sub.details'); //category/subcategory/product

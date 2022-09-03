@@ -20,7 +20,7 @@
 
 @section('twiter-title', $subCategory->meta_title)
 @section('twiter-description', $subCategory->meta_description)
-@section('twitter-image', $subCategory->image_src)
+@section('twiter-image', $subCategory->image_src)
 
 @section('content')
   <div class="breadcrumb-area d-none  pt-20 pb-20" style="background-color: #f5f5f5;">
@@ -104,8 +104,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                          =            shop page content         =
-                                                                          =============================================-->
+                                                                            =            shop page content         =
+                                                                            =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">

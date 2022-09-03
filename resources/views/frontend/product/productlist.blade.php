@@ -24,7 +24,7 @@
 
 @section('twiter-title', $category->meta_title)
 @section('twiter-description', $category->meta_description)
-@section('twitter-image', $category->image_src)
+@section('twiter-image', $category->image_src)
 
 
 @section('content')

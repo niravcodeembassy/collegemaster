@@ -32,13 +32,13 @@
   <meta property="og:site_name" content="{{ env('APP_NAME') }}">
 
   <!-- Twitter Card data -->
-  <meta name="twitter:card" content="@yield('twitter-card', 'product')">
+  <meta name="twitter:card" content="@yield('twiter-card', 'product')">
   <meta name="twitter:site" content="@publisher_handle" />
-  <meta name="twitter:title" content="@yield('twitter-title', $frontsetting->meta_title)">
-  <meta name="twitter:description" content="@yield('twitter-description', $frontsetting->meta_description)">
+  <meta name="twitter:title" content="@yield('twiter-title', $frontsetting->meta_title)">
+  <meta name="twitter:description" content="@yield('twiter-description', $frontsetting->meta_description)">
   <meta name="twitter:creator"
     content="@author_handle" />
-  <meta name="twitter:image" content="@yield('twitter-image', asset('storage/' . $frontsetting->logo))">
+  <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
@@ -362,108 +362,42 @@
 
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
-    $(document).on('click', '.call-modal', function(e) {
+    $(document).on('click', '.call-modal' , function(e) { e.preventDefault(); // return false; var el=$(this); if (el.data('requestRunning')) { console.log('0'); return; } el.data('requestRunning', true); showLoader(); var url=el.data('url'); var
+    target=el.data('target-modal'); console.log(target); $.ajax({ type: "GET" , url: url }).always(function() { $('#load-modal').html(' ');
+        el.data(' requestRunning', false); stopLoader(); }).done(function(res) { $('#load-modal').html(res.html); // $('body').append(res.html); el.attr({ 'data-toggle' : "modal" , 'data-target' : target }); $(target).modal('toggle'); }); });
+    $(document).on('click', '.has-wish-lists' , function() { var el=$(this); var url=el.attr('data-url'); var remove=el.attr('data-remove'); $.ajax({ type: "GET" , url: url, }).done(function(res) { if (res.process=="add" ) {
+    $(el).addClass('bg-danger'); $(el).find('i').addClass('text-white'); $.toast({ heading: 'Success' , text: 'Favourite add successfully.' , showHideTransition: 'slide' , icon: 'success' , loaderBg: '#f96868' , position: 'top-right' , stack: 1 }); }
+    else if (res.process=="remove" ) { if (remove) { el.closest('.col-grid-box').remove(); if (!$('.col-grid-box').length) { $('.dashboard').html('<h4>You have no wishlist</h4>')
+  }
+  }
 
-      e.preventDefault();
-      // return false;
-      var el = $(this);
+  $(el).removeClass('bg-danger');
+  $(el).find('i').removeClass('text-white');
+  $.toast({
+  heading: 'Success',
+  text: 'Favourite remove successfully.',
+  showHideTransition: 'slide',
+  icon: 'success',
+  loaderBg: '#f96868',
+  position: 'top-right',
+  stack: 1
+  });
+  }
 
-      if (el.data('requestRunning')) {
-        console.log('0');
-        return;
-      }
-      el.data('requestRunning', true);
+  }).fail(function(res) {
 
-      showLoader();
+  $.toast({
+  heading: 'Error',
+  text: 'Something went wrong.',
+  showHideTransition: 'slide',
+  icon: 'success',
+  loaderBg: '#f96868',
+  position: 'top-right'
+  })
 
-      var url = el.data('url');
-      var target = el.data('target-modal');
+  });
 
-      console.log(target);
-
-      $.ajax({
-        type: "GET",
-        url: url
-      }).always(function() {
-
-        $('#load-modal').html(' ');
-        el.data('requestRunning', false);
-
-        stopLoader();
-
-      }).done(function(res) {
-        $('#load-modal').html(res.html);
-        // $('body').append(res.html);
-        el.attr({
-          'data-toggle': "modal",
-          'data-target': target
-        });
-        $(target).modal('toggle');
-
-      });
-
-    });
-
-
-    $(document).on('click', '.has-wish-lists', function() {
-
-      var el = $(this);
-      var url = el.attr('data-url');
-      var remove = el.attr('data-remove');
-
-      $.ajax({
-        type: "GET",
-        url: url,
-      }).done(function(res) {
-
-        if (res.process == "add") {
-          $(el).addClass('bg-danger');
-          $(el).find('i').addClass('text-white');
-          $.toast({
-            heading: 'Success',
-            text: 'Favourite add successfully.',
-            showHideTransition: 'slide',
-            icon: 'success',
-            loaderBg: '#f96868',
-            position: 'top-right',
-            stack: 1
-          });
-        } else if (res.process == "remove") {
-
-          if (remove) {
-            el.closest('.col-grid-box').remove();
-            if (!$('.col-grid-box').length) {
-              $('.dashboard').html('<h4>You have no wishlist</h4>')
-            }
-          }
-
-          $(el).removeClass('bg-danger');
-          $(el).find('i').removeClass('text-white');
-          $.toast({
-            heading: 'Success',
-            text: 'Favourite remove successfully.',
-            showHideTransition: 'slide',
-            icon: 'success',
-            loaderBg: '#f96868',
-            position: 'top-right',
-            stack: 1
-          });
-        }
-
-      }).fail(function(res) {
-
-        $.toast({
-          heading: 'Error',
-          text: 'Something went wrong.',
-          showHideTransition: 'slide',
-          icon: 'success',
-          loaderBg: '#f96868',
-          position: 'top-right'
-        })
-
-      });
-
-    });
+  });
 
 
   });
