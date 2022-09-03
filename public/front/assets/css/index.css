@@ -455,14 +455,15 @@ h3.quality_h3{
 
 @media only screen and (max-width: 280px) {
   h3.quality_h3{
-    line-height: 30px;
-    font-size: 24px !important;
+    line-height: 8px;
+    font-size: 18px !important;
   }
 }
 
 @media only screen and (max-width: 480px) {
   h3.quality_h3{
-    line-height: 30px;
+    line-height: 8px;
+    font-size: 18px !important;
   }
   /* .single-category__content--three--creativehome {
     bottom: 10px;

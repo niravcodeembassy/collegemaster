@@ -36,13 +36,13 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('privacy-policy', 'ContactUsController@policy')->name('page.policy');
   Route::get('photo-policy', 'ContactUsController@photoPolicy')->name('page.photo');
   Route::get('cookie-policy', 'ContactUsController@cookiePolicy')->name('page.cookie');
-  Route::get('returns-policy', 'ContactUsController@returnPolicy')->name('page.returns');
+  Route::get('return-policy', 'ContactUsController@returnPolicy')->name('page.returns');
   Route::get('term-conditions', 'ContactUsController@term')->name('page.term');
 
   Route::get('how-to-place-order', 'ContactUsController@placeOrder')->name('page.order.place');
   Route::get('how-to-send-photo', 'ContactUsController@sendPhoto')->name('page.send.photo');
   Route::get('how-many-photo-send', 'ContactUsController@photoSend')->name('page.photo.send');
-  Route::get('how-to-send-change', 'ContactUsController@saveChange')->name('page.save.change');
+  Route::get('how-to-save-change', 'ContactUsController@saveChange')->name('page.save.change');
   Route::get('estimate-delivery-time', 'ContactUsController@deliveryTime')->name('page.delivery.time');
   // Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');
 

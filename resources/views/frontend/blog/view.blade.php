@@ -20,7 +20,7 @@
 
 @section('twiter-title', $blog->meta_title)
 @section('twiter-description', $blog->meta_description)
-@section('twitter-image', $blog->image_src)
+@section('twiter-image', $blog->image_src)
 
 
 @section('content')

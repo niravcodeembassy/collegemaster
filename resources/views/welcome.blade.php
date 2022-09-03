@@ -10,8 +10,8 @@
 
 
   <!--=============================================
-                                                                                                                                                                                                                                                   =            slider area         =
-                                                                                                                                                                                                                                                   =============================================-->
+                                                                                                                                                                                                                                                     =            slider area         =
+                                                                                                                                                                                                                                                     =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -195,7 +195,7 @@
           <div class="col-lg-12">
             <!--=======  section title  =======-->
             <div class="section-title section-title--one text-center">
-              <h3 class="text-uppercase font-weight-bold">Clever & unique ideas</h3>
+              <h3 class="text-uppercase font-weight-bold quality_h3">Clever & unique ideas</h3>
               <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon">
@@ -517,8 +517,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                                           =            instagram slider area         =
-                                                                                                                                                                                                                                                           =============================================-->
+                                                                                                                                                                                                                                                             =            instagram slider area         =
+                                                                                                                                                                                                                                                             =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
