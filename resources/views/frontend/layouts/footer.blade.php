@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="footer-top footer-container footer-one pt-70 pb-20 pb-sm-10 pt-sm-50">
+  <div class="footer-top footer-container footer-one pt-70 pb-20 pt-sm-50">
     <div class="container-fluid">
       <div class="row clearfix footer_grid mx-xl-5 mx-2">
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 footer-single-widget review_widget">

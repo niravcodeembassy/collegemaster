@@ -20,7 +20,7 @@
     var headerPosition = sliderBottomHeaderHeight + sliderHeight;
 
     if (screenSize >= 992) {
-      if (scroll < headerHeight) {
+      if (window.scrollY === 0) {
         sticky.removeClass("is-sticky");
       } else {
         sticky.addClass("is-sticky");
