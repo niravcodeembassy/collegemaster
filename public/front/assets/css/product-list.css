@@ -18,6 +18,10 @@ a.active {
   font-size: 17px !important;
 }
 
+.category_list h1{
+  color: #ad0101 !important;
+}
+
 
 .about-overlay .overlay-content {
   width: 290px;

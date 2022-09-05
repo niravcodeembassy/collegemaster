@@ -31,7 +31,7 @@
   <div class="pt-40 mb-20">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12 border-bottom">
+        <div class="col-lg-12 border-bottom category_list">
           @if (request('term'))
             <h1 class="text-center text-uppercase h2 pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
           @else
@@ -100,8 +100,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                            =            shop page content         =
-                                                                                                                                                                                                            =============================================-->
+                                                                                                                                                                                                                  =            shop page content         =
+                                                                                                                                                                                                                  =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
