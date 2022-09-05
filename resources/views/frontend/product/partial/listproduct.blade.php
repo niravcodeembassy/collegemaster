@@ -50,7 +50,7 @@
       <h3> <a href="{{ $route }}">{{ $product->name }}</a></h3>
     </div>
     <div class="price">
-      <span class="main-price" style="font-size: 20px;">{{ 'US' . $priceData->price . '+' }}</span>
+      <span class="main-price color_brown">{{ 'US' . $priceData->price . '+' }}</span>
       @if ($priceData->offer_price)
         <span class="main-price discounted" style="font-size: 16px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
         <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>

@@ -54,13 +54,12 @@
       </a>
     </div>
     <div class="price">
-      <span class="main-price" style="font-size: 18px;">{{ 'US' . $priceData->price . '+' }}</span>
+      <span class="main-price color_brown">{{ 'US' . $priceData->price . '+' }}</span>
       @if ($priceData->offer_price)
         <span class="main-price discounted" style="font-size: 14px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
         <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
       @endif
     </div>
   </div>
-
   <!--=======  End of single product content  =======-->
 </div>

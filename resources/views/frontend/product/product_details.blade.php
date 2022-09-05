@@ -49,6 +49,7 @@
       margin-left: 50px;
     }
 
+
     .discounted-price {
       font-size: 1.35rem !important;
       color: #ad0101 !important;

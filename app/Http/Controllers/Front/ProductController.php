@@ -29,14 +29,14 @@ class ProductController extends Controller
     //   $category = Category::where('slug', $slug)->select('id', 'slug', 'image', 'name', 'description')->firstOrFail();
     // }
 
-    $is_product = Product::where('name', $request->term)->first();
-    if (isset($is_product) && $is_product !== null) {
-      if ($is_product->sub_category_id !== null) {
-        return $this->productDetails($request, $is_product->category->slug, $is_product->subCategory->slug, $is_product->slug);
-      } else {
-        return $this->productDetails($request, $is_product->category->slug, $is_product->slug);
-      }
-    }
+    // $is_product = Product::where('name', $request->term)->first();
+    // if (isset($is_product) && $is_product !== null) {
+    //   if ($is_product->sub_category_id !== null) {
+    //     return $this->productDetails($request, $is_product->category->slug, $is_product->subCategory->slug, $is_product->slug);
+    //   } else {
+    //     return $this->productDetails($request, $is_product->category->slug, $is_product->slug);
+    //   }
+    // }
 
 
 
@@ -72,16 +72,16 @@ class ProductController extends Controller
   }
   public function getProductQuery(Request $request, $slug, $category = null, $sub_category_id = null)
   {
-    $result = '';
-    if ($request->term) {
-      $cate = Category::when($request->term, function ($query) use ($request) {
-        return $query->select('id', 'name', 'slug')->where('name', $request->term);
-      });
-      $sub_cate = SubCategory::when($request->term, function ($query) use ($request) {
-        return $query->select('id', 'name', 'slug')->where('name', $request->term);
-      });
-      $result = $cate->union($sub_cate)->first();
-    }
+    // $result = '';
+    // if ($request->term) {
+    //   $cate = Category::when($request->term, function ($query) use ($request) {
+    //     return $query->select('id', 'name', 'slug')->where('name', $request->term);
+    //   });
+    //   $sub_cate = SubCategory::when($request->term, function ($query) use ($request) {
+    //     return $query->select('id', 'name', 'slug')->where('name', $request->term);
+    //   });
+    //   $result = $cate->union($sub_cate)->first();
+    // }
     return Product::productList()->when($slug !== 'all' && isset($category), function ($q) use ($category) {
       return $q->where('category_id', $category->id);
     })
@@ -105,17 +105,20 @@ class ProductController extends Controller
         return $q->Where('products.name', 'like', $request->search . '_%')
           ->orWhere('products.sku', 'like', "%$request->search%");
       })
-      ->when($request->term, function ($q) use ($request, $result) {
-        $q->when($result !== null, function ($query) use ($request) {
-          return $query->Join('categories', function ($join) use ($request) {
-            return $join->on('products.category_id', '=', 'categories.id');
-          })->Join('sub_categories', function ($join) use ($request) {
-            return $join->on('products.sub_category_id', '=', 'sub_categories.id');
-          })->where('categories.name', $request->term)->orWhere('sub_categories.name', $request->term);
-        }, function ($query) use ($request) {
-          $query->Where('products.name', 'like', $request->term . '_%');
-        });
+      ->when($request->term, function ($q) use ($request) {
+        return $q->Where('products.name', 'like', $request->term . '_%');
       })
+      // ->when($request->term, function ($q) use ($request, $result) {
+      //   $q->when($result !== null, function ($query) use ($request) {
+      //     return $query->Join('categories', function ($join) use ($request) {
+      //       return $join->on('products.category_id', '=', 'categories.id');
+      //     })->Join('sub_categories', function ($join) use ($request) {
+      //       return $join->on('products.sub_category_id', '=', 'sub_categories.id');
+      //     })->where('categories.name', $request->term)->orWhere('sub_categories.name', $request->term);
+      //   }, function ($query) use ($request) {
+      //     $query->Where('products.name', 'like', $request->term . '_%');
+      //   });
+      // })
       ->with('category', 'subcategory')
       ->paginate(12);
   }
