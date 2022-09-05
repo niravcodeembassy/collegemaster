@@ -11,7 +11,7 @@
   <meta name="robots" content="index, follow">
   <!-- Favicon -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="canonical" href="{{ env('APP_URL') }}" />
+  <link rel="canonical" href="{{ url()->current() }}" />
   <link rel="icon" href="{{ asset('storage/' . $frontsetting->favicon) }}" type="png">
 
   {{-- seo meta tag --}}
@@ -252,7 +252,7 @@
     })
 
     var route_second = $('#live_search_mobile').data('url');
-    search('#live_search_mobile', route_second);
+    // search('#live_search_mobile', route_second);
     $mobile_input = $('#live_search_mobile');
     $mobile_input.change(function() {
       var current = $mobile_input.typeahead("getActive");
@@ -284,7 +284,7 @@
     //product search
     var route = $('#live_search').data('url');
     redirectSearchPage('#live_search');
-    search('#live_search', route);
+    // search('#live_search', route);
 
     function redirectSearchPage(rawId) {
       $input = $(rawId);
@@ -298,19 +298,19 @@
     }
 
 
-    function search(Id, route) {
-      $(Id).typeahead({
-        hint: true,
-        highlight: true,
-        source: function(query, process) {
-          return $.get(route, {
-            query: query
-          }, function(data) {
-            return process(data);
-          });
-        },
-      });
-    }
+    // function search(Id, route) {
+    //   $(Id).typeahead({
+    //     hint: false,
+    //     highlight: false,
+    //     source: function(query, process) {
+    //       return $.get(route, {
+    //         query: query
+    //       }, function(data) {
+    //         return process(data);
+    //       });
+    //     },
+    //   });
+    // }
   </script>
 
   @stack('js')
@@ -362,108 +362,42 @@
 
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
-    $(document).on('click', '.call-modal', function(e) {
+    $(document).on('click', '.call-modal' , function(e) { e.preventDefault(); // return false; var el=$(this); if (el.data('requestRunning')) { console.log('0'); return; } el.data('requestRunning', true); showLoader(); var url=el.data('url'); var
+    target=el.data('target-modal'); console.log(target); $.ajax({ type: "GET" , url: url }).always(function() { $('#load-modal').html(' ');
+        el.data(' requestRunning', false); stopLoader(); }).done(function(res) { $('#load-modal').html(res.html); // $('body').append(res.html); el.attr({ 'data-toggle' : "modal" , 'data-target' : target }); $(target).modal('toggle'); }); });
+    $(document).on('click', '.has-wish-lists' , function() { var el=$(this); var url=el.attr('data-url'); var remove=el.attr('data-remove'); $.ajax({ type: "GET" , url: url, }).done(function(res) { if (res.process=="add" ) {
+    $(el).addClass('bg-danger'); $(el).find('i').addClass('text-white'); $.toast({ heading: 'Success' , text: 'Favourite add successfully.' , showHideTransition: 'slide' , icon: 'success' , loaderBg: '#f96868' , position: 'top-right' , stack: 1 }); }
+    else if (res.process=="remove" ) { if (remove) { el.closest('.col-grid-box').remove(); if (!$('.col-grid-box').length) { $('.dashboard').html('<h4>You have no wishlist</h4>')
+  }
+  }
 
-      e.preventDefault();
-      // return false;
-      var el = $(this);
+  $(el).removeClass('bg-danger');
+  $(el).find('i').removeClass('text-white');
+  $.toast({
+  heading: 'Success',
+  text: 'Favourite remove successfully.',
+  showHideTransition: 'slide',
+  icon: 'success',
+  loaderBg: '#f96868',
+  position: 'top-right',
+  stack: 1
+  });
+  }
 
-      if (el.data('requestRunning')) {
-        console.log('0');
-        return;
-      }
-      el.data('requestRunning', true);
+  }).fail(function(res) {
 
-      showLoader();
+  $.toast({
+  heading: 'Error',
+  text: 'Something went wrong.',
+  showHideTransition: 'slide',
+  icon: 'success',
+  loaderBg: '#f96868',
+  position: 'top-right'
+  })
 
-      var url = el.data('url');
-      var target = el.data('target-modal');
+  });
 
-      console.log(target);
-
-      $.ajax({
-        type: "GET",
-        url: url
-      }).always(function() {
-
-        $('#load-modal').html(' ');
-        el.data('requestRunning', false);
-
-        stopLoader();
-
-      }).done(function(res) {
-        $('#load-modal').html(res.html);
-        // $('body').append(res.html);
-        el.attr({
-          'data-toggle': "modal",
-          'data-target': target
-        });
-        $(target).modal('toggle');
-
-      });
-
-    });
-
-
-    $(document).on('click', '.has-wish-lists', function() {
-
-      var el = $(this);
-      var url = el.attr('data-url');
-      var remove = el.attr('data-remove');
-
-      $.ajax({
-        type: "GET",
-        url: url,
-      }).done(function(res) {
-
-        if (res.process == "add") {
-          $(el).addClass('bg-danger');
-          $(el).find('i').addClass('text-white');
-          $.toast({
-            heading: 'Success',
-            text: 'Favourite add successfully.',
-            showHideTransition: 'slide',
-            icon: 'success',
-            loaderBg: '#f96868',
-            position: 'top-right',
-            stack: 1
-          });
-        } else if (res.process == "remove") {
-
-          if (remove) {
-            el.closest('.col-grid-box').remove();
-            if (!$('.col-grid-box').length) {
-              $('.dashboard').html('<h4>You have no wishlist</h4>')
-            }
-          }
-
-          $(el).removeClass('bg-danger');
-          $(el).find('i').removeClass('text-white');
-          $.toast({
-            heading: 'Success',
-            text: 'Favourite remove successfully.',
-            showHideTransition: 'slide',
-            icon: 'success',
-            loaderBg: '#f96868',
-            position: 'top-right',
-            stack: 1
-          });
-        }
-
-      }).fail(function(res) {
-
-        $.toast({
-          heading: 'Error',
-          text: 'Something went wrong.',
-          showHideTransition: 'slide',
-          icon: 'success',
-          loaderBg: '#f96868',
-          position: 'top-right'
-        })
-
-      });
-
-    });
+  });
 
 
   });

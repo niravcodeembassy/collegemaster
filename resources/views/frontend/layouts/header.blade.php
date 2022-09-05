@@ -112,6 +112,15 @@
           <nav class="site-nav">
             <button class="left_scroll d-xl-none d-lg-block" onclick="leftScroll()"><i class="fa fa-angle-left fa-lg" aria-hidden="true"></i></button>
             <ul class="main_list" id="category_scroll">
+              <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
+                <ul class="sub-menu single-column-menu">
+                  @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
+                    <li>
+                      <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
+                    </li>
+                  @endforeach
+                </ul>
+              </li>
               @foreach ($forntcategory->whereBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
                 <li class="menu-item-has-children">
                   <a href="{{ route('category.product', $item->slug) }}" class="category_link">{{ ucfirst($item->name) }}</a>
@@ -126,15 +135,6 @@
                   </ul>
                 </li>
               @endforeach
-              <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}" class="category_link">All</a>
-                <ul class="sub-menu single-column-menu">
-                  @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
-                    <li>
-                      <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
-                    </li>
-                  @endforeach
-                </ul>
-              </li>
             </ul>
             <button class="right_scroll d-xl-none d-lg-block" onclick="rightScroll()"><i class="fa fa-angle-right fa-lg" aria-hidden="true"></i></button>
           </nav>

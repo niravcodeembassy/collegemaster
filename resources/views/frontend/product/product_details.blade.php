@@ -46,12 +46,12 @@
 
     .stock {
       width: 80px;
-      margin-left: 10px;
-      padding-top: 25px;
+      margin-left: 50px;
     }
 
     .discounted-price {
       font-size: 1.35rem !important;
+      color: #ad0101 !important;
     }
 
     .discount-percentage {
@@ -158,6 +158,15 @@
       padding-inline-start: 40px;
     }
 
+
+    p.content_h1 {
+      font-size: 14px;
+    }
+
+    span.content_h2 {
+      font-weight: 600;
+    }
+
     .ck_editor_data h1,
     h2,
     h3,
@@ -202,6 +211,10 @@
       right: 10px;
     }
 
+    .w-55 {
+      width: 55%;
+    }
+
     .single-product__floating-icons span a {
       width: 36px;
       height: 36px;
@@ -220,9 +233,20 @@
         margin-top: -27px;
       }
 
+      .shop-product__price .w-55 {
+        width: 100% !important;
+      }
+
+      .shop-product__price {
+        display: block !important;
+      }
+
+
       .shop-product__buttons {
         display: block !important;
       }
+
+
 
       .shop-product__buttons .d-flex {
         display: block !important;
@@ -236,7 +260,6 @@
       .stock {
         margin-left: 0px;
         padding-top: 0px;
-        float: right;
       }
     }
 
@@ -251,6 +274,18 @@
 
       .nav-tabs a {
         border: none !important;
+      }
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 667px) {
+      .shop-product__price .w-55 {
+        width: 60% !important;
+      }
+    }
+
+    @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
+      .shop-product__price .w-55 {
+        width: 60% !important;
       }
     }
   </style>
@@ -287,8 +322,8 @@
         <div class="col-lg-12">
           <div class="breadcrumb-area pb-20">
             <ul class="breadcrumb-list">
-              <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-              <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active' : '' }}">
+              <li class="breadcrumb-list__item text-uppercase"><a href="{{ url('/') }}">HOME</a></li>
+              <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active text-uppercase' : 'text-uppercase' }}">
                 <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
               </li>
               @php
@@ -297,7 +332,7 @@
                 unset($routeParameter['slug']);
               @endphp
               @if (isset($sub) && !is_null($sub))
-                <li class="breadcrumb-list__item breadcrumb-list__item--active">
+                <li class="breadcrumb-list__item breadcrumb-list__item--active text-uppercase">
                   <a href="{{ route('product.details', $routeParameter) }}">{{ $sub->name }}
                   </a>
                 </li>
@@ -458,16 +493,18 @@
                     }
                   @endphp
 
-                  <div class="shop-product__price mb-25">
-                    <span class="discounted-price">{{ 'US' . $priceData->price . '+' }}</span>
-                    @if ($priceData->offer_price)
-                      <span class="main-price discounted">{{ 'US' . $priceData->offer_price . '+' }}</span>
-                      <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
-                    @endif
+                  <div class="align-items-center d-flex mb-25 shop-product__price">
+                    <div class="d-flex flex-wrap w-55">
+                      <span class="discounted-price">{{ 'US' . $priceData->price . '+' }}</span>
+                      @if ($priceData->offer_price)
+                        <span class="main-price discounted">{{ 'US' . $priceData->offer_price . '+' }}</span>
+                        <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
+                      @endif
+                      <p class="content_h1"><span class="content_h2">HOORAY!</span> This item delivers for free.</p>
+                    </div>
                     <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid">
-                    {{-- <div class="float-right"></div> --}}
-                    <p class="h6" style="line-height: 20px;">HOORAY! This item delivers for free.</p>
                   </div>
+
 
                   <!--=======  End of shop product price  =======-->
 
