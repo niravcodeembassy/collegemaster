@@ -117,12 +117,17 @@
   <!--=============================================
          =            Header without topbar         =
          =============================================-->
+
+
   @include('frontend.layouts.header')
+
   <!--===== End of Header without topbar ======-->
   @section('content')
   @show
 
+  @if (!Route::is('login') && !Route::is('register'))
   @include('frontend.layouts.footer')
+@endif
 
   <!-- scroll to top  -->
   {{-- <a href="#" class="scroll-top"></a> --}}

@@ -1,117 +1,98 @@
 @extends('frontend.layouts.app')
 
+@push('css')
+  <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+
+
 @section('content')
-  <div class=" breadcrumb-area   pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
+  <div class="auth-header min-vh-100">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <h1 class="breadcrumb-title">Register</h1>
-
-          <!--=======  breadcrumb list  =======-->
-
-          <ul class="breadcrumb-list">
-            <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-            <li class="breadcrumb-list__item breadcrumb-list__item--active">Register</li>
-          </ul>
-
-          <!--=======  End of breadcrumb list  =======-->
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container register-form">
-    <div class=" justify-content-center mb-100">
-      <div class="col-md-6">
-        <div class=" lezada-form login-form">
-          <div class="card-bodys">
-            <form method="POST" action="{{ route('register') }}">
-              @csrf
-
-              <div class="form-group row">
-
-                <div class="col-md-12">
-                  <label for="first_name">{{ __('First name') }}</label>
-                  <input id="first_name" type="text" class=" @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
+        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+          <div class="card auth_card card-plain">
+            <div class="card-header pb-0 text-left">
+              <h4 class="font-weight-bolder">Sign Up</h4>
+              <p class="mb-0 h6">Enter your email and password to register</p>
+            </div>
+            <div class="card-body pb-3">
+              <form class="auth_form" method="POST" action="{{ route('register') }}">
+                @csrf
+                <label for="first_name">{{ __('First name') }}</label>
+                <div class="mb-3">
+                  <input id="first_name" type="text" placeholder="First Name" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name"
+                    autofocus>
                   @error('first_name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
                 </div>
-              </div>
-              <div class="form-group row">
-
-                <div class="col-md-12">
-                  <label for="last_name">{{ __('Last name') }}</label>
-                  <input id="last_name" type="text" class=" @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                <label for="last_name">{{ __('Last name') }}</label>
+                <div class="mb-3">
+                  <input id="last_name" type="text" placeholder="Last Name" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
                   @error('last_name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
                 </div>
-              </div>
-
-              <div class="form-group row">
-
-                <div class="col-md-12">
-                  <label for="email">{{ __('E-Mail Address') }}</label>
-                  <input id="email" type="email" class=" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+                <label for="email">{{ __('E-Mail') }}</label>
+                <div class="mb-3">
+                  <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email" aria-label="Email">
                   @error('email')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
                 </div>
-              </div>
-
-
-              <div class="form-group row">
-
-                <div class="col-md-12">
-                  <label for="mobile">{{ __('Mobile number') }}</label>
-                  <input id="mobile" type="tel" placeholder="Mobile number" class=" @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
-                    style="background: none;padding-left:72px!important">
+                <label for="mobile">{{ __('Mobile number') }}</label>
+                <div class="">
+                  <input id="mobile" type="tel" placeholder="Mobile number" class="form-control form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
                   <label id="mobile-error" class="error text-danger" for="phone"></label>
                   @error('mobile')
                     <span class="invalid-feedback" role="alert">
-                      <strong id="mobile-error">{{ $message }}</strong>
+                      <strong>{{ $message }}</strong>
                     </span>
                   @enderror
                 </div>
-              </div>
-
-              <div class="form-group row">
-
-                <div class="col-md-12">
-                  <label for="password">{{ __('Password') }}</label>
-                  <input id="password" type="password" class=" @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                <label for="password">{{ __('Password') }}</label>
+                <div class="mb-3">
+                  <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
                   @error('password')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
                 </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                  <input id="password-confirm" type="password" class="" name="password_confirmation" required autocomplete="new-password">
+                <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                <div class="">
+                  <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
                 </div>
-              </div>
-
-              <div class="form-group row mb-0">
-                <div class="col-md-12 text-center">
-                  <button type="submit" class="lezada-button lezada-button--medium">
-                    {{ __('Register') }}
-                  </button>
+                <div class="text-center">
+                  <button type="submit" class="btn text-white btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign up</button>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
+            <div class="card-footer text-center pt-0 px-sm-4 px-1">
+              <p class="mb-4 mx-auto">
+                Already have an account?
+                <a href="{{ route('login') }}" class="text-dark text-gradient font-weight-bold">Sign in</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 image_content d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+          <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+            <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/shapes/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+            <div class="position-relative">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/illustrations/chat.png" alt="image">
+            </div>
+            <div class="mx-auto text_content">
+              <h4 class="text-white font-weight-bolder">Your journey starts here</h4>
+              <p class="text-white">Just as it takes a company to sustain a product, it takes a community to sustain a protocol.</p>
+            </div>
           </div>
         </div>
       </div>

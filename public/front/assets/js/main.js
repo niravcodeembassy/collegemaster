@@ -21,8 +21,10 @@
 
     if (screenSize >= 992) {
       if (window.scrollY === 0) {
+        $(".auth-header").addClass("small_device");
         sticky.removeClass("is-sticky");
       } else {
+        $(".auth-header").removeClass("small_device");
         sticky.addClass("is-sticky");
       }
     }

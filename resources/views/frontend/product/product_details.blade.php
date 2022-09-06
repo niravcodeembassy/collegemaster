@@ -609,7 +609,7 @@
                   @php
                     $style = null;
                     if ($productVarinat->inventory_quantity <= 0) {
-                        $style='pointer-events: none;cursor: not-allowed;opacity: 0.2;';
+                        $style = 'pointer-events: none;cursor: not-allowed;opacity: 0.2;';
                     }
                     $cart = ['product_id' => $productVarinat->product_id, 'variant_id' => $productVarinat->id, 'image_id' => $productVarinat->productimage_id];
                   @endphp
@@ -910,15 +910,94 @@
   </style>
 @endpush
 
+@php
+$schema_first = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'Product',
+    'name' => $product->meta_title,
+    'image' => $product->product_src,
+    'description' => $product->meta_description,
+    'brand' => [
+        '@type' => 'Brand',
+        'name' => env('APP_NAME'),
+    ],
+    'sku' => $product->sku,
+    'offers' => [
+        '@type' => 'Offer',
+        'url' => route('product.view', $product->slug),
+        'priceCurrency' => 'USD',
+        'price' => str_replace("$", '', $priceData->price),
+        'availability' => 'https://schema.org/InStock',
+        'itemCondition' => 'https://schema.org/NewCondition',
+    ],
+    'aggregateRating' => [
+        '@type' => 'AggregateRating',
+        'ratingValue' => $review_rating,
+        'bestRating' => '5',
+        'worstRating' => '1',
+        'ratingCount' => $product_review->count(),
+    ],
+];
+
+$schema_second = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'Organization',
+    'name' => env('APP_NAME'),
+    'url' => env('APP_URL'),
+    'logo' => asset('storage/' . $frontsetting->logo),
+];
+
+$schema_third = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => 'Home',
+            'item' => url('/'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => 'Products',
+            'item' => route('category.product', 'all'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 3,
+            'name' => $product->name,
+            'item' => url()->current(),
+        ],
+    ],
+];
+
+$product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$site_schema = json_encode($schema_second, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$product_schema, $site_schema, $list_schema];
+@endphp
+
 @push('js')
   <script src="{{ asset('front/assets/js/review.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 @endpush
 
+
+@foreach ($schema as $key => $list)
+  <x-schema>
+    {!! $list !!}
+  </x-schema>
+@endforeach
+
+
+
+
+
 @push('script')
   <script>
     let productCombination = @json($variantCombination);
-    console.log(productCombination);
   </script>
   <script>
     $(window).scroll(function() {

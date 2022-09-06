@@ -1,99 +1,89 @@
 @extends('frontend.layouts.app')
 
+@push('css')
+  <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @section('content')
-<div class=" breadcrumb-area   pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
+  <div class="auth-header min-vh-100">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="breadcrumb-title">Login Us</h1>
-                <!--=======  breadcrumb list  =======-->
-                <ul class="breadcrumb-list">
-                    <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-                    <li class="breadcrumb-list__item breadcrumb-list__item--active">Login</li>
-                </ul>
-                <!--=======  End of breadcrumb list  =======-->
+      <div class="row">
+        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+          <div class="card auth_card card-plain">
+            <div class="card-header pb-0 text-left">
+              <h4 class="font-weight-bolder">Sign In</h4>
+              <p class="mb-0 h6">Enter your email and password to sign in</p>
             </div>
-        </div>
-    </div>
-</div>
-<div class="container signin-form">
-    <div class=" justify-content-center mb-100">
-        <div class="row">
-            <div class="col-md-6 np">
-                <div class=" lezada-form login-form">
-                    <div class="card-bodys">
-                        <form method="POST" action="{{ route('login') }}" autocomplete="off">
-
-                            @csrf
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label for="email" >{{ __('E-Mail Address') }}</label>
-                                    <input id="email" type="email" class=" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  autofocus>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label for="password" >{{ __('Password') }}</label>
-                                    <input id="password" type="password" class=" @error('password') is-invalid @enderror" name="password" required >
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label  remember-text" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    @if (Route::has('password.request'))
-                                        <a class="reset-pass-link reset-pass-link mt-0" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
-                                </div>
-
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-12 ">
-                                    <button type="submit" class="lezada-button lezada-button--medium">
-                                        {{ __('Login') }}
-                                    </button>
-
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
+            <div class="card-body">
+              <form class="auth_form" method="POST" action="{{ route('login') }}" autocomplete="off">
+                @csrf
+                <label for="email">{{ __('E-Mail') }}</label>
+                <div class="mb-3">
+                  <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email" aria-label="Email">
+                  @error('email')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 </div>
-            </div>
-            <div class="col-lg-6 right-login">
-                <h2 class="mb-3">New Customer</h2>
-                <div class="theme-card authentication-right">
-                    <h5 class="title-font text-uppercase">Create An Account</h5>
-                    <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order
-                        from our shop. To start shopping click register.</p>
-                    <a href="{{ route('register') }}" class="lezada-button lezada-button--medium">Sign Up</a>
+                <label>{{ __('Password') }}</label>
+                <div class="mb-3">
+                  <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autofocus placeholder="Password" aria-label="Password">
+                  @error('password')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 </div>
+
+                <div class="d-md-flex justify-content-md-between">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="remember" id="rememberMe" {{ old('remember') ? 'checked' : '' }}>
+                    <label class="form-check-label  remember-text" for="remember">
+                      {{ __('Remember Me') }}
+                    </label>
+                  </div>
+
+                  @if (Route::has('password.request'))
+                    <a class="text-muted" href="{{ route('password.request') }}">
+                      {{ __('Forgot Your Password?') }}
+                    </a>
+                  @endif
+
+                </div>
+
+
+                <div class="text-center">
+                  <button type="submit" class="btn text-white  btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
+                    Sign in
+                  </button>
+                </div>
+              </form>
             </div>
+            <div class="card-footer text-center pt-0 px-lg-2 px-1">
+              <p class="mb-4 text-sm mx-auto">
+                Don't have an account?
+                <a href="{{ route('register') }}" class="text-dark text-gradient font-weight-bold">Sign up</a>
+              </p>
+            </div>
+          </div>
         </div>
+        <div class="col-6 image_content d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+          <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+            <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/shapes/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+            <div class="position-relative">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/illustrations/chat.png" alt="image">
+            </div>
+            <div class="mx-auto text_content">
+              {{-- <h4 class="text-white font-weight-bolder">"Create An Account"</h4>
+              <p class="text-white px-5">Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order
+                from our shop. To start shopping click register.</p> --}}
+              <h4 class="text-white font-weight-bolder">"Attention is the new currency"</h4>
+              <p class="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 @endsection
