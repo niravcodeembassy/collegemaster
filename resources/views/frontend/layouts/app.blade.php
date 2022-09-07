@@ -42,6 +42,8 @@
     content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
+  @yield('schema')
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
   <script>
@@ -89,22 +91,7 @@
   <script src="{{ asset('front/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
   <link href="{{ asset('front/assets/css/index.css') }}" rel="stylesheet">
-
-  <style>
-    .signup-form input[type=submit] {
-      background: url('{{ asset('front/assets/images/payment/telegram-plane.svg') }}');
-      background-repeat: no-repeat;
-      width: 35px;
-      height: 30px;
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      font-size: 0;
-      padding: 0
-    }
-  </style>
+  
   @stack('css')
 
   @stack('style')
@@ -127,7 +114,7 @@
 
   @if (!Route::is('login') && !Route::is('register'))
   @include('frontend.layouts.footer')
-@endif
+  @endif
 
   <!-- scroll to top  -->
   {{-- <a href="#" class="scroll-top"></a> --}}

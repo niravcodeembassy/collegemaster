@@ -122,6 +122,14 @@
   width: 100% !important;
 }
 
+.search_form .fa{
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+.search_form_mobile .fa{
+  font-size: 18px;
+  padding-bottom: 5px;
+}
 .search_form {
   width: 70% !important;
   position: relative;

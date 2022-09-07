@@ -173,7 +173,22 @@
   height: calc(2em + 1rem + 2px);
   font-size: .875rem;
 }
-.iti__flag-container,.auth_form .form-control {
+
+.iti input,.iti input[type=tel] {
+  display: block;
+  width: 100%;
+  font-size: .875rem;
+  font-weight: 400;;
+  line-height: 1.4rem;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box !important;
+  border: 1px solid #d2d6da !important;
+  appearance: none;
+  transition: box-shadow .15s ease,border-color .15s ease;
+}
+
+.intel_input input,.auth_form .form-control {
   display: block;
   width: 100%;
   padding: 0.75rem;
@@ -204,7 +219,9 @@
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
 }
-
+.iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
+  background-color: transparent !important;
+}
 .auth_form .form-switch .form-check-input {
   border: 1px solid #e9ecef;
   position: relative;
@@ -236,8 +253,15 @@
   width: 100%;
 }
 
+.iti--allow-dropdown  input:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
 .iti__country-list {
-  max-width: 320 !important;
+  max-width: 320px !important;
   overflow-x: hidden;
 }
 html * {

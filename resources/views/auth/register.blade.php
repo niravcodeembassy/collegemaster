@@ -2,6 +2,7 @@
 
 @push('css')
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('front/assets/build/css/intlTelInput.css') }}">
 @endpush
 
 
@@ -40,7 +41,7 @@
                 </div>
                 <label for="email">{{ __('E-Mail') }}</label>
                 <div class="mb-3">
-                  <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email" aria-label="Email">
+                  <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
                   @error('email')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -48,8 +49,9 @@
                   @enderror
                 </div>
                 <label for="mobile">{{ __('Mobile number') }}</label>
-                <div class="">
-                  <input id="mobile" type="tel" placeholder="Mobile number" class="form-control form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
+                <div class="intel_input">
+                  <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
+                    style="background: none;">
                   <label id="mobile-error" class="error text-danger" for="phone"></label>
                   @error('mobile')
                     <span class="invalid-feedback" role="alert">
@@ -85,9 +87,9 @@
         </div>
         <div class="col-6 image_content d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
           <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-            <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/shapes/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+            <img src="{{ asset('front/assets/images/pattern-lines.svg') }}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
             <div class="position-relative">
-              <img class="max-width-500 w-100 position-relative z-index-2" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/illustrations/chat.png" alt="image">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="{{ asset('front/assets/images/chat.png') }}" alt="image">
             </div>
             <div class="mx-auto text_content">
               <h4 class="text-white font-weight-bolder">Your journey starts here</h4>
@@ -105,7 +107,7 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
   <script src="https://js.stripe.com/v3/"></script>
 
-  <link rel="stylesheet" href="{{ asset('front/assets/build/css/intlTelInput.css') }}">
+
   <script src="{{ asset('front/assets/build/js/intlTelInput.min.js') }}"></script>
 
   <script>
@@ -121,7 +123,7 @@
     $('.iti__flag-container').click(function() {
       country();
     });
-
+    
     function country() {
       var countryCode = $('.iti__selected-flag').attr('title');
       var countryCode = countryCode.replace(/[^0-9]/g, '')

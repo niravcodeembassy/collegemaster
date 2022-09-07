@@ -17,11 +17,6 @@
       border-bottom: 1px dotted black;
     }
 
-    .popover-header {
-      color: blue;
-      font-size: 15px;
-    }
-
     .nice-select.open .list {
       width: 100% !important;
     }
@@ -314,6 +309,85 @@
 @section('twiter-description', $product->meta_description)
 @section('twiter-image', $product->product_src)
 
+@php
+$priceData = Helper::productPrice($productVarinat);
+$schema_first = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'Product',
+    'name' => $product->meta_title,
+    'image' => $product->product_src,
+    'description' => $product->meta_description,
+    'brand' => [
+        '@type' => 'Brand',
+        'name' => env('APP_NAME'),
+    ],
+    'sku' => $product->sku,
+    'offers' => [
+        '@type' => 'Offer',
+        'url' => route('product.view', $product->slug),
+        'priceCurrency' => 'USD',
+        'price' => str_replace("$", '', $priceData->price),
+        'availability' => 'https://schema.org/InStock',
+        'itemCondition' => 'https://schema.org/NewCondition',
+    ],
+    'aggregateRating' => [
+        '@type' => 'AggregateRating',
+        'ratingValue' => $review_rating,
+        'bestRating' => '5',
+        'worstRating' => '1',
+        'ratingCount' => $product_review->count(),
+    ],
+];
+
+$schema_second = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'Organization',
+    'name' => env('APP_NAME'),
+    'url' => env('APP_URL'),
+    'logo' => asset('storage/' . $frontsetting->logo),
+];
+
+$schema_third = [
+    '@context' => 'https://schema.org/',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => 'Home',
+            'item' => url('/'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => 'Products',
+            'item' => route('category.product', 'all'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 3,
+            'name' => $product->name,
+            'item' => url()->current(),
+        ],
+    ],
+];
+
+$product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$site_schema = json_encode($schema_second, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$product_schema, $site_schema, $list_schema];
+@endphp
+
+@section('schema')
+
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+
+@endsection
 
 @section('content')
 
@@ -848,6 +922,7 @@
     </div>
   </div>
   <!--=====  End of shop page content  ======-->
+
 @endsection
 
 @push('js')
@@ -910,74 +985,7 @@
   </style>
 @endpush
 
-@php
-$schema_first = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'Product',
-    'name' => $product->meta_title,
-    'image' => $product->product_src,
-    'description' => $product->meta_description,
-    'brand' => [
-        '@type' => 'Brand',
-        'name' => env('APP_NAME'),
-    ],
-    'sku' => $product->sku,
-    'offers' => [
-        '@type' => 'Offer',
-        'url' => route('product.view', $product->slug),
-        'priceCurrency' => 'USD',
-        'price' => str_replace("$", '', $priceData->price),
-        'availability' => 'https://schema.org/InStock',
-        'itemCondition' => 'https://schema.org/NewCondition',
-    ],
-    'aggregateRating' => [
-        '@type' => 'AggregateRating',
-        'ratingValue' => $review_rating,
-        'bestRating' => '5',
-        'worstRating' => '1',
-        'ratingCount' => $product_review->count(),
-    ],
-];
 
-$schema_second = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'Organization',
-    'name' => env('APP_NAME'),
-    'url' => env('APP_URL'),
-    'logo' => asset('storage/' . $frontsetting->logo),
-];
-
-$schema_third = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        [
-            '@type' => 'ListItem',
-            'position' => 1,
-            'name' => 'Home',
-            'item' => url('/'),
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => 2,
-            'name' => 'Products',
-            'item' => route('category.product', 'all'),
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => 3,
-            'name' => $product->name,
-            'item' => url()->current(),
-        ],
-    ],
-];
-
-$product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$site_schema = json_encode($schema_second, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-$schema = [$product_schema, $site_schema, $list_schema];
-@endphp
 
 @push('js')
   <script src="{{ asset('front/assets/js/review.js') }}"></script>
@@ -985,11 +993,6 @@ $schema = [$product_schema, $site_schema, $list_schema];
 @endpush
 
 
-@foreach ($schema as $key => $list)
-  <x-schema>
-    {!! $list !!}
-  </x-schema>
-@endforeach
 
 
 
@@ -1035,11 +1038,6 @@ $schema = [$product_schema, $site_schema, $list_schema];
           loaderBg: "#f96868",
           position: "top-right",
         });
-      });
-
-      $('[data-toggle="popover"]').popover({
-        html: true,
-        container: 'body'
       });
 
       $('#rating').barrating({

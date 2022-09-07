@@ -7,6 +7,19 @@ footer{display:inline-block;width:100%}.newsletter{background:#252525;padding:40
 .footer-nav-container nav ul li {
   padding: 1px !important;
 }
+.signup-form input[type=submit] {
+  background: url('../images/payment/telegram-plane.svg');
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  font-size: 0;
+  padding: 0
+}
 
 .footer-container.footer-one {
   background: #f9f9f9;

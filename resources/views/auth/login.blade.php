@@ -70,9 +70,9 @@
         </div>
         <div class="col-6 image_content d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
           <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-            <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/shapes/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+            <img src="{{ asset('front/assets/images/pattern-lines.svg') }}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
             <div class="position-relative">
-              <img class="max-width-500 w-100 position-relative z-index-2" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/illustrations/chat.png" alt="image">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="{{ asset('front/assets/images/chat.png') }}" alt="image">
             </div>
             <div class="mx-auto text_content">
               {{-- <h4 class="text-white font-weight-bolder">"Create An Account"</h4>
