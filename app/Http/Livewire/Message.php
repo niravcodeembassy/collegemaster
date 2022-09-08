@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\User;
 use App\Model\Order;
 use Aj\FileUploader\FileUploader;
+use App\Model\MessageSnippet;
 use App\Model\Message as Chat;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +41,7 @@ class Message extends Component
     //     return $query->whereLike(['order_no', 'user.name'], "%{$search}%");
     //   })->orderBy('id', 'desc')->get();
 
+    $snippet = MessageSnippet::whereNull('is_active')->orderBy('id', 'DESC')->get();
     $orders =  Order::with('user')->select('orders.*', DB::raw("MAX(messages.created_at) as date"))
       ->Join('messages', function ($join) {
         $join->on('orders.id', '=', 'messages.order_id');
@@ -58,6 +60,7 @@ class Message extends Component
       'admin' => $this->admin,
       'admin_user' => $hasAdmin,
       'orders' => $this->orders,
+      'snippet' => $snippet
     ]);
   }
 
@@ -130,5 +133,11 @@ class Message extends Component
   public function resetFile()
   {
     $this->reset('file');
+  }
+
+  public function fillMessage($id)
+  {
+    $snippet = MessageSnippet::find($id);
+    $this->message = $snippet->description;
   }
 }

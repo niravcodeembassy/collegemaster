@@ -100,6 +100,10 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
 
   Route::get('/chat', 'MessageController@index')->name('chat.order');
 
+  Route::post('message-snippet/{id}/status', 'MessageSnippetController@changeStatus')->name('message-snippet.status');
+  Route::post('message-snippet/data-list', 'MessageSnippetController@dataList')->name('message-snippet.dataList');
+  Route::resource('message-snippet', 'MessageSnippetController');
+
   Route::get('testimonial/exists', 'TestimonialController@exists')->name('testimonial.exists');
   Route::post('testimonial/{id}/status', 'TestimonialController@changeStatus')->name('testimonial.status');
   Route::post('testimonial/data-list', 'TestimonialController@dataList')->name('testimonial.dataList');

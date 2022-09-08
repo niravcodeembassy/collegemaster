@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-lg-row chat_content" wire:poll="mountComponent">
+<div class="d-flex flex-column flex-lg-row chat_content" wire:poll.750ms="mountComponent">
   <!--begin::Sidebar-->
   @if ($admin_user)
     <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
@@ -251,6 +251,26 @@
       @endif
       <!--end::Card footer-->
     </div>
+
+    @if ($show && $snippet->count() > 0)
+      <div class="flex-lg-row-fluid mt-2">
+        <div class="card card-flush mb-6 mb-xl-9">
+          <div class="card-body">
+            <h5>Message Snippet</h5>
+            <div class="separator separator-dashed mb-2"></div>
+            @if ($snippet->count() > 0)
+              @foreach ($snippet as $list)
+                <a href="javascript:void(0)" wire:click.prevent="fillMessage({{ $list->id }})" class="text-white">
+                  <span class="badge badge-pill badge-success p-2 mr-2 my-1">{{ ucwords($list->title) ?? '' }}</span>
+                </a>
+                </span>
+              @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+    @endif
+
     <!--end::Messenger-->
   </div>
   <!--end::Content-->

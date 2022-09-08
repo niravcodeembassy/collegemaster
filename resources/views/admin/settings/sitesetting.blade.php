@@ -193,7 +193,16 @@
                 </a>
               </span>
             </div>
-
+            <div class="align-items-center col-sm-12 col-md-4 d-flex py-3">
+              <a href="{{ route('admin.message-snippet.index') }}" role="button" type="button" class="btn btn-primary shdow mr-3 shadow">
+                <i class="far fa-comment-alt" aria-hidden="true"></i>
+              </a>
+              <span class="text-muted">
+                <a href="{{ route('admin.message-snippet.index') }}">
+                  <h6 class="text-capitalize mb-1"><b> Message Snippet</b></h6>
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
