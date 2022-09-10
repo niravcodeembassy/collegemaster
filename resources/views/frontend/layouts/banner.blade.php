@@ -4,7 +4,7 @@
       <div class="col-lg-12">
         <h1 class="breadcrumb-title">{{ $pageTitel }}</h1>
         <ul class="breadcrumb-list">
-          <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
+          <li class="breadcrumb-list__item"><a href="{{ route('front.home') }}">HOME</a></li>
           <li class="breadcrumb-list__item breadcrumb-list__item--active">{{ $pageTitel }}</li>
         </ul>
       </div>

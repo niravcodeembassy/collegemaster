@@ -12,6 +12,7 @@
         "aj/file-uploader": "@dev",
         "aj/multi-auth": "@dev",
         "akaunting/money": "^1.1",
+        "anhskohbo/no-captcha": "^3.4",
         "arcanedev/log-viewer": "~7.0",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "fideloper/proxy": "^4.2",

@@ -1258,16 +1258,22 @@
   $(".shop-product__big-image-gallery-sticky .single-image").zoom();
 
   //lightgallery
-  var productThumb = $(
-      ".shop-product__big-image-gallery-slider .single-image img, .shop-product__big-image-gallery-sticky .single-image img"
-    ),
-    imageSrcLength = productThumb.length,
-    images = [];
-  for (var i = 0; i < imageSrcLength; i++) {
-    images[i] = { src: productThumb[i].src };
-  }
+  // var productThumb = $(
+  //     ".shop-product__big-image-gallery-slider .single-image img, .shop-product__big-image-gallery-sticky .single-image img"
+  //   ),
+  //   imageSrcLength = productThumb.length,
+  //   images = [];
+  // for (var i = 0; i < imageSrcLength; i++) {
+  //   images[i] = { src: productThumb[i].src };
+  // }
 
   $(".btn-zoom-popup").on("click", function () {
+    var all_img = $(this).data("images");
+    var images = [];
+    for (var i = 0; i < all_img.length; i++) {
+      images[i] = { src: all_img[i] };
+    }
+
     $(this).lightGallery({
       thumbnail: false,
       dynamic: true,

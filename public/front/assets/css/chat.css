@@ -7,16 +7,25 @@
 }
 
 .order_div{
-  min-height: 550px;
+  min-height: 680px;
+}
+
+.not_main_div{
+  min-height: 680px;
 }
 
 .header-div{
-  min-height: 550px;
+  max-height: 680px;
+}
+
+.order_scroll_div{
+  height: 580px;
+  overflow-y: auto;
 }
 
 .chat-messages {
-    height: 450px !important;
-    overflow-y: scroll;
+   height: 450px;
+    overflow-y: auto;
     display:flex;
     flex-direction:column-reverse;
 }
@@ -111,6 +120,22 @@ img.avatar{
   width: 5px;
 }
 
+.order_scroll_div::-webkit-scrollbar{
+  width: 5px;
+}
+
+.order_scroll_div::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  -webkit-border-radius: 10px;
+  border-radius: 5px;
+}
+
+.order_scroll_div::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 5px;
+  background: #6d6d6d;
+}
+
 .scroll_div::-webkit-scrollbar-track {
   background-color: #ebebeb;
   -webkit-border-radius: 10px;
@@ -164,6 +189,12 @@ img.avatar{
   .order_div{
     min-height: auto;
   }
+  .not_main_div{
+    min-height: 400px;
+  }
+  .order_scroll_div{
+    height: 300px;
+  }
 }
 
 @media only screen
@@ -187,6 +218,12 @@ and (max-device-width : 1020px)
   }
   .header-div{
     min-height: 300px;
+  }
+  .not_main_div{
+    min-height: 300px;
+  }
+  .order_scroll_div{
+    height: 300px;
   }
   .scroll_div{
     max-height: 250px;

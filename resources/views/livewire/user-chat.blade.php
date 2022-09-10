@@ -3,52 +3,52 @@
     <div class="card">
       <div class="row g-0">
         <div class="col-12  col-lg-4 border-right order_div">
-          <div class="px-4 d-none d-md-block">
+          <div class="px-4 d-none d-md-block ">
             <div class="d-flex align-items-center">
               <div class="flex-grow-1">
                 <input type="text" class="form-control my-3" name="search" value="" placeholder="Search by order No" wire:model="search" />
               </div>
             </div>
           </div>
-          @foreach ($orders as $order)
-            @php
-              $not_seen =
-                  \App\Model\Message::where('order_id', $order->id)
-                      ->where('user_id', $admin->id)
-                      ->where('is_seen', false)
-                      ->get() ?? null;
-              $latest =
-                  \App\Model\Message::where('order_id', $order->id)
-                      ->where('user_id', $admin->id)
-                      ->latest()
-                      ->first() ?? null;
-            @endphp
-            <a href="#" wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" class="list-group-item list-group-item-action border-0">
-              @if (filled($not_seen))
-                <div class="badge bg-warning float-right"> {{ $not_seen->count() }}</div>
-              @endif
+          <div class="order_scroll_div">
+            @foreach ($orders as $order)
+              @php
+                $not_seen =
+                    \App\Model\Message::where('order_id', $order->id)
+                        ->where('user_id', $admin->id)
+                        ->where('is_seen', false)
+                        ->get() ?? null;
+                $latest =
+                    \App\Model\Message::where('order_id', $order->id)
+                        ->where('user_id', $admin->id)
+                        ->latest()
+                        ->first() ?? null;
+              @endphp
+              <a href="javascript:void(0)" wire:click="getUser({{ $order->id }})" id="order_{{ $order->id }}" class="list-group-item list-group-item-action border-0">
+                @if (filled($not_seen))
+                  <div class="badge bg-warning float-right"> {{ $not_seen->count() }}</div>
+                @endif
 
-              <div class="d-flex align-items-start">
-                <div class="symbol symbol-45px symbol-circle">
-                  <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
-                  @if (isset($clicked_user) && $clicked_user->id == $order->id)
-                    <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
-                  @endif
+                <div class="d-flex align-items-start">
+                  <div class="symbol symbol-45px symbol-circle">
+                    <span class="symbol-label bg-light-danger text-info fs-6 fw-bolder">{{ $order->order_no ?? '' }}</span>
+                    @if (isset($clicked_user) && $clicked_user->id == $order->id)
+                      <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                    @endif
+                  </div>
+                  <div class="flex-grow-1 ml-3">
+                    Order #{{ $order->order_no ?? '' }}
+                    @if (!is_null($latest))
+                      <div class="small"> {{ $latest->created_at->diffForHumans(null, true) }}</div>
+                    @endif
+                  </div>
                 </div>
-                <div class="flex-grow-1 ml-3">
-                  Order #{{ $order->order_no ?? '' }}
-                  @if (!is_null($latest))
-                    <div class="small"> {{ $latest->created_at->diffForHumans(null, true) }}</div>
-                  @endif
-                </div>
-              </div>
-            </a>
-          @endforeach
-
-
-          <hr class="d-block d-lg-none mt-1 mb-0">
+              </a>
+            @endforeach
+            <hr class="d-block d-lg-none mt-1 mb-0">
+          </div>
         </div>
-        <div class="col-12 col-lg-8 header-div">
+        <div class="col-12 col-lg-8  {{ $show ? 'header-div' : 'not_main_div' }}">
           @if ($show)
             <div class="py-2 px-4 border-bottom">
               <div class="d-flex align-items-center py-1">
@@ -59,7 +59,7 @@
                   <strong>{{ ucwords($admin->name) ?? '' }}</strong>
                 </div>
               </div>
-                
+
               <strong class="text-bold pb-2"><a href="{{ route('orders.show', $clicked_user->id) }}" class="text-gray-900 text-hover-primary">Order No # <b>{{ $clicked_user->order_no ?? '' }}</b></a></strong>
             </div>
             <div class="position-relative">
@@ -79,8 +79,9 @@
                           <div class="d-flex align-items-center mb-2">
                             <img src="{{ $message->user->profile_src ?? '' }}" class="rounded-circle avatar mr-1" alt="Chris Wood">
                             <div class="ms-3">
+
                               <a href="javascript:void(0)" class="fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
-                              <span class="text-muted small fs-7 mb-1">{{ $message->created_at->diffForHumans() ?? '' }}</span>
+                              <span class="text-muted small fs-7 mb-1">{{ $message->created_at->diffForHumans(null, true) }}</span>
                             </div>
                           </div>
                         </div>

@@ -91,7 +91,7 @@
   <script src="{{ asset('front/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
   <link href="{{ asset('front/assets/css/index.css') }}" rel="stylesheet">
-  
+
   @stack('css')
 
   @stack('style')
@@ -234,12 +234,12 @@
     });
 
     $('#search_mobile_btn').on('click', function() {
-      $('#live_search_mobile').val('');
-      @if (url()->current() == url('/all'))
-        var url = "/";
+
+        // var url = '{{ request()->segment(1) == null ? url('/') : url(app()->getlocale())}}';
+        var url = '{{route('front.home')}}'
         $('#live_search_mobile').val('')
         window.location.href = url;
-      @endif
+
       $('#search_mobile_btn').addClass('d-none');
     })
 
@@ -263,13 +263,8 @@
 
     $('#search_btn').on('click', function() {
       $('#live_search').val('');
-
-      @if (url()->current() == url('/all'))
-        var url = "/";
-        $('#live_search').val('');
+        var url = '{{route('front.home')}}'
         window.location.href = url;
-      @endif
-
       $('#search_btn').addClass('d-none');
     })
 

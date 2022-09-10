@@ -23,7 +23,7 @@ class CustomerController extends Controller
   {
 
     // Listing colomns to show
-    $columns = array('name', 'email', 'phone', 'created_at', 'orders_count', 'action');
+    $columns = array('name', 'email', 'phone', 'created_at', 'created_at', 'orders_count', 'action');
 
     $totalData = User::count(); // datata table count
 
@@ -55,6 +55,7 @@ class CustomerController extends Controller
       $row['email']  = $item->email;
       $row['phone']  = $item->phone;
       $row['created_at']  = date("d-m-Y", strtotime($item->created_at));
+      $row['time']  =date("H:i:s", strtotime($item->created_at));
       $row['order_status'] =  '<i class="fa fa-truck f-18 px-2"></i>' . $item->orders_count;
       $row['status'] = $this->status($item->is_active, $item->id, route('admin.customer.status'));
       $row['action'] = $this->action([

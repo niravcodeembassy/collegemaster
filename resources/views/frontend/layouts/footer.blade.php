@@ -174,7 +174,7 @@
                 </ul>
               </section>
               <section class="f-50-logo">
-                <a href="{{ url('/') }}">
+                <a href="{{ route('front.home') }}">
                   <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
                 </a>
               </section>

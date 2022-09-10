@@ -27,7 +27,7 @@
 
 
 @section('content')
-  <div class="breadcrumb-area d-none   pt-20 pb-20 mb-30" style="background-color: #f5f5f5;">
+  <div class="breadcrumb-area d-none pt-20 pb-20 mb-30" style="background-color: #f5f5f5;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">

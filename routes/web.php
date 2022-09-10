@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-
+  
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
 
   Route::get('transaction-fail', function () {

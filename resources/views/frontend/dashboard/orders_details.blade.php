@@ -5,10 +5,10 @@
       'pageTitel' => 'INVOICE' ?? '',
   ])
   @php
-  $address = json_decode($order->address);
-  $shipping = $address->shipping_address;
-  // dd($shipping);
-  $billing = $address->billing_address;
+    $address = json_decode($order->address);
+    $shipping = $address->shipping_address;
+    // dd($shipping);
+    $billing = $address->billing_address;
   @endphp
   <section class="section-b-space mt-60">
     <div class="container ">
@@ -46,12 +46,18 @@
 
                   $image_id = $json_data->image_id;
                   $product_id = $json_data->product_id;
-                  $img = App\Model\ProductImage::select('image_url')->find($image_id);
+                  $image_url = null;
+                  if (isset($item->image_id)) {
+                      $img = App\Model\ProductImage::select('image_url')->find($image_id);
+                      $image_url = asset('storage/' . $img->image_url);
+                  } else {
+                      $image_url = asset('storage/category/default.png');
+                  }
                   $sku = App\Model\Product::select('sku')->find($product_id);
 
                 @endphp
                 <li class="list-group-item d-flex justify-content-between lh-condensed order-table">
-                  <img src="{{ asset('storage/' . $img->image_url) }}" alt="" style="width: 160px">
+                  <img src="{{ $image_url }}" alt="" style="width: 160px">
                   <div class="product-details" style="margin-right: 134px">
                     <h6 class="my-0 f-18 p-name" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
                     @if (count($attributes) > 0)

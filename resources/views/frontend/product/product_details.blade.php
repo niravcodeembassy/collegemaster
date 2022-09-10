@@ -343,7 +343,7 @@ $schema_second = [
     '@context' => 'https://schema.org/',
     '@type' => 'Organization',
     'name' => env('APP_NAME'),
-    'url' => env('APP_URL'),
+    'url' => route('front.home'),
     'logo' => asset('storage/' . $frontsetting->logo),
 ];
 
@@ -355,7 +355,7 @@ $schema_third = [
             '@type' => 'ListItem',
             'position' => 1,
             'name' => 'Home',
-            'item' => url('/'),
+            'item' => route('front.home'),
         ],
         [
             '@type' => 'ListItem',
@@ -397,7 +397,7 @@ $schema = [$product_schema, $site_schema, $list_schema];
         <div class="col-lg-12">
           <div class="breadcrumb-area pb-20">
             <ul class="breadcrumb-list">
-              <li class="breadcrumb-list__item text-uppercase"><a href="{{ url('/') }}">HOME</a></li>
+              <li class="breadcrumb-list__item text-uppercase"><a href="{{ route('front.home') }}">HOME</a></li>
               <li class="breadcrumb-list__item {{ is_null($product->subcategory) ? 'breadcrumb-list__item--active text-uppercase' : 'text-uppercase' }}">
                 <a href="{{ route('category.product', $product->category->slug) }}">{{ strtoupper($product->category->name) }}</a>
               </li>
@@ -467,23 +467,25 @@ $schema = [$product_schema, $site_schema, $list_schema];
                       @endauth
 
                     </span>
+                    @php
+                      $images = $product->images;
+                      if ($productVarinat->productimage_id !== null) {
+                          $findImage = $images->where('id', $productVarinat->productimage_id)->first();
+                          $images = $images->reject(function ($value, $key) use ($productVarinat) {
+                              return $productVarinat->productimage_id == $value->id;
+                          });
+                          $images->splice(0, 0, [$findImage]);
+                      }
+                      $images = $product->images;
+                      $all_img = $images->pluck('variant_image');
+                    @endphp
                     <span class="enlarge-icon">
-                      <a class="btn-zoom-popup p-1" href="#" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                        data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
+                      <a class="btn-zoom-popup p-1" href="#" data-images="{{ $all_img }}" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
+                        data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
                     </span>
                   </div>
-                  @php
-                    $images = $product->images;
-                    if ($productVarinat->productimage_id !== null) {
-                        $findImage = $images->where('id', $productVarinat->productimage_id)->first();
-                        $images = $images->reject(function ($value, $key) use ($productVarinat) {
-                            return $productVarinat->productimage_id == $value->id;
-                        });
-                        $images->splice(0, 0, [$findImage]);
-                    }
-                    $images = $product->images;
-                  @endphp
-                  {{-- @dump($images,$productVarinat) --}}
+
+                  {{-- @dump($images, $productVarinat) --}}
                   <!--=======  End of shop product gallery icons  =======-->
 
                   <div class="shop-product__big-image-gallery-slider lazy">

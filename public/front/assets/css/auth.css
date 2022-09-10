@@ -274,11 +274,14 @@ html * {
   }
 }
 
-/* @media only screen and (max-width: 480px) {
-  .small_device{
-    padding-bottom: 100px;
-  }
-} */
+@media only screen and (max-width: 480px) {
+  .g-recaptcha {
+    transform: scale(0.60);
+    -webkit-transform: scale(0.92);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+}
+}
 @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
   .text_content{
     max-width:250px;

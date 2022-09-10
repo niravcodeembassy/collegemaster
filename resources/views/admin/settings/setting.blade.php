@@ -436,16 +436,31 @@
               <h5 class="mb-3"><strong>Twilio Whatsapp Credentials</strong></h5>
               <div class="col-12">
                 <div class="form-group">
-                  <label for="offertext">Twilio SID<span class="text-danger">*</span></label>
+                  <label for="offertext">Twilio SID <span class="text-danger">*</span></label>
                   <input class="form-control" type="text" name="twilio_auth_sid" value="{{ $setting->response->twilio_auth_sid ?? '' }}">
                 </div>
                 <div class="form-group">
-                  <label for="offertext">Twilio Auth Token<span class="text-danger">*</span></label>
+                  <label for="offertext">Twilio Auth Token <span class="text-danger">*</span></label>
                   <input class="form-control" type="text" name="twilio_auth_token" value="{{ $setting->response->twilio_auth_token ?? '' }}">
                 </div>
                 <div class="form-group">
-                  <label for="offertext">Twilio Whastapp Number<span class="text-danger">*</span></label>
+                  <label for="offertext">Twilio Whastapp Number <span class="text-danger">*</span></label>
                   <input class="form-control" type="text" name="twilio_whatsapp_form" value="{{ $setting->response->twilio_whatsapp_form ?? '' }}">
+                </div>
+              </div>
+            </div>
+
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="mb-3"><strong>Google Recaptcha Credentials</strong></h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="offertext">Recaptcha Site key <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="recaptcha_site_key" value="{{ $setting->response->recaptcha_site_key ?? '' }}">
+                </div>
+                <div class="form-group">
+                  <label for="offertext">Recaptcha Secret Key <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="recaptcha_secret_key" value="{{ $setting->response->recaptcha_secret_key ?? '' }}">
                 </div>
               </div>
             </div>

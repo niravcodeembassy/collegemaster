@@ -59,19 +59,23 @@
                     </span>
                   @enderror
                 </div>
-                <label for="password">{{ __('Password') }}</label>
-                <div class="mb-3">
-                  <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
-                  @error('password')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
+                <div style="margin-top: -5px;">
+                  <label for="password">{{ __('Password') }}</label>
+                  <div class="mb-3">
+                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
+                    @error('password')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
                 </div>
                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                <div class="">
+                <div class="mb-3">
                   <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
                 </div>
+                {!! app('captcha')->display() !!}
+                <label class="captcha text-danger" style="display:none">This field is required.</label>
                 <div class="text-center">
                   <button type="submit" class="btn text-white btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign up</button>
                 </div>
@@ -100,6 +104,7 @@
       </div>
     </div>
   </div>
+  {!! NoCaptcha::renderJs() !!}
 @endsection
 
 @push('js')
@@ -123,7 +128,17 @@
     $('.iti__flag-container').click(function() {
       country();
     });
-    
+
+    $('form').on('submit', function(e) {
+      if (grecaptcha.getResponse() == "") {
+        e.preventDefault();
+        $(".captcha").show();
+      } else {
+        $('form').submit();
+      }
+    });
+
+
     function country() {
       var countryCode = $('.iti__selected-flag').attr('title');
       var countryCode = countryCode.replace(/[^0-9]/g, '')

@@ -231,13 +231,19 @@
                       }
                       $subtotal += $data->final_price_total;
                       $product = \App\Model\Product::select('id', 'name', 'slug', 'sku')->find($data->product_id);
-                      $img = App\Model\ProductImage::select('image_url')->find($data->image_id);
+                      $image_url = null;
+                      if (isset($item->image_id)) {
+                          $img = App\Model\ProductImage::select('image_url')->find($image_id);
+                          $image_url = asset('storage/' . $img->image_url);
+                      } else {
+                          $image_url = asset('storage/category/default.png');
+                      }
                     @endphp
 
                     <table class="order-table">
                       <tr>
                         <td class="w-12">
-                          <img src="{{ asset('storage/' . $img->image_url) ?? 'https://i.etsystatic.com/18954143/r/il/4d9459/2243517109/il_340x270.2243517109_k5dq.jpg' }}" class="img_product">
+                          <img src="{{ $image_url ?? 'https://i.etsystatic.com/18954143/r/il/4d9459/2243517109/il_340x270.2243517109_k5dq.jpg' }}" class="img_product">
                         </td>
                         <td class="w-54 v-top">
                           <b>{{ $data->name . '-' . $data->hsn_cod ?? '' }}

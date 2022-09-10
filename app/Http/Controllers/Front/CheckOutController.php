@@ -46,7 +46,7 @@ class CheckOutController extends Controller
 
     $this->generateInvoiceNumber();
     if ($carts['cart']->count() == 0) {
-      return redirect('/');
+      return redirect()->route('front.home');
     }
 
     $user                          = Auth::user();
@@ -87,7 +87,7 @@ class CheckOutController extends Controller
     }
 
     if ($this->cart['cart']->count() == 0) {
-      return redirect('/')->with('error', 'You have no product in your cart');
+      return redirect()->route('front.home')->with('error', 'You have no product in your cart');
     }
 
     if (Session::has('order_cart') ||  Session::has('checkout_request')) {

@@ -11,7 +11,7 @@ use App\Traits\MoveToCart;
 
 class LoginController extends Controller
 {
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -22,48 +22,58 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
-    use MoveToCart;
+  use AuthenticatesUsers;
+  use MoveToCart;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+  /**
+   * Where to redirect users after login.
+   *
+   * @var string
+   */
+  protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
+
+  public function logout(Request $request)
+  {
+
+    $this->guard()->logout();
+
+    $request->session()->invalidate();
+
+    $locale = request()->segment(1);
+    $url = '/';
+    if (in_array($locale, config('app.locales'))) {
+      $url = $locale;
     }
 
-    public function logout(Request $request)
-    {
+    return $this->loggedOut($request) ?:  redirect($url);
+  }
 
-        $this->guard()->logout();
+  public function showLoginForm()
+  {
+    session(['link' => url()->previous()]);
+    return view('auth.login');
+  }
 
-        $request->session()->invalidate();
-
-        return $this->loggedOut($request) ?: redirect('/');
+  protected function authenticated(Request $request, $user)
+  {
+    $this->move($request, $user);
+    return redirect(session('link'));
+    $locale = request()->segment(1);
+    $url = '/';
+    if (in_array($locale, config('app.locales'))) {
+      $url = '/' . $locale;
     }
-
-    public function showLoginForm()
-    {
-        session(['link' => url()->previous()]);
-        return view('auth.login');
-    }
-
-
-    protected function authenticated(Request $request, $user)
-    {
-        $this->move($request, $user);
-        return redirect(session('link'));
-        return redirect('/');
-    }
-
+    return  redirect($url);
+  }
 }

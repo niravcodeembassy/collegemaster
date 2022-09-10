@@ -51,6 +51,18 @@ class ApiConfigServiceProvider extends ServiceProvider
         );
         \Config::set('app.stripe', $stripe);
       }
+
+      if (isset($setting->recaptcha_site_key)) {
+        # code...
+        $config_captcha = array(
+          'secret' => $setting->recaptcha_secret_key,
+          'sitekey' => $setting->recaptcha_site_key,
+          'options' => [
+            'timeout' => 30,
+          ],
+        );
+        \Config::set('captcha', $config_captcha);
+      }
     }
   }
 }

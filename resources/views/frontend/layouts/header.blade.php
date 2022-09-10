@@ -10,8 +10,12 @@
         <!--=======  logo with off canvas  =======-->
         <div class="logo-with-offcanvas d-flex">
           <!--=======  logo   =======-->
+
+          @php
+            $url = request()->segment(1) == null ? url('/') : url(app()->getlocale());
+          @endphp
           <div class="logo">
-            <a href="{{ url('/') }}">
+            <a href="{{ route('front.home') }}">
               <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
             </a>
           </div>

@@ -69,6 +69,10 @@ return [
 
   'timezone' => 'America/Chicago',
 
+  'locales' => [
+    'en', 'fr'
+  ],
+
   /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
