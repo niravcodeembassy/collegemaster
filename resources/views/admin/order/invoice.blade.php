@@ -231,9 +231,15 @@
                       }
                       $subtotal += $data->final_price_total;
                       $product = \App\Model\Product::select('id', 'name', 'slug', 'sku')->find($data->product_id);
+                      $image_id = $data->image_id;
                       $image_url = null;
-                      if (isset($item->image_id)) {
+                      if (isset($image_id)) {
                           $img = App\Model\ProductImage::select('image_url')->find($image_id);
+                          if (isset($img->image_url)) {
+                              $image_url = asset('storage/' . $img->image_url);
+                          } else {
+                              $image_url = asset('storage/' . $img->image_url);
+                          }
                           $image_url = asset('storage/' . $img->image_url);
                       } else {
                           $image_url = asset('storage/category/default.png');

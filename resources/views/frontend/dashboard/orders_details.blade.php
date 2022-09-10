@@ -47,9 +47,13 @@
                   $image_id = $json_data->image_id;
                   $product_id = $json_data->product_id;
                   $image_url = null;
-                  if (isset($item->image_id)) {
+                  if (isset($image_id)) {
                       $img = App\Model\ProductImage::select('image_url')->find($image_id);
-                      $image_url = asset('storage/' . $img->image_url);
+                      if (isset($img->image_url)) {
+                          $image_url = asset('storage/' . $img->image_url);
+                      } else {
+                          $image_url = asset('storage/' . $img->image_url);
+                      }
                   } else {
                       $image_url = asset('storage/category/default.png');
                   }
@@ -57,7 +61,7 @@
 
                 @endphp
                 <li class="list-group-item d-flex justify-content-between lh-condensed order-table">
-                  <img src="{{ $image_url }}" alt="" style="width: 160px">
+                  <img src="{{ $image_url }}" alt="" style="width: 160px" class="mr-4">
                   <div class="product-details" style="margin-right: 134px">
                     <h6 class="my-0 f-18 p-name" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
                     @if (count($attributes) > 0)

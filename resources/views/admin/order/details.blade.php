@@ -43,7 +43,11 @@
             $image_url = null;
             if (isset($item->image_id)) {
                 $img = App\Model\ProductImage::select('image_url')->find($image_id);
-                $image_url = asset('storage/' . $img->image_url);
+                if (isset($img->image_url)) {
+                    $image_url = asset('storage/' . $img->image_url);
+                } else {
+                    $image_url = asset('storage/category/default.png');
+                }
             } else {
                 $image_url = asset('storage/category/default.png');
             }
@@ -51,7 +55,7 @@
 
           @endphp
           <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <img src="{{ $image_url }}" alt="" style="width: 160px">
+            <img src="{{ $image_url }}" alt="" style="width: 160px" class="mr-4">
             <div style="margin-left:20px">
               <h6 class="my-0 f-18" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
               @if (count($attributes) > 0)
