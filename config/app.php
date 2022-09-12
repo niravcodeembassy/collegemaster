@@ -70,7 +70,7 @@ return [
   'timezone' => 'America/Chicago',
 
   'locales' => [
-    'en', 'fr'
+    'uk', 'ca', 'au', 'de', 'ir', 'fr', 'in', 'sg', 'ae'
   ],
 
   /*
