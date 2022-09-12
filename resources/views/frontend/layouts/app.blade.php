@@ -42,16 +42,40 @@
     content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
-  <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="en-us" />
+  @php
+  $locale = request()->segment(1);
+  $languages = config('app.locales');
+  if(in_array($locale, $languages)){
+    $current = Str::after(url()->current(),env('APP_URL').'/'.$locale);
+  }else{
+    $current = Str::after(url()->current(),env('APP_URL'));
+  }
+  if($locale == null){
+    $link = env('APP_URL');
+  }else{
+    $link = env('APP_URL').$current;
+  }
+  @endphp
+
+  <link rel="alternate" href="{{ $link }}" hreflang="en-us" />
   @foreach (config('app.locales') as $key => $item)
   @php
-    $locale = request()->segment(1);
+   if($locale == null){
     $url = env('APP_URL').'/'.$item;
+  }else{
+    $url = env('APP_URL').'/'.$item.$current;
+  }
+    if($item  == 'uk'){
+      $item = 'gb';
+    }
+    if($item  == 'ir'){
+      $item = 'ie';
+    }
     $lang = 'en-'.''.$item;
   @endphp
   <link rel="alternate" href="{{ $url }}" hreflang="{{ $lang }}" />
   @endforeach
-  <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="x-default">
+  <link rel="alternate" href="{{ $link }}" hreflang="x-default">
 
 
 
