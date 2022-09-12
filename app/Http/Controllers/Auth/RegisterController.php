@@ -106,13 +106,7 @@ class RegisterController extends Controller
     if (session('link') != null) {
       return redirect(session('link'));
     } else {
-      // return redirect()->route('login')->with('success', "You have Successfully Registered");
-      $locale = request()->segment(1);
-      $url = '/';
-      if (in_array($locale, config('app.locales'))) {
-        $url = '/' . $locale;
-      }
-      return redirect($url);
+      return redirect()->route('login')->with('success', "You have Successfully Registered");
     }
   }
 }

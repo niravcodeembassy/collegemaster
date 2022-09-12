@@ -106,8 +106,9 @@
                 <div class="col-lg-12 mb-40">
                   <textarea cols="30" rows="10" placeholder="Message" name="message" id="message"></textarea>
                 </div>
-
-                {!! app('captcha')->display() !!}
+                <div class="col-lg-6 mb-lg-0 mb-40">
+                  {!! app('captcha')->display() !!}
+                </div>
 
                 <label class="captcha text-danger" style="display:none">This field is required.</label>
                 <div class="col-lg-12 text-right">

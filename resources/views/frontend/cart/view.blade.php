@@ -12,7 +12,7 @@
           <!--=======  breadcrumb list  =======-->
 
           <ul class="breadcrumb-list">
-            <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
+            <li class="breadcrumb-list__item"><a href="{{ route('front.home') }}">HOME</a></li>
             <li class="breadcrumb-list__item breadcrumb-list__item--active">Cart</li>
           </ul>
 

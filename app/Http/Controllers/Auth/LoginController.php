@@ -55,7 +55,6 @@ class LoginController extends Controller
     if (in_array($locale, config('app.locales'))) {
       $url = $locale;
     }
-
     return $this->loggedOut($request) ?:  redirect($url);
   }
 
@@ -69,11 +68,5 @@ class LoginController extends Controller
   {
     $this->move($request, $user);
     return redirect(session('link'));
-    $locale = request()->segment(1);
-    $url = '/';
-    if (in_array($locale, config('app.locales'))) {
-      $url = '/' . $locale;
-    }
-    return  redirect($url);
   }
 }

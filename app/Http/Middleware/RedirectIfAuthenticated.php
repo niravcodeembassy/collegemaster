@@ -8,20 +8,25 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
-        }
-
-        return $next($request);
+  /**
+   * Handle an incoming request.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \Closure  $next
+   * @param  string|null  $guard
+   * @return mixed
+   */
+  public function handle($request, Closure $next, $guard = null)
+  {
+    if (Auth::guard($guard)->check()) {
+      $locale = request()->segment(1);
+      $url = RouteServiceProvider::HOME;
+      if (in_array($locale, config('app.locales'))) {
+        $url = $locale;
+      }
+      return redirect($url);
     }
+    
+    return $next($request);
+  }
 }
