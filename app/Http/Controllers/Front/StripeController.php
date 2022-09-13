@@ -30,7 +30,15 @@ class StripeController extends Controller
     Stripe::setApiKey(config('app.stripe.stripe_secret'));
     header('Content-Type: application/json');
 
-    $url = request()->segment(1) == null ? url('/') : url(app()->getlocale());
+    $locale = request()->segment(1);
+    $languages = config('app.locales');
+    if (in_array($locale, $languages)) {
+      $url = url($locale);
+    }else{
+      $url =  url('/');
+    }
+
+
     $order_item = session('order_cart');
     $product_name = $order_item['cart'][0]['name'];
     $order_id = Order::orderBy('id', 'desc')->first();

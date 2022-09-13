@@ -1,6 +1,12 @@
 @extends('frontend.layouts.app')
 
 @push('style')
+  <style>
+    .price span.color_brown {
+      font-size: 20px !important;
+      color: #ad0101 !important;
+    }
+  </style>
 @endpush
 
 @push('css')
@@ -71,10 +77,11 @@
                             </a>
                           </div>
                           <div class="price">
+                            <span class="main-price color_brown">{{ 'US' . $priceData->price . '+' }}</span>
                             @if ($priceData->offer_price)
-                              <span class="main-price discounted">{{ $priceData->offer_price }}</span>
+                              <span class="main-price discounted" style="font-size: 14px;">{{ 'US' . $priceData->offer_price . '+' }}</span>
+                              <span class="discount-percentage">({{ intval($priceData->dicount) }}% Off)</span>
                             @endif
-                            <span class="main-price">{{ $priceData->price }}</span>
                           </div>
                         </div>
 

@@ -46,7 +46,6 @@
       </div>
     </div>
   </div>
-  <hr />
   <div class="section-title-container mb-40">
     <div class="container">
       <div class="row">
