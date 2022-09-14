@@ -58,39 +58,82 @@ class OrderController extends Controller
       7 => 'option',
     );
 
-    $totalData = Order::count(); // datata table count
+    // datata table count
     // dd($totalData);
     $limit = $request->input('length');
     $start = $request->input('start');
     $order = $columns[$request->input('order.0.column')];
     $dir = $request->input('order.0.dir');
     $search = $request->input('search.value');
+
+    $filter_status = $request->filter_status;
+
     // DB::enableQueryLog();
     // genrate a query
-    $orders = Order::with('user', 'itemslists:id,order_id,qty')
-      ->when($search, function ($query, $search) {
-        return $query->whereLike(['order_number', 'user.name'], "%{$search}%");
-      })
-      ->when($request->to_date, function ($query) use ($request) {
-        return $query->where('created_at', '>=', date('Y-m-d', strtotime($request->to_date)));
-      })
-      ->when($request->from_date, function ($query) use ($request) {
-        return $query->where('created_at', '<=', date('Y-m-d', strtotime($request->from_date)));
-      })
-      ->when($request->get('type') == 'cod', function ($query) use ($request) {
-        return $query->where('payment_type', 'cash');
-      })
-      ->when($request->get('type') == 'online', function ($query) use ($request) {
-        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
-      })
-      ->when($request->get('type') == 'pending', function ($query) use ($request) {
-        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
-          $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
-        });
-      })
-      ->orderBy($order, $dir);
+    if ($filter_status !== 'all') {
+      $orders = Order::with('user', 'itemslists:id,order_id,qty')
+        ->when($search, function ($query, $search) {
+          return $query->whereLike(['order_number', 'user.name'], "%{$search}%");
+        })
+        ->when($request->to_date, function ($query) use ($request) {
+          return $query->where('created_at', '>=', date('Y-m-d', strtotime($request->to_date)));
+        })
+        ->when($request->from_date, function ($query) use ($request) {
+          return $query->where('created_at', '<=', date('Y-m-d', strtotime($request->from_date)));
+        })
+        ->when($request->get('type') == 'cod', function ($query) use ($filter_status) {
+          return $query->where('payment_type', 'cash')->where('order_status', $filter_status);
+        })
+        ->when($request->get('type') == 'online', function ($query) use ($filter_status) {
+          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')
+            ->where('order_status', $filter_status);
+        })
+        ->when($request->get('type') == 'pending', function ($query) {
+          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+            $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+          });
+        })
+        ->orderBy($order, $dir);
+    } else {
+      $orders = Order::with('user', 'itemslists:id,order_id,qty')
+        ->when($search, function ($query, $search) {
+          return $query->whereLike(['order_number', 'user.name'], "%{$search}%");
+        })
+        ->when($request->to_date, function ($query) use ($request) {
+          return $query->where('created_at', '>=', date('Y-m-d', strtotime($request->to_date)));
+        })
+        ->when($request->from_date, function ($query) use ($request) {
+          return $query->where('created_at', '<=', date('Y-m-d', strtotime($request->from_date)));
+        })
+        ->when($request->get('type') == 'cod', function ($query) {
+          return $query->where('payment_type', 'cash');
+        })
+        ->when($request->get('type') == 'online', function ($query) {
+          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
+        })
+        ->when($request->get('type') == 'pending', function ($query) {
+          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+            $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+          });
+        })
+        ->orderBy($order, $dir);
+    }
+
 
     $totalFiltered = $orders->count();
+
+    $sql = Order::when($request->get('type') == 'cod', function ($query) use ($filter_status) {
+      return $query->where('payment_type', 'cash');
+    })->when($request->get('type') == 'online', function ($query) use ($filter_status) {
+      return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
+    })->when($request->get('type') == 'pending', function ($query) use ($filter_status) {
+      return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+        $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+      });
+    });
+
+    $totalData = $sql->count();
+
 
     $data = [];
 
@@ -126,15 +169,21 @@ class OrderController extends Controller
       if ($item->order_status == "cancelled") {
         $row['deliveryStatus'] = '<span class = "badge badge-pill my-badge badge-danger m-auto mb-1">' . ucfirst(str_replace('_', ' ', $item->order_status)) . '</span>';
       } else if ($item->order_status == 'order_placed') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-primary m-auto mb-1">Ordered</span>';
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-primary m-auto mb-1">New</span>';
+      } else if ($item->order_status == 'pick_not_receive') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Pick Not Receive</span>';
+      } else if ($item->order_status == 'correction') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Correction</span>';
+      } else if ($item->order_status == 'printing') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Printing</span>';
+      } else if ($item->order_status == 'delivered') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-success m-auto mb-1">Completed</span>';
+      } else if ($item->order_status == 'customer_approval') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-warning bg-maroon m-auto mb-1">Approval</span>';
+      } else if ($item->order_status == 'work_in_progress') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-default bg-gray m-auto mb-1">Designing</span>';
       } else if ($item->order_status == 'dispatched') {
         $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Shipped</span>';
-      } else if ($item->order_status == 'delivered') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-success m-auto mb-1">Delivered</span>';
-      } else if ($item->order_status == 'customer_approval') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-warning bg-maroon m-auto mb-1">Customer Approval </span>';
-      } else if ($item->order_status == 'work_in_progress') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-default bg-gray m-auto mb-1">Work In Progress </span>';
       }
 
       $statusPopup = '<a class="call-model call-modal"
@@ -153,7 +202,7 @@ class OrderController extends Controller
       if ($item->total) {
         $item->total = $item->total ?? 0;
       }
-      
+
       $row['totalPrice'] = '<span class="text-right d-block" >' . Helper::showPrice($item->total, $item->currency) . '</span>';
 
       if ($item->payment_status == 'completed') {
@@ -296,7 +345,7 @@ class OrderController extends Controller
 
     $order->order_status = $request->delivery_status;
 
-    if ($request->delivery_status == 'dispatched') {
+    if ($request->delivery_status == 'dispatched') {  //shipped currently commented
 
       $datedata = explode('-', $request->shipping_date);
       $strDate = $request->shipping_date;
@@ -314,7 +363,7 @@ class OrderController extends Controller
       }
     }
 
-    if ($request->delivery_status == 'delivered') {
+    if ($request->delivery_status == 'delivered') { //rename for completed
 
       $datedata = explode('-', $request->deleverd_date);
       $strDate = $datedata[1] . '-' . $datedata[0] . '-' . $datedata[2];
@@ -323,9 +372,10 @@ class OrderController extends Controller
       $order->deleverd_date = date('Y-m-d H:i:s', strtotime($strDate));
       $order->deleverd_to_name = $request->user_name;
       $order->order_status = 'delivered';
+      $order->tracking_number = $request->tracking_number;
 
       $date = date('F j, Y', strtotime($order->deleverd_date));
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Delivered in ' . $date;
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been completed in ' . $date;
       $this->sendMessage($user->phone, $body);
     }
 
@@ -342,18 +392,13 @@ class OrderController extends Controller
       }
     }
 
-    if ($request->delivery_status == 'work_in_progress') {
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that your order has been processed further information contact admin';
+    if ($request->delivery_status == 'work_in_progress') { //rename for designing
+      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that your order has been designing further information contact admin';
       $this->sendMessage($user->phone, $body);
     }
 
     $order->payment_status = $request->payment_status;
-
-
-
     $order->save();
-
-
     return redirect()->back()->with('success', "Order updated successfully.");
   }
 

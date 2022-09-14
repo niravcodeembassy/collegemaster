@@ -1,175 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('frontend.layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        /* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800'); */
-.error-container {
-  text-align: center;
-  font-size: 106px;
-  font-family: 'Catamaran', sans-serif;
-  font-weight: 800;
-  margin: 70px 15px;
-}
-.error-container > span {
-  display: inline-block;
-  position: relative;
-}
-.error-container > span.four {
-  width: 136px;
-  height: 43px;
-  border-radius: 999px;
-  background:
-    linear-gradient(140deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 43%, transparent 44%, transparent 100%),
-    linear-gradient(105deg, transparent 0%, transparent 40%, rgba(0, 0, 0, 0.06) 41%, rgba(0, 0, 0, 0.07) 76%, transparent 77%, transparent 100%),
-    linear-gradient(to right, #d89ca4, #e27b7e);
-}
-.error-container > span.four:before,
-.error-container > span.four:after {
-  content: '';
-  display: block;
-  position: absolute;
-  border-radius: 999px;
-}
-.error-container > span.four:before {
-  width: 43px;
-  height: 156px;
-  left: 60px;
-  bottom: -43px;
-  background:
-    linear-gradient(128deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 40%, transparent 41%, transparent 100%),
-    linear-gradient(116deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 50%, transparent 51%, transparent 100%),
-    linear-gradient(to top, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
-}
-.error-container > span.four:after {
-  width: 137px;
-  height: 43px;
-  transform: rotate(-49.5deg);
-  left: -18px;
-  bottom: 36px;
-  background: linear-gradient(to right, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
-}
+@push('css')
+  <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
+@endpush
 
-.error-container > span.zero {
-  vertical-align: text-top;
-  width: 156px;
-  height: 156px;
-  border-radius: 999px;
-  background: linear-gradient(-45deg, transparent 0%, rgba(0, 0, 0, 0.06) 50%,  transparent 51%, transparent 100%),
-    linear-gradient(to top right, #99749D, #99749D, #B895AB, #CC9AA6, #D7969E, #ED8687, #ED8687);
-  overflow: hidden;
-  animation: bgshadow 5s infinite;
-}
-.error-container > span.zero:before {
-  content: '';
-  display: block;
-  position: absolute;
-  transform: rotate(45deg);
-  width: 90px;
-  height: 90px;
-  background-color: transparent;
-  left: 0px;
-  bottom: 0px;
-  background:
-    linear-gradient(95deg, transparent 0%, transparent 8%, rgba(0, 0, 0, 0.07) 9%, transparent 50%, transparent 100%),
-    linear-gradient(85deg, transparent 0%, transparent 19%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.07) 91%, transparent 92%, transparent 100%);
-}
-.error-container > span.zero:after {
-  content: '';
-  display: block;
-  position: absolute;
-  border-radius: 999px;
-  width: 70px;
-  height: 70px;
-  left: 43px;
-  bottom: 43px;
-  background: #FDFAF5;
-  box-shadow: -2px 2px 2px 0px rgba(0, 0, 0, 0.1);
-}
 
-.screen-reader-text {
-    position: absolute;
-    top: -9999em;
-    left: -9999em;
-}
-    
-@keyframes bgshadow {
-  0% {
-    box-shadow: inset -160px 160px 0px 5px rgba(0, 0, 0, 0.4);
-  }
-  45% {
-    box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
-  }
-  55% {
-    box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
-  }
-  100% {
-    box-shadow: inset 160px -160px 0px 5px rgba(0, 0, 0, 0.4);
-  }
-}
+@push('style')
+  <style>
+    .masthead {
+      height: 50vh;
+      padding-top: 9.5rem;
+      padding-bottom: 9rem;
+      color: #fff;
+      background-image: url('{{ asset('front/assets/images/404-error.jpg') }}');
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-position: center center;
+      background-size: cover;
+    }
 
-/* demo stuff */
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-body {
-  background-color: #FDFAF5;
-  margin-bottom: 50px;
-}
-html, button, input, select, textarea {
-    font-family: 'Montserrat', Helvetica, sans-serif;
-    color: #bbb;
-}
-h1 {
-  text-align: center;
-  margin: 30px 15px;
-}
-.zoom-area { 
-  max-width: 490px;
-  margin: 30px auto 30px;
-  font-size: 19px;
-  text-align: center;
-}
-.link-container {
-  text-align: center;
-}
-a.more-link {
-  text-transform: uppercase;
-  font-size: 13px;
-    background-color: #de7e85;
-    padding: 10px 15px;
-    border-radius: 0;
-    color: #fff;
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    line-height: 1.5;
-    text-decoration: none;
-  margin-top: 50px;
-  letter-spacing: 1px;
-}
-    </style>
-</head>
+    .primary_title {
+      margin-top: 0px;
+      line-height: normal;
+      text-transform: uppercase;
+      font-size: 24px;
+    }
 
-<body>
-    <h1>404 Page Note found</h1>
-    
-    <section class="error-container">
-        <span class="four"><span class="screen-reader-text">4</span></span>
-        <span class="zero"><span class="screen-reader-text">0</span></span>
-        <span class="four"><span class="screen-reader-text">4</span></span>
-    </section>
-    <div class="link-container">
-        <a target="_blank" href="{{url('/')}}"
-            class="more-link">Go To Home</a>
+    .primary_content {
+      line-height: normal;
+      font-size: 13px;
+    }
+
+    .primary_content a {
+      color: #bf1e2e;
+    }
+
+    .primary_content a:hover {
+      color: #343a40;
+    }
+
+    @media only screen and (max-width: 480px) {
+      .masthead {
+        margin-left: -365px;
+      }
+
+      .box_area {
+        position: absolute;
+        left: 10px;
+        border: 1px solid black;
+        width: 340px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: hsla(0, 0%, 100%, .85);
+        margin-top: 60px;
+        margin-right: 5px;
+      }
+
+      .primary_title {
+        font-size: 18px;
+      }
+    }
+
+    @media screen and (max-width: 1600px) {
+      .masthead {
+        padding-top: 8.5rem;
+      }
+    }
+
+    @media screen and (max-width: 1366px) {
+      .masthead {
+        padding-top: 7.5rem;
+      }
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 667px) {
+      .masthead {
+        margin-left: -365px;
+      }
+
+      .box_area {
+        position: absolute;
+        left: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 20px;
+      }
+    }
+
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+      .masthead {
+        height: 32vh;
+        padding-top: 5.5rem;
+      }
+
+    }
+  </style>
+@endpush
+
+@php
+$commonBanner = App\Model\CommonBanner::whereNull('is_active')->get();
+@endphp
+@section('content')
+  <div class="masthead mb-50">
+    <div class="container mx-auto">
+      <div class="row">
+        <div class="col-md-6 box_area">
+          <h3 class="primary_title font-weight-bold">OOPS! THIS PAGE IS LOST OR MAY HAVE BEEN MOVED.</h3>
+          <p class="primary_content text-dark">Sorry! Either we can’t find the page you’re looking for, or there was a jam in our machine. Try searching or return to our <a class="primary_link" href="{{ route('front.home') }}">homepage</a></p>
+        </div>
+      </div>
+
     </div>
-</body>
-
-</html>
+  </div>
+  @if ($commonBanner->count() > 0)
+    <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!--=======  section title  =======-->
+            <div class="section-title section-title--one text-center">
+              <h3 class="text-uppercase font-weight-bold quality_h3">Clever & unique ideas</h3>
+              <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon">
+                  <i class="fa fa-circle" aria-hidden="true"></i>
+                </div>
+                <div class="divider-custom-line"></div>
+              </div>
+              <p class="idea_content d-xl-block d-none">
+                <span>Collage Master is a one-of-a-kind gifting service that has revolutionized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master</span>
+                <br /><span> refined this concept and added our own twist to it. We have come up with a new way of capturing your memories and portraying them</span><br />
+                <span>in a beautiful manner. We are more than just a collage-making service.</span>
+              </p>
+              <p class="idea_content d-xl-none">
+                Collage Master is a one-of-a-kind gifting service that has revolutinized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master
+                refined this concept and added our own twist to it. We have come up with a new way of capturing your memories and portraying them
+                in a beautiful manner. We are more than just a collage-making service.
+              </p>
+            </div>
+            <!--=======  End of section title  =======-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hover-banner-area mb-65 mb-md-45 mb-sm-45">
+      <div class="container wide">
+        <div class="row">
+          @foreach ($commonBanner as $item)
+            <div class="col-xl-3 col-lg-4 col-sm-6 col-md-6 mb-30 banner_side">
+              <!--=======  single category  =======-->
+              <div class="single-category single-category--three">
+                <!--=======  single category image  =======-->
+                <div class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
+                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
+                </div>
+                <!--=======  single category content  =======-->
+                <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">
+                  <div class="title">
+                    <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
+                    @if ($item->url)
+                      <a class="lezada-button caption_button lezada-button--custom" href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
+                    @endif
+                  </div>
+                </div>
+                <!--=======  banner-link  =======-->
+                @if ($item->url)
+                  <a href="{{ $item->url }}" class="banner-link"></a>
+                @endif
+                <!--=======  End of banner-link  =======-->
+              </div>
+              <!--=======  End of single category  =======-->
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  @endif
+@endsection
