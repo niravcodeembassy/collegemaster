@@ -57,6 +57,7 @@
   }
   @endphp
 
+  <link rel="alternate" href="{{ $link }}" hreflang="en"/>
   <link rel="alternate" href="{{ $link }}" hreflang="en-us" />
   @foreach (config('app.locales') as $key => $item)
   @php
