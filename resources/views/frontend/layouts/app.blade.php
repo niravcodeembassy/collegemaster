@@ -42,6 +42,7 @@
     content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
+
   @php
   $locale = request()->segment(1);
   $languages = config('app.locales');
@@ -84,8 +85,14 @@
   @yield('schema')
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
-  <script>
+    @if(isset($frontsetting->google_tag_script))
+    {!! $frontsetting->google_tag_script !!}
+    @endif
+
+
+    <script>
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {

@@ -465,6 +465,18 @@
               </div>
             </div>
 
+            <hr style="margin: 15px -20px">
+            <div class="row">
+              <h5 class="mb-3"><strong>Google Tag Manager</strong></h5>
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label for="term_condition">Google Tag</label>
+                  <textarea class="form-control" id="google_tag_script" rows="4" name="google_tag_script">{{ $setting->response->google_tag_script ?? '' }}</textarea>
+                </div>
+              </div>
+            </div>
+
+
 
             <hr style="margin: 15px -20px">
             <div class="row">

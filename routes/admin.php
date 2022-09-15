@@ -171,7 +171,8 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
     Route::get('deal-of-day', 'DealOfDayController@index')->name('dealofday.index');
     Route::post('deal-of-day/update', 'DealOfDayController@update')->name('dealofday.update');
 
-
+    Route::get('site-map', 'SiteMapController@index')->name('sitemap.index');
+    Route::post('site-map/update', 'SiteMapController@store')->name('sitemap.update');
 
 
     Route::get('website-setting', 'SettingController@showSettingPage')->name('website-setting');
