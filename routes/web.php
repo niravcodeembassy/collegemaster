@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+
 // use Barryvdh\DomPDF\Facade as PDF;
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,13 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-  
+Route::get('/sitemap.xml', function (Request $request) {
+  $content = Storage::disk('public')->get('sitemap.xml');
+  return response($content, 200, [
+    'Content-Type' => 'application/xml'
+  ]);
+});
+
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
 
   Route::get('transaction-fail', function () {
@@ -107,40 +115,9 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('product/review/{product}/list', 'ProductReviewController@reviewList')->name('product.review.list');
 });
 
-
 Auth::routes();
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
-Route::get('sendmail', function () {
-
-  // $mail = Setting::where('name' ,'mail')->first();
-
-  // Mail::raw('Text to e-mail', function ($message) use ($mail) {
-  //     $message->to('test@example.com')->bcc(explode(',',$mail->response->mail_bcc),'Self');
-  // });
-  // PDF::setOptions(['dpi' => 300, 'defaultFont' => 'sans-serif']);
-
-  // $pdf = PDF::loadView('inv');
-  // return $pdf->stream('a.pdf');
-
-  return view('inv');
-});
-
-Route::get('print', function () {
-
-  // $mail = Setting::where('name' ,'mail')->first();
-
-  // Mail::raw('Text to e-mail', function ($message) use ($mail) {
-  //     $message->to('test@example.com')->bcc(explode(',',$mail->response->mail_bcc),'Self');
-  // });
-  // PDF::setOptions(['dpi' => 300, 'defaultFont' => 'sans-serif']);
-
-  // $pdf = PDF::loadView('inv');
-  // return $pdf->stream('a.pdf');
-
-  return view('inv');
-});
 
 Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], function () {
   Route::get('product/{slug}', 'ProductController@productView')->name('product.view');

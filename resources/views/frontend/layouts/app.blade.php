@@ -58,26 +58,12 @@
   }
   @endphp
 
-  <link rel="alternate" href="{{ $link }}" hreflang="en"/>
+
   <link rel="alternate" href="{{ $link }}" hreflang="en-us" />
-  @foreach (config('app.locales') as $key => $item)
-  @php
-   if($locale == null){
-    $url = env('APP_URL').'/'.$item;
-  }else{
-    $url = env('APP_URL').'/'.$item.$current;
-  }
-    if($item  == 'uk'){
-      $item = 'gb';
-    }
-    if($item  == 'ir'){
-      $item = 'ie';
-    }
-    $lang = 'en-'.''.$item;
-  @endphp
-  <link rel="alternate" href="{{ $url }}" hreflang="{{ $lang }}" />
-  @endforeach
   <link rel="alternate" href="{{ $link }}" hreflang="x-default">
+  <link rel="alternate" href="{{ $link }}" hreflang="en"/>
+
+
 
 
 

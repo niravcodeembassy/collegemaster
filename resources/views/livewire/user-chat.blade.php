@@ -139,7 +139,7 @@
                         </section>
                       @endif
                     </div>
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                       <textarea wire:model.defer="message" class="form-control form-control-flush" rows="2" placeholder="Type a message" id="message" wire:keydown.enter="SendMessage" @if (!$file) required @endif></textarea>
                       <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center me-2">
@@ -153,6 +153,22 @@
                           @endif
                         </div>
                         <button class="btn btn-primary" type="submit" data-kt-element="send">Send</button>
+                      </div>
+                    </div> --}}
+                    <div class="col-md-12">
+                      <div class="d-flex justify-content-between me-2">
+                        <textarea wire:model.defer="message" class="form-control form-control-flush" rows="2" placeholder="Type a message" id="message" wire:keydown.enter="SendMessage" @if (!$file) required @endif></textarea>
+                        @if (empty($file))
+                          <button class="btn btn-sm btn-icon btn-active-light-primary" type="button" id="file-area" data-bs-toggle="tooltip" title="uplod">
+                            <label>
+                              <img src="{{ asset('front/assets/images/picture_icon.png') }}" class="img-fluid py-1" style="width: 25px;" />
+                              <input type="file" wire:model="file">
+                            </label>
+                          </button>
+                        @endif
+                      </div>
+                      <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-primary btn-sm" type="submit" data-kt-element="send">Send</button>
                       </div>
                     </div>
                   </div>

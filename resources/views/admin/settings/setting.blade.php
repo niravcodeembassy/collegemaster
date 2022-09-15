@@ -471,7 +471,7 @@
               <div class="col-lg-12">
                 <div class="form-group">
                   <label for="term_condition">Google Tag</label>
-                  <textarea class="form-control" id="google_tag_script" rows="4" name="google_tag_script">{{ $setting->response->google_tag_script ?? '' }}</textarea>
+                  <textarea class="form-control" id="google_tag_script" rows="8" name="google_tag_script">{{ $setting->response->google_tag_script ?? '' }}</textarea>
                 </div>
               </div>
             </div>
@@ -498,7 +498,7 @@
                   </div>
                   <div class="form-group">
                     <label for="term_condition">Content</label>
-                    <textarea class="form-control" id="trust_box" rows="4" name="trust_box">{{ $setting->response->trust_box ?? '' }}</textarea>
+                    <textarea class="form-control" id="trust_box" rows="8" name="trust_box">{{ $setting->response->trust_box ?? '' }}</textarea>
                   </div>
 
                 </div>

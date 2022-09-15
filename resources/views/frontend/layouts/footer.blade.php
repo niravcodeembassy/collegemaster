@@ -141,7 +141,7 @@
             <h5 class="footer-title footer_heading">Call Support:</h5>
             <p class="about marginB20">
               Call at
-              <a href="/tel:+918200324798" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact }}</a><br>
+              <a href="tel:{{ $frontsetting->contact }}" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact }}</a><br>
               We are here to help you on all working days between 10:00 AM to
               07:00 PM
             </p>
