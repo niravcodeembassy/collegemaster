@@ -59,9 +59,10 @@
   @endphp
 
 
-  <link rel="alternate" href="{{ $link }}" hreflang="en-us" />
-  <link rel="alternate" href="{{ $link }}" hreflang="x-default">
-  <link rel="alternate" href="{{ $link }}" hreflang="en"/>
+  <link rel="alternate" hreflang="en-us" href="{{ $link }}" />
+  <link rel="alternate" hreflang="x-default" href="{{ $link }}">
+  <link rel="alternate" hreflang="en" href="{{ $link }}"/>
+
 
 
 
