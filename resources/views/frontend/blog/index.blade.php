@@ -2,8 +2,12 @@
 
 @section('pagination')
   @if ($blogs->hasPages())
-    <link rel="prev" href="{{ $blogs->previousPageUrl() }}" />
-    <link rel="next" href="{{ $blogs->nextPageUrl() }}" />
+    @if ($blogs->previousPageUrl() !== null)
+      <link rel="prev" href="{{ $blogs->previousPageUrl() }}" />
+    @endif
+    @if ($blogs->nextPageUrl() !== null)
+      <link rel="next" href="{{ $blogs->nextPageUrl() }}" />
+    @endif
   @endif
 @endsection
 

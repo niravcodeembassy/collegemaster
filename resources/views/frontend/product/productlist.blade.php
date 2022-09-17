@@ -2,8 +2,12 @@
 
 @section('pagination')
   @if ($product->hasPages())
-    <link rel="prev" href="{{ $product->previousPageUrl() }}" />
-    <link rel="next" href="{{ $product->nextPageUrl() }}" />
+    @if ($product->previousPageUrl() !== null)
+      <link rel="prev" href="{{ $product->previousPageUrl() }}" />
+    @endif
+    @if ($product->nextPageUrl() !== null)
+      <link rel="next" href="{{ $product->nextPageUrl() }}" />
+    @endif
   @endif
 @endsection
 
@@ -107,8 +111,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                          =            shop page content         =
-                                                                                                                                                                                                                                                          =============================================-->
+                                                                                                                                                                                                                                                                =            shop page content         =
+                                                                                                                                                                                                                                                                =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">

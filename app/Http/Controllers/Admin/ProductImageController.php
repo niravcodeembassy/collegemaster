@@ -84,14 +84,14 @@ class ProductImageController extends Controller
           //product_image/839/
           if (Str::contains($product->image_url, 'product_image/' . $productid . '/')) {
             if (str_replace('product_image/' . $productid . '/', '', $product->image_url) != $value['name']) {
-              $name = 'product_image/' . $productid . '/' .   str_replace(' ', '_', $value['name']);
+              $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']);
               Storage::disk('public')->move($product->image_url, $name);
               $product->image_url =  $name;
               $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
             }
           } else {
             if (str_replace('product_image/', '', $product->image_url) != $value['name']) {
-              $name = 'product_image/' . $productid . '/' .   str_replace(' ', '_', $value['name']);
+              $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']);
               Storage::disk('public')->move($product->image_url, $name);
               $product->image_url =  $name;
               $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
