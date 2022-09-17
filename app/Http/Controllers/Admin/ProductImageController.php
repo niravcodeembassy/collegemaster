@@ -73,7 +73,7 @@ class ProductImageController extends Controller
           $product->product_id = $productid;
           $imagepos = ProductImage::where('product_id', $productid)->max('position');
           $uploadfile =  $this->uploadFile($value['image'], $value['name'], $productid);
-          $product->position =  $imagepos === NULL ? 0 : $imagepos + 1;
+          $product->position =  $key++;
           $product->image_url =  $uploadfile;
           $product->image_name =  Str::after($uploadfile, 'product_image/' . $productid . '/');
           $product->image_alt =  $value['alt'];
