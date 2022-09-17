@@ -159,14 +159,14 @@
           </p>
         </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="{{ route('admin.chat.order') }}" class="nav-link  {{ Helper::isActive(['admin.chat.order']) }}">
           <i class="px-1 nav-icon f-18  fas fa-comment-dots d-inline-block"></i>
           <p class="align-middle">
             Order Chat @livewire('chat-counter')
           </p>
         </a>
-      </li>
+      </li> --}}
 
       <li class="nav-item">
         <a href="{{ route('admin.discount.index') }}" class="nav-link  {{ Helper::isActive(['discount.*']) }}">

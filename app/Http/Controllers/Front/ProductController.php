@@ -272,7 +272,7 @@ class ProductController extends Controller
 
     $product = Product::with([
       'productvariants',
-      'images:id,product_id,image_name,image_alt',
+      'images:id,product_id,image_name,image_alt,image_url',
       'category:id,name,slug',
       'subcategory:id,name,slug',
     ])->where('is_active', 'Yes')->findOrfail($variant->product_id);

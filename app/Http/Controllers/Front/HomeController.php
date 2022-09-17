@@ -54,7 +54,7 @@ class HomeController extends Controller
 
   public function allBlog()
   {
-    $blogs = Blog::whereNull('is_active')->orderBy('id', 'desc')->paginate(3);
+    $blogs = Blog::whereNull('is_active')->orderBy('id', 'desc')->paginate(1);
     $this->data['title'] = 'Blog';
     $this->data['blogs'] = $blogs;
     return view('frontend.blog.index',  $this->data);

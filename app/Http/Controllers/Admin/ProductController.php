@@ -13,6 +13,7 @@ use App\Model\HsCode;
 use App\Traits\DatatableTrait;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -117,12 +118,12 @@ class ProductController extends Controller
         </small>';
       }
 
-      $row['title'] = ' 
+      $row['title'] = '
                 <div class="feeds-widget p-0">
                     <div class="feed-item border-0 p-0">
                         <a href="' . route('admin.product.edit', $item->id) . '" class="d-flex align-items-start" >
                             <div class="feeds-left d-inline-block " style="width:20%;">
-                                ' . $this->image('product_image', $item->image_name, '80%') . '
+                                ' . $this->image('product_image', $item->image_url, '80%') . '
                             </div>
                             <div class="feeds-body">
                                 <h5 class="font-weight-normal f-18 text-primary mb-0">' . $item->title . '</h5>

@@ -64,6 +64,7 @@
   <link rel="alternate" hreflang="en" href="{{ $link }}"/>
 
 
+  @yield('pagination')
 
 
 

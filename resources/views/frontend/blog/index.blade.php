@@ -1,4 +1,12 @@
 @extends('frontend.layouts.app')
+
+@section('pagination')
+  @if ($blogs->hasPages())
+    <link rel="prev" href="{{ $blogs->previousPageUrl() }}" />
+    <link rel="next" href="{{ $blogs->nextPageUrl() }}" />
+  @endif
+@endsection
+
 @push('style')
   <style>
     a.active {

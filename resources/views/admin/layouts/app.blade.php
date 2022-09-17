@@ -16,6 +16,8 @@
   <link rel="icon" href="{{ asset('storage/' . $frontsetting->favicon) }}" type="png">
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
+
 
   @stack('css')
 
@@ -108,7 +110,10 @@
   <script src="{{ asset('js/datatables.js') }}"></script>
   <script src="{{ asset('js/backend-plugins.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
   <script>
+    var lodingImage = '<div class="lds-ellipsis"> <div></div> <div></div> <div></div> <div></div> </div>';
     $('[data-toggle="tooltip"]').tooltip();
     const message = Swal.mixin({
       customClass: {
@@ -116,7 +121,23 @@
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
+
+    function showLoader() {
+      $.blockUI({
+        message: lodingImage,
+        baseZ: 2000,
+        css: {
+          border: '0',
+          cursor: 'wait',
+          backgroundColor: 'transparent'
+        },
+      });
+    }
+
+    function stopLoader() {
+      $.unblockUI();
+    }
     const toast = Swal.mixin({
       toast: true,
       position: 'top-end',

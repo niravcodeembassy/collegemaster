@@ -297,7 +297,7 @@ $(document).ready(function () {
         $( this ).sortable( "refreshPositions" );
 
         var data = $(':input' , this).serializeArray();
-        data.push({ name : 'date' , value : new Date() }) ;
+        data.push({ name : 'date' , value : new Date() });
         $.ajax({
             type: "POST",
             url: $('#shortable').data('position-url'),

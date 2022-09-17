@@ -7,11 +7,10 @@ use App\Model\ProductImage;
 use App\Model\Productvariant;
 use DB;
 use Illuminate\Support\Str;
-
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductImageController extends Controller
 {
@@ -35,7 +34,7 @@ class ProductImageController extends Controller
     $this->data['mockup'] = $this->getProductImge();
 
     //dd($this->data);
-    return view('admin.product.image.index', $this->data);
+    return view('admin.product.image.uploader', $this->data);
   }
 
   /**
@@ -59,47 +58,86 @@ class ProductImageController extends Controller
   public function store(Request $request, $productid)
   {
     //
+    // dd($request->all());
+    $record = $request->record;
+
+    $uploadedFile = [];
 
     try {
 
       DB::beginTransaction();
 
-      $uploadedFile = [];
-
-      if ($request->hasFile('images')) {
-
-        foreach ($request->file('images', []) as $key => $value) {
-
-          $imagepos = ProductImage::where('product_id', $productid)->max('position');
+      foreach ($record as $key => $value) {
+        if ($value['id'] === null) {
           $product = new ProductImage();
           $product->product_id = $productid;
-          $uploadfile =  $this->uploadFile($value);
+          $imagepos = ProductImage::where('product_id', $productid)->max('position');
+          $uploadfile =  $this->uploadFile($value['image'], $value['name'], $productid);
           $product->position =  $imagepos === NULL ? 0 : $imagepos + 1;
           $product->image_url =  $uploadfile;
-          $product->image_name =  Str::after($uploadfile, 'product_image/');
-
-          $altIndex = collect($this->request->file_id)->search(function ($file) use ($key) {
-            return $file == $this->request->input('uuid.' . $key, null);
-          });
-
-          $product->image_alt =  $this->request->input('alt.' . $altIndex, null);
-
-          $product->size =   $value->getSize();
+          $product->image_name =  Str::after($uploadfile, 'product_image/' . $productid . '/');
+          $product->image_alt =  $value['alt'];
+          $product->size =  $value['size'];
           $product->save();
-          $uploadedFile[] = [
-            'image_id' => $product->id,
-            'uuid' => $this->request->input('uuid.' . $key, null)
-          ];
+        } else {
+          $product = ProductImage::where('id', $value['id'])->first();
+          //product_image/839/
+          if (Str::contains($product->image_url, 'product_image/' . $productid . '/')) {
+            if (str_replace('product_image/' . $productid . '/', '', $product->image_url) != $value['name']) {
+              $name = 'product_image/' . $productid . '/' .   str_replace(' ', '_', $value['name']);
+              Storage::disk('public')->move($product->image_url, $name);
+              $product->image_url =  $name;
+              $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
+            }
+          } else {
+            if (str_replace('product_image/', '', $product->image_url) != $value['name']) {
+              $name = 'product_image/' . $productid . '/' .   str_replace(' ', '_', $value['name']);
+              Storage::disk('public')->move($product->image_url, $name);
+              $product->image_url =  $name;
+              $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
+            }
+          }
+          $product->position =  $key++;
+          $product->image_alt =  $value['alt'];
+          $product->update();
         }
+
+        $uploadedFile[] = [
+          'image_id' => $product->id,
+          'uuid' => $this->request->input('uuid.' . $key, null)
+        ];
       }
 
+      $productImage = ProductImage::where('product_id', $productid)->get();
+      if (isset($productImage) && $productImage->count()) {
+        $image = $productImage->map(function ($item, $i) {
+          // dump($item->image_url);
+          return [
+            'alt' => $item->image_alt,
+            'image' => asset('storage/' . $item->image_url),
+            'dataURL' => asset('storage/' . $item->image_url),
+            'is_delelt' => true,
+            'position' => $item->position,
+            'progress' => 100,
+            'name' => $item->image_name,
+            'size' => $item->size,
+            'id' => $item->id,
+            'removeUrl' => route('admin.product.image.remove', ['product_id' =>  $item->product_id]),
+            'upload' => [
+              'uuid' => hash('md5', $item->id),
+            ],
+            'accepted' => true,
+            'width' => 255
+          ];
+        });
+      }
 
       DB::commit();
-
       return response()->json([
         'message' => 'Upload successfully',
         'success' => true,
-        'files' => $uploadedFile
+        'files' => $uploadedFile,
+        'preview_file' => $image ?? []
       ], 200);
     } catch (Exception $e) {
 
@@ -111,12 +149,12 @@ class ProductImageController extends Controller
     }
   }
 
-  public function uploadFile($value)
+  public function uploadFile($value, $fileName, $product_id)
   {
     $file = $value;
-    $fileName = time() . '_' . rand(0, 500) . '_' . $file->getClientOriginalName();
+    // $fileName = time() . '_' . rand(0, 500) . '_' . $file->getClientOriginalName();
     $fileName = str_replace(' ', '_', $fileName);
-    $uploadfile =  $file->storeAs('product_image', $fileName);
+    $uploadfile =  $file->storeAs('product_image/' . $product_id, $fileName);
     return $uploadfile;
   }
 
@@ -173,7 +211,6 @@ class ProductImageController extends Controller
 
 
     $postion = $request->input('images_id', []);
-
     if ($postion) {
 
       $postionIndex = 0; // start index with 0 ;

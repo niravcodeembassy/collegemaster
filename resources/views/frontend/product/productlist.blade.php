@@ -1,5 +1,12 @@
 @extends('frontend.layouts.app')
 
+@section('pagination')
+  @if ($product->hasPages())
+    <link rel="prev" href="{{ $product->previousPageUrl() }}" />
+    <link rel="next" href="{{ $product->nextPageUrl() }}" />
+  @endif
+@endsection
+
 @push('css')
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
@@ -100,8 +107,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                  =            shop page content         =
-                                                                                                                                                                                                                  =============================================-->
+                                                                                                                                                                                                                                                          =            shop page content         =
+                                                                                                                                                                                                                                                          =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
