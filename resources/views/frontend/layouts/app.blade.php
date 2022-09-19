@@ -11,7 +11,7 @@
   <meta name="robots" content="index, follow">
   <!-- Favicon -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="canonical" href="{{ url()->current() }}" />
+  <link rel="canonical" href="{{ request()->fullUrl() }}" />
   <link rel="icon" href="{{ asset('storage/' . $frontsetting->favicon) }}" type="png">
 
   {{-- seo meta tag --}}
