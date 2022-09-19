@@ -71,8 +71,15 @@
       <div class="d-flex justify-content-end mt-4">
         <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" value="save_exit" class="btn btn-outline-danger mx-2 shadow"> Save & Exit
         </a>
-        <a href="{{ route('admin.variation.variation_edit', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Goto Variation
-        </a>
+        @if ($productvariant > 1)
+          <a href="{{ route('admin.variation.variation_edit', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Goto Variation{{-- Update variation --}}
+          </a>
+        @else
+          {{-- <div class="wrap"> --}}
+          <a href="{{ route('admin.variation.create', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Add variation
+          </a>
+          {{-- </div> --}}
+        @endif
       </div>
 
     </form>
