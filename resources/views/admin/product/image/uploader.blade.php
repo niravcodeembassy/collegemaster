@@ -5,8 +5,8 @@
 @section('content')
   @component('component.heading',
       [
-          'page_title' => 'Upload Image',
-          'icon' => 'fa fa-shopping-cart',
+          'page_title' => null,
+          'icon' => '',
           'tagline' => 'Lorem ipsum dolor sit amet.',
           'action' => route(request()->get('route', 'admin.product.edit'), $product->id),
           'action_icon' => 'fa fa-arrow-left',
@@ -19,8 +19,8 @@
 
     <form @submit="onSubmit" id="product_form" enctype="multipart/form-data">
       <div class="upload-btn-wrapper">
-        <button class="btn"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-        <input accept="image/jpeg, image/png" type="file" multiple name="images[]" @change="addFiles($event)" />
+        <button class="btn"><i class="fa fa-upload" aria-hidden="true"></i> Add Image</button>
+        <input accept="image/jpeg" type="file" multiple name="images[]" @change="addFiles($event)" />
       </div>
 
 
@@ -60,7 +60,7 @@
               </div>
             </template>
           </draggable>
-          <div class="pull-right mb-2">
+          <div class="pull-right mb-2 d-none">
             <button type="submit" name="submit" id="save_exit" value="save_exit" class="btn btn-sm btn-info shadow ">
               Upload
             </button>
@@ -69,19 +69,21 @@
       </template>
 
       <div class="d-flex justify-content-end mt-4">
-        <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" value="save_exit" class="btn btn-outline-danger mx-2 shadow"> Save & Exit
+        <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" class="btn btn-default">Exit
         </a>
+        <button type="submit" name="submit" id="save_exit" value="save_exit" value="save_exit" data-url="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" class="btn btn-outline-danger mx-2 shadow">
+          Save & Exit
+        </button>
         @if ($productvariant > 1)
-          <a href="{{ route('admin.variation.variation_edit', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Goto Variation{{-- Update variation --}}
-          </a>
+          <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.variation_edit', $product->id) }}" class="btn btn-success shadow">
+            Goto Variation
+          </button>
         @else
-          {{-- <div class="wrap"> --}}
-          <a href="{{ route('admin.variation.create', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Add variation
-          </a>
-          {{-- </div> --}}
+          <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.create', $product->id) }}" class="btn btn-success shadow">
+            Add variation
+          </button>
         @endif
       </div>
-
     </form>
     @include('admin.product.image.showimage')
     <div id="load-modal"></div>
@@ -266,13 +268,13 @@
             var files_count = files.length;
             for (let i = 0; i < files_count; i++) {
               this.files.push({
-                "alt": files[i].name,
+                "alt": this.removeExtension(files[i].name),
                 "image": files[i],
                 "dataURL": null,
                 "is_delelt": false,
                 "position": null,
                 "progress": 100,
-                "name": files[i].name,
+                "name": this.removeExtension(files[i].name),
                 "size": files[i].size,
                 "id": null,
                 "removeUrl": null,
@@ -286,7 +288,11 @@
             }
           }
         },
+        removeExtension(filename) {
+          return filename.substring(0, filename.lastIndexOf('.')) || filename;
+        },
         async onSubmit(e) {
+          let submit = e.submitter;
           e.preventDefault();
           const url = '{{ route('admin.image.store', $product->id) }}';
           const formData = this.files;
@@ -311,6 +317,8 @@
                   type: 'success',
                 });
                 stopLoader();
+                let redriect = $(submit).data('url');
+                window.location = redriect;
                 let previewFile = response.data.preview_file;
                 if (!jQuery.isEmptyObject(previewFile)) {
                   let preview = [...previewFile];

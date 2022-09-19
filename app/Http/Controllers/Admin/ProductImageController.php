@@ -28,6 +28,9 @@ class ProductImageController extends Controller
   public function index(Request $request, $productid)
   {
 
+
+    // $k = !Str::contains('product_image/827/test_user', '.jpg');
+    // dump($k);
     $this->data['title'] = 'Product';
     $this->data['productvariant'] = Productvariant::where('product_id', $productid)->count();
     $this->data['product'] =  $this->product;
@@ -63,97 +66,81 @@ class ProductImageController extends Controller
 
     $uploadedFile = [];
 
-    try {
 
-      DB::beginTransaction();
-
-      foreach ($record as $key => $value) {
-        if ($value['id'] === null) {
-          $product = new ProductImage();
-          $product->product_id = $productid;
-          $imagepos = ProductImage::where('product_id', $productid)->max('position');
-          $uploadfile =  $this->uploadFile($value['image'], $value['name'], $productid);
-          $product->position =  $key++;
-          $product->image_url =  $uploadfile;
-          $product->image_name =  Str::after($uploadfile, 'product_image/' . $productid . '/');
-          $product->image_alt =  $value['alt'];
-          $product->size =  $value['size'];
-          $product->save();
-        } else {
-          $product = ProductImage::where('id', $value['id'])->first();
-          //product_image/839/
-          if (Str::contains($product->image_url, 'product_image/' . $productid . '/')) {
-            if (str_replace('product_image/' . $productid . '/', '', $product->image_url) != $value['name']) {
-              $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']);
-              Storage::disk('public')->move($product->image_url, $name);
-              $product->image_url =  $name;
-              $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
-            }
-          } else {
-            if (str_replace('product_image/', '', $product->image_url) != $value['name']) {
-              $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']);
-              Storage::disk('public')->move($product->image_url, $name);
-              $product->image_url =  $name;
-              $product->image_name =  Str::after($name, 'product_image/' . $productid . '/');
-            }
-          }
-          $product->position =  $key++;
-          $product->image_alt =  $value['alt'];
-          $product->update();
+    foreach ($record as $key => $value) {
+      if ($value['id'] === null) {
+        $product = new ProductImage();
+        $product->product_id = $productid;
+        $imagepos = ProductImage::where('product_id', $productid)->max('position');
+        $uploadfile =  $this->uploadFile($value['image'], $value['name'], $productid);
+        $image_with_extension = Str::after($uploadfile, 'product_image/' . $productid . '/');
+        $product->position =  $key++;
+        $product->image_url =  $uploadfile;
+        $product->image_name = $this->removeExtension($image_with_extension);
+        $product->image_alt =  $value['alt'];
+        $product->size =  $value['size'];
+        $product->save();
+      } else {
+        $product = ProductImage::find($value['id']);
+        if ($product->image_name !== $value['name']) {
+          $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']) . '.jpg';
+          Storage::disk('public')->move($product->image_url, $name);
+          $product->image_url = $name;
+          $product->image_name = str_replace(' ', '_', $value['name']);
         }
-
-        $uploadedFile[] = [
-          'image_id' => $product->id,
-          'uuid' => $this->request->input('uuid.' . $key, null)
-        ];
+        $product->position =  $key++;
+        $product->image_alt =  $value['alt'];
+        $product->save();
       }
 
-      $productImage = ProductImage::where('product_id', $productid)->get();
-      if (isset($productImage) && $productImage->count()) {
-        $image = $productImage->map(function ($item, $i) {
-          // dump($item->image_url);
-          return [
-            'alt' => $item->image_alt,
-            'image' => asset('storage/' . $item->image_url),
-            'dataURL' => asset('storage/' . $item->image_url),
-            'is_delelt' => true,
-            'position' => $item->position,
-            'progress' => 100,
-            'name' => $item->image_name,
-            'size' => $item->size,
-            'id' => $item->id,
-            'removeUrl' => route('admin.product.image.remove', ['product_id' =>  $item->product_id]),
-            'upload' => [
-              'uuid' => hash('md5', $item->id),
-            ],
-            'accepted' => true,
-            'width' => 255
-          ];
-        });
-      }
-
-      DB::commit();
-      return response()->json([
-        'message' => 'Upload successfully',
-        'success' => true,
-        'files' => $uploadedFile,
-        'preview_file' => $image ?? []
-      ], 200);
-    } catch (Exception $e) {
-
-      report($e);
-
-      DB::rollback();
-
-      return redirect()->back()->with('error', 'Something went wrong please try again.');
+      $uploadedFile[] = [
+        'image_id' => $product->id,
+        'uuid' => $this->request->input('uuid.' . $key, null)
+      ];
     }
+
+    $productImage = ProductImage::where('product_id', $productid)->get();
+    if (isset($productImage) && $productImage->count()) {
+      $image = $productImage->map(function ($item, $i) {
+        // dump($item->image_url);
+        return [
+          'alt' => $item->image_alt,
+          'image' => asset('storage/' . $item->image_url),
+          'dataURL' => asset('storage/' . $item->image_url),
+          'is_delelt' => true,
+          'position' => $item->position,
+          'progress' => 100,
+          'name' => $item->image_name,
+          'size' => $item->size,
+          'id' => $item->id,
+          'removeUrl' => route('admin.product.image.remove', ['product_id' =>  $item->product_id]),
+          'upload' => [
+            'uuid' => hash('md5', $item->id),
+          ],
+          'accepted' => true,
+          'width' => 255
+        ];
+      });
+    }
+
+    return response()->json([
+      'message' => 'Upload successfully',
+      'success' => true,
+      'files' => $uploadedFile,
+      'preview_file' => $image ?? []
+    ], 200);
+  }
+
+  public function removeExtension($fileName)
+  {
+    return substr($fileName, 0, strrpos($fileName, '.'));
   }
 
   public function uploadFile($value, $fileName, $product_id)
   {
     $file = $value;
     // $fileName = time() . '_' . rand(0, 500) . '_' . $file->getClientOriginalName();
-    $fileName = str_replace(' ', '_', $fileName);
+    $fileName = str_replace(' ', '_', $fileName . '.jpg');
     $uploadfile =  $file->storeAs('product_image/' . $product_id, $fileName);
     return $uploadfile;
   }
