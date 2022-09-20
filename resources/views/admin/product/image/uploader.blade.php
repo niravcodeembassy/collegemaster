@@ -3,35 +3,47 @@
 @section('title', $title)
 
 @section('content')
-  @component('component.heading',
-      [
-          'page_title' => null,
-          'icon' => '',
-          'tagline' => 'Lorem ipsum dolor sit amet.',
-          'action' => route(request()->get('route', 'admin.product.edit'), $product->id),
-          'action_icon' => 'fa fa-arrow-left',
-          'text' => 'Back',
-      ])
-  @endcomponent
+  {{-- @component('component.heading', [
+    'page_title' => null,
+    'icon' => '',
+    'tagline' => 'Lorem ipsum dolor sit amet.',
+    'action' => route(request()->get('route', 'admin.product.edit'), $product->id),
+    'action_icon' => 'fa fa-arrow-left',
+    'text' => 'Back',
+])
+  @endcomponent --}}
 
   <div id="app">
 
 
+
     <form @submit="onSubmit" id="product_form" enctype="multipart/form-data">
-      <div class="upload-btn-wrapper">
-        <button class="btn"><i class="fa fa-upload" aria-hidden="true"></i> Add Image</button>
-        <input accept="image/jpeg" type="file" multiple name="images[]" @change="addFiles($event)" />
+      <div class="d-flex justify-content-end align-items-center ">
+        <div class="upload-btn-wrapper">
+          <button class="btn btn-success btn-sm shadow"><i class="fa fa-upload" aria-hidden="true"></i> Add Image</button>
+          <input accept="image/jpeg" type="file" multiple name="images[]" @change="addFiles($event)" />
+        </div>
+        <div class="upload-btn-wrapper mx-2">
+          <button class="btn btn-danger remove_all btn-sm shadow" type="button" @click="removeAll()" data-url="{{ route('admin.product.image.remove.all', ['product_id' => $product->id]) }}">
+            <i class="fa fa-trash"></i> Remove All
+          </button>
+        </div>
+        <a href="{{ route(request()->get('route', 'admin.product.edit'), $product->id) }}" class="btn btn-secondary btn-sm shadow ">
+          <i class="fa fa-arrow-left "></i> Back
+        </a>
       </div>
 
 
+
       <template v-if="files.length > 0">
-        <div class="ml-0 mt-2" id="main_card" data-remove-url="{{ route('admin.product.image.remove', ['product_id' => $product->id]) }}" data-position-url="{{ route('admin.product.image.position', ['product_id' => $product->id]) }}">
-          <draggable v-model="files" group="people" @start="drag=true" @end="drag=false" class="row">
+        <div class="ml-0 mt-4" id="main_card" data-remove-url="{{ route('admin.product.image.remove', ['product_id' => $product->id]) }}" data-position-url="{{ route('admin.product.image.position', ['product_id' => $product->id]) }}">
+          <draggable v-model="files" @start="drag=true" @end="drag=false" handle=".move_content" class="row">
             <template v-for="(_, index) in Array.from({ length: files.length })">
               <div class="col-md-6">
                 <div class="card w-100 parent" :data-index="index">
                   <div class="d-flex">
                     <div class="img">
+                      <i class="fa fa-arrows-alt move_content"></i>
                       <img v-bind:src="loadFile(files[index])" class="position-relative border-4 border-white preview" />
                       <div class="image_size">
                         <span class="text-xs" v-text="humanFileSize(files[index].size)">...</span>
@@ -68,7 +80,7 @@
         </div>
       </template>
 
-      <div class="d-flex justify-content-end mt-4">
+      <div class="d-flex justify-content-end mt-3">
         <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" class="btn btn-default">Exit
         </a>
         <button type="submit" name="submit" id="save_exit" value="save_exit" value="save_exit" data-url="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" class="btn btn-outline-danger mx-2 shadow">
@@ -100,16 +112,6 @@
       position: relative;
       overflow: hidden;
       display: inline-block;
-    }
-
-    .upload-btn-wrapper .btn {
-      border: 2px solid gray;
-      color: gray;
-      background-color: white;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-size: 20px;
-      font-weight: bold;
     }
 
     .upload-btn-wrapper input[type=file] {
@@ -147,6 +149,7 @@
 
     div.img {
       width: 25% !important;
+      position: relative;
     }
 
     div.text {
@@ -164,6 +167,16 @@
       width: 160px;
       height: 100%;
       border-radius: 8px;
+    }
+
+    i.move_content {
+      position: absolute;
+      top: 5px;
+      padding-left: 3px;
+      width: 10px;
+      height: 10px;
+      z-index: 1;
+      color: white;
     }
 
     div.image_size {
@@ -290,6 +303,38 @@
         },
         removeExtension(filename) {
           return filename.substring(0, filename.lastIndexOf('.')) || filename;
+        },
+        async removeAll() {
+          let files = [...this.files];
+          const url = $('.remove_all').data('url');
+          let ids = files.map(a => a.id);
+
+          message.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value == true) {
+              showLoader();
+              var data = {
+                images_id: ids,
+              }
+              axios.post(url, data)
+                .then((response) => {
+                  message.fire({
+                    title: 'Success',
+                    text: "Images remove successfully.",
+                    type: 'success',
+                  });
+                })
+              this.files = [];
+              stopLoader();
+            }
+          });
         },
         async onSubmit(e) {
           let submit = e.submitter;

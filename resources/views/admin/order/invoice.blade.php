@@ -367,7 +367,8 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    {!! Helper::showPrice($data->tax, $order->currency, $order->currency) !!}
+                                    $ 0.00
+                                    {{-- {!! Helper::showPrice($data->tax, $order->currency, $order->currency) !!} --}}
                                   </td>
                                 </tr>
                                 <tr>

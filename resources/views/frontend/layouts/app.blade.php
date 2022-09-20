@@ -38,8 +38,7 @@
   <meta name="twitter:site" content="@publisher_handle" />
   <meta name="twitter:title" content="@yield('twiter-title', $frontsetting->meta_title)">
   <meta name="twitter:description" content="@yield('twiter-description', $frontsetting->meta_description)">
-  <meta name="twitter:creator"
-    content="@author_handle" />
+  <meta name="twitter:creator" content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
 
@@ -65,11 +64,6 @@
 
 
   @yield('pagination')
-
-
-
-
-
   @yield('schema')
 
   <!-- Global site tag (gtag.js) - Google Analytics -->

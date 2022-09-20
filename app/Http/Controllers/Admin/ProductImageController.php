@@ -27,10 +27,6 @@ class ProductImageController extends Controller
    */
   public function index(Request $request, $productid)
   {
-
-
-    // $k = !Str::contains('product_image/827/test_user', '.jpg');
-    // dump($k);
     $this->data['title'] = 'Product';
     $this->data['productvariant'] = Productvariant::where('product_id', $productid)->count();
     $this->data['product'] =  $this->product;
@@ -84,6 +80,9 @@ class ProductImageController extends Controller
         $product = ProductImage::find($value['id']);
         if ($product->image_name !== $value['name']) {
           $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name']) . '.jpg';
+          if (Storage::disk('public')->exists($name)) {
+            $name = 'product_image/' . $productid . '/' . str_replace(' ', '_', $value['name'] . '_' . $key) . '.jpg';
+          }
           Storage::disk('public')->move($product->image_url, $name);
           $product->image_url = $name;
           $product->image_name = str_replace(' ', '_', $value['name']);
@@ -224,11 +223,37 @@ class ProductImageController extends Controller
     ]);
   }
 
+  public function removeAll(Request $request, $product_id)
+  {
+
+
+    try {
+      $images_id = $request->input('images_id', []);
+
+      foreach ($images_id as $key => $value) {
+        ProductImage::findOrFail($value)->delete();
+      }
+
+      return response()->json([
+        'message' => 'images remove succefully.',
+        'success' => true
+      ], 200);
+    } catch (Exception $e) {
+
+      report($e);
+
+      return response()->json([
+        'message' => 'Image does not remove because it is used.',
+        'success' => true
+      ], 406);
+    }
+  }
+
   public function removeImage(Request $request, $product_id)
   {
 
     try {
-      $isdelete = ProductImage::findOrfail($request->id)->delete();
+      $isdelete = ProductImage::findOrFail($request->id)->delete();
 
       if (!$isdelete) {
         return response()->json([

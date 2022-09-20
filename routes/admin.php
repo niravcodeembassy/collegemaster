@@ -76,6 +76,7 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
 
   Route::post('product/{product_id}/image/alt', 'ProductImageController@changeAlt')->name('product.image.alt');
   Route::post('product/{product_id}/image/removeimage', 'ProductImageController@removeImage')->name('product.image.remove');
+  Route::post('product/{product_id}/image/removeAll', 'ProductImageController@removeAll')->name('product.image.remove.all');
   Route::post('product/{product_id}/image/update', 'ProductImageController@positionImage')->name('product.image.position');
   Route::resource('product/{product_id}/image', 'ProductImageController');
 
