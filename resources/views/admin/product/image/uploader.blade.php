@@ -83,18 +83,26 @@
       <div class="d-flex justify-content-end mt-3">
         <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" class="btn btn-default">Exit
         </a>
-        <button type="submit" name="submit" id="save_exit" value="save_exit" value="save_exit" data-url="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" class="btn btn-outline-danger mx-2 shadow">
-          Save & Exit
-        </button>
-        @if ($productvariant > 1)
-          <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.variation_edit', $product->id) }}" class="btn btn-success shadow">
-            Goto Variation
+        <template v-if="files.length > 0">
+          <button type="submit" name="submit" id="save_exit" value="save_exit" value="save_exit" data-url="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" class="btn btn-outline-danger mx-2 shadow">
+            Save & Exit
           </button>
-        @else
-          <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.create', $product->id) }}" class="btn btn-success shadow">
-            Add variation
-          </button>
-        @endif
+          @if ($productvariant > 1)
+            <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.variation_edit', $product->id) }}" class="btn btn-success shadow">
+              Goto Variation
+            </button>
+          @else
+            <button type="submit" name="submit" id="save_add_variant" value="save_add_variant" data-url="{{ route('admin.variation.create', $product->id) }}" class="btn btn-success shadow">
+              Add variation
+            </button>
+          @endif
+        </template>
+        <template v-if="files.length == 0">
+          <a href="{{ route(request()->get('route', 'admin.product.index'), ['id' => $product->id]) }}" name="submit" value="save_exit" class="btn btn-outline-danger shadow mx-2"> Save & Exit
+          </a>
+          <a href="{{ route('admin.variation.variation_edit', $product->id) }}" id="save_add_variant" name="submit" value="save_add_variant" class="btn btn-success shadow"> Goto Variation{{-- Update variation --}}
+          </a>
+        </template>
       </div>
     </form>
     @include('admin.product.image.showimage')
@@ -176,7 +184,6 @@
       width: 10px;
       height: 10px;
       z-index: 1;
-      color: white;
     }
 
     div.image_size {
@@ -364,13 +371,13 @@
                 stopLoader();
                 let redriect = $(submit).data('url');
                 window.location = redriect;
-                let previewFile = response.data.preview_file;
-                if (!jQuery.isEmptyObject(previewFile)) {
-                  let preview = [...previewFile];
-                  this.files = preview.sort((a, b) => {
-                    return a.position - b.position;
-                  });
-                }
+                // let previewFile = response.data.preview_file;
+                // if (!jQuery.isEmptyObject(previewFile)) {
+                //   let preview = [...previewFile];
+                //   this.files = preview.sort((a, b) => {
+                //     return a.position - b.position;
+                //   });
+                // }
               }
             });
         }
