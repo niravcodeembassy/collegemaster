@@ -18,6 +18,30 @@
     .owl-nav button.owl-next {
       right: 0;
     }
+
+    .ck_editor_data h1 {
+      font-size: 24px;
+    }
+
+    .ck_editor_data h2,
+    h3 {
+      font-size: 22px;
+    }
+
+    .ck_editor_data p {
+      max-width: 100%;
+      font-size: 15px;
+    }
+
+
+    .ck_editor_data blockquote p {
+      max-width: 95%;
+    }
+
+    .ck_editor_data blockquote {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
   </style>
 @endpush
 @push('css')
@@ -125,7 +149,7 @@ $schema = [$schema_organization, $schema_local];
         </div>
 
         <div class="col-lg-12">
-          <div class="about-page-text">
+          <div class="about-page-text ck_editor_data">
             <p class="my-35">{!! $page->bodyhtml ?? '' !!}</p>
           </div>
         </div>

@@ -135,7 +135,7 @@ $schema = [$schema_organization, $schema_local];
                     <p class="mb-30">
                       {{ $blog->content ?? '' }}
                     </p>
-                    <div class="mb-30" class="ck_editor_data">
+                    <div class="mb-30 ck_editor_data">
                       {!! $blog->description ?? '' !!}
                     </div>
                   </div>

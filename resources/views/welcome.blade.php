@@ -58,8 +58,7 @@ $schema_site_link = [
         '@type' => 'SearchAction',
         'target' => route('category.product', 'all') . '?term={search_term_string}',
         'query-input' => 'required name=search_term_string',
-    ],
-    'credentialCategory' => [$category_list],
+    ]
 ];
 
 $schema_organization = Schema::organizationSchema();
