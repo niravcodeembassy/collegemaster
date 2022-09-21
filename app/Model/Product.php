@@ -132,6 +132,7 @@ class Product extends Model
       'products.content',
       'products.product_type',
       'products.slug',
+      'products.sku',
       'products.category_id',
       'products.sub_category_id',
       'products.name',

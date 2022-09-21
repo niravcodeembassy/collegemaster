@@ -15,11 +15,12 @@
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
+
 @section('title')
   {{ $category->name }}
 @endsection
 
-@section('title', $category->meta_title)
+@section('meta_title', $category->meta_title)
 @section('keywords', $category->meta_keywords)
 @section('description', $category->meta_description)
 @section('published_time', $category->created_at)
@@ -37,6 +38,89 @@
 @section('twiter-description', $category->meta_description)
 @section('twiter-image', $category->image_src)
 
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [
+    'organization' => $schema_organization,
+    'local' => $schema_local,
+];
+if ($product->count() > 0) {
+    $priceData = Helper::productPrice($productVarinat);
+
+    $schema_first = [
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' => $category->meta_title,
+        'image' => $category->image_src,
+        'description' => $category->meta_description,
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => env('APP_NAME'),
+        ],
+        'sku' => $first_product->sku,
+        'offers' => [
+            '@type' => 'Offer',
+            'url' => route('product.view', $first_product->slug),
+            'priceCurrency' => 'USD',
+            'price' => str_replace("$", '', $priceData->price),
+            'availability' => 'https://schema.org/InStock',
+            'itemCondition' => 'https://schema.org/NewCondition',
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => isset($category_rating) ? intval($category_rating->avg_rating) : 0,
+            'bestRating' => '5',
+            'worstRating' => '1',
+            'ratingCount' => isset($category_rating) ? $category_rating->total_rating : 0,
+        ],
+    ];
+
+    $schema_third = [
+        '@context' => 'https://schema.org/',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => route('front.home'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Products',
+                'item' => route('category.product', 'all'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $first_product->name,
+                'item' => route('product.view', $first_product->slug),
+            ],
+        ],
+    ];
+    $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $schema['product_schema'] = $product_schema;
+    $schema['list_schema'] = $list_schema;
+}
+@endphp
+
+@section('schema')
+
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+
+@endsection
+
 
 @section('content')
   <div class="pt-40 mb-20">
@@ -44,10 +128,10 @@
       <div class="row">
         <div class="col-lg-12 border-bottom category_list">
           @if (request('term'))
-            <h1 class="text-center text-uppercase h2 pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
+            <h1 class="text-center text-uppercase h2 font-weight-bold pb-3"><span>{{ ucwords(request('term')) }}</span></h1>
           @else
-            <h1 class="text-center text-uppercase h2 pb-3"><span><b>{{ ucwords($category->name ?? '') }}</b></span></h1>
-            <h4 class="text-center pb-3"> {{ Str::limit($category->description, 250) }}</h4>
+            <h1 class="text-center text-uppercase h2 font-weight-bold pb-3"><span>{{ ucwords($category->name ?? '') }}</span></h1>
+            <p class="text-center pb-3"> {{ Str::limit($category->description, 250) }}</p>
           @endif
         </div>
       </div>
@@ -111,8 +195,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                                =            shop page content         =
-                                                                                                                                                                                                                                                                =============================================-->
+                                                                                                                                                                                                                                                                              =            shop page content         =
+                                                                                                                                                                                                                                                                              =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
@@ -158,7 +242,7 @@
                 } elseif (request('type', 'grid') == 'grid-four') {
                     $type = 'four-column';
                 }
-
+                
               @endphp
 
               <div class="row product-isotope shop-product-wrap {{ $type }} ">

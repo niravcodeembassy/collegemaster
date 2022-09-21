@@ -1288,7 +1288,7 @@
   });
 
   /*---------- FOOTER TOGGLE DHARM ----------*/
-  $(".footer-single-widget h5.widget-title").on("click", function () {
+  $(".footer-single-widget h3.widget-title").on("click", function () {
     console.log("c");
     $(this).toggleClass("active");
   });

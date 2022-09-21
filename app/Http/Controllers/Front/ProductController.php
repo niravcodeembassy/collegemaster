@@ -38,9 +38,16 @@ class ProductController extends Controller
     //   }
     // }
 
-
-
     $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
+
+    $category_rating = Category::groupBy('categories.id')
+      ->select('categories.id', 'categories.slug', 'product_reviews.rating as rating')
+      ->join('products', function ($join) use ($slug) {
+        $join->on('categories.id', '=', 'products.category_id')
+          ->where('categories.slug', $slug);
+      })->join('product_reviews', function ($join) use ($slug) {
+        $join->on('products.id', '=', 'product_reviews.product_id');
+      })->selectRaw("avg(rating) as avg_rating,sum(rating) as total_rating")->first();
 
 
     $categoryList = Category::whereNull('is_active')
@@ -53,6 +60,14 @@ class ProductController extends Controller
 
 
     $product =  $this->getProductQuery($request, $slug, $category);
+    if ($product->count() > 0) {
+      $first_product = $product->first();
+      $variant = Productvariant::where('product_id', $first_product->id)->where('type', 'variant')->first();
+      $this->data['first_product'] = $first_product;
+      $this->data['productVarinat'] = $variant;
+      $this->data['category_rating'] = isset($category_rating) ? $category_rating : null;
+    }
+
     $this->data['product'] = $product;
     $this->data['title'] = $category->name;
     $this->data['categoryList'] = $categoryList;
@@ -127,7 +142,18 @@ class ProductController extends Controller
 
     $subCategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'image', 'description', 'category_id')->firstOrFail();
 
+    $subcategory_rating = SubCategory::groupBy('sub_categories.id')
+      ->select('sub_categories.id', 'sub_categories.slug', 'product_reviews.rating as rating')
+      ->join('products', function ($join) use ($slug) {
+        $join->on('sub_categories.id', '=', 'products.sub_category_id')
+          ->where('sub_categories.slug', $slug);
+      })->join('product_reviews', function ($join) use ($slug) {
+        $join->on('products.id', '=', 'product_reviews.product_id');
+      })->selectRaw("avg(rating) as avg_rating,sum(rating) as total_rating")->first();
+
     $category = Category::findOrFail($subCategory->category_id);
+
+
 
     $this->data['category'] = $category;
 
@@ -148,6 +174,13 @@ class ProductController extends Controller
         $q->whereNull('is_active');
       }])->whereNull('is_active')->get();
 
+    if ($product->count() > 0) {
+      $first_product = $product->first();
+      $variant = Productvariant::where('product_id', $first_product->id)->where('type', 'variant')->first();
+      $this->data['first_product'] = $first_product;
+      $this->data['productVarinat'] = $variant;
+      $this->data['subcategory_rating'] = isset($subcategory_rating) ? $subcategory_rating : null;
+    }
     $this->data['categoryList'] = $categoryList;
     $this->data['product'] = $product;
     $this->data['min'] = Productvariant::min('mrp_price');
@@ -428,6 +461,7 @@ class ProductController extends Controller
         // return view('frontend.product.partial.variant',compact('option','optionVal','new_option','price'));
       }
     }
+
 
     // dd($new_option);
     $new_option_lable = $option;

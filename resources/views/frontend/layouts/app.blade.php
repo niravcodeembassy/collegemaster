@@ -5,6 +5,7 @@
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-language" content="en-us">
   <title> @yield('title', $title ?? 'Home') | {{ env('APP_NAME') }}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +16,7 @@
   <link rel="icon" href="{{ asset('storage/' . $frontsetting->favicon) }}" type="png">
 
   {{-- seo meta tag --}}
-  <meta name="title" content="@yield('title', $frontsetting->meta_title)">
+  <meta name="title" content="@yield('meta_title',$frontsetting->meta_title)">
   <meta name="description" content="@yield('description', $frontsetting->meta_description)">
   <meta name="keywords" content="@yield('keywords', $frontsetting->meta_keywords)">
   <meta property='article:published_time' content="@yield('published_time', now())">
@@ -41,6 +42,9 @@
   <meta name="twitter:creator" content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
+  @if(isset($frontsetting->google_head_script))
+  {!! $frontsetting->google_head_script !!}
+  @endif
 
   @php
   $locale = request()->segment(1);
@@ -69,9 +73,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE3412SH9L"></script>
-    @if(isset($frontsetting->google_tag_script))
-    {!! $frontsetting->google_tag_script !!}
-    @endif
+
 
 
     <script>
@@ -129,6 +131,9 @@
 </head>
 
 <body>
+  @if(isset($frontsetting->google_body_script))
+  {!! $frontsetting->google_body_script !!}
+  @endif
   <!--=============================================
          =            Header without topbar         =
          =============================================-->

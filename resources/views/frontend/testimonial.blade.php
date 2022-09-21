@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 mx-auto my-2">
-        <h3 class="text-center text-uppercase font-weight-bold quality_h3">CUSTOMER LOVE</h3>
+        <h2 class="text-center text-uppercase font-weight-bold quality_h3">CUSTOMER LOVE</h2>
         <div class="divider-custom">
           <div class="divider-custom-line-1"></div>
           <div class="divider-custom-icon">

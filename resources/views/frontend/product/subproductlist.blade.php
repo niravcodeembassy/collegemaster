@@ -11,12 +11,11 @@
   @endif
 @endsection
 
-
 @push('css')
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
-@section('title', $subCategory->meta_title)
+@section('meta_title', $subCategory->meta_title)
 @section('keywords', $subCategory->meta_keywords)
 @section('published_time', $subCategory->created_at)
 @section('description', $subCategory->meta_description)
@@ -33,6 +32,89 @@
 @section('twiter-title', $subCategory->meta_title)
 @section('twiter-description', $subCategory->meta_description)
 @section('twiter-image', $subCategory->image_src)
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [
+    'organization' => $schema_organization,
+    'local' => $schema_local,
+];
+if ($product->count() > 0) {
+    $priceData = Helper::productPrice($productVarinat);
+    $schema_first = [
+        '@context' => 'https://schema.org/',
+        '@type' => 'Product',
+        'name' => $subCategory->meta_title,
+        'image' => $subCategory->image_src,
+        'description' => $subCategory->meta_description,
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => env('APP_NAME'),
+        ],
+        'sku' => $first_product->sku,
+        'offers' => [
+            '@type' => 'Offer',
+            'url' => route('product.view', $first_product->slug),
+            'priceCurrency' => 'USD',
+            'price' => str_replace("$", '', $priceData->price),
+            'availability' => 'https://schema.org/InStock',
+            'itemCondition' => 'https://schema.org/NewCondition',
+        ],
+        'aggregateRating' => [
+            '@type' => 'AggregateRating',
+            'ratingValue' => isset($subcategory_rating) ? intval($subcategory_rating->avg_rating) : 0,
+            'bestRating' => '5',
+            'worstRating' => '1',
+            'ratingCount' => isset($subcategory_rating) ? $subcategory_rating->total_rating : 0,
+        ],
+    ];
+
+    $schema_third = [
+        '@context' => 'https://schema.org/',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => route('front.home'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Products',
+                'item' => route('category.product', 'all'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $first_product->name,
+                'item' => route('product.view', $first_product->slug),
+            ],
+        ],
+    ];
+
+    $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    $schema['product_schema'] = $product_schema;
+    $schema['list_schema'] = $list_schema;
+}
+
+@endphp
+
+@section('schema')
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+@endsection
+
 
 @section('content')
   <div class="breadcrumb-area d-none  pt-20 pb-20" style="background-color: #f5f5f5;">
@@ -54,10 +136,10 @@
       <div class="row">
         <div class="col-lg-12 border-bottom category_list">
           @if (request('term'))
-            <h1 class="text-center h2 text-uppercase pb-3"><span><b>{{ ucwords(request('term')) }}</b></span></h1>
+            <h1 class="text-center h2 text-uppercase font-weight-bold pb-3"><span>{{ ucwords(request('term')) }}</span></h1>
           @else
-            <h1 class="text-center text-uppercase h2 pb-3"><span><b>{{ ucwords($subCategory->name) }}</b></span></h1>
-            <h4 class="text-center pb-3"> {{ Str::limit($subCategory->description, 250) }}</h4>
+            <h1 class="text-center text-uppercase h2 font-weight-bold pb-3"><span>{{ ucwords($subCategory->name) }}</span></h1>
+            <p class="text-center pb-3"> {{ Str::limit($subCategory->description, 250) }}</p>
           @endif
         </div>
       </div>
@@ -116,8 +198,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                        =            shop page content         =
-                                                                                        =============================================-->
+                                                                                                                    =            shop page content         =
+                                                                                                                    =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">

@@ -43,7 +43,7 @@
                 <div class="card w-100 parent" :data-index="index">
                   <div class="d-flex">
                     <div class="img">
-                      <i class="fa fa-arrows-alt move_content"></i>
+                      <button class="btn btn-sm btn-success move_content"> <i class="fa fa-arrows-alt "></i></button>
                       <img v-bind:src="loadFile(files[index])" class="position-relative border-4 border-white preview" />
                       <div class="image_size">
                         <span class="text-xs" v-text="humanFileSize(files[index].size)">...</span>
@@ -177,12 +177,9 @@
       border-radius: 8px;
     }
 
-    i.move_content {
+    .btn.move_content {
       position: absolute;
-      top: 5px;
-      padding-left: 3px;
-      width: 10px;
-      height: 10px;
+      top: 0px;
       z-index: 1;
     }
 

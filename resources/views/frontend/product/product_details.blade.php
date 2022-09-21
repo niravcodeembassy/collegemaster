@@ -172,8 +172,18 @@
       padding-top: 5px;
     }
 
+    .ck_editor_data h1 {
+      font-size: 24px;
+    }
+
+    .ck_editor_data h2,
+    h3 {
+      font-size: 22px;
+    }
+
     .ck_editor_data p {
       max-width: 100%;
+      font-size: 15px;
     }
 
 
@@ -291,7 +301,7 @@
   {{ $product->name }}
 @endsection
 
-@section('title', $product->meta_title)
+@section('meta_title', $product->meta_title)
 @section('keywords', $product->meta_keywords)
 @section('published_time', $product->created_at)
 @section('description', $product->meta_description)
@@ -339,13 +349,8 @@ $schema_first = [
     ],
 ];
 
-$schema_second = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'Organization',
-    'name' => env('APP_NAME'),
-    'url' => route('front.home'),
-    'logo' => asset('storage/' . $frontsetting->logo),
-];
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
 
 $schema_third = [
     '@context' => 'https://schema.org/',
@@ -373,10 +378,11 @@ $schema_third = [
 ];
 
 $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$site_schema = json_encode($schema_second, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [$product_schema, $site_schema, $list_schema];
+$schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
 @endphp
 
 @section('schema')
@@ -764,13 +770,13 @@ $schema = [$product_schema, $site_schema, $list_schema];
                       <tr class="single-info">
                         <td class="quickview-title w-25">Categories : </td>
                         <td class="quickview-value w-75">
-                          <span>{{ $product->category->name ?? '' }}</span>
+                          <h2 style="font-size:18px;">{{ $product->category->name ?? '' }}</h2>
                         </td>
                       </tr>
                       @if (!is_null($product->additional_description))
                         <tr class="single-info">
                           <td class="quickview-title w-25">Additional Description : </td>
-                          <td class="quickview-value w-75">
+                          <td class="quickview-value w-75 ck_editor_data">
                             {!! $product->additional_description ?? '' !!}
                           </td>
                         </tr>
@@ -849,8 +855,10 @@ $schema = [$product_schema, $site_schema, $list_schema];
                       <a class="nav-item nav-link active text-uppercase" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
                       <a class="nav-item nav-link text-uppercase" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
                       </a>
-                      <a class="nav-item nav-link text-uppercase" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
-                        ({{ $product_review->count() }})</a>
+                      <h3>
+                        <a class="nav-item nav-link text-uppercase" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">Reviews
+                          ({{ $product_review->count() }})</a>
+                      </h3>
                     </div>
                   </div>
 

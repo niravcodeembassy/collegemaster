@@ -5,7 +5,7 @@
 
 
 
-@section('title', $page->page_title)
+@section('meta_title', $page->page_title)
 @section('keywords', $page->meta_keywords)
 @section('published_time', $page->created_at)
 @section('description', $page->meta_desc)
@@ -19,6 +19,26 @@
 
 @section('twiter-title', $page->meta_title)
 @section('twiter-description', $page->meta_desc)
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$schema_organization, $schema_local];
+@endphp
+
+@section('schema')
+
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+
+@endsection
 
 @push('css')
   <link href="{{ asset('front/assets/css/policy.css') }}" rel="stylesheet" type="text/css" />

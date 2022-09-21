@@ -249,6 +249,7 @@ return [
     'Agent' => Jenssegers\Agent\Facades\Agent::class,
     'Location' => 'Stevebauman\Location\Facades\Location',
     'Uploader' => \App\Helpers\Uploader::class,
+    'Schema' => \App\Helpers\Schema::class
   ],
 
 ];

@@ -1,4 +1,23 @@
 @extends('frontend.layouts.app')
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$schema_organization, $schema_local];
+@endphp
+
+@section('schema')
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+@endsection
+
 @section('content')
   <div class=" breadcrumb-area   pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
     <div class="container">

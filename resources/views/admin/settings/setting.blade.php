@@ -470,8 +470,12 @@
               <h5 class="mb-3"><strong>Google Tag Manager</strong></h5>
               <div class="col-lg-12">
                 <div class="form-group">
-                  <label for="term_condition">Google Tag</label>
-                  <textarea class="form-control" id="google_tag_script" rows="8" name="google_tag_script">{{ $setting->response->google_tag_script ?? '' }}</textarea>
+                  <label for="term_condition">Head Tag</label>
+                  <textarea class="form-control" id="google_head_script" rows="8" name="google_head_script">{{ $setting->response->google_head_script ?? '' }}</textarea>
+                </div>
+                <div class="form-group">
+                  <label for="term_condition">Body Tag</label>
+                  <textarea class="form-control" id="google_body_script" rows="8" name="google_body_script">{{ $setting->response->google_body_script ?? '' }}</textarea>
                 </div>
               </div>
             </div>

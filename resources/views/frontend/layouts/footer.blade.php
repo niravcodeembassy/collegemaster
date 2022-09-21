@@ -50,7 +50,7 @@
           <!--=======  End of copyright text  =======-->
         </div>
         <div class="col-xl-1 col-lg-2 col-md-4 col-sm-6 footer-single-widget shop_widget">
-          <h5 class="widget-title">Shop</h5>
+          <h3 class="widget-title text-uppercase">Shop</h3>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
@@ -60,9 +60,11 @@
                     $category = \App\Category::whereIn('id', $frontsetting->category)->get();
                   @endphp
                   @foreach ($category as $list)
-                    <li><a href="{{ route('category.product', ['slug' => $list->slug]) }}">
-                        {{ $list->name }}
-                      </a>
+                    <li>
+                      <h4><a href="{{ route('category.product', ['slug' => $list->slug]) }}">
+                          {{ $list->name }}
+                        </a>
+                      </h4>
                     </li>
                   @endforeach
                 @endif
@@ -75,15 +77,23 @@
           <!--=======  single widget  =======-->
         </div>
         <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 footer-single-widget shop_widget">
-          <h5 class="widget-title">ABOUT</h5>
+          <h3 class="widget-title text-uppercase">ABOUT</h3>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                <li><a href="{{ route('page.about') }}">About us</a></li>
-                <li><a href="{{ route('blog') }}">Blog</a></li>
-                <li><a href="{{ route('contact-us.index') }}">Contact</a></li>
-                <li><a href="{{ route('page.story') }}">Our Story</a></li>
+                <li>
+                  <h4><a href="{{ route('page.about') }}">About us</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('blog') }}">Blog</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('contact-us.index') }}">Contact</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.story') }}">Our Story</a></h4>
+                </li>
               </ul>
             </nav>
           </div>
@@ -93,16 +103,26 @@
           <!--=======  single widget  =======-->
         </div>
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 footer-single-widget">
-          <h5 class="widget-title">policies</h5>
+          <h3 class="widget-title text-uppercase">policies</h3>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                <li><a href="{{ route('page.policy') }}">Privacy Policy</a></li>
-                <li><a href="{{ route('page.photo') }}">Photos Policy</a></li>
-                <li><a href="{{ route('page.cookie') }}">Cookies Policy</a></li>
-                <li><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></li>
-                <li><a href="{{ route('page.term') }}">Terms & Conditions</a></li>
+                <li>
+                  <h4><a href="{{ route('page.policy') }}">Privacy Policy</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.photo') }}">Photos Policy</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.cookie') }}">Cookies Policy</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.returns') }}">Shipping & Returns Policy</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.term') }}">Terms & Conditions</a></h4>
+                </li>
               </ul>
             </nav>
           </div>
@@ -112,16 +132,26 @@
           <!--=======  single widget  =======-->
         </div>
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 footer-single-widget">
-          <h5 class="widget-title"> help topics</h5>
+          <h3 class="widget-title text-uppercase"> help topics</h3>
           <!--=======  footer navigation container  =======-->
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                <li><a href="{{ route('page.order.place') }}">How To Place Order</a></li>
-                <li><a href="{{ route('page.send.photo') }}">How To Send Us Photos</a></li>
-                <li><a href="{{ route('page.photo.send') }}">How Many Photos To Send</a></li>
-                <li><a href="{{ route('page.save.change') }}">How To Send Us Changes</a></li>
-                <li><a href="{{ route('page.delivery.time') }}">Estimated Delivery Time</a></li>
+                <li>
+                  <h4><a href="{{ route('page.order.place') }}">How To Place Order</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.send.photo') }}">How To Send Us Photos</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.photo.send') }}">How Many Photos To Send</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.save.change') }}">How To Send Us Changes</a></h4>
+                </li>
+                <li>
+                  <h4><a href="{{ route('page.delivery.time') }}">Estimated Delivery Time</a></h4>
+                </li>
               </ul>
             </nav>
           </div>
@@ -134,11 +164,11 @@
         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 footer-single-widget">
           <!--=======  single widget  =======-->
           <div class="footer-subscription-widget">
-            <h5 class="footer-title reg-office footer_heading">Registered Office:</h5>
+            <h3 class="footer_heading reg-office text-uppercase">Registered Office:</h3>
             <p class="about marginB20">
               {{ $frontsetting->address ?? '' }}
             </p>
-            <h5 class="footer-title footer_heading">Call Support:</h5>
+            <h3 class="footer_heading text-uppercase">Call Support:</h3>
             <p class="about marginB20">
               Call at
               <a href="tel:{{ $frontsetting->contact }}" class="" style="color: rgb(252, 88, 47);">{{ $frontsetting->contact }}</a><br>
@@ -151,7 +181,7 @@
             </ul>
             <div class="d-flex">
               <section class="f-50">
-                <h5 class="footer_heading">Follow us</h5>
+                <h3 class="footer_heading text-uppercase">Follow us</h3>
                 <ul class="footer-links list-inline social-link">
                   @if ($frontsetting->facebook)
                     <li><a href="{{ $frontsetting->facebook }}"> <i class="fa fa-facebook"></i></a></li>

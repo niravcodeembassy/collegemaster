@@ -4,7 +4,7 @@
   {{ $blog->title }}
 @endsection
 
-@section('title', $blog->meta_title)
+@section('meta_title', $blog->meta_title)
 @section('keywords', $blog->meta_keywords)
 @section('published_time', $blog->published_at)
 @section('description', $blog->meta_description)
@@ -22,6 +22,52 @@
 @section('twiter-description', $blog->meta_description)
 @section('twiter-image', $blog->image_src)
 
+@push('style')
+  <style>
+    .ck_editor_data h1 {
+      font-size: 24px;
+    }
+
+    .ck_editor_data h2,
+    h3 {
+      font-size: 22px;
+    }
+
+    .ck_editor_data p {
+      max-width: 100%;
+      font-size: 15px;
+    }
+
+
+    .ck_editor_data blockquote p {
+      max-width: 95%;
+    }
+
+    .ck_editor_data blockquote {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  </style>
+@endpush
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$schema_organization, $schema_local];
+@endphp
+
+@section('schema')
+
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+@endsection
 
 @section('content')
   <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-100">
@@ -89,9 +135,9 @@
                     <p class="mb-30">
                       {{ $blog->content ?? '' }}
                     </p>
-                    <p class="mb-30">
+                    <div class="mb-30" class="ck_editor_data">
                       {!! $blog->description ?? '' !!}
-                    </p>
+                    </div>
                   </div>
 
                   <!--=======  End of single blog post section align-items-center  =======-->

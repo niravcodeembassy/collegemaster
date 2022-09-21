@@ -11,6 +11,8 @@
   @endif
 @endsection
 
+
+
 @push('style')
   <style>
     a.active {
@@ -41,6 +43,26 @@
 @section('title')
   {{ $title }}
 @endsection
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$schema_organization, $schema_local];
+@endphp
+
+@section('schema')
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+@endsection
+
+
 @section('content')
   <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-100">
     <div class="container">

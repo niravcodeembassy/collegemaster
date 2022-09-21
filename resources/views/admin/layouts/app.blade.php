@@ -53,6 +53,19 @@
       top: 0;
       bottom: 0;
     }
+
+    .ck-content p {
+      font-size: 15px;
+    }
+
+    .ck-content h1 {
+      font-size: 24px;
+    }
+
+    .ck-content h2,
+    h3 {
+      font-size: 22px;
+    }
   </style>
   @livewireStyles
 </head>

@@ -1,4 +1,23 @@
 @extends('frontend.layouts.app')
+
+@php
+$schema_organization = Schema::organizationSchema();
+$schema_local = Schema::localSchema();
+
+$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$schema = [$schema_organization, $schema_local];
+@endphp
+
+@section('schema')
+  @foreach ($schema as $key => $list)
+    <x-schema>
+      {!! $list !!}
+    </x-schema>
+  @endforeach
+@endsection
+
 @push('style')
   <style>
     .owl-nav button {
@@ -99,7 +118,7 @@
         </div>
 
         <div class="col-lg-12 my-2">
-          <h3 class="text-center my-5"><a href="{{ $story->instagram_handle_url ?? '' }}">{{ $story->instagram_handle ?? '' }}</a></h3>
+          <h2 class="text-center my-5"><a href="{{ $story->instagram_handle_url ?? '' }}">{{ $story->instagram_handle ?? '' }}</a></h2>
           <div class="slider-area">
             <div class="fadeOut owl-carousel owl-theme">
               @foreach ($story->image as $item)

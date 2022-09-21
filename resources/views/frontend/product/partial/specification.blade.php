@@ -18,7 +18,7 @@
                         <span class="mb-0 faq_question"> {{ $child->question ?? '' }}</span>
                       </div>
                       <div id="collapseOne{{ $child->id }}" class="collapse false" aria-labelledby="headingOne" data-parent="#shippingInfo{{ $key }}" style="">
-                        <div class="card-body" style="padding: 0.25rem 1.25rem!important;">
+                        <div class="card-body ck_editor_data" style="padding: 0.25rem 1.25rem!important;">
                           {!! $child->answer !!}
                         </div>
                       </div>
