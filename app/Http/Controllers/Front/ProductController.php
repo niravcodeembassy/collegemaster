@@ -38,7 +38,7 @@ class ProductController extends Controller
     //   }
     // }
 
-    $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description')->firstOrFail();
+    $category = Category::with('subCategory')->where('slug', $slug)->select('id', 'image', 'slug', 'name', 'description', 'meta_title', 'meta_description', 'meta_keywords')->firstOrFail();
 
     $category_rating = Category::groupBy('categories.id')
       ->select('categories.id', 'categories.slug', 'product_reviews.rating as rating')
@@ -62,7 +62,7 @@ class ProductController extends Controller
     $product =  $this->getProductQuery($request, $slug, $category);
     if ($product->count() > 0) {
       $first_product = $product->first();
-      $variant = Productvariant::where('product_id', $first_product->id)->where('type', 'variant')->first();
+      $variant = $first_product->productvariant;
       $this->data['first_product'] = $first_product;
       $this->data['productVarinat'] = $variant;
       $this->data['category_rating'] = isset($category_rating) ? $category_rating : null;
@@ -140,7 +140,7 @@ class ProductController extends Controller
   public function subcategoryProductList(Request $request, $cat_slug, $slug)
   {
 
-    $subCategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'image', 'description', 'category_id')->firstOrFail();
+    $subCategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'image', 'description', 'meta_title', 'meta_description', 'meta_keywords', 'category_id')->firstOrFail();
 
     $subcategory_rating = SubCategory::groupBy('sub_categories.id')
       ->select('sub_categories.id', 'sub_categories.slug', 'product_reviews.rating as rating')
@@ -176,7 +176,7 @@ class ProductController extends Controller
 
     if ($product->count() > 0) {
       $first_product = $product->first();
-      $variant = Productvariant::where('product_id', $first_product->id)->where('type', 'variant')->first();
+      $variant = $first_product->productvariant;
       $this->data['first_product'] = $first_product;
       $this->data['productVarinat'] = $variant;
       $this->data['subcategory_rating'] = isset($subcategory_rating) ? $subcategory_rating : null;

@@ -34,6 +34,7 @@ footer{display:inline-block;width:100%}.newsletter{background:#252525;padding:40
 }
 ul.footer-links li h4{
   line-height: 16px !important;
+  padding-top: 0px !important;
 }
 h3.footer_heading{
   font-size: 16px !important;
