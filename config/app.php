@@ -130,7 +130,8 @@ return [
   'twilio' => [
     'twilio_auth_sid' => env('TWILIO_AUTH_SID'),
     'twilio_auth_token'  => env('TWILIO_AUTH_TOKEN'),
-    'twilio_whatsapp_form'  =>  env('TWILIO_WHATSAPP_FROM')
+    'twilio_whatsapp_form'  =>  env('TWILIO_WHATSAPP_FROM'),
+    'twilio_sms_form'  =>  env('TWILIO_SMS_FROM')
   ],
 
   'stripe' => [

@@ -92,7 +92,7 @@ $schema = [$schema_organization, $schema_local];
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="breadcrumb-title">About Us</h1>
+          <h2 class="breadcrumb-title">About Us</h2>
 
           <!--=======  breadcrumb list  =======-->
 

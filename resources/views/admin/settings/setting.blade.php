@@ -444,6 +444,10 @@
                   <input class="form-control" type="text" name="twilio_auth_token" value="{{ $setting->response->twilio_auth_token ?? '' }}">
                 </div>
                 <div class="form-group">
+                  <label for="offertext">Twilio SMS Number <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="twilio_sms_form" value="{{ $setting->response->twilio_sms_form ?? '' }}">
+                </div>
+                <div class="form-group">
                   <label for="offertext">Twilio Whastapp Number <span class="text-danger">*</span></label>
                   <input class="form-control" type="text" name="twilio_whatsapp_form" value="{{ $setting->response->twilio_whatsapp_form ?? '' }}">
                 </div>

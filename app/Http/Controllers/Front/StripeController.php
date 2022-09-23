@@ -30,13 +30,13 @@ class StripeController extends Controller
     Stripe::setApiKey(config('app.stripe.stripe_secret'));
     header('Content-Type: application/json');
 
-    $locale = request()->segment(1);
-    $languages = config('app.locales');
-    if (in_array($locale, $languages)) {
-      $url = url($locale);
-    }else{
-      $url =  url('/');
-    }
+    // $locale = request()->segment(1);
+    // $languages = config('app.locales');
+    // if (in_array($locale, $languages)) {
+    //   $url = url($locale);
+    // }else{
+    //   $url =  url('/');
+    // }
 
 
     $order_item = session('order_cart');
@@ -57,8 +57,8 @@ class StripeController extends Controller
         'quantity' => 1,
       ]],
       'mode' => 'payment',
-      'success_url' => $url . '/payment/stripe/success/' . $order_id->id,
-      'cancel_url' => $url . '/transaction-fail',
+      'success_url' => env('APP_URL') . '/payment/stripe/success/' . $order_id->id,
+      'cancel_url' => env('APP_URL') . '/transaction-fail',
     ]);
 
 

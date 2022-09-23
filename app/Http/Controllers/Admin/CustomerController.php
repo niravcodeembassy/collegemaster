@@ -25,7 +25,7 @@ class CustomerController extends Controller
     // Listing colomns to show
     $columns = array('name', 'email', 'phone', 'created_at', 'created_at', 'orders_count', 'action');
 
-    $totalData = User::count(); // datata table count
+    $totalData = User::where('is_admin', 0)->count(); // datata table count
 
     $limit = $request->input('length');
     $start = $request->input('start');
@@ -37,7 +37,7 @@ class CustomerController extends Controller
 
     // DB::enableQueryLog();
     // genrate a query
-    $customcollections = User::withCount('orders')->when($search, function ($query, $search) {
+    $customcollections = User::where('is_admin', 0)->withCount('orders')->when($search, function ($query, $search) {
       return $query->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%")->orWhere('phone', 'LIKE', "%{$search}%");
     });
 
@@ -55,7 +55,7 @@ class CustomerController extends Controller
       $row['email']  = $item->email;
       $row['phone']  = $item->phone;
       $row['created_at']  = date("d-m-Y", strtotime($item->created_at));
-      $row['time']  =date("H:i:s", strtotime($item->created_at));
+      $row['time']  = date("H:i:s", strtotime($item->created_at));
       $row['order_status'] =  '<i class="fa fa-truck f-18 px-2"></i>' . $item->orders_count;
       $row['status'] = $this->status($item->is_active, $item->id, route('admin.customer.status'));
       $row['action'] = $this->action([

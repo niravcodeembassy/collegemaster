@@ -51,7 +51,23 @@
                           | Date : <span class="sl-date text-behance">{{ $item->created_at->format('m-d-Y H:i:s') ?? '---' }} </span>
                           @isset($item->order_status)
                             <small class="text-muted d-block f-12 pt-2">Order Status</small>
-                            <h6 class="mb-0">{{ ucfirst(str_replace('_', ' ', $item->order_status)) }}</h6>
+                            @php
+                              $status = null;
+                              if ($item->order_status == 'order_placed') {
+                                  $status = 'New';
+                              } elseif ($item->order_status == 'delivered') {
+                                  $status = 'Completed';
+                              } elseif ($item->order_status == 'customer_approval') {
+                                  $status = 'Approval';
+                              } elseif ($item->order_status == 'work_in_progress') {
+                                  $status = 'Designing';
+                              } elseif ($item->order_status == 'dispatched') {
+                                  $status = 'Shipped';
+                              } else {
+                                  $status = $item->order_status;
+                              }
+                            @endphp
+                            <h6 class="mb-0">{{ ucwords(str_replace('_', ' ', $status)) }}</h6>
                           @endisset
                           @isset($item->payment_type)
                             <small class="text-muted d-block pt-2 f-12">Payment Mode</small>

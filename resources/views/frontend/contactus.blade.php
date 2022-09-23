@@ -19,11 +19,11 @@ $schema = [$schema_organization, $schema_local];
 @endsection
 
 @section('content')
-  <div class=" breadcrumb-area   pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
+  <div class="breadcrumb-area pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="breadcrumb-title">Contact Us</h1>
+          <h2 class="breadcrumb-title">Contact Us</h2>
 
           <!--=======  breadcrumb list  =======-->
 

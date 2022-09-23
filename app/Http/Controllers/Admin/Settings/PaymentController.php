@@ -65,20 +65,14 @@ class PaymentController extends Controller
         'razorpay_secrete' => $request->razorpay_secrete,
         'razorpay_enable' => $request->razorpay_enable ? 'Yes' : 'No',
 
-        'twilio' => $request->twilio ? 'Yes' : 'No',
-        'twilio_auth_sid' => $request->twilio_auth_sid,
-        'twilio_auth_token' => $request->twilio_auth_token,
-        'twilio_whatsapp_form' => $request->twilio_whatsapp_form,
-        'twilio_enable' => $request->twilio_enable ? 'Yes' : 'No',
-
       ]
     );
 
-    $env_update = $this->changeEnv([
-      'STRIPE_KEY' => $request->stripe_key,
-      'STRIPE_SECRET' => $request->stripe_secrete,
-      'STRIPE_ENABLE' => $request->cash ? 'Yes' : 'No'
-    ]);
+    // $env_update = $this->changeEnv([
+    //   'STRIPE_KEY' => $request->stripe_key,
+    //   'STRIPE_SECRET' => $request->stripe_secrete,
+    //   'STRIPE_ENABLE' => $request->cash ? 'Yes' : 'No'
+    // ]);
 
 
     return redirect()->back()->with('success', 'Payment setting updated successfully');

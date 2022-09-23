@@ -108,32 +108,6 @@
         </a>
       </li>
 
-      {{-- <li class="nav-item has-treeview">
-        <a href="javascript:void(0)" class="nav-link  {{ Helper::isActive(['blog.*', 'tag.*']) }}">
-          <i class="nav-icon fa fa-user f-18  px-1"></i>
-          <p>Blog Module <i class="right fa fa-angle-left"></i></p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('admin.blog.index') }}" class="nav-link  {{ Helper::isActive(['blog.*']) }}">
-              <i class="px-1  nav-icon f-18 fas fa-blog d-inline-block"></i>
-              <p class="align-middle">
-                Blog
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('admin.tag.index') }}" class="nav-link  {{ Helper::isActive(['tag.*']) }}">
-              <i class="px-1  nav-icon f-18 fas fa-tag d-inline-block"></i>
-              <p class="align-middle">
-                Tag
-              </p>
-            </a>
-          </li>
-        </ul>
-      </li> --}}
 
       <li class="nav-item">
         <a href="{{ route('admin.testimonial.index') }}" class="nav-link  {{ Helper::isActive(['testimonial.*']) }}">
@@ -159,14 +133,14 @@
           </p>
         </a>
       </li>
-      {{-- <li class="nav-item">
+      <li class="nav-item">
         <a href="{{ route('admin.chat.order') }}" class="nav-link  {{ Helper::isActive(['admin.chat.order']) }}">
           <i class="px-1 nav-icon f-18  fas fa-comment-dots d-inline-block"></i>
           <p class="align-middle">
             Order Chat @livewire('chat-counter')
           </p>
         </a>
-      </li> --}}
+      </li>
 
       <li class="nav-item">
         <a href="{{ route('admin.discount.index') }}" class="nav-link  {{ Helper::isActive(['discount.*']) }}">

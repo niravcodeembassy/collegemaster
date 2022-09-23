@@ -46,25 +46,6 @@ $schema = [$schema_organization, $schema_local];
 
 
 @section('content')
-  <div class="breadcrumb-area d-none pt-20 pb-20 mb-30" style="background-color: #f5f5f5;">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="breadcrumb-title">{{ $title ?? '' }}</h1>
-
-          <!--=======  breadcrumb list  =======-->
-
-          <ul class="breadcrumb-list">
-            <li class="breadcrumb-list__item"><a href="{{ url('/') }}">HOME</a></li>
-            <li class="breadcrumb-list__item breadcrumb-list__item--active">{{ $title ?? '' }}</li>
-          </ul>
-
-          <!--=======  End of breadcrumb list  =======-->
-
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="section-title-container mb-40">
     <div class="container">
       <div class="row">
@@ -98,7 +79,7 @@ $schema = [$schema_organization, $schema_local];
                 <img src="{{ asset('front/assets/images/icons/icon-play-100x100.png') }}" class="img-fluid" alt="">
               </a>
             </div>
-            <h1>OUR STORY</h1>
+            <h2>OUR STORY</h2>
 
             <!--=======  floating-text right  =======-->
 

@@ -38,7 +38,8 @@ class ApiConfigServiceProvider extends ServiceProvider
         $twilio = array(
           'twilio_auth_sid' => $setting->twilio_auth_sid,
           'twilio_auth_token'  => $setting->twilio_auth_token,
-          'twilio_whatsapp_form'  => $setting->twilio_whatsapp_form
+          'twilio_whatsapp_form'  => $setting->twilio_whatsapp_form,
+          'twilio_sms_form' => $setting->twilio_sms_form
         );
         \Config::set('app.twilio', $twilio);
       }
