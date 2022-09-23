@@ -47,24 +47,24 @@
   @endif
 
   @php
-  $locale = request()->segment(1);
-  $languages = config('app.locales');
-  if(in_array($locale, $languages)){
-    $current = Str::after(url()->current(),env('APP_URL').'/'.$locale);
-  }else{
-    $current = Str::after(url()->current(),env('APP_URL'));
-  }
-  if($locale == null){
-    $link = env('APP_URL');
-  }else{
-    $link = env('APP_URL').$current;
-  }
+  // $locale = request()->segment(1);
+  // $languages = config('app.locales');
+  // if(in_array($locale, $languages)){
+  //   $current = Str::after(url()->current(),env('APP_URL').'/'.$locale);
+  // }else{
+  //   $current = Str::after(url()->current(),env('APP_URL'));
+  // }
+  // if($locale == null){
+  //   $link = env('APP_URL');
+  // }else{
+  //   $link = env('APP_URL').$current;
+  // }
   @endphp
 
 
-  <link rel="alternate" hreflang="en-us" href="{{ $link }}" />
-  <link rel="alternate" hreflang="x-default" href="{{ $link }}">
-  <link rel="alternate" hreflang="en" href="{{ $link }}"/>
+  <link rel="alternate" hreflang="en-us" href="{{ url()->current() }}" />
+  <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}">
+  <link rel="alternate" hreflang="en" href="{{ url()->current() }}"/>
 
 
   @yield('pagination')
