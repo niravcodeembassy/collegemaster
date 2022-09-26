@@ -12,7 +12,7 @@
           <div class="card auth_card card-plain">
             <div class="card-header pb-0 text-left">
               <h4 class="font-weight-bolder">Sign In</h4>
-              <p class="mb-0 h6">Enter your email and password to sign in</p>
+              <p class="font-para mb-0 h6">Enter your email and password to sign in</p>
             </div>
             <div class="card-body">
               <form class="auth_form" method="POST" action="{{ route('login') }}" autocomplete="off">
@@ -37,24 +37,30 @@
                 </div>
 
                 <div class="d-md-flex justify-content-md-between">
-                  <div class="form-check form-switch">
+                  {{-- <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="remember" id="rememberMe" {{ old('remember') ? 'checked' : '' }}>
                     <label class="form-check-label  remember-text" for="remember">
                       {{ __('Remember Me') }}
                     </label>
+                  </div> --}}
+                  <div>
+                    <label class="switch">
+                      <input type="checkbox" name="remember" id="rememberMe" {{ old('remember') ? 'checked' : '' }}>
+                      <span class="slider round"></span>
+                    </label>
+                    <label class="form-check-label"> {{ __('Remember Me') }}</span>
                   </div>
 
+
                   @if (Route::has('password.request'))
-                    <a class="text-muted" href="{{ route('password.request') }}">
+                    <a class="text-muted forgot_pwd" href="{{ route('password.request') }}">
                       {{ __('Forgot Your Password?') }}
                     </a>
                   @endif
-
                 </div>
 
-
                 <div class="text-center">
-                  <button type="submit" class="btn text-white  btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
+                  <button type="submit" class="auth_btn btn text-uppercase text-white bg-gradient-primary  w-100 mt-4 mb-0">
                     Sign in
                   </button>
                 </div>
@@ -75,9 +81,6 @@
               <img class="max-width-500 w-100 position-relative z-index-2" src="{{ asset('front/assets/images/chat.png') }}" alt="image">
             </div>
             <div class="mx-auto text_content">
-              {{-- <h4 class="text-white font-weight-bolder">"Create An Account"</h4>
-              <p class="text-white px-5">Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order
-                from our shop. To start shopping click register.</p> --}}
               <h4 class="text-white font-weight-bolder">"Attention is the new currency"</h4>
               <p class="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
             </div>

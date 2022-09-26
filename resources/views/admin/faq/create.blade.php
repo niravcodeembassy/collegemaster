@@ -17,6 +17,14 @@
               <label class="form-label fw-bolder">Title <span class="text-danger">*</span></label>
               <input type="text" name="title" required id="title" class="form-control form-control-solid title">
             </div>
+            <div class="form-group m-form__group">
+              <label for="type" class="form-control-label">Type <span class="text-danger">*</span></label>
+              <select name="type" data-rule-required="true" id="type" data-placeholder="Select Type" class="form-control">
+                <option selected value="">Select Type</option>
+                <option value="page">Page</option>
+                <option value="product">Product</option>
+              </select>
+            </div>
             <div class="repeater">
               <div data-repeater-list="response">
                 <div data-repeater-item>
@@ -71,7 +79,7 @@
       .catch(error => {
         console.error(error);
       });
-      
+
     $('.repeater').repeater({
       show: function() {
         $(this).slideDown(function() {
@@ -84,6 +92,13 @@
       },
       ready: function(setIndexes) {}
     });
+
+    let $type = $('#type');
+
+    $type.select2({
+      theme: 'bootstrap4',
+      allowClear: true,
+    })
 
 
     jQuery(document).ready(function($) {

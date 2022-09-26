@@ -6,7 +6,6 @@
 @endpush
 
 
-
 @section('content')
   <div class="auth-header min-vh-100">
     <div class="container">
@@ -15,69 +14,82 @@
           <div class="card auth_card card-plain">
             <div class="card-header pb-0 text-left">
               <h4 class="font-weight-bolder">Sign Up</h4>
-              <p class="mb-0 h6">Enter your email and password to register</p>
+              <p class="font-para mb-0 h6">Enter your email and password to register</p>
             </div>
             <div class="card-body pb-3">
               <form class="auth_form" method="POST" action="{{ route('register') }}">
                 @csrf
-                <label for="first_name">{{ __('First name') }}</label>
-                <div class="mb-3">
-                  <input id="first_name" type="text" placeholder="First Name" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name"
-                    autofocus>
-                  @error('first_name')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
-                <label for="last_name">{{ __('Last name') }}</label>
-                <div class="mb-3">
-                  <input id="last_name" type="text" placeholder="Last Name" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
-                  @error('last_name')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
-                <label for="email">{{ __('E-Mail') }}</label>
-                <div class="mb-3">
-                  <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
-                  @error('email')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
-                <label for="mobile">{{ __('Mobile number') }}</label>
-                <div class="intel_input">
-                  <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
-                    style="background: none;">
-                  <label id="mobile-error" class="error text-danger" for="phone"></label>
-                  @error('mobile')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
-                <div style="margin-top: -5px;">
-                  <label for="password">{{ __('Password') }}</label>
-                  <div class="mb-3">
-                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
-                    @error('password')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="first_name">{{ __('First name') }}</label>
+                    <div class="mb-3">
+                      <input id="first_name" type="text" placeholder="First Name" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name"
+                        autofocus>
+                      @error('first_name')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
                   </div>
-                </div>
-                <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                <div class="mb-3">
-                  <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+                  <div class="col-md-6">
+                    <label for="last_name">{{ __('Last name') }}</label>
+                    <div class="mb-3">
+                      <input id="last_name" type="text" placeholder="Last Name" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name"
+                        autofocus>
+                      @error('last_name')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="email">{{ __('E-Mail') }}</label>
+                    <div class="mb-3">
+                      <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
+                      @error('email')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12 w-100">
+                    <label for="mobile">{{ __('Mobile number') }}</label>
+                    <div class="intel_input">
+                      <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
+                        style="background: none;">
+                      <label id="mobile-error" class="error text-danger" for="phone"></label>
+                      @error('mobile')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="margin-top:-5px">
+                    <label for="password">{{ __('Password') }}</label>
+                    <div class="mb-3">
+                      <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
+                      @error('password')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                    <div class="mb-3">
+                      <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+                    </div>
+                  </div>
                 </div>
                 {!! app('captcha')->display() !!}
                 <label class="captcha text-danger" style="display:none">This field is required.</label>
                 <div class="text-center">
-                  <button type="submit" class="btn text-white btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign up</button>
+                  <button type="submit" class="auth_btn text-uppercase btn text-white bg-gradient-primary w-100 mt-4 mb-0">Sign up</button>
                 </div>
               </form>
             </div>

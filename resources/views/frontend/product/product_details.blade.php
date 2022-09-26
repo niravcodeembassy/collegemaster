@@ -110,13 +110,15 @@
       float: right;
     }
 
+    .accordion .card-header:not(.collapsed)::after {
+      content: "\f078";
+    }
+
     .accordion .card-body {
       padding: 0.5rem !important;
     }
 
-    .accordion .card-header:not(.collapsed)::after {
-      content: "\f078";
-    }
+
 
     span.faq-title {
       font-size: 20px !important;
@@ -484,10 +486,12 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       }
                       $images = $product->images;
                       $all_img = $images->pluck('variant_image');
+                      $image_name = $images->pluck('image_alt');
+                      $images_list = [$all_img, $image_name];
                     @endphp
                     <span class="enlarge-icon">
-                      <a class="btn-zoom-popup p-1" href="#" data-images="{{ $all_img }}" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
-                        data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
+                      <a class="btn-zoom-popup p-1" href="#" data-alt_text="{{ $image_name }}" data-images="{{ $all_img }}" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true"
+                        data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
                     </span>
                   </div>
 

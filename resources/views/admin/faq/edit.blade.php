@@ -19,6 +19,15 @@
               <label class="form-label fs-6 fw-bolder">Title <span class="text-danger">*</span></label>
               <input type="text" name="title" required id="title" value="{{ $faq->title }}" class="form-control form-control-solid ">
             </div>
+            <div class="form-group m-form__group">
+
+              <label for="type" class="form-control-label">Type <span class="text-danger">*</span></label>
+              <select name="type" data-rule-required="true" id="type" data-placeholder="Select Type" class="form-control">
+                <option selected value="">Select Type</option>
+                <option value="page" {{ $faq->type == 'page' ? 'selected' : '' }}>Page</option>
+                <option value="product" {{ $faq->type == 'product' ? 'selected' : '' }}>Product</option>
+              </select>
+            </div>
             <input type="hidden" name="question_id" value="{{ $faq->id }}">
 
             <div class="repeater ">
@@ -104,6 +113,7 @@
     })
 
 
+
     $('.repeater').repeater({
       show: function() {
         $(this).slideDown(function() {
@@ -116,10 +126,14 @@
       },
     });
 
+    let $type = $('#type');
+
+    $type.select2({
+      theme: 'bootstrap4',
+      allowClear: true,
+    })
+
     jQuery(document).ready(function($) {
-
-
-
 
       $('#addmore').on('submit', function(event) {
         $('.question').each(function() {

@@ -32,7 +32,7 @@
                                             <input id="percentage" class="form-control" value="{{ $hscode->percentage ??  '' }}"
                                                     data-rule-number="true"
                                                    type="text" name="percentage"
-                                                   min="1" max="100"
+                                                   min="0" max="100"
                                                 data-rule-required="true">
                                         </div>
                                     </div>

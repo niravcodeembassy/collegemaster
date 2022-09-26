@@ -123,6 +123,9 @@
                 <li>
                   <h4><a href="{{ route('page.term') }}">Terms & Conditions</a></h4>
                 </li>
+                <li>
+                  <h4><a href="{{ route('page.faq') }}">FAQ</a></h4>
+                </li>
               </ul>
             </nav>
           </div>

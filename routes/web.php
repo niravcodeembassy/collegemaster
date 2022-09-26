@@ -52,7 +52,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('how-many-photo-send', 'ContactUsController@photoSend')->name('page.photo.send');
   Route::get('how-to-save-change', 'ContactUsController@saveChange')->name('page.save.change');
   Route::get('estimate-delivery-time', 'ContactUsController@deliveryTime')->name('page.delivery.time');
-  // Route::get('page/faq', 'ContactUsController@faq')->name('page.faq');
+  Route::get('frequent-ask-question', 'ContactUsController@faq')->name('page.faq');
 
   Route::post('contact-us', 'ContactUsController@store')->name('contact-us.stroe');
 
@@ -65,6 +65,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::post('product/varient/', 'ProductController@varient')->name('product.varients');
 
   Route::post('cart/add', 'CartController@add')->name('cart.add');
+  Route::post('cart/gift', 'CartController@gift')->name('cart.gift');
   Route::post('cart/remove', 'CartController@remove')->name('cart.remove');
   Route::get('cart/update', 'CartController@update')->name('cart.update');
 
