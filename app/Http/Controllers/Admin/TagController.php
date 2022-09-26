@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Tag;
 use App\Traits\DatatableTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -179,7 +180,7 @@ class TagController extends Controller
       $tag->delete();
       return response()->json([
         'success' => true,
-        'message' => 'Role deleted Success fully',
+        'message' => 'Tag deleted Success fully',
       ], 200);
     }
     return response()->json([

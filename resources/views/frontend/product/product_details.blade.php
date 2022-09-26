@@ -345,7 +345,7 @@ $schema_first = [
         'ratingValue' => $review_rating,
         'bestRating' => '5',
         'worstRating' => '1',
-        'ratingCount' => $product_review->count(),
+        'reviewCount' => $product_review->sum('rating'),
     ],
 ];
 
@@ -616,7 +616,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                                           $varint = json_decode($productvariant->variants);
                                           $array = get_object_vars($varint);
                                           $properties = array_keys($array);
-                                  
+
                                           if (in_array($option->name, $properties)) {
                                               if ($item->name == $array[$option->name]) {
                                                   array_push($price, $productvariant->offer_price);
@@ -728,7 +728,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       } else {
                           $str = $a . ' ' . $d . ' - ' . $b . ' ' . $e . '.';
                       }
-                      
+
                     @endphp
 
                     <div class="shop-product__buttons mb-40 d-flex">
@@ -855,8 +855,10 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       <a class="nav-item nav-link active text-uppercase" id="product-tab-1" data-toggle="tab" href="#product-series-1" role="tab" aria-selected="true">Description</a>
                       <a class="nav-item nav-link text-uppercase" id="product-tab-2" data-toggle="tab" href="#product-series-2" role="tab" aria-selected="false">Specification
                       </a>
-                      <a class="nav-item nav-link text-uppercase" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false"><h3>Reviews
-                        ({{ $product_review->count() }})</h3></a>
+                      <a class="nav-item nav-link text-uppercase" id="product-tab-3" data-toggle="tab" href="#product-series-3" role="tab" aria-selected="false">
+                        <h3>Reviews
+                          ({{ $product_review->count() }})</h3>
+                      </a>
                     </div>
                   </div>
 

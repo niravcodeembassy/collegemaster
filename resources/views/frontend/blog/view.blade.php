@@ -113,8 +113,8 @@ $schema = [$schema_organization, $schema_local];
                   <!--=======  post category  =======-->
 
 
-                  <h2 class="post-title"><a href="blog-single-post-left-sidebar.html">{{ ucwords($blog->title ?? '') }}</a>
-                  </h2>
+                  <h2 class="post-title">{{ ucwords($blog->title ?? '') }}</h2>
+
 
                   <!--=======  End of post category  =======-->
 
