@@ -265,8 +265,8 @@ class ProductController extends Controller
       });
     }
 
-    $review = ProductReview::where('product_id', $product->id)->with('user')->paginate(2);
-    $product_review = $product->product_review;
+    $review = ProductReview::where('product_id', $product->id)->whereNull('is_active')->with('user')->paginate(2);
+    $product_review = $product->product_review->whereNull('is_active');
     $review_rating = intval($product_review->pluck('rating')->avg());
     $this->data['product_review'] = $product_review;
     $this->data['review_rating'] = $review_rating;

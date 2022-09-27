@@ -484,14 +484,16 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                           });
                           $images->splice(0, 0, [$findImage]);
                       }
-                      $images = $product->images;
-                      $all_img = $images->pluck('variant_image');
-                      $image_name = $images->pluck('image_alt');
-                      $images_list = [$all_img, $image_name];
+                      $images_list = $product->images->map(function ($item) {
+                          return [
+                              'alt' => $item->image_alt,
+                              'src' => $item->variant_image,
+                          ];
+                      });
                     @endphp
                     <span class="enlarge-icon">
-                      <a class="btn-zoom-popup p-1" href="#" data-alt_text="{{ $image_name }}" data-images="{{ $all_img }}" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true"
-                        data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
+                      <a class="btn-zoom-popup p-1" href="#" data-images="{{ $images_list }}" data-tippy="Click to enlarge" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
+                        data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="ion-android-expand"></i></a>
                     </span>
                   </div>
 
@@ -589,7 +591,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       @endif
                       <p class="content_h1"><span class="content_h2">HOORAY!</span> This item delivers for free.</p>
                     </div>
-                    <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid">
+                    <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid" alt="item in stock">
                   </div>
 
 
@@ -740,7 +742,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       <div class="d-flex tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
                         data-tippy-arrow="true">
                         <a href="javascript:void(0)" class="ml-2 mr-3">
-                          <img src="{{ asset('front/assets/images/truck.png') }}" class="delivery_truck img-fluid">
+                          <img src="{{ asset('front/assets/images/truck.png') }}" alt="delivery information" class="delivery_truck img-fluid">
                         </a>
                         <a href="javascript:void(0)" class="delivery_truck_link mt-lg-0 mt-col-3">
                           <b class="mt-lg-0">Arrives By

@@ -58,7 +58,7 @@ $schema_site_link = [
         '@type' => 'SearchAction',
         'target' => route('category.product', 'all') . '?term={search_term_string}',
         'query-input' => 'required name=search_term_string',
-    ]
+    ],
 ];
 
 $schema_organization = Schema::organizationSchema();
@@ -86,8 +86,8 @@ $schema = [$schema_site, $schema_organization, $schema_local];
 
 
   <!--=============================================
-                                                                                                                                                                                                                                                         =            slider area         =
-                                                                                                                                                                                                                                                         =============================================-->
+                                                                                                                                                                                                                                                                 =            slider area         =
+                                                                                                                                                                                                                                                                 =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -95,7 +95,7 @@ $schema = [$schema_site, $schema_organization, $schema_local];
       <div class="fadeOut owl-carousel owl-theme">
         @foreach ($banner as $item)
           <div class="item">
-            <img src="{{ asset('storage/' . $item->slider_img) }}">
+            <img src="{{ asset('storage/' . $item->slider_img) }}" alt="{{ $item->title ?? '' }}">
           </div>
         @endforeach
       </div>
@@ -232,25 +232,25 @@ $schema = [$schema_site, $schema_organization, $schema_local];
           ]'>
 
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" class="img-fluid">
+              <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" alt="ship" class="img-fluid">
               <h3>Ready to ship within 48 hours</h3>
               <p>All Our custom products are ready to ship within 48 hours.</p>
             </div>
 
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/print.png') }}" class="img-fluid">
+              <img src="{{ asset('front/assets/images/website_icon/print.png') }}" alt="print" class="img-fluid">
               <h3>Long-Lasting Prints</h3>
               <p>you are assured to maintain and preserve those special moments for a longer time</p>
             </div>
 
             <div class="trust_icon col-lg-10 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" class="img-fluid">
+              <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" alt="sold" class="img-fluid">
               <h3>Over 25000+ Prints sold</h3>
               <p>Since 2019, we've sold 25k custom photo gifts to worldwide.</p>
             </div>
 
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" class="img-fluid">
+              <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" alt="guarntee" class="img-fluid">
               <h3>100% Love-it Guarantee</h3>
               <p>Love it or send it back! We guarantee a full refund with no hassle.</p>
             </div>
@@ -304,7 +304,7 @@ $schema = [$schema_site, $schema_organization, $schema_local];
               <div class="single-category single-category--three">
                 <!--=======  single category image  =======-->
                 <div class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
-                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
+                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="{{ $item->caption1 ?? '' }}">
                 </div>
                 <!--=======  single category content  =======-->
                 <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">
@@ -593,8 +593,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                                                 =            instagram slider area         =
-                                                                                                                                                                                                                                                                 =============================================-->
+                                                                                                                                                                                                                                                                         =            instagram slider area         =
+                                                                                                                                                                                                                                                                         =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

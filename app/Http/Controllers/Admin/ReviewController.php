@@ -35,6 +35,8 @@ class ReviewController extends Controller
     $review = new ProductReview();
     $review->user_id = $request->user;
     $review->product_id = $request->product;
+    $review->name = $request->name;
+    $review->email = $request->email;
     $review->rating = $request->rating ?? 1;
     $review->message = $request->message;
     $review->created_at = $created_date;
@@ -50,7 +52,7 @@ class ReviewController extends Controller
     // Listing colomns to show
     $columns = array(
       'name',
-      'product',
+      'product_id',
       'email',
       'rating',
       'action',
@@ -69,8 +71,8 @@ class ReviewController extends Controller
 
     // DB::enableQueryLog();
     // genrate a query
-    $customcollections = ProductReview::when($search, function ($query, $search) {
-      return $query->whereLike(['user.name', 'user.email'], $search)->orWhere('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
+    $customcollections = ProductReview::with(['product', 'user'])->when($search, function ($query, $search) {
+      return $query->whereLike(['user.name', 'user.email', 'product.name'], $search)->orWhere('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
     });
 
     // dd($totalData);
@@ -83,7 +85,6 @@ class ReviewController extends Controller
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
 
-      // dd(route('admin.brand.edit', $item->id));
       $row['name']   =  $item->name == null ? $item->user->name : $item->name;
       $row['product']  = $item->product->name;
       $row['email']  = $item->email == null ? $item->user->email : $item->email;
@@ -105,7 +106,6 @@ class ReviewController extends Controller
           'icon' => 'fa fa-trash',
           'permission' => true
         ]),
-
       ]);
 
       $data[] = $row;
@@ -144,6 +144,8 @@ class ReviewController extends Controller
     $review = ProductReview::find($id);
     $review->user_id = $request->user;
     $review->product_id = $request->product;
+    $review->name = $request->name;
+    $review->email = $request->email;
     $review->rating = $request->rating;
     $review->message = $request->message;
     $review->created_at = $created_date;

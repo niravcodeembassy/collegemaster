@@ -100,13 +100,15 @@ $schema = [$schema_organization, $schema_local];
                       <textarea rows="3" placeholder="Message" class="form-control" name="message" id="message"></textarea>
                     </div>
                   </div>
+                  <div class="col-md-12 mt-2">
+                    {!! app('captcha')->display() !!}
+                    <span class="captcha text-danger" style="display:none">captcha is required.</span>
+                  </div>
                 </div>
-
                 <div class="row">
                   <div class="col-md-12 text-center">
                     <button type="submit" class="auth_btn btn text-uppercase text-white bg-gradient-primary  w-100 mt-4 mb-0">
-                      Send
-                      Message
+                      Send Message
                     </button>
                   </div>
                 </div>
@@ -117,12 +119,21 @@ $schema = [$schema_organization, $schema_local];
       </div>
     </div>
   </div>
+  {!! NoCaptcha::renderJs() !!}
 @endsection
 
 @push('script')
   <script>
     $(".alert").delay(4000).slideUp(200, function() {
       $(this).alert('close');
+    });
+    $('form').on('submit', function(e) {
+      if (grecaptcha.getResponse() == "") {
+        e.preventDefault();
+        $(".captcha").show();
+      } else {
+        $('form').submit();
+      }
     });
   </script>
 @endpush

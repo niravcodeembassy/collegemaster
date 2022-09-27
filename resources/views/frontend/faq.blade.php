@@ -33,9 +33,6 @@ $schema = [$schema_organization, $schema_local];
         <div class="card shadow-lg">
           <div class="card-header bg-gradient-primary p-5 position-relative">
             <h3 class="text-white mb-0">{{ $title ?? '' }}</h3>
-            @if ($faq->first()->updated_at)
-              <p class="text-white opacity-8 mb-4">{{ $faq->first()->updated_at->format('D M Y') }}</p>
-            @endif
             <div class="position-absolute w-100 z-index-1 bottom-0 ms-n5">
               <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto" style="height:7vh;min-height:50px;">
                 <defs>
@@ -76,6 +73,8 @@ $schema = [$schema_organization, $schema_local];
                   @endif
                 </div>
               @endforeach
+            @else
+              <h4 class="my-4 ps-3 text-center">FAQ NOT FOUND</h4>
             @endif
           </div>
         </div>

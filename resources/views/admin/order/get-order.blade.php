@@ -53,6 +53,7 @@
                 <option value="correction" {{ strtolower($order->order_status) == 'correction' ? 'selected' : '' }}>Correction</option>
                 <option value="printing" {{ strtolower($order->order_status) == 'printing' ? 'selected' : '' }}>Printing</option>
                 <option value="delivered" {{ strtolower($order->order_status) == 'delivered' ? 'selected' : '' }}>Completed</option>
+                <option value="refund" {{ strtolower($order->order_status) == 'refund' ? 'selected' : '' }}>Refund</option>
                 {{-- <option value="dispatched" {{ strtolower($order->order_status) == 'dispatched' ? 'selected' : '' }}>Shipped</option> --}}
                 <option value="cancelled" {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>Cancel</option>
               </select>
@@ -63,6 +64,7 @@
             $ordered_ = $order->delivery_status == 'ordered' ? '' : 'd-none';
             $shipped_ = $order->delivery_status == 'dispatched' ? '' : 'd-none';
             $delivered_ = $order->delivery_status == 'delivered' ? '' : 'd-none';
+            $refund_ = $order->delivery_status == 'refund' ? '' : 'd-none';
             $cancel_ = $order->delivery_status == 'cancelled' ? '' : 'd-none';
           @endphp
 
@@ -103,6 +105,8 @@
                             </div>
                         </div>
                     </div> --}}
+
+
 
           <div class="{{ $delivered_ }}" id="hdn_element_deleverd">
 
@@ -146,108 +150,122 @@
             </div>
           </div>
 
+          <div class="{{ $refund_ }}" style="margin-bottom: 10px;" id="show_transaction_comment">
+            <div class="contct-info">
+              <div class="form-group">
+                <label for="refund_transaction_id">Transaction Id</label>
+                <input type="text" id="refund_transaction_id" value="{{ $order->refund_transaction_id ?? '' }}" name="refund_transaction_id" style="width: 100%;" class="form-control-user form-control">
+              </div>
+            </div>
 
-        </div>
-        <input type="hidden" id="edit_id" value="{{-- $hsncode->id or '' --}}">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-default btn-link" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-sm btn-primary">Save</button>
+
+          </div>
+          <input type="hidden" id="edit_id" value="{{-- $hsncode->id or '' --}}">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default btn-link" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-sm btn-primary">Save</button>
+          </div>
         </div>
       </div>
+    </form>
   </div>
-  </form>
-</div>
 
 
 
-{{-- <script src="{{ asset('assets/plugins/select2/dist/js/select2.min.js') }}"></script> --}}
+  {{-- <script src="{{ asset('assets/plugins/select2/dist/js/select2.min.js') }}"></script> --}}
 
-{{-- <script src="{{ asset('backend/plugins/bootstrap-datetimepicker/js/moment.min.js') }}"></script> --}}
-
-
-
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    var status = $("#delivery_status").val();
-    var payment_status = $("#payment_status_id").val();
-
-    //alert(payment_status);
-    if (payment_status == "success") {
-      $("#hdn_element_payment_status").addClass('hidden');
-    } else {
-      $("#hdn_element_payment_status").removeClass('hidden');
-    }
+  {{-- <script src="{{ asset('backend/plugins/bootstrap-datetimepicker/js/moment.min.js') }}"></script> --}}
 
 
-    if (status == "dispatched") {
-      $("#hdn_element_shipped").removeClass('hidden');
-    } else {
-      $("#hdn_element_shipped").addClass('hidden');
-    }
 
-    if (status == "delivered") {
-      $("#hdn_element_deleverd").removeClass('hidden');
-    } else {
-      $("#hdn_element_deleverd").addClass('hidden');
-    }
+  <script type="text/javascript">
+    $(document).ready(function() {
 
-    $('#shipping_date,#deleverd_date').datetimepicker({
-      format: 'DD-MM-YYYY',
-      keepOpen: false,
-      showClear: true,
-      showClose: true,
-      icons: {
-        time: "fa fa-clock",
-        date: "fa fa-calendar",
-        up: "fa fa-arrow-up",
-        down: "fa fa-arrow-down"
+      var status = $("#delivery_status").val();
+      var payment_status = $("#payment_status_id").val();
+
+      //alert(payment_status);
+      if (payment_status == "success") {
+        $("#hdn_element_payment_status").addClass('hidden');
+      } else {
+        $("#hdn_element_payment_status").removeClass('hidden');
       }
-    });
 
-    $('#edit_tax_form').validate({
-      messages: {
-        percentage: {
-          remote: 'This type already exists.'
+
+      if (status == "dispatched") {
+        $("#hdn_element_shipped").removeClass('hidden');
+      } else {
+        $("#hdn_element_shipped").addClass('hidden');
+      }
+
+      if (status == "delivered") {
+        $("#hdn_element_deleverd").removeClass('hidden');
+      } else {
+        $("#hdn_element_deleverd").addClass('hidden');
+      }
+
+      $('#shipping_date,#deleverd_date').datetimepicker({
+        format: 'DD-MM-YYYY',
+        keepOpen: false,
+        showClear: true,
+        showClose: true,
+        icons: {
+          time: "fa fa-clock",
+          date: "fa fa-calendar",
+          up: "fa fa-arrow-up",
+          down: "fa fa-arrow-down"
         }
-      },
-      errorPlacement: function(error, element) {
-        error.appendTo(element.parent()).addClass('text-danger');
-      },
-      submitHandler: function(e) {
-        return true;
+      });
+
+      $('#edit_tax_form').validate({
+        messages: {
+          percentage: {
+            remote: 'This type already exists.'
+          }
+        },
+        errorPlacement: function(error, element) {
+          error.appendTo(element.parent()).addClass('text-danger');
+        },
+        submitHandler: function(e) {
+          return true;
+        }
+      });
+
+      $('#delivery_status').on('change', function() {
+        getdelivery_status();
+      });
+
+    });
+  </script>
+
+  <script>
+    function getdelivery_status() {
+
+      var status = $("#delivery_status").val();
+
+      if (status == "dispatched") {
+        $("#hdn_element_shipped").removeClass('d-none');
+      } else {
+        $("#hdn_element_shipped").addClass('d-none');
       }
-    });
 
-    $('#delivery_status').on('change', function() {
-      getdelivery_status();
-    });
+      if (status == "delivered") {
+        $("#hdn_element_deleverd").removeClass('d-none');
+      } else {
+        $("#hdn_element_deleverd").addClass('d-none');
+      }
 
-  });
-</script>
+      if (status == "cancelled") {
+        $("#show_cancel_comment").removeClass('d-none');
+      } else {
+        $("#show_cancel_comment").addClass('d-none');
+      }
 
-<script>
-  function getdelivery_status() {
+      if (status == "refund") {
+        $("#show_transaction_comment").removeClass('d-none');
+      } else {
+        $("#show_transaction_comment").addClass('d-none');
+      }
 
-    var status = $("#delivery_status").val();
-
-    if (status == "dispatched") {
-      $("#hdn_element_shipped").removeClass('d-none');
-    } else {
-      $("#hdn_element_shipped").addClass('d-none');
     }
-
-    if (status == "delivered") {
-      $("#hdn_element_deleverd").removeClass('d-none');
-    } else {
-      $("#hdn_element_deleverd").addClass('d-none');
-    }
-
-    if (status == "cancelled") {
-      $("#show_cancel_comment").removeClass('d-none');
-    } else {
-      $("#show_cancel_comment").addClass('d-none');
-    }
-
-  }
-</script>
+  </script>

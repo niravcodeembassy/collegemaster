@@ -184,6 +184,8 @@ class OrderController extends Controller
         $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-default bg-gray m-auto mb-1">Designing</span>';
       } else if ($item->order_status == 'dispatched') {
         $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Shipped</span>';
+      } else if ($item->order_status == 'refund') {
+        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-success m-auto mb-1">Refund</span>';
       }
 
       $statusPopup = '<a class="call-model call-modal"
@@ -417,6 +419,10 @@ class OrderController extends Controller
     }
 
     $order->payment_status = $request->payment_status;
+
+    if ($request->delivery_status == 'refund') {
+      $order->refund_transaction_id = $request->refund_transaction_id;
+    }
     $order->save();
     return redirect()->back()->with('success', "Order updated successfully.");
   }

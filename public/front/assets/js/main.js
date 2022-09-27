@@ -1252,9 +1252,9 @@
   /*----------  lightgallery and zoom activation  ----------*/
 
   //zoom
-  $(".shop-product__big-image-gallery-slider .single-image").zoom({
-    magnify: 0,
-  });
+  // $(".shop-product__big-image-gallery-slider .single-image").zoom({
+  //   magnify: 0,
+  // });
   $(".shop-product__big-image-gallery-sticky .single-image").zoom();
 
   //lightgallery
@@ -1269,13 +1269,8 @@
 
   $(".btn-zoom-popup").on("click", function () {
     var all_img = $(this).data("images");
-    var alt_text = $(this).data("alt_text");
-    var images = [];
-    for (var i = 0; i < all_img.length; i++) {
-      images[i] = { src: all_img[i] };
-    }
 
-    $(this).lightGallery({
+    $(".btn-zoom-popup").lightGallery({
       thumbnail: false,
       dynamic: true,
       autoplayControls: false,
@@ -1284,7 +1279,7 @@
       share: false,
       hash: false,
       index: 0,
-      dynamicEl: images,
+      dynamicEl: all_img,
     });
   });
 

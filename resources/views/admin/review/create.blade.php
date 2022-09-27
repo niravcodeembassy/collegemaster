@@ -17,16 +17,7 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>User <span class="text-danger">*</span></label>
-                  <div class="input-group input-group-button">
-                    <select class="form-control" name="user" id="user" data-url="{{ route('admin.get.customer') }}" data-rule-required="true" data-placeholder="Select User." data-msg-required="User is required.">
-                      <option value="" selected>Select User</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Product <span class="text-danger">*</span></label>
@@ -35,6 +26,31 @@
                       <option value="" selected>Select Product</option>
                     </select>
                   </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>User </label>
+                  <div class="input-group input-group-button">
+                    <select class="form-control" name="user" id="user" data-url="{{ route('admin.get.customer') }}" data-placeholder="Select User.">
+                      <option value="" selected>Select User</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" name="name" id="name" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>email</label>
+                  <input type="text" name="email" id="email" class="form-control">
                 </div>
               </div>
 
