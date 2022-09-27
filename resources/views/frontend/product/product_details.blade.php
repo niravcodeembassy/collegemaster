@@ -477,13 +477,14 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                     </span>
                     @php
                       $images = $product->images;
-                      if ($productVarinat->productimage_id !== null) {
-                          $findImage = $images->where('id', $productVarinat->productimage_id)->first();
-                          $images = $images->reject(function ($value, $key) use ($productVarinat) {
-                              return $productVarinat->productimage_id == $value->id;
-                          });
-                          $images->splice(0, 0, [$findImage]);
-                      }
+
+                      // if ($productVarinat->productimage_id !== null) {
+                      //     $findImage = $images->where('id', $productVarinat->productimage_id)->first();
+                      //     $images = $images->reject(function ($value, $key) use ($productVarinat) {
+                      //         return $productVarinat->productimage_id == $value->id;
+                      //     });
+                      //     $images->splice(0, 0, [$findImage]);
+                      // }
                       $images_list = $product->images->map(function ($item) {
                           return [
                               'alt' => $item->image_alt,
