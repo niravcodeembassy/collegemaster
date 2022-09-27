@@ -93,8 +93,6 @@ class Product extends Model
     return $this->belongsTo(HsCode::class, 'hs_id');
   }
 
-
-
   public function offerbanners()
   {
     return $this->hasMany(Offerbanner::class, 'product_id', 'id');

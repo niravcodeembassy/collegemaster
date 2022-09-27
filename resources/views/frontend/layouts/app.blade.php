@@ -145,9 +145,14 @@
   @section('content')
   @show
 
-  @if (!Route::is('login') && !Route::is('register')  && !Route::is('contact-us.index'))
-  @include('frontend.layouts.footer')
+  @php
+     $prvent_footer = ['login','register','contact-us.index','password.request'];
+  @endphp
+
+  @if (!in_array(request()->route()->getName(), $prvent_footer) && !str_contains(url()->current(),url('/password/reset/'))) {
+      @include('frontend.layouts.footer')
   @endif
+
 
   <!-- scroll to top  -->
   {{-- <a href="#" class="scroll-top"></a> --}}

@@ -47,30 +47,10 @@ if ($product->count() > 0) {
     $priceData = Helper::productPrice($productVarinat);
     $schema_first = [
         '@context' => 'https://schema.org/',
-        '@type' => 'Product',
-        'name' => $subCategory->meta_title,
-        'image' => $subCategory->image_src,
-        'description' => $subCategory->meta_description,
-        'brand' => [
-            '@type' => 'Brand',
-            'name' => env('APP_NAME'),
-        ],
-        'sku' => $first_product->sku,
-        'offers' => [
-            '@type' => 'Offer',
-            'url' => route('product.details', ['cat_slug' => $subCategory->category->slug, 'product_subcategory_slug' => $subCategory->slug, 'slug' => null]),
-            'priceCurrency' => 'USD',
-            'price' => str_replace("$", '', $priceData->price),
-            'availability' => 'https://schema.org/InStock',
-            'itemCondition' => 'https://schema.org/NewCondition',
-        ],
-        'aggregateRating' => [
-            '@type' => 'AggregateRating',
-            'ratingValue' => isset($subcategory_rating) ? intval($subcategory_rating->avg_rating) : 0,
-            'bestRating' => '5',
-            'worstRating' => '1',
-            'reviewCount' => isset($subcategory_rating) ? $subcategory_rating->total_rating : 0,
-        ],
+        'ratingValue' => isset($subcategory_rating) ? intval($subcategory_rating->avg_rating) : 0,
+        'bestRating' => '5',
+        'worstRating' => '1',
+        'reviewCount' => isset($subcategory_rating) ? $subcategory_rating->total_rating : 0,
     ];
 
     $schema_third = [
@@ -88,24 +68,6 @@ if ($product->count() > 0) {
                 'position' => 2,
                 'name' => 'Birtday Collage',
                 'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 3,
-                'name' => 'Home',
-                'item' => route('front.home'),
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 4,
-                'name' => 'Products',
-                'item' => route('category.product', 'all'),
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 5,
-                'name' => $first_product->name,
-                'item' => route('product.view', $first_product->slug),
             ],
         ],
     ];
@@ -196,8 +158,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                          =            shop page content         =
-                                                                                                                          =============================================-->
+                                                                                                                              =            shop page content         =
+                                                                                                                              =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">

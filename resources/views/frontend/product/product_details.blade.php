@@ -347,7 +347,7 @@ $schema_first = [
         'ratingValue' => $review_rating,
         'bestRating' => '5',
         'worstRating' => '1',
-        'reviewCount' => $product_review->sum('rating'),
+        'ratingCount' => $product_review->sum('rating'),
     ],
 ];
 

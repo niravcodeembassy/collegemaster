@@ -47,7 +47,7 @@ class ProductController extends Controller
           ->where('categories.slug', $slug);
       })->join('product_reviews', function ($join) use ($slug) {
         $join->on('products.id', '=', 'product_reviews.product_id');
-      })->selectRaw("avg(rating) as avg_rating,sum(rating) as total_rating")->first();
+      })->selectRaw("avg(rating) as avg_rating,count(rating) as total_rating")->first();
 
 
     $categoryList = Category::whereNull('is_active')
@@ -150,7 +150,7 @@ class ProductController extends Controller
           ->where('sub_categories.slug', $slug);
       })->join('product_reviews', function ($join) use ($slug) {
         $join->on('products.id', '=', 'product_reviews.product_id');
-      })->selectRaw("avg(rating) as avg_rating,sum(rating) as total_rating")->first();
+      })->selectRaw("avg(rating) as avg_rating, count(rating) as total_rating")->first();
 
     $category = Category::findOrFail($subCategory->category_id);
 
@@ -228,7 +228,7 @@ class ProductController extends Controller
     }, function ($q) use ($product) {
       return $q->where('product_id', $product->id)->where('type', 'variant')->first();
     });
-
+    
     if (Auth::check()) {
       $this->data['wishList'] = WishList::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();
       $this->data['cart_product'] = ShoppingCart::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();
@@ -238,18 +238,11 @@ class ProductController extends Controller
 
     $faq = FrequentAskQuestion::with('children')->where('type', 'product')->whereNull('parent_id')->get();
     $routeParameter = Helper::productRouteParameter($product);
-    $social_link =  Share::page(route('product.view', $product->slug))
-      ->facebook()
-      ->twitter()
-      ->linkedin()
-      ->whatsapp()
-      ->pinterest()
-      ->getRawLinks();
-
+    $social_link =  Share::page(route('product.view', $product->slug))->facebook()->twitter()->linkedin()->whatsapp()->pinterest()->getRawLinks();
 
     $product = Product::with([
       'productvariants',
-      'images:id,product_id,image_name,image_alt,image_url',
+      'images:id,product_id,image_name,image_alt,image_url,position',
       'category:id,name,slug',
       'subcategory:id,name,slug',
     ])->where('is_active', 'Yes')->findOrfail($variant->product_id);

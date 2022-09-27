@@ -184,6 +184,8 @@ class DbCart implements Cart
         'discount_amount' => 0,
         'hsn_cod' => $cart->product->hasncode->name,
         'notes' => $cart->notes,
+        'order_has_gift' => $cart->order_has_gift,
+        'gift_message' => $cart->gift_message,
       ];
     });
 

@@ -86,6 +86,9 @@
                   <h4><a href="{{ route('page.about') }}">About us</a></h4>
                 </li>
                 <li>
+                  <h4><a href="{{ route('page.faq') }}">FAQ</a></h4>
+                </li>
+                <li>
                   <h4><a href="{{ route('blog') }}">Blog</a></h4>
                 </li>
                 <li>
@@ -122,9 +125,6 @@
                 </li>
                 <li>
                   <h4><a href="{{ route('page.term') }}">Terms & Conditions</a></h4>
-                </li>
-                <li>
-                  <h4><a href="{{ route('page.faq') }}">FAQ</a></h4>
                 </li>
               </ul>
             </nav>
