@@ -497,6 +497,7 @@ class ProductController extends Controller
     $newProduct->meta_slug = null;
     $newProduct->meta_description = null;
     $newProduct->meta_title = null;
+    $newProduct->is_active = 'No';
     $newProduct->meta_keywords = null;
     $newProduct->push(); // save Product
     foreach ($product->getRelations() as $relation => $items) {
