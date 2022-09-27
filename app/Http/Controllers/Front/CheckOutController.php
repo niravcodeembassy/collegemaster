@@ -11,7 +11,6 @@ use App\Model\Country;
 use App\Model\CartImage;
 use App\Model\Productvariant;
 use App\Model\OrderItem;
-use PHPUnit\TextUI\Help;
 use App\Gateway\Razorpay;
 use App\Mail\OrderPlaced;
 use App\Model\PaymentLog;
@@ -119,11 +118,10 @@ class CheckOutController extends Controller
 
       $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
 
+      //SMS sent message
+      $this->sendSmsMessage($this->user->phone, $body);
       //whatsapp sent message
-      try {
-        $this->sendMessage($this->user->phone, $body);
-      } catch (\Exception $e) {
-      }
+      $this->sendWhatsappMessage($this->user->phone, $body);
 
       try {
         $mail = Setting::where('name', 'mail')->first();
@@ -600,12 +598,8 @@ class CheckOutController extends Controller
 
         $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
 
-        //whatsapp message
-        try {
-          $this->sendMessage($this->user->phone, $body);
-        } catch (\Exception $e) {
-        }
-
+        $this->sendSmsMessage($this->user->phone, $body);
+        $this->sendWhatsappMessage($this->user->phone, $body);
 
         try {
           Mail::to($this->user->email)->send(new OrderPlaced($this->order));
@@ -770,7 +764,27 @@ class CheckOutController extends Controller
     );
   }
 
-  public function sendMessage($mobile, $body)
+  public function sendSmsMessage($mobile, $body)
+  {
+    $sid =  config("app.twilio.twilio_auth_sid");
+    $token = config('app.twilio.twilio_auth_token');
+    $twilio_phone_number = config("app.twilio.twilio_sms_form");
+
+    $client = new Client($sid, $token);
+
+    try {
+      $client->messages->create(
+        $mobile,
+        array(
+          "from" => $twilio_phone_number,
+          "body" => $body
+        )
+      );
+    } catch (\Exception $e) {
+    }
+  }
+
+  public function sendWhatsappMessage($mobile, $body)
   {
     $sid =  config("app.twilio.twilio_auth_sid");
     $token = config('app.twilio.twilio_auth_token');
@@ -778,16 +792,19 @@ class CheckOutController extends Controller
 
     $client = new Client($sid, $token);
 
-    return   $client->messages->create(
-      // the number you'd like to send the message to
-      "whatsapp:$mobile",
-      [
-        // A Twilio phone number you purchased at twilio.com/console
-        'from' => "whatsapp:$wa",
-        // the body of the text message you'd like to send
-        'body' => $body,
-        // 'mediaurl' => 'https://demo.twilio.com/owl.png'
-      ]
-    );
+    try {
+      $client->messages->create(
+        // the number you'd like to send the message to
+        "whatsapp:$mobile",
+        [
+          // A Twilio phone number you purchased at twilio.com/console
+          'from' => "whatsapp:$wa",
+          // the body of the text message you'd like to send
+          'body' => $body,
+          // 'mediaurl' => 'https://demo.twilio.com/owl.png'
+        ]
+      );
+    } catch (\Exception $e) {
+    }
   }
 }

@@ -8,6 +8,7 @@ use App\Model\Page;
 use App\Model\Team;
 use App\Model\Testimonial;
 use App\Setting;
+use App\Model\FrequentAskQuestion;
 use Illuminate\Http\Request;
 use App\Model\Story;
 
@@ -78,8 +79,8 @@ class ContactUsController extends Controller
 
   public function faq(Request $request)
   {
-    $page = Page::findOrFail(5);
-    $this->data['page'] = $page;
+    $faq = FrequentAskQuestion::with('children')->where('type', 'page')->whereNull('parent_id')->get();
+    $this->data['faq'] = $faq;
     $this->data['title'] = 'Frequent Ask Question';
     return view('frontend.faq', $this->data);
   }

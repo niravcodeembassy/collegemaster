@@ -3,7 +3,6 @@ $subTotal = 0;
 @endphp
 @forelse($cartList as $cart)
   @php
-
     $priceData = Helper::productPrice($cart->productvariant);
 
     $cartSubTotal = $cart->qty * $cart->productvariant->final_price;
@@ -109,6 +108,23 @@ $subTotal = 0;
       </a>
     </td>
   </tr>
+  @auth
+    <tr style="border-bottom:none;" class="gift_message_content">
+      <td colspan="7" style="border-top:none;">
+        <div class="d-flex">
+          <label class="switch mr-2 mb-3">
+            <input type="hidden" value="{{ $cart->id }}" name="cart_id[]">
+            <input type="checkbox" class="enable_gift" name="order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
+            <span class="slider round"></span>
+          </label>
+          <span>This order is a gift</span><br>
+        </div>
+        <div class="gift_message {{ isset($cart->gift_message) ? '' : 'd-none' }}">
+          <textarea name="gift_message[]" rows="3" class="w-50 order_gift_message form-control" placeholder="Enter Your message - make sure to include to/from names">{{ $cart->gift_message ?? '' }}</textarea>
+        </div>
+      </td>
+    </tr>
+  @endauth
 @empty
   <tr>
     <td colspan="7">

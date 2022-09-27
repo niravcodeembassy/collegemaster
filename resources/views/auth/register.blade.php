@@ -87,7 +87,7 @@
                   </div>
                 </div>
                 {!! app('captcha')->display() !!}
-                <label class="captcha text-danger" style="display:none">This field is required.</label>
+                <span class="captcha text-danger" style="display:none">This field is required.</span>
                 <div class="text-center">
                   <button type="submit" class="auth_btn text-uppercase btn text-white bg-gradient-primary w-100 mt-4 mb-0">Sign up</button>
                 </div>

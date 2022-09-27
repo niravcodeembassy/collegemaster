@@ -77,8 +77,9 @@
                   <th class="text-center">Date</th>
                   <th class="text-center">Customer</th>
                   <th class="text-center" data-orderable="false">Qty</th>
-                  <th class="text-center">Payment status</th>
+                  <th class="text-center">Payment Status</th>
                   <th class="text-center">Order status</th>
+                  <th class="text-center" data-orderable="false">Download Photos</th>
                   <th class="text-center">Total</th>
                   <th class="text-center" data-orderable="false">Action</th>
                 </tr>
@@ -143,6 +144,9 @@
           },
           {
             "data": "deliveryStatus"
+          },
+          {
+            "data": "downloadPhoto"
           },
           {
             "data": "totalPrice"

@@ -205,8 +205,6 @@ class ProductController extends Controller
 
   public function productDetails(Request $request, $cat_slug, $productAndSubcategorySlug, $slug = null)
   {
-    // dd($cat_slug, $productAndSubcategorySlug);
-    // dd($request->all());
     $product = Product::where('slug', $productAndSubcategorySlug)->first();
 
     $subCategory = SubCategory::with('category')->where('slug', $productAndSubcategorySlug)->first();
@@ -238,7 +236,7 @@ class ProductController extends Controller
       $this->data['cart_product'] = ShoppingCart::where('session_id', $this->session_id)->where('variant_id', $variant->id)->first();
     }
 
-    $faq = FrequentAskQuestion::with('children')->whereNull('parent_id')->get();
+    $faq = FrequentAskQuestion::with('children')->where('type', 'product')->whereNull('parent_id')->get();
     $routeParameter = Helper::productRouteParameter($product);
     $social_link =  Share::page(route('product.view', $product->slug))
       ->facebook()

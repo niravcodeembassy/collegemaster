@@ -75,6 +75,11 @@
                 <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $item->notes }}</div>
               @endif
 
+              @if (isset($item->gift_message) && $item->gift_message != '')
+                <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $item->gift_message }}</div>
+              @endif
+
+
               <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
               <br>
               <small class="text-muted f-12">Quantity : {{ str_replace('.00', ' ', $qty) }} </small>

@@ -145,7 +145,7 @@
   @section('content')
   @show
 
-  @if (!Route::is('login') && !Route::is('register'))
+  @if (!Route::is('login') && !Route::is('register')  && !Route::is('contact-us.index'))
   @include('frontend.layouts.footer')
   @endif
 

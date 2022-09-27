@@ -54,8 +54,8 @@ class OrderController extends Controller
       3 => 'id',
       4 => 'payment_status',
       5 => 'order_status',
-      6 => 'total',
-      7 => 'option',
+      7 => 'total',
+      8 => 'option',
     );
 
     // datata table count
@@ -217,6 +217,22 @@ class OrderController extends Controller
         $row['paymentSatatus'] = '<span class = "badge badge-pill my-badge badge-danger badge-primary m-auto mb-1">Failed</span>';
       }
 
+
+      if (\Storage::exists('cart_image/order-' . $item->id)) {
+        $row['downloadPhoto'] = '<a class="btn btn-success"
+         data-id="' . $item->id . '"
+         data-url="' . route('admin.order.download', $item->id) . '"
+         href="' . route('admin.order.download', $item->id) . '">
+         <i class="fa fa-download"></i>&nbsp;&nbsp;Download Photos
+        </a>';
+      } else {
+        $row['downloadPhoto'] = '<a class="btn btn-danger"
+        href="javascript:void(0)">
+        <i class="fa fa-ban"></i>&nbsp;&nbsp;Download Photos
+       </a>';
+      }
+
+
       // dd($request->has('d_from_date'));
       if ($item->order_status == 'cancelled') {
         unset($action_edit);
@@ -248,13 +264,13 @@ class OrderController extends Controller
       $action = array_merge(
         [
 
-          (\Storage::exists('cart_image/order-' . $item->id)  ? collect([
-            'text' => 'Download Photos',
-            'id' => $item->id,
-            'icon' => 'fa fa-download',
-            'action' => route('admin.order.download', $item->id),
-            'permission' => true,
-          ]) : null),
+          // (\Storage::exists('cart_image/order-' . $item->id)  ? collect([
+          //   'text' => 'Download Photos',
+          //   'id' => $item->id,
+          //   'icon' => 'fa fa-download',
+          //   'action' => route('admin.order.download', $item->id),
+          //   'permission' => true,
+          // ]) : null),
           (\Storage::exists('cart_image/order-' . $item->id) ? collect([
             'text' => 'Remove Photos',
             'id' => $item->id,
@@ -354,7 +370,8 @@ class OrderController extends Controller
 
       $date = date('F j, Y', strtotime($order->shipping_date));
       $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
-      $this->sendMessage($user->phone, $body);
+      $this->sendSmsMessage($user->phone, $body);
+      $this->sendWhatsappMessage($user->phone, $body);
 
 
       try {
@@ -376,7 +393,8 @@ class OrderController extends Controller
 
       $date = date('F j, Y', strtotime($order->deleverd_date));
       $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been completed in ' . $date;
-      $this->sendMessage($user->phone, $body);
+      $this->sendSmsMessage($user->phone, $body);
+      $this->sendWhatsappMessage($user->phone, $body);
     }
 
     if ($request->delivery_status == 'cancelled') {
@@ -394,7 +412,8 @@ class OrderController extends Controller
 
     if ($request->delivery_status == 'work_in_progress') { //rename for designing
       $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that your order has been designing further information contact admin';
-      $this->sendMessage($user->phone, $body);
+      $this->sendSmsMessage($user->phone, $body);
+      $this->sendWhatsappMessage($user->phone, $body);
     }
 
     $order->payment_status = $request->payment_status;
@@ -641,28 +660,48 @@ class OrderController extends Controller
     return $invoice_arr;
   }
 
-  public function sendMessage($mobile, $body)
+  public function sendSmsMessage($mobile, $body)
   {
-    // $sid = env('TWILIO_AUTH_SID');
-    // $token = env('TWILIO_AUTH_TOKEN');
-    // $wa = env('TWILIO_WHATSAPP_FROM');
+    $sid =  config("app.twilio.twilio_auth_sid");
+    $token = config('app.twilio.twilio_auth_token');
+    $twilio_phone_number = config("app.twilio.twilio_sms_form");
 
+    $client = new Client($sid, $token);
+
+    try {
+      $client->messages->create(
+        $mobile,
+        array(
+          "from" => $twilio_phone_number,
+          "body" => $body
+        )
+      );
+    } catch (\Exception $e) {
+    }
+  }
+
+
+  public function sendWhatsappMessage($mobile, $body)
+  {
     $sid =  config("app.twilio.twilio_auth_sid");
     $token = config('app.twilio.twilio_auth_token');
     $wa = config("app.twilio.twilio_whatsapp_form");
 
     $client = new Client($sid, $token);
 
-    $client->messages->create(
-      // the number you'd like to send the message to
-      "whatsapp:$mobile",
-      [
-        // A Twilio phone number you purchased at twilio.com/console
-        'from' => "whatsapp:$wa",
-        // the body of the text message you'd like to send
-        'body' => $body,
-        // 'mediaurl' => 'https://demo.twilio.com/owl.png'
-      ]
-    );
+    try {
+      $client->messages->create(
+        // the number you'd like to send the message to
+        "whatsapp:$mobile",
+        [
+          // A Twilio phone number you purchased at twilio.com/console
+          'from' => "whatsapp:$wa",
+          // the body of the text message you'd like to send
+          'body' => $body,
+          // 'mediaurl' => 'https://demo.twilio.com/owl.png'
+        ]
+      );
+    } catch (\Exception $e) {
+    }
   }
 }

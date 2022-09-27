@@ -10,6 +10,10 @@ $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SL
 $schema = [$schema_organization, $schema_local];
 @endphp
 
+@push('css')
+  <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @section('schema')
   @foreach ($schema as $key => $list)
     <x-schema>
@@ -19,129 +23,100 @@ $schema = [$schema_organization, $schema_local];
 @endsection
 
 @section('content')
-  <div class="breadcrumb-area pt-20 pb-20 mb-100" style="background-color: #f5f5f5;">
+  <div class="auth-header min-vh-100">
+    <div>
+      {{-- <img class="position-absolute fixed-top ms-auto w-50 h-100 z-index-0 d-none d-sm-none d-md-block border-radius-section border-top-end-radius-0 border-top-start-radius-0 border-bottom-end-radius-0"
+        src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/curved-images/curved8.jpg" alt="image"> --}}
+
+      <div class="col-6 image_content d-lg-flex d-none w-50 z-index-0 d-sm-none d-md-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+        <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+          <img src="{{ asset('front/assets/images/pattern-lines.svg') }}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+          <div class="position-relative">
+            <img class="max-width-500 w-100 position-relative z-index-2" src="{{ asset('front/assets/images/chat.png') }}" alt="image">
+          </div>
+          <div class="mx-auto text_content">
+            <h4 class="text-white font-weight-bolder">Your journey starts here</h4>
+            <p class="text-white">Just as it takes a company to sustain a product, it takes a community to sustain a protocol.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <h2 class="breadcrumb-title">Contact Us</h2>
-
-          <!--=======  breadcrumb list  =======-->
-
-          <ul class="breadcrumb-list">
-            <li class="breadcrumb-list__item"><a href="{{ route('front.home') }}">HOME</a></li>
-            <li class="breadcrumb-list__item breadcrumb-list__item--active">contact us</li>
-          </ul>
-
-          <!--=======  End of breadcrumb list  =======-->
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section-title-container mb-50">
-    <div class="container">
-
-    </div>
-  </div>
-  <div class="icon-box-area mb-100 mb-sm-70">
-    <div class="container">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <div class="single-icon-box single-icon-box--color-center-iconbox  single-icon-box--color-center-iconbox--green">
-            <div class="icon-box-icon">
-              <i class="ti-mobile"></i>
-            </div>
-            <div class="icon-box-content">
-              <h3 class="title">PHONE</h3>
-              <p class="content">Phone : {{ $contact->contact ?? '' }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="single-icon-box single-icon-box--color-center-iconbox single-icon-box--color-center-iconbox--yellow">
-            <div class="icon-box-icon">
-              <i class="ti-location-pin"></i>
-            </div>
-            <div class="icon-box-content">
-              <h3 class="title">ADDRESS</h3>
-              <p class="content" style="white-space: pre-line;">{{ $contact->address ?? '' }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="single-icon-box single-icon-box--color-center-iconbox single-icon-box--color-center-iconbox--blue">
-            <div class="icon-box-icon">
-              <i class="ti-email"></i>
-            </div>
-            <div class="icon-box-content">
-              <h3 class="title">EMAIL</h3>
-              <p class="content">{{ $contact->email ?? '' }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="contact-form-area mb-60">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-lg-12 mb-5">
-          <div class="section-title section-title--one text-left">
-            <h1>Get in touch</h1>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-          @if (Session::has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <strong>Succeess</strong>
-              <p>{{ Session::get('success') }}</p>
+        <div class="col-lg-7 d-flex justify-content-center mt-lg-0 mt-4 flex-column">
+          <div class="card d-flex blur justify-content-center p-4 shadow-lg my-sm-0 my-sm-6 mt-8 mb-5">
+            <div class="text-center">
+              <h3 class="text-gradient">Contact us</h3>
+              <p class="mb-0" style="color:#67748e">
+                For further questions, including partnership opportunities, please email
+                {{ $contact->email ?? '' }}
+                or contact using our contact form.
+              </p>
             </div>
 
-            <script>
-              $(".alert").alert();
-            </script>
-          @endif
-          <div class="lezada-form contact-form">
-            <form id="contact-form" action="{{ route('contact-us.stroe') }}" method="post">
+            <form id="contact-form" class="auth_form" method="post" autocomplete="off" action="{{ route('contact-us.stroe') }}">
               @csrf
-              <div class="row">
-                <div class="col-md-4 mb-40">
-                  <input type="text" name="name" placeholder="First Name *" id="customername" required="">
-                </div>
-                <div class="col-md-4 mb-40">
-                  <input type="email" name="email" placeholder="Email *" id="customerEmail" required="">
-                </div>
-                <div class="col-md-4 mb-40">
-                  <input type="text" name="mobile" min="10" max="10" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
-                </div>
-                <div class="col-lg-12 mb-40">
-                  <input type="text" placeholder="Subject" required name="subject" id="subject">
-                </div>
-                <div class="col-lg-12 mb-40">
-                  <textarea cols="30" rows="10" placeholder="Message" name="message" id="message"></textarea>
-                </div>
-                <div class="col-lg-6 mb-lg-0 mb-40">
-                  {{-- {!! app('captcha')->display() !!} --}}
+              <div class="card-body pb-2">
+                @if (Session::has('success'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Succeess</strong>
+                    <p>{{ Session::get('success') }}</p>
+                  </div>
+                  <script>
+                    $(".alert").alert();
+                  </script>
+                @endif
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label>First Name <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="text" name="name" class="form-control form-control-lg" placeholder="First Name *" id="customername" required="">
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label>Email <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="email" class="form-control form-control-lg" placeholder="Email *" required="">
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label>Mobile Number <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="text" name="mobile" class="form-control form-control-lg" min="10" max="10" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label>Subject <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <textarea rows="3" placeholder="Subject *" class="form-control" name="subject" id="subject"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-2">
+                    <label>Message</label>
+                    <div class="input-group">
+                      <textarea rows="3" placeholder="Message" class="form-control" name="message" id="message"></textarea>
+                    </div>
+                  </div>
                 </div>
 
-                <label class="captcha text-danger" style="display:none">This field is required.</label>
-                <div class="col-lg-12 text-right">
-                  <button type="submit" data-sitekey="6LchyE0aAAAAABk2zPeUNVWNceekKtmUlK8YJ5Zw" data-callback='onSubmit' class="g-recaptcha lezada-button lezada-button--medium" data-action='submit'>Submit</button>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="auth_btn btn text-uppercase text-white bg-gradient-primary  w-100 mt-4 mb-0">
+                      Send
+                      Message
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
-          <p class="form-messege pt-10 pb-10 mt-10 mb-10"></p>
         </div>
       </div>
     </div>
   </div>
-  {{-- {!! NoCaptcha::renderJs() !!} --}}
 @endsection
 
 @push('script')

@@ -54,14 +54,12 @@
               <a href="{{ route('front.home') }}" class="lezada-button home-form-btn lezada-button--medium">Go to Home page</a>
             @else
               @auth
-                <a href="{{ route('checkout') }}" class="lezada-button checkout-form-btn lezada-button--medium">Check Out</a>
+                <a class="lezada-button checkout-form-btn lezada-button--medium" href="javascript:void(0)" data-cartlist="{{ json_encode($cartList) }}" data-url="{{ route('cart.gift') }}">Check Out</a>
               @else
                 <a href="{{ route('login') }}" class="lezada-button lezada-button--medium" id="login-checkout">Check Out</a>
               @endauth
             @endif
           </div>
-
-
         </div>
       </div>
     </div>
@@ -83,6 +81,11 @@
 @push('style')
   <style>
     .table thead th {
+      border-bottom: none;
+    }
+
+    .cart-table tr {
+      /* border-bottom: 1px solid #ededed; */
       border-bottom: none;
     }
 
@@ -125,9 +128,69 @@
       cursor: pointer !important;
     }
 
-
     .dz-remove {
       display: none !important;
+    }
+
+    /* switch toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 17px;
+      width: 17px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: #252525
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #252525
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
     }
   </style>
 @endpush
@@ -137,4 +200,62 @@
 @endpush
 @push('js')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+@endpush
+@push('script')
+  <script>
+    $(document).ready(function(e) {
+      $(".enable_gift").each(function(list, item) {
+        let check_id = $(item).attr('id');
+        $('#' + check_id).change(function(e) {
+          if ($(this).is(":checked")) {
+            $(this).parent().parent().next().removeClass('d-none');
+          } else {
+            $(this).parent().parent().next().addClass('d-none');
+            $(this).parent().parent().next().children('textarea').val('')
+          }
+        });
+      });
+    });
+
+    $(document).on("click", ".checkout-form-btn", function(event, data) {
+      var el = data || $(this);
+
+      var cartlist = JSON.parse(el.attr("data-cartlist"));
+
+
+      var url = $(this).data("url");
+
+
+      var cart_id = $('input[name="cart_id[]"]')
+        .map(function() {
+          return $(this).val();
+        }).get();
+
+
+      var has_gift = $('input[name="order_has_gift[]"]')
+        .map(function() {
+          return $(this).val();
+        }).get();
+
+      var gift_message = $('textarea[name="gift_message[]"]')
+        .map(function() {
+          return $(this).val();
+        }).get();
+
+      let arr = [cart_id, has_gift, gift_message];
+      cartlist.giftContent = arr;
+
+      $.ajax({
+        type: "post",
+        url: url,
+        data: {
+          'gift_content': arr,
+        },
+      }).done(function(res) {
+        window.location.href = res.back;
+      })
+
+
+    });
+  </script>
 @endpush

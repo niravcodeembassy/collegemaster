@@ -44,6 +44,7 @@ class FrequentAskQuestionController extends Controller
   {
     $question = FrequentAskQuestion::updateOrCreate(['id' => $request->question_id, 'parent_id' => null], [
       'title' => $request->title,
+      'type' => $request->type,
     ]);
 
     $old = collect($request->input('response'))->whereNotNull('parent_id')->pluck('parent_id');
@@ -73,7 +74,8 @@ class FrequentAskQuestionController extends Controller
     $columns = array(
       0 => 'id',
       1 => 'title',
-      2 => 'action',
+      2 => 'type',
+      3 => 'action',
     );
 
 
@@ -90,7 +92,7 @@ class FrequentAskQuestionController extends Controller
     // DB::enableQueryLog();
     // generate a query
     $featureCollection = FrequentAskQuestion::whereNull('parent_id')->when($search, function ($query, $search) {
-      return $query->where('title', 'LIKE', "%{$search}%");
+      return $query->where('title', 'LIKE', "%{$search}%")->orWhere('type', 'LIKE', "%{$search}%");
     });
 
     $totalData = $featureCollection->count(); // datatable count
@@ -105,6 +107,7 @@ class FrequentAskQuestionController extends Controller
     foreach ($featureCollection as $key => $item) {
       $row['id'] = $item->id;
       $row['title'] = '<b>' . $item->title . '</b>';
+      $row['type'] = ucwords($item->type);
       $row['action'] = $this->action([
         collect([
           'text' => 'Edit',
@@ -173,6 +176,7 @@ class FrequentAskQuestionController extends Controller
   {
     $question = FrequentAskQuestion::updateOrCreate(['id' => $request->question_id, 'parent_id' => null], [
       'title' => $request->title,
+      'type' => $request->type,
     ]);
 
     $old = collect($request->input('response'))->whereNotNull('parent_id')->pluck('parent_id');

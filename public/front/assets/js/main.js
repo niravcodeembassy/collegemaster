@@ -1269,6 +1269,7 @@
 
   $(".btn-zoom-popup").on("click", function () {
     var all_img = $(this).data("images");
+    var alt_text = $(this).data("alt_text");
     var images = [];
     for (var i = 0; i < all_img.length; i++) {
       images[i] = { src: all_img[i] };

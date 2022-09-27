@@ -1,9 +1,11 @@
 .card {
   box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+  font-family: Open Sans !important;
 }
 .shadow-lg {
   box-shadow: 0 8px 26px -4px hsla(0,0%,8%,.15),0 8px 9px -5px hsla(0,0%,8%,.06)!important;
 }
+
 .card {
   position: relative;
   display: flex;

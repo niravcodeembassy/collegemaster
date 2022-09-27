@@ -144,7 +144,7 @@ $schema = [$schema_organization, $schema_local];
         <div class="offset-xl-1 col-xl-4 col-lg-6 col-md-6 mb-sm-50">
 
           <div class="about-page-text">
-            <p class=" mb-35">{{ $page->short_content ?? '' }}</p>
+            <p class="mb-35">{{ $page->short_content ?? '' }}</p>
           </div>
         </div>
 

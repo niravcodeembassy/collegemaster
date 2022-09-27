@@ -35,7 +35,6 @@
                   if ($item->attribute != null) {
                       $attributes = json_decode($item->attribute, true);
                   }
-
                   if ($item->raw_data != null) {
                       $raw_data = json_decode($item->raw_data, true);
                   }
@@ -84,9 +83,14 @@
                     <br>
                     <span class="text-muted f-14 ">{!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</span>
 
-                    @if (isset($raw_data['notes']) && $raw_data['notes'] != '')
+                    @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
                       <hr>
-                      <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $raw_data['notes'] ?? '' }}</div>
+                      @if (isset($raw_data['notes']) && $raw_data['notes'] != '')
+                        <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $raw_data['notes'] ?? '' }}</div>
+                      @endif
+                      @if (isset($raw_data['gift_message']) && $raw_data['gift_message'] != '')
+                        <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $raw_data['gift_message'] ?? '' }}</div>
+                      @endif
                     @endif
                   </div>
                   @if (in_array($order->order_status, ['order_placed', 'customer_approval']))
