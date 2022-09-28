@@ -90,6 +90,7 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::resource('product/{product_id}/variation', 'ProductVariationController');
 
   Route::post('inventory/bulk', 'InventoryController@updateAll')->name('inventory.update_all');
+  Route::post('inventory/variant/bulk', 'InventoryController@updateBulk')->name('inventory.bulk.update_all');
   Route::post('inventory/list', 'InventoryController@dataListing')->name('inventory.list');
   Route::get('inventory/change/qty', 'InventoryController@changeQty')->name('inventory.change.qty');
   Route::resource('inventory', 'InventoryController');

@@ -76,7 +76,7 @@ $schema = [$schema_organization, $schema_local];
             <!--=======  End of floating-text left  =======-->
             <div class="play-icon text-center mb-40">
               <a href="{{ $story->video_url ?? 'https://www.youtube.com/watch?v=feOScd2HdiU' }}" class="popup-video">
-                <img src="{{ asset('front/assets/images/icons/icon-play-100x100.png') }}" class="img-fluid" alt="">
+                <img src="{{ asset('front/assets/images/icons/icon-play-100x100.png') }}" class="img-fluid" alt="{{ $story->title ?? '' }}" title="{{ $story->title ?? '' }}">
               </a>
             </div>
             <h2>OUR STORY</h2>
@@ -105,7 +105,7 @@ $schema = [$schema_organization, $schema_local];
               @foreach ($story->image as $item)
                 <div class="item mx-4">
                   <a href="{{ $item->url ?? '' }}">
-                    <img src="{{ $item->image_url }}" class="img-fluid">
+                    <img src="{{ $item->image_url }}" class="img-fluid" alt="{{ $item->caption ?? '' }}" title="{{ $item->caption ?? '' }}">
                   </a>
                 </div>
               @endforeach

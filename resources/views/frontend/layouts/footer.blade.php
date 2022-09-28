@@ -178,10 +178,6 @@
               We are here to help you on all working days between 10:00 AM to
               07:00 PM
             </p>
-            {{-- <h5 class="footer-title d-none">We Accept</h5>
-            <ul class="footer-links d-none">
-              <li><img src="{{ asset('front/assets/images/payment/payment_icon.png') }}" alt="Payment" class="img-responsive"></li>
-            </ul> --}}
             <div class="d-flex">
               <section class="f-50">
                 <h3 class="footer_heading text-uppercase">Follow us</h3>

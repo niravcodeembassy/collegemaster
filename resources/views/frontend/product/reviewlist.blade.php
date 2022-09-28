@@ -3,7 +3,7 @@
 <div class="single-review pb-2">
     <div class="single-review__image">
         <img src="{{ $item->user->profile_src  }}" class="img-fluid"
-            alt="user image">
+            alt="user image" title="user image">
     </div>
     <div class="single-review__content">
         <!--=======  rating  =======-->

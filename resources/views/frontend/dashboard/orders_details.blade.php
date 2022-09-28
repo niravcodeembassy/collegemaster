@@ -60,7 +60,7 @@
 
                 @endphp
                 <li class="list-group-item d-flex justify-content-between lh-condensed order-table">
-                  <img src="{{ $image_url }}" alt="" style="width: 160px" class="mr-4">
+                  <img src="{{ $image_url }}" title="{{ $item->name }}" alt="{{ $item->name }}" style="width: 160px" class="mr-4">
                   <div class="product-details" style="margin-right: 134px">
                     <h6 class="my-0 f-18 p-name" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
                     @if (count($attributes) > 0)

@@ -28,9 +28,9 @@ $subTotal = 0;
     <td class="product-thumbnail pb-15 px-3" colspan="2">
       <a href="{{ route('product.view', $routeParameter) }}">
         @if ($cart->productvariant->productimage_id && optional($cart->image)->variant_image)
-          <img src="{{ $cart->image->variant_image }}" class="img-fluid " style="width: 100px" alt="">
+          <img src="{{ $cart->image->variant_image }}" class="img-fluid " style="width: 100px" alt="variant" title="variant">
         @else
-          <img src="{{ asset('storage/default/default.png') }}" style="width: 100px" class="img-fluid" alt="">
+          <img src="{{ asset('storage/default/default.png') }}" style="width: 100px" class="img-fluid" alt="default" title="default">
         @endif
       </a>
     </td>

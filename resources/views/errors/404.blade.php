@@ -152,7 +152,7 @@ $commonBanner = App\Model\CommonBanner::whereNull('is_active')->get();
               <div class="single-category single-category--three">
                 <!--=======  single category image  =======-->
                 <div class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
-                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="">
+                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="{{ $item->caption1 ?? '' }}" title="{{ $item->caption1 ?? '' }}">
                 </div>
                 <!--=======  single category content  =======-->
                 <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">

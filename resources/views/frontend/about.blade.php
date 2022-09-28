@@ -134,7 +134,7 @@ $schema = [$schema_organization, $schema_local];
 
           @if (isset($page->slider_image))
             <div class="about-page-2-image">
-              <img src="{{ $page->page_image }}" class="img-fluid" alt="">
+              <img src="{{ $page->page_image }}" class="img-fluid" alt="{{ $page->title ?? '' }}" title="{{ $page->title ?? '' }}">
             </div>
           @endif
 
@@ -157,16 +157,18 @@ $schema = [$schema_organization, $schema_local];
     </div>
   </div>
 
-  <div class="section-title section-title--one text-center mb-30">
-    <h2 class="font-weight-bold">Creative team</h2>
-    <div class="divider-custom">
-      <div class="divider-custom-line-1"></div>
-      <div class="divider-custom-icon">
-        <i class="fa fa-circle" aria-hidden="true"></i>
+  @if ($team->count() > 0)
+    <div class="section-title section-title--one text-center mb-30">
+      <h2 class="font-weight-bold">Creative team</h2>
+      <div class="divider-custom">
+        <div class="divider-custom-line-1"></div>
+        <div class="divider-custom-icon">
+          <i class="fa fa-circle" aria-hidden="true"></i>
+        </div>
+        <div class="divider-custom-line-1"></div>
       </div>
-      <div class="divider-custom-line-1"></div>
     </div>
-  </div>
+  @endif
 
 
   <div class="team-member-area mb-100">
@@ -177,7 +179,7 @@ $schema = [$schema_organization, $schema_local];
             <div class="item">
               <div class="single-team-member text-center">
                 <div class="member-image">
-                  <img src="{{ $member->image_src ?? '' }}" class="img-fluid" alt="">
+                  <img src="{{ $member->image_src ?? '' }}" class="img-fluid" alt="{{ $member->title ?? '' }}" title="{{ $member->title ?? '' }}">
                   <div class="social-inside d-none">
                     <ul class="social-list">
                       <li class="social-list__item"><a href="#"><i class="fa fa-facebook"></i></a></li>

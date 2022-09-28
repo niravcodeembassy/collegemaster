@@ -56,7 +56,7 @@
               <div class="py-2 px-4 border-bottom">
                 <div class="d-flex align-items-center py-1">
                   <div class="position-relative">
-                    <img src="{{ $admin->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                    <img src="{{ $admin->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" title="Sharon Lessman" width="40" height="40">
                   </div>
                   <div class="flex-grow-1 pl-3">
                     <strong>{{ ucwords($admin->name) ?? '' }}</strong>
@@ -79,7 +79,7 @@
                         <div class="{{ $className }} pb-4">
                           <div class="d-flex flex-column {{ $flex }}">
                             <div class="d-flex align-items-center mb-2">
-                              <img src="{{ $message->user->profile_src ?? '' }}" class="rounded-circle avatar mr-1" alt="Chris Wood">
+                              <img src="{{ $message->user->profile_src ?? '' }}" class="rounded-circle avatar mr-1" alt="{{ $message->user->name ?? '' }}" title="{{ $message->user->name ?? '' }}">
                               <div class="ms-3">
 
                                 <a href="javascript:void(0)" class="fw-bolder text-gray-900 text-hover-primary me-1">{{ ucwords($message->user->name) ?? '' }}</a>
@@ -95,7 +95,7 @@
                           @if (Uploader::isPhoto($message->file))
                             <div class="flex-shrink-1 rounded py-2 px-3 {{ $position }}">
                               <img class="img-fluid rounded media" loading="lazy" src="{{ $message->file }}"><br />
-                              <a href="{{ $message->file }}" download="{{ $message->file_name }}" class="bg-light p-2 image_download rounded-pill"><i class="fa fa-download"></i>
+                              <a href="{{ $message->file }}" alt="download" title="download" download="{{ $message->file_name }}" class="bg-light p-2 image_download rounded-pill"><i class="fa fa-download"></i>
                                 {{ $message->file_name }}
                               </a>
                             </div>
@@ -161,7 +161,7 @@
                         @if (empty($file))
                           <button class="btn btn-sm btn-icon btn-active-light-primary" type="button" id="file-area" data-bs-toggle="tooltip" title="uplod">
                             <label>
-                              <img src="{{ asset('front/assets/images/picture_icon.png') }}" class="img-fluid py-1" style="width: 25px;" />
+                              <img src="{{ asset('front/assets/images/picture_icon.png') }}" alt="icon" title="icon" class="img-fluid py-1" style="width: 25px;" />
                               <input type="file" wire:model="file">
                             </label>
                           </button>
@@ -178,7 +178,7 @@
               <div class="py-2 px-4 border-bottom d-none d-lg-block">
                 <div class="d-flex align-items-center py-1">
                   <div class="position-relative">
-                    <img src="{{ auth()->user()->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                    <img src="{{ auth()->user()->profile_src ?? '' }}" class="rounded-circle mr-1" alt="Sharon Lessman" title="Sharon Lessman" width="40" height="40">
                   </div>
                   <div class="flex-grow-1 pl-3">
                     <strong>{{ ucwords(auth()->user()->name) ?? '' }}</strong>
@@ -187,7 +187,7 @@
               </div>
               <div class="position-relative">
                 <div class="text-center d-block">
-                  <img class="overlay-wrapper h-300px bgi-no-repeat bgi-size-contain bgi-position-center" src="{{ asset('front/assets/images/1.png') }}" alt="">
+                  <img class="overlay-wrapper h-300px bgi-no-repeat bgi-size-contain bgi-position-center" src="{{ asset('front/assets/images/1.png') }}" alt="overlay" title="overlay">
                 </div>
                 <div class="chat-messages_display p-4">
                   <div class="h3 text-center">Select a order to see the chat</div>

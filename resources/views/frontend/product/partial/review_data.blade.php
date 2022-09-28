@@ -1,7 +1,7 @@
 @foreach ($review as $item)
   <div class="single-review pt-4 mb-0 ">
     <div class="single-review__image">
-      <img src="{{ $item->user->profile_src ?? asset('front/assets/images/blank.png') }}" class="img-fluid" alt="user image">
+      <img src="{{ $item->user->profile_src ?? asset('front/assets/images/blank.png') }}" class="img-fluid" alt="user image" title="user image">
     </div>
     <div class="single-review__content">
       <!--=======  rating  =======-->

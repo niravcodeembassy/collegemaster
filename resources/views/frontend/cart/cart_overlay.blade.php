@@ -18,9 +18,9 @@
         <div class="image">
           <a href="{{ $route }}">
             @if ($cart->productvariant->productimage_id && optional($cart->image)->variant_image)
-              <img src="{{ $cart->image->variant_image }}" class="img-fluid" alt="">
+              <img src="{{ $cart->image->variant_image }}" class="img-fluid" alt="variant" title="variant">
             @else
-              <img src="{{ asset('storage/default/default.png') }}" class="img-fluid" alt="">
+              <img src="{{ asset('storage/default/default.png') }}" class="img-fluid" alt="default" title="default">
             @endif
           </a>
         </div>

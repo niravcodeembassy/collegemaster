@@ -40,7 +40,7 @@
 
                           <a class="image-wrap" href="{{ route('product.view', $routeParameter) }}">
                             @foreach ($product->images->take(2) as $item)
-                              <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                              <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}" title="{{ $item->image_alt ?? '' }}">
                             @endforeach
                           </a>
 

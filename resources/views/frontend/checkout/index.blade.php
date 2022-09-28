@@ -231,7 +231,7 @@
                             <input type="radio" id="stripe" data-rule-required="true" class="radio" name="payment_method" value="stripe">
                             <label for="stripe"> Credit Card/Debit Card/NetBanking <br>
                               <br>
-                              <img src="{{ asset('storage\payment_icon\payment.png') }}" alt="master-card" style="width:312px">
+                              <img src="{{ asset('storage\payment_icon\payment.png') }}" alt="master-card" title="master-card" style="width:312px">
                             </label>
                           </div>
                         @endif

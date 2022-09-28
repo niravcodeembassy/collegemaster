@@ -16,7 +16,7 @@
           @endphp
           <div class="logo">
             <a href="{{ route('front.home') }}">
-              <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
+              <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros" title="At Auros">
             </a>
           </div>
           <!--=======  End of logo   =======-->
