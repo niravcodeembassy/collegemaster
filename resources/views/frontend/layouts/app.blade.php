@@ -62,9 +62,9 @@
   @endphp
 
 
-  <link rel="alternate" hreflang="en-us" href="{{ url()->current() }}" />
-  <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}">
-  <link rel="alternate" hreflang="en" href="{{ url()->current() }}"/>
+<link rel="alternate" hreflang="en-us" href="{{ request()->fullUrl() }}" />
+<link rel="alternate" hreflang="x-default" href="{{ request()->fullUrl() }}">
+<link rel="alternate" hreflang="en" href="{{ request()->fullUrl() }}"/>
 
 
   @yield('pagination')
