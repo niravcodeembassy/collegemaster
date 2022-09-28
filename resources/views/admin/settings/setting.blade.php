@@ -210,9 +210,8 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="offertext">Category Selection <span class="text-danger">*</span></label>
-                  <select class="form-control category-select2" multiple name="category[]" id="category" data-url="{{ route('admin.get.category') }}" data-rule-required="true" data-placeholder="Select Category."
-                    data-msg-required="Category is required.">
+                  <label for="offertext">Category Selection </label>
+                  <select class="form-control category-select2" multiple name="category[]" id="category" data-url="{{ route('admin.get.category') }}" data-placeholder="Select Category.">
                     @if (isset($setting->response->category) && !is_null($setting->response->category))
                       @foreach ($setting->response->category as $item)
                         <option value="{{ $item }}" selected>{{ \App\Category::find($item)->name }}</option>
@@ -542,7 +541,7 @@
         var target = $(el.data('target'));
         target.parent().children().addClass('hidden');
         target.removeClass('hidden');
-      });;
+      });
     });
   </script>
 @endpush

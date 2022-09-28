@@ -107,7 +107,11 @@ class CheckOutController extends Controller
     // $this->order_items = $this->saveOrderItem();
 
     $order_id = Order::orderBy('id', 'desc')->first();
-    $order_id = $order_id->id + 1;
+    if ($order_id != null) {
+      $order_id = $order_id->id + 1;
+    } else {
+      $order_id = 1;
+    }
     if ($this->request->payment_method == "cash") {
 
       $this->address = $this->saveShippingAndBillingAddress();
@@ -223,7 +227,7 @@ class CheckOutController extends Controller
     $shipping_charge = $this->cart['shipping_charge'];
     $total           = $this->cart['total'];
     $discount        = $this->cart['discount'];
-    $tax        = $this->cart['tax'];
+    $tax             = $this->cart['tax'];
 
     $orderNumbers = Helper::orderNumber();
 
