@@ -102,7 +102,7 @@ $schema = [$schema_organization, $schema_local];
                 <!--=======  image  =======-->
 
                 <div class="single-slider-post__image single-slider-post--sticky__image mb-30">
-                  <img src="{{ $blog->image_src ?? '' }}" class="img-fluid" alt="">
+                  <img src="{{ $blog->image_src ?? '' }}" class="img-fluid" alt="{{ $blog->title ?? '' }}" title="{{ $blog->title ?? '' }}">
                 </div>
 
                 <!--=======  End of image  =======-->

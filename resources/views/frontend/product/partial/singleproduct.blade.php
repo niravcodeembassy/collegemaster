@@ -8,7 +8,7 @@
   <div class="single-product__image">
     <a class="image-wrap" href="{{ $route }}">
       @foreach ($product->images->take(1) as $item)
-        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}" title="{{ $item->image_alt ?? '' }}">
       @endforeach
     </a>
 

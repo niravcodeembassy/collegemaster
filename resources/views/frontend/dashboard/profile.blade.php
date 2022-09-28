@@ -71,7 +71,7 @@
               <div class="row">
                 <div class="col-lg-3 col-md-12">
                   <div class="text-center" id="tag_container">
-                    <img src="{{ $user->profile_src }}" class="rounded-circle" alt="{{ $user->name ?? '' }}" width="150" height="150" id="showcropimg">
+                    <img src="{{ $user->profile_src }}" class="rounded-circle" alt="{{ $user->name ?? '' }}" title="{{ $user->name ?? '' }}" width="150" height="150" id="showcropimg">
                     <div class="card-body">
                       <div class="text-center">
                         <label for="uplode_btn" class="btn btn-sm btn-info">Upload Image</label>

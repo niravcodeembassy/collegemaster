@@ -368,7 +368,7 @@ $schema_third = [
             '@type' => 'ListItem',
             'position' => 2,
             'name' => 'Products',
-            'item' => route('category.product', 'all'),
+            'item' => route('category.product', $product->category->slug),
         ],
         [
             '@type' => 'ListItem',
@@ -505,7 +505,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                     <!--=======  single image  =======-->
                     @foreach ($images as $key => $item)
                       <div class="single-image main_big_img" id="slick_image_id_{{ $item->id }}">
-                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}" title="{{ $item->image_alt ?? '' }}">
                       </div>
                     @endforeach
                     <!--=======  End of single image  =======-->
@@ -522,7 +522,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                     @foreach ($images as $key => $item)
                       <!--=======  single image  =======-->
                       <div class="single-image" id="slick_id_{{ $item->id }}">
-                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}">
+                        <img src="{{ $item->variant_image }}" class="img-fluid" alt="{{ $item->image_alt ?? '' }}" title="{{ $item->image_alt ?? '' }}">
                       </div>
                       <!--=======  End of single image  =======-->
                     @endforeach
@@ -592,7 +592,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       @endif
                       <p class="content_h1"><span class="content_h2">HOORAY!</span> This item delivers for free.</p>
                     </div>
-                    <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid" alt="item in stock">
+                    <img src="{{ asset('front/assets/images/stock.png') }}" class="stock img-fluid" alt="item in stock" title="item in stock">
                   </div>
 
 
@@ -743,7 +743,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       <div class="d-flex tooltip_truck" data-tippy="{{ $frontsetting->delivery_caption ?? '' }}" data-tippy-placement="top" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50"
                         data-tippy-arrow="true">
                         <a href="javascript:void(0)" class="ml-2 mr-3">
-                          <img src="{{ asset('front/assets/images/truck.png') }}" alt="delivery information" class="delivery_truck img-fluid">
+                          <img src="{{ asset('front/assets/images/truck.png') }}" alt="delivery information" title="delivery information" class="delivery_truck img-fluid">
                         </a>
                         <a href="javascript:void(0)" class="delivery_truck_link mt-lg-0 mt-col-3">
                           <b class="mt-lg-0">Arrives By

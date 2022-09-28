@@ -35,13 +35,13 @@
           <!--=======  logo  =======-->
           <div class="logo">
             <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
-              <img class="img-fluid mb-2" alt="google review" src="{{ asset('front/assets/images/website_icon/google.png') }}">
+              <img class="img-fluid mb-2" alt="google review" title="google review" src="{{ asset('front/assets/images/website_icon/google.png') }}">
             </a>
             <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
-              <img class="img-fluid my-2" alt="trust icon review" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
+              <img class="img-fluid my-2" alt="trust icon review"  title="trust icon review" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
             </a>
             <a href="{{ $frontsetting->esty_link ?? '' }}" target="_blank">
-              <img class="img-fluid my-2" alt="esty review" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
+              <img class="img-fluid my-2" alt="esty review" title="esty review" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
             </a>
           </div>
           <!--=======  End of logo  =======-->
@@ -208,7 +208,7 @@
               </section>
               <section class="f-50-logo">
                 <a href="{{ route('front.home') }}">
-                  <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros">
+                  <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros" title="At Auros">
                 </a>
               </section>
             </div>
@@ -221,7 +221,7 @@
     <!--=======  WHATSAPP D =======-->
     <div class="whatsapp-sec" style="z-index:90000">
       <a href="https://api.whatsapp.com/send?phone=919898142002" target="_blank">
-        <img src="{{ asset('storage/setting/') }}/whatsapp.svg" alt="whatsapp" class="whatsapp-img" />
+        <img src="{{ asset('storage/setting/') }}/whatsapp.svg" alt="whatsapp" class="whatsapp-img" title="whatsapp-img" />
       </a>
     </div>
     <!--=======  END WHATSAP  =======-->

@@ -99,7 +99,7 @@ $schema = [$schema_organization, $schema_local];
 
                     <div class="single-slider-post__image single-slider-post--list__image mb-sm-30">
                       <a href="{{ route('blog.show', $blog->slug) }}">
-                        <img src="{{ $blog->image_src ?? '' }}" class="img-fluid" alt="">
+                        <img src="{{ $blog->image_src ?? '' }}" class="img-fluid" alt="{{ $blog->title ?? '' }}" title="{{ $blog->title ?? '' }}">
                       </a>
                     </div>
 
