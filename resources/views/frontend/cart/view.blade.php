@@ -225,6 +225,7 @@
             $(this).val('No');
             $(this).parent().parent().next().removeClass('d-block').addClass('d-none');
             $(this).parent().parent().next().find('textarea').val('');
+            $(this).parent().parent().next().find('.gift_message').addClass('d-none');
             $(this).parent().parent().next().find('input[type="checkbox"]').prop('checked', false)
           }
         });

@@ -79,8 +79,8 @@
                 <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $item->gift_message }}</div>
               @endif
 
-              @if (isset($item['optional_note']) && $item['optional_note'] != '')
-                <div class="text-muted" style="margin-top: 5px;"><b>Optional Note</b> : {{ $item['optional_note'] ?? '' }}</div>
+              @if (isset($item->optional_note) && $item->optional_note != '')
+                <div class="text-muted" style="margin-top: 5px;"><b>Optional Note</b> : {{ $item->optional_note ?? '' }}</div>
               @endif
 
 
