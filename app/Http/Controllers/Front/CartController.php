@@ -45,18 +45,16 @@ class CartController extends Controller
 
   public function gift(Request $request)
   {
-    $cart_ids = $request->gift_content[0];
-    $enable_gift = $request->gift_content[1];
-    $gift_message = $request->gift_content[2];
-
-    $record = array_map(function ($ids, $enable, $messages) {
-      return  ['cart_id' => $ids, 'enable_gift' => $enable, 'gift_message' => $messages];
-    }, $cart_ids, $enable_gift, $gift_message);
-
+    $record = $request->gift_content;
     foreach ($record as $key => $list) {
       ShoppingCart::where('id', $list['cart_id'])
         ->update(
-          ['order_has_gift' => $list['gift_message'] == null ? 'No' : 'Yes', 'gift_message' => $list['gift_message']]
+          [
+            'order_has_gift' => $list['order_has_gift'],
+            'order_has_message' => $list['order_has_message'],
+            'optional_note' => $list['optional_note'],
+            'gift_message' => $list['gift_message']
+          ]
         );
     }
     return response()->json([

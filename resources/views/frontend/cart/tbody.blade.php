@@ -1,7 +1,7 @@
 @php
 $subTotal = 0;
 @endphp
-@forelse($cartList as $cart)
+@forelse($cartList as$key=> $cart)
   @php
     $priceData = Helper::productPrice($cart->productvariant);
 
@@ -109,19 +109,29 @@ $subTotal = 0;
     </td>
   </tr>
   @auth
-    <tr style="border-bottom:none;" class="gift_message_content">
-      <td colspan="7" style="border-top:none;">
-        <div class="d-flex">
-          <label class="switch mr-2 mb-3">
-            <input type="hidden" value="{{ $cart->id }}" name="cart_id[]">
-            <input type="checkbox" class="enable_gift" name="order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
+    <tr style="border-bottom:none;" class="px-3 gift_message_area">
+      <td colspan="7" class="px-3" style="border-top:none;">
+        <div class="">
+          <label class="switch mr-2">
+            <input type="hidden" value="{{ $cart->id }}" name="cart[{{ $key }}]cart_id[]" class="cart_id">
+            <input type="checkbox" class="enable_gift" value="{{ $cart->order_has_gift ?? '' }}" name="cart[{{ $key }}]order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
             <span class="slider round"></span>
           </label>
-          <span>This order is a gift</span><br>
+          <span>This order is a gift</span>
+          <p class="gift_slip">Prices will not be shown on packing slip</p>
         </div>
-        <div class="gift_message {{ isset($cart->gift_message) ? '' : 'd-none' }}">
-          <textarea name="gift_message[]" rows="3" class="w-50 order_gift_message form-control" placeholder="Enter Your message - make sure to include to/from names">{{ $cart->gift_message ?? '' }}</textarea>
+        <div class="gift_message_content mt-2 {{ $cart->order_has_message == 'Yes' ? 'd-block' : 'd-none' }}">
+          <label class="switch mr-2 my-3">
+            <input type="checkbox" class="enable_message" value="{{ $cart->order_has_message ?? '' }}" name="cart[{{ $key }}]order_has_message[]" id="enable_{{ $cart->id }}" {{ $cart->order_has_message == 'Yes' ? 'checked' : '' }}>
+            <span class="slider round"></span>
+          </label>
+          <span>Add Gift Message For Free</span>
+          <div class="gift_message  {{ $cart->order_has_message == 'Yes' ? '' : 'd-none' }}">
+            <textarea name="cart[{{ $key }}]gift_message[]" rows="3" class="col-lg-6 col-12 order_gift_message form-control" placeholder="Enter Your message - make sure to include to/from names">{{ $cart->gift_message ?? '' }}</textarea>
+            <label class="col-lg-6 col-12">Use the space above to enter your gift message. Please make sure to include to/from names.</label>
+          </div>
         </div>
+        <textarea name="cart[{{ $key }}]optional_note[]" rows="3" class="mt-4 col-lg-6 col-12 order_optional_note form-control" placeholder="Add a note to CollagemasterCo (optiontal)">{{ $cart->optional_note ?? '' }}</textarea>
       </td>
     </tr>
   @endauth

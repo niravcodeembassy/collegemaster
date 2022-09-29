@@ -118,8 +118,6 @@
       padding: 0.5rem !important;
     }
 
-
-
     span.faq-title {
       font-size: 20px !important;
       line-height: 16px;
@@ -422,7 +420,6 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
               @endif
               <li class="breadcrumb-list__item breadcrumb-list__item--active d-none">
                 <a href="javascript:void(0)">
-                  {{-- {{ Str::words($product->name,8, '...') }} --}}
                   {{ $product->name }}
                 </a>
               </li>
@@ -614,7 +611,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                           @endphp
                           <label for="variatoins_{{ $key }}" class="d-block shop-product__block__title"><b>{{ ucfirst($option->name) }}</b> <span class="text-danger">*</span></label>
                           <div class="d-block clearfix " style="width: 30%;">
-                            <select name="variatoins" class="form-control change-combination " id="variatoins_{{ $key }}" style="width: 250px;">
+                            <select name="variatoins" class="form-control change-combination " id="variatoins_{{ $key }}" style="width: 350px;">
                               @foreach ($variatoins as $item)
                                 @php
                                   $price = [];
@@ -777,7 +774,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       <tr class="single-info">
                         <td class="quickview-title w-25">Categories : </td>
                         <td class="quickview-value w-75">
-                          <h2 style="font-size:18px;">{{ $product->category->name ?? '' }}</h2>
+                          <span>{{ $product->category->name ?? '' }}</span>
                         </td>
                       </tr>
                       @if (!is_null($product->additional_description))

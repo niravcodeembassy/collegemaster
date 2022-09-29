@@ -31,7 +31,7 @@ $cart = json_encode(['product_id' => $product_id, 'variant_id' => $variant_id, '
 <div class="form-group mb-25">
   <label for="variatoins_2" class="d-block shop-product__block__title"><b>{{ ucfirst('Size') }}</b> <span class="text-danger">*</span></label>
   <div class="d-block clearfix " style="width: 30%;">
-    <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 250px;">
+    <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 350px;">
       @foreach ($size_new_option as $key => $item)
         @if ($loop->first)
           <option value=""> Select </option>
@@ -50,7 +50,7 @@ $cart = json_encode(['product_id' => $product_id, 'variant_id' => $variant_id, '
 <div class="form-group mb-25">
   <label for="variatoins_1" class="d-block shop-product__block__title"><b>{{ ucfirst('Printing options') }}</b> <span class="text-danger">*</span></label>
   <div class="d-block clearfix " style="width: 30%;">
-    <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 250px;">
+    <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 350px;">
       @foreach ($printing_new_option as $key => $item)
         @if ($loop->first)
           <option value=""> Select </option>

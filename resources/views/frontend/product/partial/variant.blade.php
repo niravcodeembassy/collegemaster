@@ -11,7 +11,7 @@
             if ($new_option_lable == 'size' && $new_option_lable == $option->name) {
                 foreach ($variatoins as $item) {
                     $new_price = [];
-                  
+
                     foreach ($productvariants as $key => $productvariant) {
                         if ($productvariant->type == 'variant') {
                             $varint = json_decode($productvariant->variants);
@@ -49,7 +49,7 @@
   <div class="form-group mb-25">
     <label for="variatoins_1" class="d-block shop-product__block__title"><b>{{ ucfirst('Size') }}</b> <span class="text-danger">*</span></label>
     <div class="d-block clearfix " style="width: 30%;">
-      <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 250px;">
+      <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 350px;">
         @foreach ($size_item as $item)
           @php
 
@@ -70,7 +70,7 @@
   <div class="form-group mb-25">
     <label for="variatoins_2" class="d-block shop-product__block__title"><b>{{ ucfirst('Printing options') }}</b> <span class="text-danger">*</span></label>
     <div class="d-block clearfix " style="width: 30%;">
-      <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 250px;">
+      <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 350px;">
         @foreach ($new_option as $key => $item)
           @if ($loop->first)
             <option value=""> Select </option>
@@ -134,7 +134,7 @@
   <div class="form-group mb-25">
     <label for="variatoins_2" class="d-block shop-product__block__title"><b>{{ ucfirst('Size') }}</b> <span class="text-danger">*</span></label>
     <div class="d-block clearfix " style="width: 30%;">
-      <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 250px;">
+      <select name="variatoins" class="form-control change-combination " id="variatoins_2" style="width: 350px;">
         @foreach ($new_option as $key => $item)
           @if ($loop->first)
             <option value=""> Select </option>
@@ -150,7 +150,7 @@
   <div class="form-group mb-25">
     <label for="variatoins_1" class="d-block shop-product__block__title"><b>{{ ucfirst('Printing options') }}</b> <span class="text-danger">*</span></label>
     <div class="d-block clearfix " style="width: 30%;">
-      <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 250px;">
+      <select name="variatoins" class="form-control change-combination " id="variatoins_1" style="width: 350px;">
         @foreach ($frame as $item)
           @if ($loop->first)
             <option value=""> Select </option>

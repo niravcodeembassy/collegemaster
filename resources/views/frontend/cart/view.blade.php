@@ -170,6 +170,7 @@
       transition: .4s;
     }
 
+
     input:checked+.slider {
       background-color: #252525
     }
@@ -192,6 +193,16 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+    p.gift_slip {
+      padding-left: 60px;
+      color: #ababab;
+      line-height: 0px;
+    }
+
+    .gift_message label {
+      padding-left: 0px;
+    }
   </style>
 @endpush
 
@@ -208,54 +219,69 @@
         let check_id = $(item).attr('id');
         $('#' + check_id).change(function(e) {
           if ($(this).is(":checked")) {
+            $(this).val('Yes');
             $(this).parent().parent().next().removeClass('d-none');
           } else {
-            $(this).parent().parent().next().addClass('d-none');
-            $(this).parent().parent().next().children('textarea').val('')
+            $(this).val('No');
+            $(this).parent().parent().next().removeClass('d-block').addClass('d-none');
+            $(this).parent().parent().next().find('textarea').val('');
+            $(this).parent().parent().next().find('input[type="checkbox"]').prop('checked', false)
+          }
+        });
+      });
+
+      $(".enable_message").each(function(list, item) {
+        let check_id = $(item).attr('id');
+        $('#' + check_id).change(function(e) {
+          if ($(this).is(":checked")) {
+            $(this).val('Yes');
+            $(this).parent().parent().children('.gift_message').removeClass('d-none');
+          } else {
+            $(this).val('No');
+            $(this).parent().parent().children('.gift_message').addClass('d-none');
+            $(this).parent().parent().children('.gift_message').find('textarea').val('');
           }
         });
       });
     });
 
+
     $(document).on("click", ".checkout-form-btn", function(event, data) {
       var el = data || $(this);
 
       var cartlist = JSON.parse(el.attr("data-cartlist"));
-
-
       var url = $(this).data("url");
 
+      var c = [];
+      $(".cart-table tbody tr.gift_message_area").each(function() {
+        var cart_id = $(this).find(".cart_id").val();
+        var enable_gift = $(this).find(".enable_gift").val();
+        var enable_message = $(this).find(".enable_message").val();
+        var order_gift_message = $(this).find(".order_gift_message").val();
+        var order_optional_note = $(this).find(".order_optional_note").val();
 
-      var cart_id = $('input[name="cart_id[]"]')
-        .map(function() {
-          return $(this).val();
-        }).get();
-
-
-      var has_gift = $('input[name="order_has_gift[]"]')
-        .map(function() {
-          return $(this).val();
-        }).get();
-
-      var gift_message = $('textarea[name="gift_message[]"]')
-        .map(function() {
-          return $(this).val();
-        }).get();
-
-      let arr = [cart_id, has_gift, gift_message];
-      cartlist.giftContent = arr;
+        let obj = {
+          'cart_id': cart_id,
+          'order_has_gift': enable_gift,
+          'order_has_message': enable_message,
+          'gift_message': order_gift_message,
+          'optional_note': order_optional_note
+        };
+        c.push(obj);
+      });
+      cartlist.giftContent = c;
 
       $.ajax({
         type: "post",
         url: url,
         data: {
-          'gift_content': arr,
+          'gift_content': c,
         },
       }).done(function(res) {
         window.location.href = res.back;
-      })
-
-
+      }).fail(function(respons) {
+        console.log(respons)
+      });
     });
   </script>
 @endpush

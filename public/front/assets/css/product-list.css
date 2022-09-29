@@ -23,6 +23,23 @@ a.active {
   color: #ad0101 !important;
 }
 
+a.read_more{
+  text-decoration: underline;
+  color: #ad0101;
+}
+a.read_less{
+  text-decoration: underline;
+  color: #ad0101;
+}
+
+a.read_more:hover{
+  text-decoration: underline;
+  color: #ad0101;
+}
+a.read_less:hover{
+  text-decoration: underline;
+  color: #ad0101;
+}
 .about-overlay .overlay-content {
   width: 290px;
   padding: 55px 20px;
@@ -30,6 +47,7 @@ a.active {
 
 h1 span {
   border-bottom: 1px dotted black;
+  font-size: 24px;
 }
 
 h4{

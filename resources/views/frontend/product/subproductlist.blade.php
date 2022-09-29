@@ -101,10 +101,17 @@ if ($product->count() > 0) {
       <div class="row">
         <div class="col-lg-12 border-bottom category_list">
           @if (request('term'))
-            <h1 class="text-center h2 text-uppercase font-weight-bold pb-3"><span>{{ ucwords(request('term')) }}</span></h1>
+            <h1 class="text-center text-uppercase font-weight-bold pb-3"><span>{{ ucwords(request('term')) }}</span></h1>
           @else
-            <h1 class="text-center text-uppercase h2 font-weight-bold pb-3"><span>{{ ucwords($subCategory->name) }}</span></h1>
-            <p class="text-center pb-3"> {{ Str::limit($subCategory->description, 250) }}</p>
+            <h1 class="text-center text-uppercase font-weight-bold pb-3"><span>{{ ucwords($subCategory->name) }}</span></h1>
+            @isset($subCategory->description)
+              <p class="text-center pb-3 small_text"> {{ Str::limit($subCategory->description, 250, '') }}
+                <a class="read_more">Read more...</a>
+              </p>
+              <p class="text-center pb-3 fulltext d-none">{{ $subCategory->description }}
+                <a class="read_less">Read less...</a>
+              </p>
+            @endisset
           @endif
         </div>
       </div>
@@ -163,8 +170,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                              =            shop page content         =
-                                                                                                                              =============================================-->
+                                                                                                                                            =            shop page content         =
+                                                                                                                                            =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
@@ -183,16 +190,15 @@ if ($product->count() > 0) {
                   @if (isset($categoryList) && $categoryList->count() > 0)
                     <!--=======  single sidebar widget  =======-->
                     <div class="single-sidebar-widget d-none d-lg-block mb-40">
-                      <h2 class="single-sidebar-widget--title">Categories</h2>
+                      <p class="single-sidebar-widget--title h2">Categories</p>
                       {!! $category_list_view !!}
                     </div>
                     <!--=======  End of single sidebar widget  =======-->
                   @endif
-                  {{-- <div class="single-sidebar-widget mb-40" style="display:none">
-                <h2 class="single-sidebar-widget--title">Filters</h2>
-                <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range"
-                  value="{{ request('range',null)  }}" />
-              </div> --}}
+                  <div class="single-sidebar-widget mb-40" style="display:none">
+                    <span class="single-sidebar-widget--title h2">Filters</span>
+                    <input type="text" class="js-range-slider" data-min="{{ 1 }}" data-max="{{ $max ?? 5000 }}" name="range" value="{{ request('range', null) }}" />
+                  </div>
                   @if (request()->has('search') || request()->has('sort') || request()->has('range'))
                     <div class=" text-center">
                       <a class="lezada-button  lezada-button--small btn-sm" href="{{ route('product.details', ['cat_slug' => $category->slug, 'product_subcategory_slug' => $subCategory->slug, 'slug' => null]) }}" role="button">Clear Filter</a>
@@ -476,6 +482,16 @@ if ($product->count() > 0) {
       }
       $('#sort').on('change', function() {
         submitform();
+      });
+      $('.read_more').click(function(event) {
+        event.preventDefault();
+        $('.fulltext').removeClass('d-none');
+        $('.small_text').addClass('d-none');
+      });
+      $('.read_less').click(function(event) {
+        event.preventDefault();
+        $('.fulltext').addClass('d-none');
+        $('.small_text').removeClass('d-none');
       });
     });
   </script>

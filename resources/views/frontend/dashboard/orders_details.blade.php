@@ -91,6 +91,9 @@
                       @if (isset($raw_data['gift_message']) && $raw_data['gift_message'] != '')
                         <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $raw_data['gift_message'] ?? '' }}</div>
                       @endif
+                      @if (isset($raw_data['optional_note']) && $raw_data['optional_note'] != '')
+                        <div class="text-muted" style="margin-top: 5px;"><b>Optional Note</b> : {{ $raw_data['optional_note'] ?? '' }}</div>
+                      @endif
                     @endif
                   </div>
                   @if (in_array($order->order_status, ['order_placed', 'customer_approval']))
