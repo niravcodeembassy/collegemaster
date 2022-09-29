@@ -40,6 +40,7 @@
     }
   </style>
 @endpush
+
 @section('title')
   {{ $title }}
 @endsection

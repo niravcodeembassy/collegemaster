@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+  {{ $story->title }}
+@endsection
+
 @php
 $schema_organization = Schema::organizationSchema();
 $schema_local = Schema::localSchema();
@@ -40,9 +44,7 @@ $schema = [$schema_organization, $schema_local];
   </style>
 @endpush
 
-@section('title')
-  {{ $story->title }}
-@endsection
+
 
 
 @section('content')

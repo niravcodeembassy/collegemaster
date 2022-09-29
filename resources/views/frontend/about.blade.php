@@ -47,8 +47,9 @@
 @push('css')
   <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
 @endpush
+
 @section('title')
-  {{ $page->title }}
+  {{ $page->page_title }}
 @endsection
 
 @section('meta_title', $page->page_title)

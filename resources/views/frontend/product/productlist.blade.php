@@ -17,7 +17,7 @@
 
 
 @section('title')
-  {{ $category->name }}
+  {{ $category->meta_title }}
 @endsection
 
 @section('meta_title', $category->meta_title)

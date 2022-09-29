@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
-@section('title')
-  {{ $page->title }}
-@endsection
 
+@section('title')
+  {{ $page->page_title }}
+@endsection
 
 
 @section('meta_title', $page->page_title)

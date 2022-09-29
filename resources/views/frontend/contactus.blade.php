@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+  {{ $page->title }}
+@endsection
+
 @php
 $schema_organization = Schema::organizationSchema();
 $schema_local = Schema::localSchema();

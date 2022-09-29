@@ -15,6 +15,11 @@
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
+@section('title')
+  {{ $subCategory->meta_title }}
+@endsection
+
+
 @section('meta_title', $subCategory->meta_title)
 @section('keywords', $subCategory->meta_keywords)
 @section('published_time', $subCategory->created_at)

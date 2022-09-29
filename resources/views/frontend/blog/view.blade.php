@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-  {{ $blog->title }}
+  {{ $blog->meta_title }}
 @endsection
 
 @section('meta_title', $blog->meta_title)

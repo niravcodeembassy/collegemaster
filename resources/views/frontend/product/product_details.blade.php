@@ -300,7 +300,7 @@
 @endpush
 
 @section('title')
-  {{ $product->name }}
+  {{ $product->meta_title }}
 @endsection
 
 @section('meta_title', $product->meta_title)
