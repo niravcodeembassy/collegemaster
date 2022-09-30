@@ -111,7 +111,7 @@ $subTotal = 0;
   @auth
     <tr style="border-bottom:none;" class="px-3 gift_message_area">
       <td colspan="7" class="px-3" style="border-top:none;">
-        <div class="">
+        <div class="d-block">
           <label class="switch mr-2">
             <input type="hidden" value="{{ $cart->id }}" name="cart[{{ $key }}]cart_id[]" class="cart_id">
             <input type="checkbox" class="enable_gift" value="{{ $cart->order_has_gift ?? '' }}" name="cart[{{ $key }}]order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
@@ -121,7 +121,7 @@ $subTotal = 0;
           <p class="gift_slip">Prices will not be shown on packing slip</p>
         </div>
         <div class="gift_message_content mt-2 {{ $cart->order_has_message == 'Yes' ? 'd-block' : 'd-none' }}">
-          <label class="switch mr-2 my-3">
+          <label class="switch switch_second my-3">
             <input type="checkbox" class="enable_message" value="{{ $cart->order_has_message ?? '' }}" name="cart[{{ $key }}]order_has_message[]" id="enable_{{ $cart->id }}" {{ $cart->order_has_message == 'Yes' ? 'checked' : '' }}>
             <span class="slider round"></span>
           </label>

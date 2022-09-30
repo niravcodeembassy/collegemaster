@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-  {{ $page->title }}
+  {{ $title }}
 @endsection
 
 @php

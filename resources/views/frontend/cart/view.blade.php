@@ -203,6 +203,22 @@
     .gift_message label {
       padding-left: 0px;
     }
+
+    .switch_second {
+      margin-right: 0.5rem !important;
+    }
+
+    /* media query */
+    @media only screen and (max-width: 480px) {
+      p.gift_slip {
+        padding-left: 0px;
+        line-height: 20px;
+      }
+
+      .mr-2 {
+        margin-right: 1.5rem !important;
+      }
+    }
   </style>
 @endpush
 

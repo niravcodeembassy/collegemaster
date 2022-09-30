@@ -149,7 +149,7 @@
      $prvent_footer = ['login','register','contact-us.index','password.request'];
   @endphp
 
-  @if (!in_array(request()->route()->getName(), $prvent_footer) && !str_contains(url()->current(),url('/password/reset/'))) {
+  @if (!in_array(request()->route()->getName(), $prvent_footer) && !str_contains(url()->current(),url('/password/reset/')))
       @include('frontend.layouts.footer')
   @endif
 
