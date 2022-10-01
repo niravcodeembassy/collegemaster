@@ -52,8 +52,8 @@ class OrderController extends Controller
       1 => 'created_at',
       2 => 'user_id',
       3 => 'id',
-      4 => 'payment_status',
-      5 => 'order_status',
+      // 4 => 'payment_status',
+      4 => 'order_status',
       7 => 'total',
       8 => 'option',
     );
@@ -501,7 +501,7 @@ class OrderController extends Controller
     $this->data['shipping_address'] = $data['shipping_address'];
     $this->data['belling_address'] =  $data['belling_address'];
     $this->data['title'] = 'Invoice';
-
+    
     return $this->view('admin.order.invoice_' . $data['type']);
   }
 

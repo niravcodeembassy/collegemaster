@@ -209,8 +209,6 @@
     </div>
   </div>
 
-  @include('admin.order.invoice')
-
 
 @endsection
 
@@ -226,7 +224,7 @@
 
 @push('script')
   <script>
-    $('.download-pdf').on('click', function() {
+    $('.printPDF').on('click', function() {
       var element = document.getElementById('invoice-page');
       var opt = {
         margin: 0.2,
@@ -242,17 +240,21 @@
           unit: 'in'
         }
       };
-      html2pdf().set(opt).from(element).save();
+      // html2pdf().set(opt).from(element).save();
+      html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdfObj) {
+        pdfObj.autoPrint();
+        window.open(pdfObj.output('bloburl'), '_blank');
+      });
     });
 
     // New Promise-based usage:
 
-    $('.printPDF').on('click', function(e) {
-      const a = $('#order-page').printThis({
-        importStyle: true,
-        beforePrintEvent: function(a) {}
-      });
-    });
+    // $('.printPDF').on('click', function(e) {
+    //   const a = $('#invoice-page').printThis({
+    //     importStyle: true,
+    //     beforePrintEvent: function(a) {}
+    //   });
+    // });
   </script>
 @endpush
 
@@ -260,9 +262,6 @@
   <style>
     /* Template Name: Professional  */
 
-    .main_invoice {
-      display: none;
-    }
 
     .font-size-div * {
       line-height: 21px;

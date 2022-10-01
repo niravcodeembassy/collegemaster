@@ -43,7 +43,7 @@ $subTotal = 0;
     <td class="product-price pb-15 px-3"><span class="price">{{ $priceData->price ?? $priceData->offer_price }}</span>
     </td>
     <td class="product-quantity pb-15 px-3 text-center">
-      <div style="height: 60px;margin-top:15px;">
+      <div>
         <div class="pro-qty d-inline-block py-0 mx-0">
           <input type="text" value="{{ $cart->qty }}" class="add-to-cart-update-view border-0" min="1" name="view_update_{{ $cart->id }}" readonly data-cart="{{ json_encode($cartData) }}"
             data-url="{{ route('cart.view-update', ['update' => true]) }}" data-msg-max="Product is out of stock" max="{{ $cart->productvariant->inventory_quantity }}">

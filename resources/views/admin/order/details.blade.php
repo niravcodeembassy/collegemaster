@@ -2,6 +2,17 @@
 
 @section('title', $title)
 
+@push('style')
+  <style>
+    span.dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+  </style>
+@endpush
+
 @section('content')
   @component('component.heading',
       [
@@ -55,13 +66,13 @@
 
           @endphp
           <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <img src="{{ $image_url }}" alt="" style="width: 160px" class="mr-4">
+            <img src="{{ $image_url }}" alt="" style="width: 160px;height:160px;" class="mr-4">
             <div style="margin-left:20px">
               <h6 class="my-0 f-18" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
               @if (count($attributes) > 0)
                 <div class="">
                   @foreach ($attributes as $key => $attribute)
-                    <span class="text-muted">{{ $key }} : {{ $attribute }}</span>
+                    <span class="text-muted f-12">{{ $key }} : {{ $attribute }}</span>
                     @if (!$loop->last)
                     @endif
                     @if (!$loop->last)
@@ -72,23 +83,26 @@
               @endif
 
               @if (isset($item->notes) && $item->notes != '')
-                <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $item->notes }}</div>
+                <div class="text-muted" style="margin-top: 10px;"><b>Notes </b>: {{ $item->notes }}</div>
+              @endif
+
+              @if (isset($item->order_has_gift))
+                <div class="text-muted" style="margin-top: 5px;"><b>This Order Has Gift</b> <span class="mx-2 dot {{ $item->order_has_gift == 'Yes' ? 'bg-success' : 'bg-danger' }}"></span></div>
               @endif
 
               @if (isset($item->gift_message) && $item->gift_message != '')
-                <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $item->gift_message }}</div>
+                <div class="text-muted" style="margin-top: 5px;"><b>Gift Message </b>: {{ $item->gift_message }}</div>
               @endif
 
               @if (isset($item->optional_note) && $item->optional_note != '')
-                <div class="text-muted" style="margin-top: 5px;"><b>Optional Note</b> : {{ $item->optional_note ?? '' }}</div>
+                <div class="text-muted" style="margin-top: 5px;"><b>Optional Note </b> {{ $item->optional_note ?? '' }}</div>
               @endif
-
 
               <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
               <br>
               <small class="text-muted f-12">Quantity : {{ str_replace('.00', ' ', $qty) }} </small>
               <br>
-              <span class="text-muted f-14 ">{!! Helper::showPrice($item->qty_price, $order->currency, $order->currency) !!}</span>
+              <small class="text-muted f-12">Price : {!! Helper::showPrice($item->qty_price, $order->currency, $order->currency) !!}</small>
 
             </div>
           </li>
@@ -149,7 +163,7 @@
       <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
       <div class="card shadow-none border">
         <div class="card-body">
-          <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
+          <span class="text-muted "> Name : <span class="text-uppercase"> {{ $order->user->name ?? '' }} </span> </span> <br>
           <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
           <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
         </div>
@@ -289,14 +303,14 @@
             <span class="text-muted "> <strong>Mobile</strong> : {{ $shipping->mobile }}</span> <br>
           @endif
           @if ($shipping->address_one)
-            <span class="text-muted ">{{ $shipping->address_one }}</span> <br>
+            <span class="text-muted text-uppercase">{{ $shipping->address_one }}</span> <br>
           @endif
           @if ($shipping->address_two)
-            <span class="text-muted "> {{ $shipping->address_two }}</span> <br>
+            <span class="text-muted text-uppercase"> {{ $shipping->address_two }}</span> <br>
           @endif
 
-          <span class="text-muted "> {{ $shipping->city ?? '' }} - {{ $shipping->postal_code ?? '' }} </span> <br>
-          <span class="text-muted ">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
+          <span class="text-muted text-uppercase"> {{ $shipping->city ?? '' }} - {{ $shipping->postal_code ?? '' }} </span> <br>
+          <span class="text-muted text-uppercase">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
         </div>
       </div>
 
@@ -306,14 +320,14 @@
           <div class="card-body">
 
             @if ($billing->billing_address_one)
-              <span class="text-muted ">{{ $billing->billing_address_one }}</span> <br>
+              <span class="text-muted text-uppercase">{{ $billing->billing_address_one }}</span> <br>
             @endif
             @if ($billing->billing_address_two)
-              <span class="text-muted "> {{ $billing->billing_address_two }}</span> <br>
+              <span class="text-muted text-uppercase"> {{ $billing->billing_address_two }}</span> <br>
             @endif
-            <span class="text-muted "> {{ $billing->billing_city ?? '' }} -
+            <span class="text-muted text-uppercase"> {{ $billing->billing_city ?? '' }} -
               {{ $billing->billing_postal_code ?? '' }} </span> <br>
-            <span class="text-muted ">{{ $billing->billing_state ?? '' }} -
+            <span class="text-muted text-uppercase">{{ $billing->billing_state ?? '' }} -
               {{ $billing->billing_country ?? '' }}</span> <br>
           </div>
         </div>

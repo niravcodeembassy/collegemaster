@@ -69,7 +69,25 @@
                       @enderror
                     </div>
                   </div>
+
+                  @php
+                    $countryList = App\Model\Country::get();
+                  @endphp
                   <div class="col-md-12" style="margin-top:-5px">
+                    <label for="Country">{{ __('Country') }}</label>
+                    <div class="mb-3">
+                      <select class="nice-select form-control  form-control-lg  w-100" placeholder="Country" name="country_id" style="display: none;" id="country">
+                        <option value="">Select Country</option>
+                        @foreach ($countryList as $item)
+                          <option value="{{ $item->id }}">
+                            {{ $item->name }}
+                          </option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 mt-3">
                     <label for="password">{{ __('Password') }}</label>
                     <div class="mb-3">
                       <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
@@ -139,7 +157,7 @@
       preferredCountries: ["us"],
     });
 
-    
+
     $('.iti__flag-container').click(function() {
       var countryCode = iti.getSelectedCountryData().dialCode;
       $('#code').val("+" + countryCode);

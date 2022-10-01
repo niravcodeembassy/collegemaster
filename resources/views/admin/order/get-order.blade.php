@@ -4,7 +4,7 @@
 <div class="modal fade" id="edit_hsncode_form_model">
   <div class="modal-dialog">
     <form action="{{ route('admin.order.update', $order->id) }}" method="POST" role="form" name="edit_tax_form" id="edit_tax_form">
-      @csrf @method('PUT') ;
+      @csrf @method('PUT')
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Manage Order</h5>
@@ -17,7 +17,7 @@
             <div class="form-group">
 
               <label for="gst_type">Payment Status <em class="text-danger">*</em></label>
-              <div class="content_error ">
+              <div class="content_error">
                 <select name="payment_status" id="payment_status_id" data-rule-required="true" class="form-control">
                   <option value="">--- Payment Status ---</option>
 
@@ -47,10 +47,10 @@
               <select name="delivery_status" id="delivery_status" data-rule-required="true" onchange="getdelivery_status();" data-parsley-group="first" required class="form-control">
                 <option value="">--- Delivery Status ---</option>
                 <option value="order_placed" {{ strtolower($order->order_status) == 'order_placed' ? 'selected' : '' }}>New</option>
-                <option value="customer_approval" {{ strtolower($order->order_status) == 'customer_approval' ? 'selected' : '' }}>Approval</option>
-                <option value="work_in_progress" {{ strtolower($order->order_status) == 'work_in_progress' ? 'selected' : '' }}>Designing</option>
                 <option value="pick_not_receive" {{ strtolower($order->order_status) == 'pick_not_receive' ? 'selected' : '' }}>Pick Not Recieve</option>
+                <option value="work_in_progress" {{ strtolower($order->order_status) == 'work_in_progress' ? 'selected' : '' }}>Designing</option>
                 <option value="correction" {{ strtolower($order->order_status) == 'correction' ? 'selected' : '' }}>Correction</option>
+                <option value="customer_approval" {{ strtolower($order->order_status) == 'customer_approval' ? 'selected' : '' }}>Approval</option>
                 <option value="printing" {{ strtolower($order->order_status) == 'printing' ? 'selected' : '' }}>Printing</option>
                 <option value="delivered" {{ strtolower($order->order_status) == 'delivered' ? 'selected' : '' }}>Completed</option>
                 <option value="refund" {{ strtolower($order->order_status) == 'refund' ? 'selected' : '' }}>Refund</option>
@@ -104,7 +104,7 @@
                             <input type="text" class="form-control " id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5"/>
                             </div>
                         </div>
-                    </div> --}}
+          </div> --}}
 
 
 

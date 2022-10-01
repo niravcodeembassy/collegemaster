@@ -52,12 +52,11 @@
                         <input type="email" value="{{ $shippingAddress->email ?? '' }}" required data-rule-email="true" name="email" placeholder="Email Address">
                       </div>
 
-                      <input type="hidden" id="shiping_mobile_country_code" name="country_code" value="{{ $shippingAddress->country_code ?? '' }}">
+                      <input type="hidden" id="shiping_mobile_country_code" name="country_code" value="{{ $shippingAddress->country_code ?? '+1' }}">
                       <div class="col-md-6 col-12 mb-20 mobile_input">
                         <label for="telephone">Mobile no*</label>
-                        <input type="tel" placeholder="Phone number" value="{{ $shippingAddress->mobile ?? '' }}" name="mobile" id="telephone" style="padding-left: 53px;" data-rule-required="true" required>
+                        <input type="tel" placeholder="Phone number" value="{{ $shippingAddress->mobile ?? '' }}" name="mobile" id="telephone" data-rule-number="true" style="padding-left: 53px;" data-rule-required="true" required>
                         <label id="telephone-error" class="error text-danger" for="telephone"></label>
-
                       </div>
 
 
@@ -106,8 +105,7 @@
                         <label>Zip Code*</label>
                         <input type="text" name="postal_code" value="{{ $shippingAddress->postal_code ?? '' }}" required placeholder="Zip Code">
                       </div>
-
-
+                      
 
                       <div class="col-12 mb-20">
                         <div class="check-box">
@@ -148,15 +146,13 @@
                         <input type="email" data-rule-required="#different_billing_address:checked" value="{{ $sessionData['billing_email'] ?? '' }}" data-rule-email="true" name="billing_email" placeholder="Email Address">
                       </div>
 
-                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code" {{ $sessionData['billing_mobile_country_code'] ?? '' }}>
+                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code" {{ $sessionData['billing_mobile_country_code'] ?? '+1' }}>
                       <div class="col-md-6 col-12 mb-20 billing_input">
                         <label for="billing_mobile">Mobile no*</label>
                         <input type="tel" placeholder="Phone number" value="{{ $sessionData['billing_mobile'] ?? '' }}" name="billing_mobile" id="billing_mobile" data-rule-required="true"
-                          data-rule-required="#different_billing_address:checked" required pattern="^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$" data-msg-required="Mobile no is required" data-rule-mobileUK="true"
+                          data-rule-required="#different_billing_address:checked" data-rule-number="true" required pattern="^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$" data-msg-required="Mobile no is required" data-rule-mobileUK="true"
                           style="padding-left:73px!important;padding:10px">
                         <label id="billing_mobile-error" class="error text-danger" for="billing_mobile"></label>
-
-
                       </div>
 
 
@@ -290,14 +286,16 @@
     });
 
     $('.mobile_input .iti__flag-container').click(function() {
-      var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
-      var countryCode = countryCode.replace(/[^0-9]/g, '')
+      var countryCode = iti.getSelectedCountryData().dialCode;
+      // var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
+      // var countryCode = countryCode.replace(/[^0-9]/g, '')
       $('#shiping_mobile_country_code').val("+" + countryCode);
     });
 
     $('.billing_input .iti__flag-container').click(function() {
-      var countryCode = $('.billing_input .iti__selected-flag').attr('title');
-      var countryCode = countryCode.replace(/[^0-9]/g, '')
+      var countryCode = iti_second.getSelectedCountryData().dialCode;
+      // var countryCode = $('.billing_input .iti__selected-flag').attr('title');
+      // var countryCode = countryCode.replace(/[^0-9]/g, '')
       $('#billing_mobile_country_code').val("+" + countryCode);
     });
 

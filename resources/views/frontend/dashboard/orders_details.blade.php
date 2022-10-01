@@ -60,7 +60,7 @@
 
                 @endphp
                 <li class="list-group-item d-flex justify-content-between lh-condensed order-table">
-                  <img src="{{ $image_url }}" title="{{ $item->name }}" alt="{{ $item->name }}" style="width: 160px" class="mr-4">
+                  <img src="{{ $image_url }}" title="{{ $item->name }}" alt="{{ $item->name }}" style="width: 160px; height:160px;" class="mr-4">
                   <div class="product-details" style="margin-right: 134px">
                     <h6 class="my-0 f-18 p-name" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
                     @if (count($attributes) > 0)
@@ -76,18 +76,22 @@
                       </div>
                     @endif
 
-
                     <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
                     <br>
-                    <small class="text-muted f-12">Qty {{ str_replace('.00', ' ', $qty) }} </small>
+                    <small class="text-muted f-12">Qty : {{ str_replace('.00', ' ', $qty) }} </small>
                     <br>
-                    <span class="text-muted f-14 ">{!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</span>
+                    <span class="text-muted f-14 ">Price : {!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</span>
 
-                    @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
+                    @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['order_has_gift']) && isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
                       <hr>
                       @if (isset($raw_data['notes']) && $raw_data['notes'] != '')
                         <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $raw_data['notes'] ?? '' }}</div>
                       @endif
+
+                      @if (isset($raw_data['order_has_gift']))
+                        <div class="text-muted" style="margin-top: 5px;"><b>This Order Has Gift</b> <span class="mx-2 dot {{ $raw_data['order_has_gift'] == 'Yes' ? 'bg-success' : 'bg-danger' }}"></span></div>
+                      @endif
+
                       @if (isset($raw_data['gift_message']) && $raw_data['gift_message'] != '')
                         <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $raw_data['gift_message'] ?? '' }}</div>
                       @endif
@@ -364,6 +368,13 @@
       color: #0087F7;
       font-size: 1.5em;
       letter-spacing: 0.05em;
+    }
+
+    span.dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
     }
 
     .dropzone {

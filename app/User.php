@@ -74,7 +74,7 @@ class User extends Authenticatable
       return asset('storage/' . $this->profile_image);
     }
 
-    return asset('storage/default/default.png');
+    return 'https://ui-avatars.com/api/?name=' . $this->name;
   }
 
   public function message()

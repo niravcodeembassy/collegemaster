@@ -3,7 +3,6 @@
 @section('title', $title)
 
 @section('content')
-
   @component('component.heading',
       [
           'page_title' => 'Orde Invoice',
@@ -13,7 +12,9 @@
           'action_icon' => 'fa fa-plus',
           'text' => '',
       ])
-    <button class="btn btn-sm btn-primary printPDF"><i class="fa fa-print"></i> Print</button>
+    <button class="btn btn-sm btn-success  printOrder mx-2"><i class="fa fa-print"></i> Print Order
+      Form</button>
+    <button class="btn btn-sm btn-primary printPDF"><i class="fa fa-print"></i> Print Invoice</button>
   @endcomponent
 
 
@@ -262,6 +263,14 @@
     // html2pdf().set(opt).from(element).save();
 
     $('.printPDF').on('click', function(e) {
+      const a = $('#invoice-page').printThis({
+        importStyle: true,
+        beforePrintEvent: function(a) {
+        }
+      });
+    });
+
+    $('.printOrder').on('click', function(e) {
       const a = $('#order-page').printThis({
         importStyle: true,
         beforePrintEvent: function(a) {

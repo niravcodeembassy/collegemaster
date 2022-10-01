@@ -78,8 +78,8 @@
                         <input type="file" value="Choose a file" accept="image/*" id="uplode_btn" name="uplode_btn" style="display:none;">
                       </div>
                     </div>
-                    <h4 class="card-title mt-8"><b>{{ $user->first_name ?? '' }}</b></h4>
-                    <p class="card-subtitle">{{ $user->email ?? '' }}</p>
+                    <h4 class="card-title mt-8"><b>{{ ucwords($user->name) ?? '' }}</b></h4>
+                    {{-- <p class="card-subtitle">{{ $user->email ?? '' }}</p> --}}
                   </div>
                 </div>
                 <div class="col-lg-9 col-md-12">

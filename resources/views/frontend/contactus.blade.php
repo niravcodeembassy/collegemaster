@@ -83,7 +83,7 @@ $schema = [$schema_organization, $schema_local];
                   <div class="col-md-12 mb-3">
                     <label>Email <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="email" class="form-control form-control-lg" placeholder="Email *" required="">
+                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email *" required="">
                     </div>
                   </div>
 
