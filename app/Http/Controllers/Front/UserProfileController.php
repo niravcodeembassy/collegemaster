@@ -118,13 +118,14 @@ class UserProfileController extends Controller
       'postcode' => 'required|string',
     ]);
 
-
+    $mobile = $request->country_code . "" . $request->phone;
     User::where('id', $userid)->update([
       'name' => $request->first_name . ' ' . $request->last_name,
       'first_name' => $request->first_name,
       'last_name' => $request->last_name,
       'email' => $request->email,
-      'phone' => $request->phone,
+      'phone' => $mobile,
+      'country_code' => $request->country_code,
       'address1' => $request->address1,
       'address2' => $request->address2,
       'country_id' => $request->country,

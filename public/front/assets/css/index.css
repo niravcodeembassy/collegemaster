@@ -425,6 +425,7 @@ h2.quality_h3{
 
 .trust_icon h3{
   font-size: 18px !important;
+  font-weight: 600;
 }
 
 /*media query */

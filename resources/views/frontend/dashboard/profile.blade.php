@@ -109,12 +109,12 @@
                             <input type="email" class="" name="email" id="email" data-rule-required="true" data-rule-remote="" data-msg-remote="Email is already exists." data-msg-required="Email is required"
                               value="{{ $user->email ?? '' }}">
                           </div>
+                          <input type="hidden" id="code" name="country_code" value="{{ $user->country_code ?? '' }}">
                           <div class="form-group col-md-6">
                             <label for="phone">Mobile no <span class="text-danger">*</span></label>
                             <input type="tel" placeholder="Phone number" value="{{ $user->phone ?? '' }}" name="phone" class="telephone" id="telephone" data-rule-required="true" required pattern="^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$"
                               data-msg-required="Mobile no is required" data-rule-mobileUK="true" style="padding-left:73px!important;padding:10px">
-                            {{-- <label id="phone-error" class="error text-danger" for="phone"></label> --}}
-                            {{-- <input type="text" id="phone" name="phone" id="phone" class="" data-rule-required="true" data-msg-required="Mobile no is required" data-rule-number="true" data-rule-maxlength="10"  value="{{ $user->phone ?? ''}}"> --}}
+                            <label id="phone-error" class="error text-danger" for="phone"></label>
                           </div>
                         </div>
                         <div class="form-group">
@@ -216,10 +216,11 @@
 
   <script>
     var input = document.querySelector("#telephone");
-    window.intlTelInput(input, {
+    var iti = window.intlTelInput(input, {
       formatOnDisplay: false,
       autoPlaceholder: "polite",
       initialDialCode: true,
+      separateDialCode: true,
       americaMode: false,
       preferredCountries: ["us"],
     });
@@ -231,22 +232,22 @@
     function country() {
       var countryCode = $('.iti__selected-flag').attr('title');
       var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#telephone').val("");
-      $('#telephone').val("+" + countryCode + "" + $('#telephone').val());
+      $('#code').val("+" + countryCode);
     }
 
-    $('#telephone').keyup(function() {
-      var mobile_no = $(this).val();
-      var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(mobile_no)) {
-        $('#phone-error').text('');
-        return true;
-      } else {
-        $('#phone-error').text('Please Enter Valid Mobile No');
-        return false;
-      }
-    });
-
+    // $('#telephone').keyup(function() {
+    //   var mobile_no = $(this).val();
+    //   var code = iti.getSelectedCountryData().dialCode;
+    //   var phone = "+" + code + "" + mobile_no;
+    //   var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+    //   if (regex.test(phone)) {
+    //     $('#phone-error').text('');
+    //     return true;
+    //   } else {
+    //     $('#phone-error').text('Please Enter Valid Mobile No');
+    //     return false;
+    //   }
+    // });
 
 
     $(document).ready(function() {
@@ -256,8 +257,9 @@
       get_state(country_code, country_url)
 
       $.validator.addMethod('customphone', function(value, element, params) {
-        console.log(params.test(value));
-        return params.test(value);
+        var code = iti.getSelectedCountryData().dialCode;
+        var phone = "+" + code + "" + value;
+        return params.test(phone);
       }, "Please Enter Valid Mobile No");
 
       jQuery.validator.addClassRules("telephone", {

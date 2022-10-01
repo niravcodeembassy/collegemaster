@@ -52,6 +52,7 @@
                         <input type="email" value="{{ $shippingAddress->email ?? '' }}" required data-rule-email="true" name="email" placeholder="Email Address">
                       </div>
 
+                      <input type="hidden" id="shiping_mobile_country_code" name="country_code" value="{{ $shippingAddress->country_code ?? '' }}">
                       <div class="col-md-6 col-12 mb-20 mobile_input">
                         <label for="telephone">Mobile no*</label>
                         <input type="tel" placeholder="Phone number" value="{{ $shippingAddress->mobile ?? '' }}" name="mobile" id="telephone" style="padding-left: 53px;" data-rule-required="true" required>
@@ -147,6 +148,7 @@
                         <input type="email" data-rule-required="#different_billing_address:checked" value="{{ $sessionData['billing_email'] ?? '' }}" data-rule-email="true" name="billing_email" placeholder="Email Address">
                       </div>
 
+                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code" {{ $sessionData['billing_mobile_country_code'] ?? '' }}>
                       <div class="col-md-6 col-12 mb-20 billing_input">
                         <label for="billing_mobile">Mobile no*</label>
                         <input type="tel" placeholder="Phone number" value="{{ $sessionData['billing_mobile'] ?? '' }}" name="billing_mobile" id="billing_mobile" data-rule-required="true"
@@ -268,45 +270,44 @@
 
   <script>
     var input = document.querySelector("#telephone");
-    window.intlTelInput(input, {
+    var iti = window.intlTelInput(input, {
       formatOnDisplay: false,
       autoPlaceholder: "polite",
       initialDialCode: true,
+      separateDialCode: true,
       americaMode: false,
       preferredCountries: ["us"],
     });
 
     var data = document.querySelector("#billing_mobile");
-    window.intlTelInput(data, {
+    var iti_second = window.intlTelInput(data, {
       formatOnDisplay: false,
       autoPlaceholder: "polite",
-      initialDialCode: true,
       americaMode: false,
+      separateDialCode: true,
+      initialDialCode: true,
       preferredCountries: ["us"],
     });
 
     $('.mobile_input .iti__flag-container').click(function() {
       var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
       var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#telephone').val("");
-      $('#telephone').val("+" + countryCode + "" + $('#telephone').val());
+      $('#shiping_mobile_country_code').val("+" + countryCode);
     });
 
     $('.billing_input .iti__flag-container').click(function() {
       var countryCode = $('.billing_input .iti__selected-flag').attr('title');
       var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#billing_mobile').val("");
-      $('#billing_mobile').val("+" + countryCode + "" + $('#billing_mobile').val());
+      $('#billing_mobile_country_code').val("+" + countryCode);
     });
-
-
-
 
 
     $('#billing_mobile').keyup(function() {
       var mobile_no = $(this).val();
+      var country_code = iti_second.getSelectedCountryData().dialCode;
+      var phone = "+" + country_code + "" + mobile_no;
       var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(mobile_no)) {
+      if (regex.test(phone)) {
         $('#billing_mobile-error').text('');
         return true;
       } else {
@@ -317,12 +318,14 @@
 
     $('#telephone').keyup(function() {
       var mobile_no = $(this).val();
+      var country_code = iti.getSelectedCountryData().dialCode;
+      var phone = "+" + country_code + "" + mobile_no;
       var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(mobile_no)) {
-        $('#phone-error').text('');
+      if (regex.test(phone)) {
+        $('#telephone-error').text('');
         return true;
       } else {
-        $('#phone-error').text('Please Enter Valid Mobile No');
+        $('#telephone-error').text('Please Enter Valid Mobile No');
         return false;
       }
     });

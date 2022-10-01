@@ -47,7 +47,7 @@
                   <div class="col-md-12">
                     <label for="email">{{ __('E-Mail') }}</label>
                     <div class="mb-3">
-                      <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
+                      <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email">
                       @error('email')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -55,11 +55,12 @@
                       @enderror
                     </div>
                   </div>
+
+                  <input type="hidden" id="code" name="country_code">
                   <div class="col-md-12 w-100">
                     <label for="mobile">{{ __('Mobile number') }}</label>
                     <div class="intel_input">
-                      <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile"
-                        style="background: none;">
+                      <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required style="background: none;">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                       @error('mobile')
                         <span class="invalid-feedback" role="alert">
@@ -129,39 +130,38 @@
 
   <script>
     var input = document.querySelector("#mobile");
-    window.intlTelInput(input, {
+    let iti = window.intlTelInput(input, {
       formatOnDisplay: true,
       autoPlaceholder: "polite",
       initialDialCode: true,
       americaMode: false,
+      separateDialCode: true,
       preferredCountries: ["us"],
     });
 
+    
     $('.iti__flag-container').click(function() {
-      country();
+      var countryCode = iti.getSelectedCountryData().dialCode;
+      $('#code').val("+" + countryCode);
     });
 
     $('form').on('submit', function(e) {
       if (grecaptcha.getResponse() == "") {
         e.preventDefault();
         $(".captcha").show();
+        var countryCode = iti.getSelectedCountryData().dialCode;
+        $('#code').val("+" + countryCode);
       } else {
         $('form').submit();
       }
     });
 
-
-    function country() {
-      var countryCode = $('.iti__selected-flag').attr('title');
-      var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#mobile').val("");
-      $('#mobile').val("+" + countryCode + "" + $('#mobile').val());
-    }
-
     $('#mobile').keyup(function() {
       var mobile_no = $(this).val();
+      var country_code = iti.getSelectedCountryData().dialCode;
+      var phone = "+" + country_code + "" + mobile_no;
       var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(mobile_no)) {
+      if (regex.test(phone)) {
         $('#mobile-error').text('');
         return true;
       } else {

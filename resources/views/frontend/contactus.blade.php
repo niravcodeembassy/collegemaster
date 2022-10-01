@@ -16,6 +16,7 @@ $schema = [$schema_organization, $schema_local];
 
 @push('css')
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('front/assets/build/css/intlTelInput.css') }}">
 @endpush
 
 @section('schema')
@@ -85,12 +86,17 @@ $schema = [$schema_organization, $schema_local];
                       <input type="email" class="form-control form-control-lg" placeholder="Email *" required="">
                     </div>
                   </div>
+
+
                   <div class="col-md-12 mb-3">
+                    <input type="hidden" id="code" name="country_code">
                     <label>Mobile Number <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="text" name="mobile" class="form-control form-control-lg" min="10" max="10" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
+                      <input type="text" class="form-control form-control-lg" min="10" max="10" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
+                      <label id="mobile-error" class="error text-danger" for="phone"></label>
                     </div>
                   </div>
+
                   <div class="col-md-12 mb-3">
                     <label>Subject <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -125,17 +131,56 @@ $schema = [$schema_organization, $schema_local];
   {!! NoCaptcha::renderJs() !!}
 @endsection
 
+@push('js')
+  <script src="{{ asset('front/assets/build/js/intlTelInput.min.js') }}"></script>
+  <script src="{{ asset('front/assets/build/js/intlTelInput-jquery.min.js') }}"></script>
+@endpush
+
 @push('script')
   <script>
     $(".alert").delay(4000).slideUp(200, function() {
       $(this).alert('close');
     });
+
+    var input = document.querySelector("#mobile");
+    let iti = window.intlTelInput(input, {
+      formatOnDisplay: true,
+      autoPlaceholder: "polite",
+      initialDialCode: true,
+      americaMode: false,
+      separateDialCode: true,
+      preferredCountries: ["us"],
+    });
+
+
+
+    $('.iti__flag-container').click(function() {
+      var countryCode = iti.getSelectedCountryData().dialCode;
+      $('#code').val("+" + countryCode);
+    });
+
     $('form').on('submit', function(e) {
       if (grecaptcha.getResponse() == "") {
         e.preventDefault();
         $(".captcha").show();
+        var countryCode = iti.getSelectedCountryData().dialCode;
+        $('#code').val("+" + countryCode);
       } else {
         $('form').submit();
+      }
+    });
+
+    $('#mobile').keyup(function() {
+      var mobile_no = $(this).val();
+      var country_code = iti.getSelectedCountryData().dialCode;
+      var phone = "+" + country_code + "" + mobile_no;
+      var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+      if (regex.test(phone)) {
+        $('#mobile-error').text('');
+        return true;
+      } else {
+        $('#mobile-error').text('Please Enter Valid Mobile No');
+        return false;
       }
     });
   </script>

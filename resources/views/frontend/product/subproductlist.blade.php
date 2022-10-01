@@ -106,10 +106,10 @@ if ($product->count() > 0) {
             <h1 class="text-center text-uppercase font-weight-bold pb-3"><span>{{ ucwords($subCategory->name) }}</span></h1>
             @isset($subCategory->description)
               <p class="text-center pb-3 small_text"> {{ Str::limit($subCategory->description, 250, '') }}
-                <a class="read_more">Read more...</a>
+                <a class="read_more font-weight-bold">Read more...</a>
               </p>
               <p class="text-center pb-3 fulltext d-none">{{ $subCategory->description }}
-                <a class="read_less">Read less...</a>
+                <a class="read_less font-weight-bold">Read less...</a>
               </p>
             @endisset
           @endif
@@ -170,8 +170,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                            =            shop page content         =
-                                                                                                                                            =============================================-->
+                                                                                                                                              =            shop page content         =
+                                                                                                                                              =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">

@@ -17,7 +17,10 @@ a.active {
 .breadcrumb-area h2 {
   font-size: 17px !important;
 }
-
+.category_list h1{
+  line-height: 18px;
+  font-size: 24px;
+}
 .price span.color_brown{
   font-size: 20px !important;
   color: #ad0101 !important;
@@ -44,11 +47,10 @@ a.read_less:hover{
   width: 290px;
   padding: 55px 20px;
 }
-
-h1 span {
+h1 span{
   border-bottom: 1px dotted black;
-  font-size: 24px;
 }
+
 
 h4{
   font-size: 16px;

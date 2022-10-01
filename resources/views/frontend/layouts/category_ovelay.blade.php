@@ -14,7 +14,7 @@
       <div class="widget-wrapper">
         <!--=======  single widget  =======-->
         <div class="single-widget">
-          <h2 class="single-sidebar-widget--title">Categories</h2>
+          <p class="single-sidebar-widget--title h2">Categories</p>
           <ul class="single-sidebar-widget--list single-sidebar-widget--list--category">
             @foreach ($forntcategory as $item)
               <li class="has-children">

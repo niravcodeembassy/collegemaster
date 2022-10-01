@@ -30,14 +30,13 @@ class ContactUsController extends Controller
    */
   public function store(Request $request)
   {
-    //
-
+    $mobile = $request->country_code . "" . $request->mobile;
     $contact = new Contact();
     $contact->name = $request->name;
     $contact->email = $request->email;
     $contact->subject = $request->subject;
     $contact->comment = $request->message;
-    $contact->phone = $request->mobile;
+    $contact->phone = $mobile;
     $contact->save();
 
     return back()->with('success', 'Message sent successfully');
