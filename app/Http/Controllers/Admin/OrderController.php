@@ -766,10 +766,11 @@ class OrderController extends Controller
         'message' => "SMS Sent Successfully"
       ], 200);
     }
+
     return response()->json([
       'success' => true,
       'message' => "SMS Not Sent this Order Status"
-    ], 200);
+    ], 400);
   }
 
   public function sendSmsMessage($mobile, $body)
