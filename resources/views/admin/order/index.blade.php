@@ -19,6 +19,28 @@
       background-color: #fff;
       margin-bottom: 0rem;
     }
+
+    .btn-active {
+      background-color: #6576ff;
+      border-color: #6576ff;
+      box-shadow: none;
+      color: white;
+    }
+
+    .btn-active:hover {
+      color: white;
+    }
+
+    .btn-inactive:hover {
+      color: black;
+    }
+
+    .btn-inactive {
+      background-color: #e5e9f2;
+      border-color: #e5e9f2;
+      box-shadow: none;
+      color: black;
+    }
   </style>
 @endpush
 @push('js')
@@ -44,28 +66,28 @@
         <div class="card-header">
           <ul class="nav">
             <li class="nav-item">
-              <a class="btn btn-group-vertical ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online</a>
+              <a class="btn btn-group-vertical text-uppercase ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-group-vertical  mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD</a>
+              <a class="btn btn-group-vertical text-uppercase mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD</a>
             </li>
             <li class="nav-item ">
-              <a class="btn btn-group-vertical {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending</a>
+              <a class="btn btn-group-vertical text-uppercase {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending</a>
             </li>
           </ul>
           <div class="mt-2">
             <ol class="breadcrumb text-muted fw-bold">
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="order_placed" class="type text-primary">NEW</a>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="order_placed" class="btn-group-vertical type btn btn-active">NEW</a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="type">PIC NOT REC</a>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="btn-group-vertical type btn btn-inactive">PIC NOT REC</a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="work_in_progress" class="type">DESIGNING</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="type">CORRECTION </a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="customer_approval" class="type">APPROVAL</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="printing" class="type">PRINTING</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="delivered" class="type">COMPLETED</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="refund" class="type">REFUND</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="all" class="type">ALL</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="work_in_progress" class="btn-group-verticaltype btn btn-inactive">DESIGNING</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="btn-group-vertical type btn btn-inactive">CORRECTION </a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="customer_approval" class="btn-group-vertical type btn btn-inactive">APPROVAL</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="printing" class="btn-group-vertical type btn btn-inactive">PRINTING</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="delivered" class="btn-group-vertical type btn btn-inactive">COMPLETED</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="refund" class="btn-group-vertical type btn btn-inactive">REFUND</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="all" class="btn-group-vertical type btn btn-inactive">ALL</a></li>
             </ol>
           </div>
         </div>
@@ -80,6 +102,7 @@
                   <th class="text-center" data-orderable="false">Qty</th>
                   {{-- <th class="text-center">Payment Status</th> --}}
                   <th class="text-center">Order status</th>
+                  <th class="text-center">Send Message</th>
                   <th class="text-center" data-orderable="false">Download Photos</th>
                   <th class="text-center">Total</th>
                   <th class="text-center" data-orderable="false">Action</th>
@@ -147,6 +170,9 @@
             "data": "deliveryStatus"
           },
           {
+            "data": "sendMessage"
+          },
+          {
             "data": "downloadPhoto"
           },
           {
@@ -161,11 +187,79 @@
       $('ol.breadcrumb li a').click(function(e) {
         e.preventDefault();
         $type = $(this).attr('data-type');
-        $('li a').removeClass('text-primary');
-        $(this).addClass('text-primary');
+        $('li a.btn-active').removeClass('btn-active').addClass('btn-inactive');
+        $(this).removeClass('btn-inactive').addClass('btn-active');
         filter_type = $type;
         table.draw();
       });
+
+
+
+      $(document).on('click', '.sendWhatsapp', function(e) {
+        var id = $(this).data('id');
+        var status = $(this).data('status');
+        var link = $(this).data('url');
+
+        $.ajax({
+          type: "POST",
+          url: link,
+          data: {
+            id: id,
+            order_status: status
+          }
+        }).always(function(respons) {}).done(function(respons) {
+          if (respons.success) {
+            toast.fire({
+              type: 'success',
+              title: 'Success',
+              text: respons.message
+            });
+          }
+
+        }).fail(function(respons) {
+
+          toast.fire({
+            type: 'error',
+            title: 'Error',
+            text: 'something went wrong please try again !'
+          });
+
+        });
+      });
+
+      $(document).on('click', '.sendSms', function(e) {
+        var id = $(this).data('id');
+        var status = $(this).data('status');
+        var link = $(this).data('url');
+
+        $.ajax({
+          type: "POST",
+          url: link,
+          data: {
+            id: id,
+            order_status: status
+          }
+        }).always(function(respons) {}).done(function(respons) {
+          if (respons.success) {
+            toast.fire({
+              type: 'success',
+              title: 'Success',
+              text: respons.message
+            });
+          }
+
+        }).fail(function(respons) {
+
+          toast.fire({
+            type: 'error',
+            title: 'Error',
+            text: 'something went wrong please try again !'
+          });
+
+        });
+      });
+
+
     });
   </script>
 @endpush

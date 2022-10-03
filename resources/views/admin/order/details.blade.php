@@ -72,7 +72,7 @@
               @if (count($attributes) > 0)
                 <div class="">
                   @foreach ($attributes as $key => $attribute)
-                    <span class="text-muted f-12">{{ $key }} : {{ $attribute }}</span>
+                    <span class="text-muted f-12"><span class="text-uppercase">{{ $key }}</span> : {{ $attribute }}</span>
                     @if (!$loop->last)
                     @endif
                     @if (!$loop->last)
@@ -83,26 +83,29 @@
               @endif
 
               @if (isset($item->notes) && $item->notes != '')
-                <div class="text-muted" style="margin-top: 10px;"><b>Notes </b>: {{ $item->notes }}</div>
+                <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Notes </span> : {{ $item->notes }}</div>
               @endif
 
-              @if (isset($item->order_has_gift))
-                <div class="text-muted" style="margin-top: 5px;"><b>This Order Has Gift</b> <span class="mx-2 dot {{ $item->order_has_gift == 'Yes' ? 'bg-success' : 'bg-danger' }}"></span></div>
+              @if (isset($item->order_has_gift) && $item->order_has_gift == 'Yes')
+                <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift </span> : <span class="mx-2 dot bg-success"></span>Price does not display</div>
+              @endif
+
+              @if (isset($item->order_has_gift) && $item->order_has_gift == 'No')
+                <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift</span> : <span class="mx-2 dot bg-danger"></span></div>
               @endif
 
               @if (isset($item->gift_message) && $item->gift_message != '')
-                <div class="text-muted" style="margin-top: 5px;"><b>Gift Message </b>: {{ $item->gift_message }}</div>
+                <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Gift Message </span> : {{ $item->gift_message }}</div>
               @endif
 
               @if (isset($item->optional_note) && $item->optional_note != '')
-                <div class="text-muted" style="margin-top: 5px;"><b>Optional Note </b> {{ $item->optional_note ?? '' }}</div>
+                <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Optional Note </span> : {{ $item->optional_note ?? '' }}</div>
               @endif
 
-              <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
-              <br>
-              <small class="text-muted f-12">Quantity : {{ str_replace('.00', ' ', $qty) }} </small>
-              <br>
-              <small class="text-muted f-12">Price : {!! Helper::showPrice($item->qty_price, $order->currency, $order->currency) !!}</small>
+              <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">SKU </span> : <b>{{ $sku->sku ?? '' }}</b></div>
+
+              <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Qty </span> : {{ str_replace('.00', ' ', $qty) }}</div>
+              <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Price </span> : {!! Helper::showPrice($item->qty_price, $order->currency, $order->currency) !!}</div>
 
             </div>
           </li>

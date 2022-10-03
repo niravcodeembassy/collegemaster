@@ -19,7 +19,7 @@ class OrderCanceled extends Mailable
      */
     public function __construct($order)
     {
-        $this->order  = $order ;
+        $this->order  = $order;
     }
 
     /**
@@ -29,9 +29,9 @@ class OrderCanceled extends Mailable
      */
     public function build()
     {
-        $this->order->load('itemslists' ,'user') ;
+        $this->order->load('itemslists' ,'user');
         $this->data['setting']  = Setting::findOrfail(1);
-        $this->data['shipping'] =  $this->order->address ;
+        $this->data['shipping'] =  $this->order->address;
         $this->data['order'] = $this->order;
 
         return $this->view('mail.canceled' , $this->data);

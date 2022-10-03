@@ -13,6 +13,10 @@ use App\Mail\OrderCanceled;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\OrderDispatched;
+use App\Mail\OrderDesignApproval;
+use App\Mail\OrderPickNotReceive;
+use App\Mail\OrderPrinting;
+use App\Mail\OrderDelivered;
 use App\Traits\DatatableTrait;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -204,6 +208,18 @@ class OrderController extends Controller
       if ($item->total) {
         $item->total = $item->total ?? 0;
       }
+      $row['sendMessage'] = '<a class="btn btn-dark btn-sm text-white sendWhatsapp"
+      data-url="' . route('admin.order.whatsapp', $item->id) . '"
+      data-status="' . $item->order_status . '"
+      href="javascript:void(0)" data-id="' . $item->id . '">
+      <i class="fab fa-whatsapp"></i></i>&nbsp;&nbsp;Message
+      </a>&nbsp;&nbsp;
+      <a class="btn btn-info btn-sm text-white sendSms"
+      data-url="' . route('admin.order.sms', $item->id) . '"
+      data-status="' . $item->order_status . '"
+      href="javascript:void(0)" data-id="' . $item->id . '">
+      <i class="fas fa-comment-dots"></i></i>&nbsp;&nbsp;SMS
+      </a>&nbsp;&nbsp;';
 
       $row['totalPrice'] = '<span class="text-right d-block" >' . Helper::showPrice($item->total, $item->currency) . '</span>';
 
@@ -230,7 +246,7 @@ class OrderController extends Controller
       } else {
         $row['downloadPhoto'] = '<a class="btn btn-danger"
         href="javascript:void(0)">
-        <i class="fa fa-ban"></i>&nbsp;&nbsp;Download Photos
+        <i class="fa fa-ban"></i>&nbsp;&nbsp;No Photos
        </a>';
       }
 
@@ -342,7 +358,7 @@ class OrderController extends Controller
    */
   public function edit(Request $request, $id)
   {
-    $order = Order::findOrfail($id);
+    $order = Order::findOrFail($id);
     $view = view('admin.order.get-order', ['order' => $order])->render();
     return response()->json(['html' => $view], 200);
   }
@@ -357,8 +373,7 @@ class OrderController extends Controller
   public function update(Request $request, $id)
   {
     //
-
-    $order = Order::findorfail($id);
+    $order = Order::findOrFail($id);
     $user = $order->user;
 
     $order->order_status = $request->delivery_status;
@@ -369,12 +384,6 @@ class OrderController extends Controller
       $strDate = $request->shipping_date;
       $order->shipping_date = date('Y-m-d', strtotime($strDate));
       $order->order_status = 'dispatched';
-
-      $date = date('F j, Y', strtotime($order->shipping_date));
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
-      $this->sendSmsMessage($user->phone, $body);
-      $this->sendWhatsappMessage($user->phone, $body);
-
 
       try {
         Mail::to($user->email)->send(new OrderDispatched($order));
@@ -393,10 +402,32 @@ class OrderController extends Controller
       $order->order_status = 'delivered';
       $order->tracking_number = $request->tracking_number;
 
-      $date = date('F j, Y', strtotime($order->deleverd_date));
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that you order has been completed in ' . $date;
-      $this->sendSmsMessage($user->phone, $body);
-      $this->sendWhatsappMessage($user->phone, $body);
+      try {
+        Mail::to($user->email)->send(new OrderDelivered($order));
+      } catch (\Exception $th) {
+      }
+    }
+
+    if ($request->delivery_status == 'pick_not_receive') {
+
+      try {
+        Mail::to($user->email)->send(new OrderPickNotReceive($order));
+      } catch (\Exception $th) {
+      }
+    }
+
+    if ($request->delivery_status == 'customer_approval') {
+      try {
+        Mail::to($user->email)->send(new OrderDesignApproval($order));
+      } catch (\Exception $th) {
+      }
+    }
+
+    if ($request->delivery_status == 'printing') {
+      try {
+        Mail::to($user->email)->send(new OrderPrinting($order));
+      } catch (\Exception $th) {
+      }
     }
 
     if ($request->delivery_status == 'cancelled') {
@@ -410,12 +441,6 @@ class OrderController extends Controller
         Mail::to($user->email)->send(new OrderCanceled($order));
       } catch (\Exception $th) {
       }
-    }
-
-    if ($request->delivery_status == 'work_in_progress') { //rename for designing
-      $body = 'Dear ' . ucwords($order->user->name) . ', We would like to inform you that your order has been designing further information contact admin';
-      $this->sendSmsMessage($user->phone, $body);
-      $this->sendWhatsappMessage($user->phone, $body);
     }
 
     $order->payment_status = $request->payment_status;
@@ -501,7 +526,7 @@ class OrderController extends Controller
     $this->data['shipping_address'] = $data['shipping_address'];
     $this->data['belling_address'] =  $data['belling_address'];
     $this->data['title'] = 'Invoice';
-    
+
     return $this->view('admin.order.invoice_' . $data['type']);
   }
 
@@ -664,6 +689,87 @@ class OrderController extends Controller
       'type' => $type
     ];
     return $invoice_arr;
+  }
+
+  public function sendWhatsapp(Request $request)
+  {
+    $order_id = $request->id;
+    $status = $request->order_status;
+
+    $order = Order::findOrFail($order_id);
+    $user = $order->user;
+
+    $order_status = [
+      'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+    ];
+
+    if (in_array($status, $order_status)) {
+      if ($status == 'pick_not_receive') {
+        $content = 'waiting for pictures';
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been ' . $content;
+        $this->sendWhatsappMessage($user->phone, $body);
+      } else if ($status == 'customer_approval') {
+        $content = 'Design Approval';
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been' . $content;
+        $this->sendWhatsappMessage($user->phone, $body);
+      } else if ($status == 'printing') {
+        $content = 'Printing';
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Printing';
+        $this->sendWhatsappMessage($user->phone, $body);
+      } else if ($status == 'delivered') {
+        $date = date('F j, Y', strtotime($order->deleverd_date));
+        $content = 'dispatched in ' . $date;
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that you order has been ' . $content;
+        $this->sendWhatsappMessage($user->phone, $body);
+      }
+
+      return response()->json([
+        'success' => true,
+        'message' => "Message Sent Successfully"
+      ], 200);
+    }
+    return response()->json([
+      'success' => true,
+      'message' => "Message Not Sent this Order Status"
+    ], 400);
+  }
+
+  public function sendSms(Request $request)
+  {
+    $order_id = $request->id;
+    $status = $request->order_status;
+
+    $order = Order::findOrFail($order_id);
+    $user = $order->user;
+
+    $order_status = [
+      'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+    ];
+
+    if (in_array($status, $order_status)) {
+      if ($status == 'pick_not_receive') {
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been waiting for pictures';
+        $this->sendSmsMessage($user->phone, $body);
+      } else if ($status == 'customer_approval') {
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Design Approval';
+        $this->sendSmsMessage($user->phone, $body);
+      } else if ($status == 'printing') {
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Printing';
+        $this->sendSmsMessage($user->phone, $body);
+      } else if ($status == 'delivered') {
+        $date = date('F j, Y', strtotime($order->deleverd_date));
+        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
+        $this->sendSmsMessage($user->phone, $body);
+      }
+      return response()->json([
+        'success' => true,
+        'message' => "SMS Sent Successfully"
+      ], 200);
+    }
+    return response()->json([
+      'success' => true,
+      'message' => "SMS Not Sent this Order Status"
+    ], 200);
   }
 
   public function sendSmsMessage($mobile, $body)

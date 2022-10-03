@@ -160,6 +160,9 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
 
   Route::get('order/pdf/{id}', 'OrderController@orderPdf')->name('order.pdf');
 
+  Route::post('order/sendWhatsapp/{id}', 'OrderController@sendWhatsapp')->name('order.whatsapp');
+  Route::post('order/sendSms/{id}', 'OrderController@sendSms')->name('order.sms');
+
   Route::resource('order', 'OrderController');
   Route::post('orders-msg', 'OrderController@orderMsg')->name('orders.msg');
 

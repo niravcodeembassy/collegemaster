@@ -66,7 +66,7 @@
                     @if (count($attributes) > 0)
                       <div class="options">
                         @foreach ($attributes as $key => $attribute)
-                          <span class="text-muted">{{ $key }} : {{ $attribute }}</span>
+                          <small class="text-muted f-12">{{ strtoupper($key) }} : {{ $attribute }}</small>
                           @if (!$loop->last)
                           @endif
                           @if (!$loop->last)
@@ -78,25 +78,34 @@
 
                     <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
                     <br>
-                    <small class="text-muted f-12">Qty : {{ str_replace('.00', ' ', $qty) }} </small>
+                    <small class="text-muted f-12">QTY : {{ str_replace('.00', ' ', $qty) }} </small>
                     <br>
-                    <span class="text-muted f-14 ">Price : {!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</span>
+                    <small class="text-muted f-12">PRICE : {!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</small>
+
 
                     @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['order_has_gift']) && isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
                       <hr>
                       @if (isset($raw_data['notes']) && $raw_data['notes'] != '')
-                        <div class="text-muted" style="margin-top: 10px;"><b>Notes</b> : {{ $raw_data['notes'] ?? '' }}</div>
+                        <small class="text-muted" style="margin-top: 5px;"><span class="text-uppercase">Notes</span> : {{ $raw_data['notes'] ?? '' }}</small><br>
                       @endif
 
-                      @if (isset($raw_data['order_has_gift']))
-                        <div class="text-muted" style="margin-top: 5px;"><b>This Order Has Gift</b> <span class="mx-2 dot {{ $raw_data['order_has_gift'] == 'Yes' ? 'bg-success' : 'bg-danger' }}"></span></div>
+                      @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'Yes')
+                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Order Has Gift </span> : <span class="mx-2 dot bg-success"></span> Price does not display</small>
+                        <br>
+                      @endif
+
+                      @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'No')
+                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift :</span> : <span class="mx-2 dot bg-danger"></span></small>
+                        <br>
                       @endif
 
                       @if (isset($raw_data['gift_message']) && $raw_data['gift_message'] != '')
-                        <div class="text-muted" style="margin-top: 5px;"><b>Gift Message</b> : {{ $raw_data['gift_message'] ?? '' }}</div>
+                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Gift Message</span> : {{ $raw_data['gift_message'] ?? '' }}</small>
+                        <br>
                       @endif
                       @if (isset($raw_data['optional_note']) && $raw_data['optional_note'] != '')
-                        <div class="text-muted" style="margin-top: 5px;"><b>Optional Note</b> : {{ $raw_data['optional_note'] ?? '' }}</div>
+                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Optional Note </span>: {{ $raw_data['optional_note'] ?? '' }}</small>
+                        <br>
                       @endif
                     @endif
                   </div>
@@ -276,7 +285,7 @@
             <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
             <div class="card shadow-none border">
               <div class="card-body">
-                <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
+                <span class="text-muted "> Name : <span class="text-uppercase"> {{ $order->user->name ?? '' }} </span></span> <br>
                 <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
                 <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
               </div>
@@ -290,19 +299,19 @@
             <div class="card shadow-none border">
               <div class="card-body">
                 @if ($shipping->email)
-                  <span class="text-muted "> <strong>Email</strong> : {{ $shipping->email }}</span> <br>
+                  <span class="text-muted"> <strong>Email</strong> : {{ $shipping->email }}</span> <br>
                 @endif
                 @if ($shipping->mobile)
                   <span class="text-muted "> <strong>Mobile</strong> : {{ $shipping->mobile }}</span> <br>
                 @endif
                 @if ($shipping->address_one)
-                  <span class="text-muted ">{{ $shipping->address_one }}</span> <br>
+                  <span class="text-muted text-uppercase">{{ $shipping->address_one }}</span> <br>
                 @endif
                 @if ($shipping->address_two)
-                  <span class="text-muted "> {{ $shipping->address_two }}</span> <br>
+                  <span class="text-muted text-uppercase"> {{ $shipping->address_two }}</span> <br>
                 @endif
-                <span class="text-muted "> {{ $shipping->city ?? '' }} - {{ $shipping->postal_code ?? '' }} </span> <br>
-                <span class="text-muted ">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
+                <span class="text-muted text-uppercase"> {{ $shipping->city ?? '' }} - {{ $shipping->postal_code ?? '' }} </span> <br>
+                <span class="text-muted text-uppercase">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
               </div>
             </div>
             @if (isset($address->billing_address) && count((array) $address->billing_address))
@@ -311,13 +320,13 @@
                 <div class="card-body">
 
                   @if ($billing->billing_address_one)
-                    <span class="text-muted ">{{ $billing->billing_address_one }}</span> <br>
+                    <span class="text-muted text-uppercase">{{ $billing->billing_address_one }}</span> <br>
                   @endif
                   @if ($billing->billing_address_two)
-                    <span class="text-muted "> {{ $billing->billing_address_two }}</span> <br>
+                    <span class="text-muted text-uppercase"> {{ $billing->billing_address_two }}</span> <br>
                   @endif
-                  <span class="text-muted "> {{ $billing->billing_city ?? '' }} - {{ $billing->billing_postal_code ?? '' }} </span> <br>
-                  <span class="text-muted ">{{ $billing->billing_state ?? '' }} - {{ $billing->billing_country->name ?? '' }}</span> <br>
+                  <span class="text-muted text-uppercase"> {{ $billing->billing_city ?? '' }} - {{ $billing->billing_postal_code ?? '' }} </span> <br>
+                  <span class="text-muted text-uppercase">{{ $billing->billing_state ?? '' }} - {{ $billing->billing_country->name ?? '' }}</span> <br>
                 </div>
               </div>
             @endif

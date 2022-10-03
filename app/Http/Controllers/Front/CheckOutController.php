@@ -120,7 +120,8 @@ class CheckOutController extends Controller
 
       $this->clearCart();
 
-      $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
+      $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
+      $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been ' . $content;
 
       //SMS sent message
       $this->sendSmsMessage($this->user->phone, $body);
@@ -609,7 +610,8 @@ class CheckOutController extends Controller
         session()->forget(['checkout_session']);
 
 
-        $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
+        $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
+        $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been ' . $content;
 
         $this->sendSmsMessage($this->user->phone, $body);
         $this->sendWhatsappMessage($this->user->phone, $body);

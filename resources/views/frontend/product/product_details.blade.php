@@ -690,7 +690,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       </div>
                     </div>
                   </div>
-
+                  
                   <!--=======  End of shop product color block  =======-->
                   @php
                     $style = null;
