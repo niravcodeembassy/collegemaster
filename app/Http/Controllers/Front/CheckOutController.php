@@ -121,8 +121,7 @@ class CheckOutController extends Controller
       $this->clearCart();
 
       $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-      $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been ' . $content;
-
+      $body = 'we would  like to inform '.ucwords($this->order->user->name).' that Your order has been '.$content.' at the moment.';
       //SMS sent message
       $this->sendSmsMessage($this->user->phone, $body);
       //whatsapp sent message
@@ -526,7 +525,7 @@ class CheckOutController extends Controller
       })->join('-');
       $cartImages = CartImage::where('cart_id', $value['id'])->get();
       if ($cartImages->count()) {
-        $folderName = 'cart_image/' . 'order-' . $orderId . '/' . $value['name'] . '-' . $value['id'] . '-' . $folderName;
+        $folderName = 'cart_image/' . 'order-' . $orderId . '/cart/' . $value['name'] . '-' . $value['id'] . '-' . $folderName;
         $folderName = str_replace(' ', '-', $folderName);
         $root = 'cart_image/' . $value['id'] . '/';
 
@@ -611,8 +610,8 @@ class CheckOutController extends Controller
 
 
         $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-        $body = 'Dear ' . ucwords($this->order->user->name) . ', We would like to inform you that you order has been ' . $content;
-
+        $body = 'we would  like to inform '.ucwords($this->order->user->name).' that Your order has been '.$content.' at the moment.';
+        
         $this->sendSmsMessage($this->user->phone, $body);
         $this->sendWhatsappMessage($this->user->phone, $body);
 

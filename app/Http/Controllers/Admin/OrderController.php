@@ -44,6 +44,25 @@ class OrderController extends Controller
   {
     $this->data['title'] =  'Order';
     $this->data['type'] = $request->get('type', 'online');
+    $status = array('order_placed', 'dispatched', 'delivered', 'cancelled', 'customer_approval', 'work_in_progress', 'pick_not_receive', 'correction', 'printing', 'refund');
+    $online_count = [];
+    $offline_count = [];
+    $pending_count = [];
+    foreach ($status as $key => $list) {
+      $online_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+      $offline_count[$list] =  Order::where('order_status', $list)->where('payment_type', 'cash')->count();
+      $pending_count[$list] =  0;
+    }
+    $this->data['total_count'] = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+    $this->data['order_count'] = $online_count;
+    if ($request->get('type') == 'cod') {
+      $this->data['order_count'] = $offline_count;
+      $this->data['total_count'] = Order::where('payment_type', 'cash')->count();
+    }
+    if ($request->get('type') == 'pending') {
+      $this->data['order_count'] = $pending_count;
+      $this->data['total_count'] = 0;
+    }
     return view('admin.order.index', $this->data);
   }
 
@@ -236,20 +255,33 @@ class OrderController extends Controller
       }
 
 
-      if (\Storage::exists('cart_image/order-' . $item->id)) {
-        $row['downloadPhoto'] = '<a class="btn btn-success"
-         data-id="' . $item->id . '"
-         data-url="' . route('admin.order.download', $item->id) . '"
-         href="' . route('admin.order.download', $item->id) . '">
-         <i class="fa fa-download"></i>&nbsp;&nbsp;Download Photos
-        </a>';
+      $order_photo = null;
+      $checkout_photo = null;
+      $file_exist_in_dir  = Storage::allFiles('cart_image/order-' . $item->id);
+      if (\Storage::exists('cart_image/order-' . $item->id) && count($file_exist_in_dir) > 0) {
+        $order_photo = '<a class="btn btn-sm btn-success"
+        data-id="' . $item->id . '"
+        data-url="' . route('admin.order.download', ['id' => $item->id, 'type' => 'cart']) . '"
+        href="' . route('admin.order.download', ['id' => $item->id, 'type' => 'cart']) . '">
+        <i class="fa fa-download"></i>
+       </a>';
+        if (\Storage::exists('cart_image/order-' . $item->id . '/checkout/')) {
+          $checkout_photo = '<a class="btn btn-sm btn-info"
+        data-id="' . $item->id . '"
+        data-url="' . route('admin.order.download', ['id' => $item->id, 'type' => 'checkout']) . '"
+        href="' . route('admin.order.download', ['id' => $item->id, 'type' => 'checkout']) . '">
+        <i class="fa fa-download"></i>
+       </a>';
+        }
       } else {
-        $row['downloadPhoto'] = '<a class="btn btn-danger"
+        $order_photo =  '<a class="btn btn-sm btn-danger"
         href="javascript:void(0)">
         <i class="fa fa-ban"></i>&nbsp;&nbsp;No Photos
-       </a>';
+        </a>';
       }
 
+
+      $row['downloadPhoto'] = $order_photo . '&nbsp;&nbsp;' . $checkout_photo;
 
       // dd($request->has('d_from_date'));
       if ($item->order_status == 'cancelled') {
@@ -466,7 +498,7 @@ class OrderController extends Controller
   public function changeStatus(Request $request)
   {
   }
-
+  
   public function checkorderCode(Request $request)
   {
   }
@@ -478,7 +510,15 @@ class OrderController extends Controller
 
     Storage::makeDirectory('zips');
 
-    $path = 'storage/cart_image/order-' . $order->id;
+    if (Storage::exists('cart_image/order-' . $order->id . '/cart')) {
+      $path = 'storage/cart_image/order-' . $order->id . '/cart';
+    } else {
+      $path = 'storage/cart_image/order-' . $order->id;
+    }
+
+    if ($request->type == 'checkout') {
+      $path = 'storage/cart_image/order-' . $order->id . '/checkout';
+    }
 
     // Get real path for our folder
     $rootPath = public_path($path . '/');
@@ -513,7 +553,8 @@ class OrderController extends Controller
   {
     $order = Order::where('id', $id)->first();
     \Storage::delete(['zips/' . $order->order_number . '.zip']);
-    \Storage::deleteDirectory('cart_image/' . $order->order_number);
+    \Storage::deleteDirectory('cart_image/' . 'order-' . $order->id);
+    CartImage::where('order_id', $order->id)->delete();
     return back()->with('success', 'Attachment remove successfully');
   }
 
@@ -706,20 +747,20 @@ class OrderController extends Controller
     if (in_array($status, $order_status)) {
       if ($status == 'pick_not_receive') {
         $content = 'waiting for pictures';
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been ' . $content;
+        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
         $content = 'Design Approval';
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been' . $content;
+        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'printing') {
         $content = 'Printing';
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Printing';
+        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'delivered') {
         $date = date('F j, Y', strtotime($order->deleverd_date));
         $content = 'dispatched in ' . $date;
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that you order has been ' . $content;
+        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
         $this->sendWhatsappMessage($user->phone, $body);
       }
 
@@ -729,9 +770,9 @@ class OrderController extends Controller
       ], 200);
     }
     return response()->json([
-      'success' => true,
+      'success' => false,
       'message' => "Message Not Sent this Order Status"
-    ], 400);
+    ], 200);
   }
 
   public function sendSms(Request $request)
@@ -768,9 +809,9 @@ class OrderController extends Controller
     }
 
     return response()->json([
-      'success' => true,
+      'success' => false,
       'message' => "SMS Not Sent this Order Status"
-    ], 400);
+    ], 200);
   }
 
   public function sendSmsMessage($mobile, $body)

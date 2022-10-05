@@ -143,7 +143,6 @@ class CartController extends Controller
     $cartId = $request->cart;
     $cart = ShoppingCart::with('product', 'cartimage')->where('id', $cartId)->first();
     $product = $cart->product;
-
     $html = view('frontend.cart.imagepopup', [
       "mockup" => $this->getProductImage($cart->cartimage),
       "cart" => $cart,
@@ -207,9 +206,7 @@ class CartController extends Controller
       if ($request->order && $request->item) {
         $uploadedFilePath = $this->itemDirExist($request);
       }
-
       if ($request->hasFile('images')) {
-
         foreach ($request->file('images', []) as $key => $value) {
 
           $product = new CartImage();
@@ -220,6 +217,13 @@ class CartController extends Controller
           $product->name =  $uploadfile['name'];
           $product->order_id = $request->order ?? null;
           $product->item_id = $request->item ?? null;
+          if ($request->order && $request->item) {
+            $product->sequence = 2;
+          } else {
+            $product->sequence = 1;
+          }
+
+
           $product->save();
 
           $uploadedFile[] = [
@@ -245,9 +249,11 @@ class CartController extends Controller
     }
   }
 
+  
   public function itemDirExist($request)
   {
-    $uploadedFilePath = CartImage::where('order_id', $request->order)->where('item_id', $request->item)->first();
+    $uploadedFilePath = false;
+    // $uploadedFilePath = CartImage::where('order_id', $request->order)->where('item_id', $request->item)->first();
     if (!$uploadedFilePath) {
       $uploadedFilePath = Order::with(['singleItem' => function ($q) use ($request) {
         $q->where('id', $request->item);
@@ -259,7 +265,7 @@ class CartController extends Controller
         return $key . '-' . $item;
       })->join('-');
 
-      $folderName = 'cart_image/' . 'order-' . $uploadedFilePath->id . '/' . $singleItem->name . '-' . $singleItem->id . '-' . $folderName;
+      $folderName = 'cart_image/' . 'order-' . $uploadedFilePath->id . '/checkout/' . $singleItem->name . '-' . $singleItem->id . '-' . $folderName;
       $folderName = str_replace(' ', '-', $folderName);
       $root = 'cart_image/' . $singleItem->id . '/';
 

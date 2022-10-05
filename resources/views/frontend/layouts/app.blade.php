@@ -346,7 +346,7 @@
   <script>
     window.Laravel = @json([
     'csrfToken' => csrf_token(),
-]);
+    ]);
     const message = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success shadow mr-5',
@@ -373,119 +373,115 @@
     @endif
 
     @if (Session::has('success'))
-      $.toast({
-        heading: "Success",
-        text: "{!! session('success') !!}",
-        showHideTransition: "slide",
-        icon: "success",
-        loaderBg: "#f96868",
-        position: "top-right"
-      });
-      @php
-        session()->forget('success');
-      @endphp @endif
+        $.toast({
+          heading: "Success",
+          text: "{!! session('success') !!}",
+          showHideTransition: "slide",
+          icon: "success",
+          loaderBg: "#f96868",
+          position: "top-right"
+        });
+        @php
+          session()->forget('success');
+        @endphp
+    @endif
 
-      $(document).on('click', '.call-modal', function(e) {
+    $(document).on('click', '.call-modal', function(e) {
 
-e.preventDefault();
-// return false;
-var el = $(this);
+            e.preventDefault();
+            // return false;
+            var el = $(this);
 
-if (el.data('requestRunning')) {
-  console.log('0');
-  return;
-}
-el.data('requestRunning', true);
+            if (el.data('requestRunning')) {
+              console.log('0');
+              return;
+            }
+            el.data('requestRunning', true);
 
-showLoader();
+            showLoader();
 
-var url = el.data('url');
-var target = el.data('target-modal');
+            var url = el.data('url');
+            var target = el.data('target-modal');
 
-console.log(target);
+            console.log(target);
 
-$.ajax({
-  type: "GET",
-  url: url
-}).always(function() {
+            $.ajax({
+              type: "GET",
+              url: url
+            }).always(function() {
 
-  $('#load-modal').html(' ');
-  el.data('requestRunning', false);
+              $('#load-modal').html(' ');
+              el.data('requestRunning', false);
 
-  stopLoader();
+              stopLoader();
 
-}).done(function(res) {
-  $('#load-modal').html(res.html);
-  // $('body').append(res.html);
-  el.attr({
-    'data-toggle': "modal",
-    'data-target': target
-  });
-  $(target).modal('toggle');
-
-});
-
-});
-
-
-$(document).on('click', '.has-wish-lists', function() {
-
-var el = $(this);
-var url = el.attr('data-url');
-var remove = el.attr('data-remove');
-
-$.ajax({
-  type: "GET",
-  url: url,
-}).done(function(res) {
-
-  if (res.process == "add") {
-    $(el).addClass('bg-danger');
-    $(el).find('i').addClass('text-white');
-    $.toast({
-      heading: 'Success',
-      text: 'Favourite add successfully.',
-      showHideTransition: 'slide',
-      icon: 'success',
-      loaderBg: '#f96868',
-      position: 'top-right',
-      stack: 1
+            }).done(function(res) {
+              $('#load-modal').html(res.html);
+              // $('body').append(res.html);
+              el.attr({
+                'data-toggle': "modal",
+                'data-target': target
+              });
+              $(target).modal('toggle');
+            });
     });
-  } else if (res.process == "remove") {
 
-    if (remove) {
-      el.closest('.col-grid-box').remove();
-      if (!$('.col-grid-box').length) {
-        $('.dashboard').html('<h4>You have no wishlist</h4>')
+    $(document).on('click', '.has-wish-lists', function() {
+
+      var el = $(this);
+      var url = el.attr('data-url');
+      var remove = el.attr('data-remove');
+
+      $.ajax({
+        type: "GET",
+        url: url,
+      }).done(function(res) {
+
+      if (res.process == "add") {
+        $(el).addClass('bg-danger');
+        $(el).find('i').addClass('text-white');
+        $.toast({
+          heading: 'Success',
+          text: 'Favourite add successfully.',
+          showHideTransition: 'slide',
+          icon: 'success',
+          loaderBg: '#f96868',
+          position: 'top-right',
+          stack: 1
+        });
+      } else if (res.process == "remove") {
+
+        if (remove) {
+          el.closest('.col-grid-box').remove();
+          if (!$('.col-grid-box').length) {
+            $('.dashboard').html('<h4>You have no wishlist</h4>')
+          }
+        }
+
+        $(el).removeClass('bg-danger');
+        $(el).find('i').removeClass('text-white');
+        $.toast({
+          heading: 'Success',
+          text: 'Favourite remove successfully.',
+          showHideTransition: 'slide',
+          icon: 'success',
+          loaderBg: '#f96868',
+          position: 'top-right',
+          stack: 1
+        });
       }
-    }
+      }).fail(function(res) {
 
-    $(el).removeClass('bg-danger');
-    $(el).find('i').removeClass('text-white');
-    $.toast({
-      heading: 'Success',
-      text: 'Favourite remove successfully.',
-      showHideTransition: 'slide',
-      icon: 'success',
-      loaderBg: '#f96868',
-      position: 'top-right',
-      stack: 1
+        $.toast({
+          heading: 'Error',
+          text: 'Something went wrong.',
+          showHideTransition: 'slide',
+          icon: 'success',
+          loaderBg: '#f96868',
+          position: 'top-right'
+        })
+      });
     });
-  }
-
-}).fail(function(res) {
-
-  $.toast({
-    heading: 'Error',
-    text: 'Something went wrong.',
-    showHideTransition: 'slide',
-    icon: 'success',
-    loaderBg: '#f96868',
-    position: 'top-right'
-  })
-
-});
-});
   </script>
 
 

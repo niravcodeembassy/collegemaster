@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
 {
-    //
-    // use SoftDeletes;
+  //
+  // use SoftDeletes;
 
-    public function items()
-    {
-        return $this->belongsTo(Order::class);
-    }
+  public function items()
+  {
+    return $this->belongsTo(Order::class);
+  }
 
-    public function images()
-    {
-        return $this->hasMany(CartImage::class, 'item_id', 'id');
-    }
+  public function images()
+  {
+    return $this->hasMany(CartImage::class, 'item_id', 'id')->where('sequence', 2);
+  }
 
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
+  public function order()
+  {
+    return $this->belongsTo(Order::class);
+  }
 }

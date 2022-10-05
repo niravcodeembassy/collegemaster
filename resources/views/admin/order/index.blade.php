@@ -41,6 +41,10 @@
       box-shadow: none;
       color: black;
     }
+
+    span.order_count {
+      display: contents;
+    }
   </style>
 @endpush
 @push('js')
@@ -77,17 +81,17 @@
           </ul>
           <div class="mt-2">
             <ol class="breadcrumb text-muted fw-bold">
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="order_placed" class="btn-group-vertical type btn btn-active">NEW</a>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="order_placed" class="btn-group-vertical type btn btn-active">NEW <span class="order_count">({{ $order_count['order_placed'] }})</span></a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="btn-group-vertical type btn btn-inactive">PIC NOT REC</a>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="btn-group-vertical type btn btn-inactive">PIC NOT REC <span class="order_count">({{ $order_count['pick_not_receive'] }})</span></a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="work_in_progress" class="btn-group-verticaltype btn btn-inactive">DESIGNING</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="btn-group-vertical type btn btn-inactive">CORRECTION </a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="customer_approval" class="btn-group-vertical type btn btn-inactive">APPROVAL</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="printing" class="btn-group-vertical type btn btn-inactive">PRINTING</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="delivered" class="btn-group-vertical type btn btn-inactive">COMPLETED</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="refund" class="btn-group-vertical type btn btn-inactive">REFUND</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="all" class="btn-group-vertical type btn btn-inactive">ALL</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="work_in_progress" class="btn-group-verticaltype btn btn-inactive">DESIGNING <span class="order_count">({{ $order_count['work_in_progress'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="btn-group-vertical type btn btn-inactive">CORRECTION <span class="order_count">({{ $order_count['correction'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="customer_approval" class="btn-group-vertical type btn btn-inactive">APPROVAL <span class="order_count">({{ $order_count['customer_approval'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="printing" class="btn-group-vertical type btn btn-inactive">PRINTING <span class="order_count">({{ $order_count['printing'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="delivered" class="btn-group-vertical type btn btn-inactive">COMPLETED <span class="order_count">({{ $order_count['delivered'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="refund" class="btn-group-vertical type btn btn-inactive">REFUND <span class="order_count">({{ $order_count['refund'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="all" class="btn-group-vertical type btn btn-inactive">ALL <span class="order_count">({{ $total_count }})</span> </a></li>
             </ol>
           </div>
         </div>
@@ -102,7 +106,7 @@
                   <th class="text-center" data-orderable="false">Qty</th>
                   {{-- <th class="text-center">Payment Status</th> --}}
                   <th class="text-center">Order status</th>
-                  <th class="text-center">Send Message</th>
+                  <th class="text-center" data-orderable="false">Send Message</th>
                   <th class="text-center" data-orderable="false">Download Photos</th>
                   <th class="text-center">Total</th>
                   <th class="text-center" data-orderable="false">Action</th>
@@ -194,7 +198,6 @@
       });
 
 
-
       $(document).on('click', '.sendWhatsapp', function(e) {
         var id = $(this).data('id');
         var status = $(this).data('status');
@@ -214,7 +217,14 @@
               title: 'Success',
               text: respons.message
             });
+          } else {
+            toast.fire({
+              type: 'info',
+              title: 'Info',
+              text: respons.message
+            });
           }
+
 
         }).fail(function(respons) {
 
@@ -246,7 +256,14 @@
               title: 'Success',
               text: respons.message
             });
+          } else {
+            toast.fire({
+              type: 'info',
+              title: 'Info',
+              text: respons.message
+            });
           }
+
 
         }).fail(function(respons) {
 

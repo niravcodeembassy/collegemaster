@@ -109,13 +109,11 @@
                       @endif
                     @endif
                   </div>
-                  @if (in_array($order->order_status, ['order_placed', 'customer_approval']))
+                  @if (in_array($order->order_status, ['order_placed', 'pick_not_receive', 'work_in_progress', 'correction']) && !$item->images->count() > 0)
                     <div data-url="{{ route('cart.load.popup.ordered', ['item' => $item->id]) }}" class="text-center load-image-popup">
                       @include('svg.upload', ['width' => '30px'])
                     </div>
                   @endif
-
-
                 </li>
               @endforeach
               @if ($order->subtotal)
@@ -362,7 +360,7 @@
 
         </div>
         <div class="modal-footer">
-          <a name="" id="" class="btn-link" href="#" data-dismiss="modal" role="button">Close</a>
+          <a name="" id="close_img_btn" class="btn-link" href="#" data-dismiss="modal" role="button">Close</a>
         </div>
       </div>
     </div>
