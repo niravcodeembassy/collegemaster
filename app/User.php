@@ -4,6 +4,8 @@ namespace App;
 
 use App\Model\CartImage;
 use App\Model\Order;
+use App\Notifications\Auth\ResetPassword;
+use App\Notifications\Auth\VerifyEmail;
 use App\Model\ShoppingCart;
 use App\Model\UserShippingAddress;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
   use Notifiable;
 
@@ -45,6 +47,15 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
+  public function sendPasswordResetNotification($token)
+  {
+    $this->notify(new ResetPassword($token));
+  }
+
+  public function sendEmailVerificationNotification()
+  {
+    $this->notify(new VerifyEmail);
+  }
 
   public function address()
   {

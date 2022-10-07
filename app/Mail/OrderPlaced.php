@@ -10,32 +10,30 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class OrderPlaced extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($order)
-    {
-        $this->order  = $order;
-    }
+  /**
+   * Create a new message instance.
+   *
+   * @return void
+   */
+  public function __construct($order)
+  {
+    $this->order  = $order;
+  }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        $this->order->load('itemslists' ,'user');
-        $this->data['setting']  = Setting::findOrfail(1);
-        $this->data['shipping'] =  $this->order->address;
-        $this->data['order'] = $this->order;
+  /**
+   * Build the message.
+   *
+   * @return $this
+   */
+  public function build()
+  {
+    $this->order->load('itemslists', 'user');
+    $this->data['setting']  = Setting::findOrFail(1);
+    $this->data['shipping'] =  $this->order->address;
+    $this->data['order'] = $this->order;
 
-        return $this->view('mail.orderplaced' , $this->data);
-    }
-
-
+    return $this->view('mail.placed', $this->data);
+  }
 }

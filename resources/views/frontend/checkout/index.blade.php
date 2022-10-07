@@ -105,7 +105,7 @@
                         <label>Zip Code*</label>
                         <input type="text" name="postal_code" value="{{ $shippingAddress->postal_code ?? '' }}" required placeholder="Zip Code">
                       </div>
-                      
+
 
                       <div class="col-12 mb-20">
                         <div class="check-box">
@@ -146,7 +146,7 @@
                         <input type="email" data-rule-required="#different_billing_address:checked" value="{{ $sessionData['billing_email'] ?? '' }}" data-rule-email="true" name="billing_email" placeholder="Email Address">
                       </div>
 
-                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code" {{ $sessionData['billing_mobile_country_code'] ?? '+1' }}>
+                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code">
                       <div class="col-md-6 col-12 mb-20 billing_input">
                         <label for="billing_mobile">Mobile no*</label>
                         <input type="tel" placeholder="Phone number" value="{{ $sessionData['billing_mobile'] ?? '' }}" name="billing_mobile" id="billing_mobile" data-rule-required="true"

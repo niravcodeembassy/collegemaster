@@ -155,7 +155,7 @@
                                         style="text-align: left;font-weight: normal;margin-bottom:1px; font-size: 14px; color: #000000;line-height: 21px;    margin-top: 0;">
                                         @if($order->user->name) {{ $order->user->name ?? '' }}@endif
                                     </p>
-
+                                    
                                     @if($order->user->name)
                                         <p style="text-align: left;font-weight: normal;margin-bottom:1px; font-size: 14px; color: #000000;line-height: 21px;    margin-top: 0;"> Mobile :  {{ $order->user->phone }}</p>
                                     @endif

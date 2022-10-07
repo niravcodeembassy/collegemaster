@@ -44,11 +44,10 @@
                           <i class="ti-truck text-success"></i>
                         </button>
                       </div>
-
                       <div class="sl-right">
                         <a href="{{ route('orders.show', $item->id) }}" class="link call-modals" data-url="{{ route('orders.show', $item->id) }}" data-target-modal="#orderdetails" data-target="#orderdetails"> Order No :
                           {{ $item->order_number ?? '---' }}
-                          | Date : <span class="sl-date text-behance">{{ $item->created_at->format('m-d-Y H:i:s') ?? '---' }} </span>
+                          | Date : <span class="sl-date text-behance">{{ $item->created_at->format('m-d-Y H:i:s') ?? '---' }} (IST) </span>
                           @isset($item->order_status)
                             <small class="text-muted d-block f-12 pt-2">Order Status</small>
                             @php

@@ -14,6 +14,7 @@
             <div class="card-header text-center pt-4 pb-1">
               <h4 class="font-weight-bolder mb-1">Change password</h4>
             </div>
+            
             <div class="card-body">
               <form method="POST" class="password_form" action="{{ route('password.update') }}">
                 @csrf
@@ -50,6 +51,7 @@
 
               </form>
             </div>
+
           </div>
         </div>
       </div>

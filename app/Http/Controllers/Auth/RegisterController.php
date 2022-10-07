@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Traits\MoveToCart;
 use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SignUp;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -82,7 +84,7 @@ class RegisterController extends Controller
   protected function create(array $data)
   {
     $mobile = $data['country_code'] . "" . $data['mobile'];
-    return User::create([
+    $user =  User::create([
       'name' => $data['first_name'] . " " . $data['last_name'],
       'first_name' => $data['first_name'],
       'last_name' => $data['last_name'],
@@ -92,6 +94,13 @@ class RegisterController extends Controller
       'email' => $data['email'],
       'password' => Hash::make($data['password']),
     ]);
+
+    try {
+      Mail::to($user->email)->send(new SignUp($user));
+    } catch (\Exception $th) {
+    }
+
+    return $user;
   }
 
   /**

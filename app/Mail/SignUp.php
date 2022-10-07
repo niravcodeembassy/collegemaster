@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use App\Setting;
 use Illuminate\Queue\SerializesModels;
 
-class OrderDesignApproval extends Mailable
+class SignUp extends Mailable
 {
   use Queueable, SerializesModels;
 
@@ -17,9 +17,9 @@ class OrderDesignApproval extends Mailable
    *
    * @return void
    */
-  public function __construct($order)
+  public function __construct($user)
   {
-    $this->order  = $order;
+    $this->user  = $user;
   }
 
   /**
@@ -29,11 +29,8 @@ class OrderDesignApproval extends Mailable
    */
   public function build()
   {
-    $this->order->load('itemslists', 'user');
-    $this->data['setting']  = Setting::findOrFail(1);
-    $this->data['shipping'] =  $this->order->address;
-    $this->data['order'] = $this->order;
-
-    return $this->view('mail.approval', $this->data);
+    $this->data['setting']  = Setting::first()->response;
+    $this->data['user'] = $this->user;
+    return $this->view('mail.welcome-user', $this->data);
   }
 }

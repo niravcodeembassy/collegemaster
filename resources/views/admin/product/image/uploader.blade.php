@@ -57,7 +57,7 @@
                       </div>
                       <div class="form-group">
                         <label for="image_alt">Image alt text</label>
-                        <input type="text" class="form-control" :name="`image_alt[${index}]['alt']`" v-model="files[index].alt">
+                        <input type="text" class="form-control" :name="`image_alt[${index}]['alt']`" v-on:keyup="inputBind(files[index], $event)" v-model="files[index].alt">
                       </div>
                     </div>
                     <div class="icon float-end">
@@ -223,6 +223,11 @@
             (size / Math.pow(1024, i)).toFixed(2) * 1 +
             " " + ["B", "kB", "MB", "GB", "TB"][i]
           );
+        },
+        inputBind(file, evt) {
+          var alt = evt.target.value;
+          var name = alt.replace(/ /g, "_");
+          file.name = name;
         },
         async remove(index) {
           let files = [...this.files];

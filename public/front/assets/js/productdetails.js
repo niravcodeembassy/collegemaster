@@ -403,6 +403,9 @@ $(document).ready(function () {
     $(".add-to-cart-update-view").trigger("change", {
       show: false,
     });
+    setTimeout(function () {
+      window.location.reload();
+    }, 3000);
     $("#load-modal").html("");
   });
 
@@ -555,6 +558,9 @@ function loadDropZone() {
               $("body #close_img_btn").trigger("click");
             },
           });
+          setTimeout(function () {
+            window.location.reload();
+          }, 5000);
         }
       });
 
@@ -607,6 +613,9 @@ function loadDropZone() {
                 _this.emit("complete", file);
               },
             });
+            setTimeout(function () {
+              window.location.reload();
+            }, 5000);
 
             // toast.fire({
             //     title: 'Success',

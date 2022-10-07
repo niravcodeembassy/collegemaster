@@ -146,7 +146,7 @@
   @show
 
   @php
-     $prvent_footer = ['login','register','contact-us.index','password.request'];
+     $prvent_footer = ['login','register','contact-us.index','password.request','verification.notice'];
   @endphp
 
   @if (!in_array(request()->route()->getName(), $prvent_footer) && !str_contains(url()->current(),url('/password/reset/')))

@@ -19,7 +19,7 @@
               <span class="text-muted"> Order No : {{ $order->order_number }}</span>
               <div>
                 <a href="{{ route('order.inv', $order->id) }}" class="text-strong mr-5" style="cursor: pointer;"> <i class="fa fa-print"></i> View Invoice </a>
-                <span class="badge  badge-secondary badge-pill">{{ $order->created_at->format('m-d-Y H:m:s') }}</span>
+                <span class="badge  badge-secondary badge-pill">{{ $order->created_at->format('m-d-Y H:i:s') }} (IST)</span>
               </div>
             </h5>
             <ul class="list-group mb-3  b-0">
@@ -112,6 +112,14 @@
                   @if (in_array($order->order_status, ['order_placed', 'pick_not_receive', 'work_in_progress', 'correction']) && !$item->images->count() > 0)
                     <div data-url="{{ route('cart.load.popup.ordered', ['item' => $item->id]) }}" class="text-center load-image-popup">
                       @include('svg.upload', ['width' => '30px'])
+                    </div>
+                  @endif
+                  @if ($item->images->count())
+                    <div class="d-flex flex-column align-items-center">
+                      @include('svg.right', ['width' => '30px'])
+                      <span class="text-success text-center" style="font-size: 11px;line-height:initial">
+                        you have rich maximum limit of upload
+                      </span>
                     </div>
                   @endif
                 </li>
@@ -316,7 +324,12 @@
               <h5 class="card-title text-muted mt-2">Billing Address</h5>
               <div class="card shadow-none border">
                 <div class="card-body">
-
+                  @if ($billing->billing_email)
+                    <span class="text-muted"> <strong>Email</strong> : {{ $billing->billing_email }}</span> <br>
+                  @endif
+                  @if ($billing->billing_mobile)
+                    <span class="text-muted"> <strong>Mobile</strong> : {{ $billing->billing_mobile }}</span> <br>
+                  @endif
                   @if ($billing->billing_address_one)
                     <span class="text-muted text-uppercase">{{ $billing->billing_address_one }}</span> <br>
                   @endif
@@ -324,7 +337,7 @@
                     <span class="text-muted text-uppercase"> {{ $billing->billing_address_two }}</span> <br>
                   @endif
                   <span class="text-muted text-uppercase"> {{ $billing->billing_city ?? '' }} - {{ $billing->billing_postal_code ?? '' }} </span> <br>
-                  <span class="text-muted text-uppercase">{{ $billing->billing_state ?? '' }} - {{ $billing->billing_country->name ?? '' }}</span> <br>
+                  <span class="text-muted text-uppercase">{{ $billing->billing_state ?? '' }} - {{ $billing->billing_country ?? '' }}</span> <br>
                 </div>
               </div>
             @endif

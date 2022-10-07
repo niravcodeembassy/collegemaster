@@ -121,11 +121,12 @@ class CheckOutController extends Controller
       $this->clearCart();
 
       $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-      $body = 'we would  like to inform '.ucwords($this->order->user->name).' that Your order has been '.$content.' at the moment.';
+      $body = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
       //SMS sent message
       $this->sendSmsMessage($this->user->phone, $body);
       //whatsapp sent message
       $this->sendWhatsappMessage($this->user->phone, $body);
+
 
       try {
         $mail = Setting::where('name', 'mail')->first();
@@ -135,7 +136,6 @@ class CheckOutController extends Controller
           ->send(new OrderPlaced($this->order));
       } catch (\Exception $th) {
       }
-
 
 
       // return redirect()->route('payment.thankyou', encrypt($this->order->id))->with('order', $this->order);
@@ -482,29 +482,29 @@ class CheckOutController extends Controller
     ]);
     $address['shipping_address'] = $shippingAddress;
     // if billing address is different then set in session
-    // if ($orderaddress['different_billing_address'] == 'on') {
+    if ($orderaddress['different_billing_address'] == 'on') {
+      $mobile_billing =   $orderaddress['billing_mobile_country_code'] . "" .  $orderaddress['billing_mobile'];
+      $state = State::find($orderaddress['billing_state']);
+      $country = Country::find($orderaddress['billing_country']);
 
-    //     $state = State::find($orderaddress['billing_state']);
-    //     $country = Country::find($orderaddress['billing_country']);
-
-    //     session()->put(
-    //         'different_billing_address',
-    //         [
-    //             'billing_first_name'  => $orderaddress['billing_first_name'],
-    //             'billing_last_name'   => $orderaddress['billing_last_name'],
-    //             'billing_email'       => $orderaddress['billing_email'],
-    //             'billing_mobile'      => $orderaddress['billing_mobile'],
-    //             'billing_address_one' => $orderaddress['billing_address_one'],
-    //             'billing_address_two' => $orderaddress['billing_address_two'],
-    //             'billing_country'     => $country->name,
-    //             'billing_state'       => $state->name,
-    //             'billing_city'        => $orderaddress['billing_city'],
-    //             'billing_postal_code' => $orderaddress['billing_postal_code'],
-    //         ]
-    //     );
-    // } else {
-    //     session()->forget('different_billing_address');
-    // }
+      session()->put(
+        'different_billing_address',
+        [
+          'billing_first_name'  => $orderaddress['billing_first_name'],
+          'billing_last_name'   => $orderaddress['billing_last_name'],
+          'billing_email'       => $orderaddress['billing_email'],
+          'billing_mobile'      => $mobile_billing,
+          'billing_address_one' => $orderaddress['billing_address_one'],
+          'billing_address_two' => $orderaddress['billing_address_two'],
+          'billing_country'     => $country->name,
+          'billing_state'       => $state->name,
+          'billing_city'        => $orderaddress['billing_city'],
+          'billing_postal_code' => $orderaddress['billing_postal_code'],
+        ]
+      );
+    } else {
+      session()->forget('different_billing_address');
+    }
 
     $address['shipping_address'] = $shippingAddress;
     $address['billing_address']  = session()->get('different_billing_address', []);
@@ -610,8 +610,8 @@ class CheckOutController extends Controller
 
 
         $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-        $body = 'we would  like to inform '.ucwords($this->order->user->name).' that Your order has been '.$content.' at the moment.';
-        
+        $body = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
+
         $this->sendSmsMessage($this->user->phone, $body);
         $this->sendWhatsappMessage($this->user->phone, $body);
 

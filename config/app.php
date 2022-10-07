@@ -67,7 +67,7 @@ return [
     |
     */
 
-  'timezone' => 'America/Chicago',
+  'timezone' =>  'Asia/Kolkata',
 
   'locales' => [
     // 'uk', 'ca', 'au', 'de', 'ir', 'fr', 'in', 'sg', 'ae'

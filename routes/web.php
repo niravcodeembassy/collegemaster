@@ -73,13 +73,14 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::post('cart/view-update', 'CartController@updatecartView')->name('cart.view-update');
   Route::post('cart/view-remove', 'CartController@removecartView')->name('cart.view-remove');
 
-  Route::get('load/image-popup', 'CartController@loadImagePopUp')->name('cart.load.popup');
-  Route::get('load/image-popup/ordered', 'CartController@loadImagePopUpOrdered')->name('cart.load.popup.ordered');
-  Route::post('cart/image-store', 'CartController@imageStore')->name('cart.image.store');
-  Route::post('cart/image-remove', 'CartController@productImageRemove')->name('cart.productimage.remove');
 
 
-  Route::middleware(['auth'])->group(function () {
+  Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('load/image-popup', 'CartController@loadImagePopUp')->name('cart.load.popup');
+    Route::get('load/image-popup/ordered', 'CartController@loadImagePopUpOrdered')->name('cart.load.popup.ordered');
+    Route::post('cart/image-store', 'CartController@imageStore')->name('cart.image.store');
+    Route::post('cart/image-remove', 'CartController@productImageRemove')->name('cart.productimage.remove');
 
     Route::resource('profile', 'UserProfileController');
     Route::post('/change/image/{id}', 'UserProfileController@changeProfilImage')->name('changeProfilImage');
@@ -116,7 +117,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::get('product/review/{product}/list', 'ProductReviewController@reviewList')->name('product.review.list');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
