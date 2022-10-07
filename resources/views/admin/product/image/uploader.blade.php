@@ -52,12 +52,12 @@
 
                     <div class="text">
                       <div class="form-group">
-                        <label for="image_name">Name</label>
-                        <input type="text" class="form-control" :name="`image_name[${index}]['name']`" v-model="files[index].name">
-                      </div>
-                      <div class="form-group">
                         <label for="image_alt">Image alt text</label>
                         <input type="text" class="form-control" :name="`image_alt[${index}]['alt']`" v-on:keyup="inputBind(files[index], $event)" v-model="files[index].alt">
+                      </div>
+                      <div class="form-group">
+                        <label for="image_name">Image Name</label>
+                        <input type="text" class="form-control" :name="`image_name[${index}]['name']`" v-model="files[index].name">
                       </div>
                     </div>
                     <div class="icon float-end">
