@@ -17,9 +17,10 @@ class OrderDesignApproval extends Mailable
    *
    * @return void
    */
-  public function __construct($order)
+  public function __construct($order, $image)
   {
     $this->order  = $order;
+    $this->image  = $image;
   }
 
   /**
@@ -33,7 +34,13 @@ class OrderDesignApproval extends Mailable
     $this->data['setting']  = Setting::findOrFail(1);
     $this->data['shipping'] =  $this->order->address;
     $this->data['order'] = $this->order;
+    $this->data['image'] = $this->image;
 
-    return $this->view('mail.approval', $this->data);
+    if ($this->order->approval_image == null) {
+      return $this->view('mail.approval', $this->data);
+    }
+
+    return $this->view('mail.approval', $this->data)
+      ->attachFromStorage($this->order->approval_image);
   }
 }

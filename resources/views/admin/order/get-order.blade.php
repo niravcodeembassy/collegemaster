@@ -3,7 +3,7 @@
 
 <div class="modal fade" id="edit_hsncode_form_model">
   <div class="modal-dialog">
-    <form action="{{ route('admin.order.update', $order->id) }}" method="POST" role="form" name="edit_tax_form" id="edit_tax_form">
+    <form action="{{ route('admin.order.update', $order->id) }}" method="POST" enctype="multipart/form-data" role="form" name="edit_tax_form" id="edit_tax_form">
       @csrf @method('PUT')
       <div class="modal-content">
         <div class="modal-header">
@@ -64,8 +64,8 @@
             $ordered_ = $order->delivery_status == 'ordered' ? '' : 'd-none';
             $shipped_ = $order->delivery_status == 'dispatched' ? '' : 'd-none';
             $delivered_ = $order->delivery_status == 'delivered' ? '' : 'd-none';
-            $refund_ = $order->delivery_status == 'refund' ? '' : 'd-none';
             $cancel_ = $order->delivery_status == 'cancelled' ? '' : 'd-none';
+            $approval = $order->approval_image !== null ? '' : 'd-none';
           @endphp
 
           <div class="{{ $shipped_ }}" id="hdn_element_shipped">
@@ -138,7 +138,7 @@
             </div>
 
           </div>
-
+          
           <div class="{{ $cancel_ }}" style="margin-bottom: 10px;" id="show_cancel_comment">
             <div class="contct-info">
 
@@ -150,16 +150,31 @@
             </div>
           </div>
 
-          <div class="{{ $refund_ }}" style="margin-bottom: 10px;" id="show_transaction_comment">
+          <div class="d-none" style="margin-bottom: 10px;" id="show_transaction_comment">
             <div class="contct-info">
               <div class="form-group">
                 <label for="refund_transaction_id">Transaction Id</label>
                 <input type="text" id="refund_transaction_id" value="{{ $order->refund_transaction_id ?? '' }}" name="refund_transaction_id" style="width: 100%;" class="form-control-user form-control">
               </div>
             </div>
-
-
           </div>
+
+          <div class="{{$approval }}" style="margin-bottom: 10px;" id="show_approval_comment">
+            <div class="contct-info">
+              <div class="form-group">
+                <label for="refund_transaction_id">Approval Image Attachment</label>
+                <div class="logoContainer">
+                  <img src="{{ $order->approval_image_src ?? asset('storage/category/default.png') }}">
+                </div>
+                <div class="fileContainer sprite">
+                  <span>choose file</span>
+                  <input type="file" value="Choose File" name="approval_image">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <input type="hidden" id="edit_id" value="{{-- $hsncode->id or '' --}}">
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-default btn-link" data-dismiss="modal">Close</button>
@@ -176,6 +191,54 @@
 
   {{-- <script src="{{ asset('backend/plugins/bootstrap-datetimepicker/js/moment.min.js') }}"></script> --}}
 
+  <style>
+    .logoContainer {
+      width: 140px;
+      height: 151px;
+      /* margin: 15px auto 0 auto; */
+      padding: 11px 10px 21px 10px;
+      text-align: left;
+      line-height: 120px;
+    }
+
+    .logoContainer img {
+      max-width: 100%;
+    }
+
+    .fileContainer {
+      background: #ccc;
+      width: 140px;
+      height: 31px;
+      overflow: hidden;
+      position: relative;
+      font-size: 16px;
+      line-height: 31px;
+      color: #434343;
+      padding: 0px 43px 0 20px;
+      /* margin: 0 auto 60px auto; */
+      cursor: pointer !important;
+    }
+
+    .fileContainer span {
+      overflow: hidden;
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .fileContainer input[type="file"] {
+      opacity: 0;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      position: absolute;
+      cursor: pointer;
+    }
+  </style>
 
 
   <script type="text/javascript">
@@ -235,6 +298,20 @@
         getdelivery_status();
       });
 
+      //file input preview
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('.logoContainer img').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      $("input:file").change(function() {
+        readURL(this);
+      });
+
     });
   </script>
 
@@ -266,6 +343,15 @@
       } else {
         $("#show_transaction_comment").addClass('d-none');
       }
+
+      if (status == "customer_approval") {
+        $("#show_approval_comment").removeClass('d-none');
+      } else {
+        $("#show_approval_comment").addClass('d-none');
+      }
+
+
+
 
     }
   </script>

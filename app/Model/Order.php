@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class Order extends Model
 {
@@ -42,4 +43,12 @@ class Order extends Model
   {
     return $this->hasMany(Message::class);
   }
+
+  public function getApprovalImageSrcAttribute()
+    {   
+        if($this->approval_image && Storage::exists($this->approval_image) ) {
+            return asset('storage/'.$this->approval_image);
+        }
+        return asset('storage/category/default.png');
+    }
 }

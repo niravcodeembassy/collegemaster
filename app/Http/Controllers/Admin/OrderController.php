@@ -63,6 +63,7 @@ class OrderController extends Controller
       $this->data['order_count'] = $pending_count;
       $this->data['total_count'] = 0;
     }
+
     return view('admin.order.index', $this->data);
   }
 
@@ -449,8 +450,21 @@ class OrderController extends Controller
     }
 
     if ($request->delivery_status == 'customer_approval') {
+      $image = asset('storage/category/default.png');
+      if ($request->hasFile('approval_image')) {
+        if ($order->approval_image && Storage::exists($order->approval_image)) {
+          Storage::delete($order->approval_image);
+        }
+        $image = $request->approval_image;
+        $fileName = time() . '_' . rand(0, 500) . '_' . $image->getClientOriginalName();
+        $fileName = str_replace(' ', '_', $fileName);
+        $uploadFile =  $image->storeAs('approval_image', $fileName);
+        $order->approval_image =  $uploadFile;
+        $image = asset('storage/' . $order->approval_image);
+      }
+
       try {
-        Mail::to($user->email)->send(new OrderDesignApproval($order));
+        Mail::to($user->email)->send(new OrderDesignApproval($order, $image));
       } catch (\Exception $th) {
       }
     }
@@ -484,6 +498,16 @@ class OrderController extends Controller
     return redirect()->back()->with('success', "Order updated successfully.");
   }
 
+
+  public function uploadFile($value, $fileName, $product_id)
+  {
+    $file = $value;
+    // $fileName = time() . '_' . rand(0, 500) . '_' . $file->getClientOriginalName();
+    $fileName = str_replace(' ', '_', $fileName . '.jpg');
+    $uploadfile =  $file->storeAs('product_image/' . $product_id, $fileName);
+    return $uploadfile;
+  }
+
   /**
    * Remove the specified resource from storage.w
    *
@@ -498,7 +522,7 @@ class OrderController extends Controller
   public function changeStatus(Request $request)
   {
   }
-  
+
   public function checkorderCode(Request $request)
   {
   }
@@ -657,15 +681,6 @@ class OrderController extends Controller
 
       return response()->download(public_path($fileName));
     }
-  }
-
-  public function uploadFile($value)
-  {
-    $file = $value;
-    $fileName = time() . '_' . rand(0, 500) . '_' . $file->getClientOriginalName();
-    $fileName = str_replace(' ', '_', $fileName);
-    $uploadfile =  $file->storeAs('chat_img', $fileName);
-    return $uploadfile;
   }
 
   public function orderPdf($id)

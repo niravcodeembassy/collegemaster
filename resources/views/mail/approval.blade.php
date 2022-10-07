@@ -490,20 +490,21 @@
                                 <td style="padding:0;Margin:0">
                                   <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr class="links">
-                                      <td align="center" valign="top" width="25%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0"><a target="_blank"
-                                          href="{{ route('front.home') }}"
+                                      <td align="center" valign="top" width="25%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0">
+                                        <a target="_blank" href="{{ route('front.home') }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue', helvetica, sans-serif;color:#666666;font-size:14px">Home</a>
                                       </td>
-                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0"><a target="_blank"
-                                          href="{{ route('page.about') }}"
+                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0">
+                                        <a target="_blank" href="{{ route('page.about') }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue', helvetica, sans-serif;color:#e8a598;font-size:14px">About
-                                          Us</a></td>
-                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0"><a target="_blank"
-                                          href="{{ route('blog') }}"
+                                          Us</a>
+                                      </td>
+                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0">
+                                        <a target="_blank" href="{{ route('blog') }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue', helvetica, sans-serif;color:#666666;font-size:14px">Blog</a>
                                       </td>
-                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0"><a target="_blank"
-                                          href="{{ route('page.faq') }}"
+                                      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:25px;padding-bottom:25px;border:0">
+                                        <a target="_blank" href="{{ route('page.faq') }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue', helvetica, sans-serif;color:#666666;font-size:14px">FAQ</a>
                                       </td>
                                     </tr>
@@ -527,7 +528,8 @@
                                 <td align="center" class="es-m-p0t es-m-p0b" style="padding:0;Margin:0;padding-top:10px;padding-bottom:20px;font-size:0">
                                   <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr>
-                                      <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:none;height:1px;width:100%;margin:0px"></td>
+                                      <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:none;height:1px;width:100%;margin:0px">
+                                      </td>
                                     </tr>
                                   </table>
                                 </td>
@@ -557,7 +559,9 @@
                             <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                               <tr>
                                 <td align="left" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px">
-                                  <h1 style="Margin:0;line-height:30px;mso-line-height-rule:exactly;font-family:Nunito, Roboto, sans-serif;font-size:25px;font-style:normal;font-weight:bold;color:#333333"><strong>HOORAY!&nbsp;</strong></h1>
+                                  <h1 style="Margin:0;line-height:30px;mso-line-height-rule:exactly;font-family:Nunito, Roboto, sans-serif;font-size:25px;font-style:normal;font-weight:bold;color:#333333">
+                                    <strong>HOORAY!&nbsp;</strong>
+                                  </h1>
                                 </td>
                               </tr>
                               <tr>
@@ -610,7 +614,9 @@
                                   </p>
                                   <p
                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#000000;font-size:14px">
-                                    We have attached the first draft of your requested item. Please go through it and let us know if any changes are required. The watermark will be removed after your confirmation.</p>
+                                    We have attached the first draft of your requested item. Please go through it and
+                                    let us know if any changes are required. The watermark will be removed after your
+                                    confirmation.</p>
                                 </td>
                               </tr>
                             </table>
@@ -629,7 +635,8 @@
                                 <td align="center" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0">
                                   <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr>
-                                      <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:none;height:1px;width:100%;margin:0px"></td>
+                                      <td style="padding:0;Margin:0;border-bottom:1px solid #cccccc;background:none;height:1px;width:100%;margin:0px">
+                                      </td>
                                     </tr>
                                   </table>
                                 </td>
@@ -648,17 +655,11 @@
                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                               <tr>
                                 <td align="center" style="padding:0;Margin:0">
-                                  <!--[if mso]><a href="https://viewstripo.email" target="_blank" hidden>
- <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://viewstripo.email"
-                style="height:35px; v-text-anchor:middle; width:176px" arcsize="50%" stroke="f"  fillcolor="#363637">
-  <w:anchorlock></w:anchorlock>
-  <center style='color:#ffffff; font-family:"open sans", "helvetica neue", helvetica, arial, sans-serif; font-size:12px; font-weight:400; line-height:12px;  mso-text-raise:1px'>CHECK ATTACHED FILE</center>
- </v:roundrect></a>
-<![endif]-->
-                                  <!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#363637;border-width:0px;display:inline-block;border-radius:29px;width:auto;mso-hide:all"><a
-                                      href="https://viewstripo.email" class="es-button es-button-1" target="_blank"
-                                      style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:13px;border-style:solid;border-color:#363637;border-width:10px 20px;display:inline-block;background:#363637;border-radius:29px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-weight:normal;font-style:normal;line-height:16px;width:auto;text-align:center">CHECK
-                                      ATTACHED FILE</a></span>
+                                  <span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#363637;border-width:0px;display:inline-block;border-radius:29px;width:auto;mso-hide:all">
+                                    <a href="javascript:void(0)" class="es-button es-button-1"
+                                      style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:13px;border-style:solid;border-color:#363637;border-width:10px 20px;display:inline-block;background:#363637;border-radius:29px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-weight:normal;font-style:normal;line-height:16px;width:auto;text-align:center">
+                                      CHECK ATTACHED FILE</a>
+                                  </span>
                                   <!--<![endif]-->
                                 </td>
                               </tr>
@@ -701,8 +702,10 @@
                                 <td align="left" style="padding:0;Margin:0">
                                   <p
                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#666666;font-size:14px">
-                                    <span style="font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;color:#b22222"><strong>NOTE :&nbsp;&nbsp;</strong></span><span style="color:#000000"><strong><span
-                                          style="font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:12px">WITHOUT YOUR APPROVAL WE ARE UNABLE TO SHIP YOUR PRODUCT SO PLEASE REPLY THIS EMAIL WITH YOUR&nbsp; APPROVAL OR
+                                    <span style="font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;color:#b22222"><strong>NOTE
+                                        :&nbsp;&nbsp;</strong></span><span style="color:#000000"><strong><span style="font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:12px">WITHOUT
+                                          YOUR APPROVAL WE ARE UNABLE TO SHIP YOUR PRODUCT SO PLEASE REPLY THIS EMAIL
+                                          WITH YOUR&nbsp; APPROVAL OR
                                           CHANGES.</span></strong></span>
                                   </p>
                                 </td>
@@ -736,13 +739,15 @@
                                         <td align="center" valign="top" style="padding:0;Margin:0;padding-right:30px"><a target="_blank" href="{{ $setting->response->facebook }}"
                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#3D85C6;font-size:14px"><img title="Facebook"
                                               src="{{ asset('front/assets/mail_images/facebook-logo-black.png') }}" alt="Fb" width="32" height="32"
-                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
+                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a>
+                                        </td>
                                       @endif
                                       @if ($setting->response->instagram)
                                         <td align="center" valign="top" style="padding:0;Margin:0;padding-right:30px"><a target="_blank" href="{{ $setting->response->instagram }}"
                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#3D85C6;font-size:14px"><img title="Instagram"
                                               src="{{ asset('front/assets/mail_images/instagram-logo-black.png') }}" alt="Inst" width="32" height="32"
-                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
+                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a>
+                                        </td>
                                       @endif
                                       @if ($setting->response->pinterest)
                                         <td align="center" valign="top" style="padding:0;Margin:0">
@@ -773,11 +778,12 @@
                                 <td style="padding:0;Margin:0">
                                   <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr class="links-images-left">
-                                      <td align="center" valign="top" width="100%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0"><a target="_blank"
-                                          href="tel:{{ $setting->response->contact }}"
+                                      <td align="center" valign="top" width="100%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0">
+                                        <a target="_blank" href="tel:{{ $setting->response->contact }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue', helvetica, sans-serif;color:#666666;font-size:14px"><img
                                             src="{{ asset('front/assets/mail_images/51291613659576041.png') }}" alt="{{ $setting->response->contact }}" title="{{ $setting->response->contact }}" align="absmiddle" width="16" height="16"
-                                            style="display:inline-block !important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">{{ $setting->response->contact }}</a></td>
+                                            style="display:inline-block !important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">{{ $setting->response->contact }}</a>
+                                      </td>
                                     </tr>
                                   </table>
                                 </td>
@@ -795,12 +801,13 @@
                                 <td style="padding:0;Margin:0">
                                   <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr class="links-images-left">
-                                      <td align="center" valign="top" width="100%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0"><a target="_blank"
-                                          href="mailto:{{ $setting->response->email }}"
+                                      <td align="center" valign="top" width="100%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0">
+                                        <a target="_blank" href="mailto:{{ $setting->response->email }}"
                                           style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;display:block;font-family:arial, 'helvetica neue'
                                           , helvetica, sans-serif;color:#666666;font-size:14px"><img
                                             src="{{ asset('front/assets/mail_images/14401613659575727.png') }}" alt="{{ $setting->response->email }}" title="{{ $setting->response->email }}" align="absmiddle" width="16" height="16"
-                                            style="display:inline-block !important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">{{ $setting->response->email }}</a></td>
+                                            style="display:inline-block !important;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;padding-right:5px;vertical-align:middle">{{ $setting->response->email }}</a>
+                                      </td>
                                     </tr>
                                   </table>
                                 </td>
