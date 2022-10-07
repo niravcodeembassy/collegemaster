@@ -131,13 +131,15 @@
                 </li>
               @endforeach
               <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}" class="category_link">Other</a>
-                <ul class="sub-menu single-column-menu">
-                  @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
-                    <li>
-                      <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
-                    </li>
-                  @endforeach
-                </ul>
+                @if ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All')->count() > 0)
+                  <ul class="sub-menu single-column-menu">
+                    @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
+                      <li>
+                        <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
+                      </li>
+                    @endforeach
+                  </ul>
+                @endif
               </li>
             </ul>
             <button class="right_scroll d-xl-none d-lg-block" onclick="rightScroll()"><i class="fa fa-angle-right fa-lg" aria-hidden="true"></i></button>
