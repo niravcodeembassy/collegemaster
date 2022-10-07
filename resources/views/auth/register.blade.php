@@ -159,8 +159,9 @@
 
 
     $('.iti__flag-container').click(function() {
-      var countryCode = iti.getSelectedCountryData().dialCode;
-      $('#code').val("+" + countryCode);
+      var countryCode = $('.iti__selected-flag').attr('title');
+      var Code = countryCode.replace(/[^0-9]/g, '');
+      $('#code').val("+" + Code);
     });
 
     $('form').on('submit', function(e) {

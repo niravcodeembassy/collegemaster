@@ -286,17 +286,17 @@
     });
 
     $('.mobile_input .iti__flag-container').click(function() {
-      var countryCode = iti.getSelectedCountryData().dialCode;
-      // var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
-      // var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#shiping_mobile_country_code').val("+" + countryCode);
+      // var countryCode = iti.getSelectedCountryData().dialCode;
+      var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
+      var Code = countryCode.replace(/[^0-9]/g, '');
+      $('#shiping_mobile_country_code').val("+" + Code);
     });
 
     $('.billing_input .iti__flag-container').click(function() {
-      var countryCode = iti_second.getSelectedCountryData().dialCode;
-      // var countryCode = $('.billing_input .iti__selected-flag').attr('title');
-      // var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#billing_mobile_country_code').val("+" + countryCode);
+      // var countryCode = iti_second.getSelectedCountryData().dialCode;
+      var countryCode = $('.billing_input .iti__selected-flag').attr('title');
+      var Code = countryCode.replace(/[^0-9]/g, '');
+      $('#billing_mobile_country_code').val("+" + Code);
     });
 
 

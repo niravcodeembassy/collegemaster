@@ -27,7 +27,7 @@
 
             <div class="card">
                 <div class="card-body ">
-                    <div class="invoice-page" id="invoice-page">
+                    <div class="invoice-page" id="invoice-page" data-filename="{{$order->order_number}}.pdf">
                         <div>
                             <div class="refrens-header-wrapper">
                                 <div class="invoice-header">

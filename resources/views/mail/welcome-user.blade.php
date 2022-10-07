@@ -424,7 +424,7 @@
                           <td valign="top" align="center" style="padding:0;Margin:0;width:520px">
                             <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                               <tr style="border-collapse:collapse">
-                                <td align="left" style="padding:0;Margin:0;font-size:0px"><a href="https://viewstripo.email/" target="_blank"
+                                <td align="left" style="padding:0;Margin:0;font-size:0px"><a href="{{ route('front.home') }}" target="_blank"
                                     style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#FFFFFF;font-size:14px"><img
                                       src="{{ asset('front/assets/mail_images/collagemaster_logo_bj4.png') }}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="187" height="63"></a></td>
                               </tr>
@@ -622,28 +622,13 @@
                                   <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                     <tr style="border-collapse:collapse">
                                       @if ($setting->facebook)
-                                        <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px">
-                                          <a href="{{ $setting->facebook }}" target="_blank">
-                                            <img title="Facebook" src="{{ asset('front/assets/mail_images/facebook-circle-white.png') }}" alt="Fb" width="24" height="24"
-                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic">
-                                          </a>
-                                        </td>
+                                      <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px"><a href="{{ $setting->facebook }}" target="_blank"><img title="Facebook" src="{{ asset('front/assets/mail_images/facebook-circle-white.png') }}" alt="Fb" width="24" height="24" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
                                       @endif
                                       @if ($setting->instagram)
-                                        <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px">
-                                          <a href="{{ $setting->instagram }}" target="_blank">
-                                            <img title="Instagram" src="{{ asset('front/assets/mail_images/instagram-circle-white.png') }}" alt="Inst" width="24" height="24"
-                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic">
-                                          </a>
-                                        </td>
+                                      <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px"><a href="{{ $setting->instagram }}" target="_blank"><img title="Instagram" src="{{ asset('front/assets/mail_images/instagram-circle-white.png') }}" alt="Inst" width="24" height="24" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
                                       @endif
                                       @if ($setting->pinterest)
-                                        <td valign="top" align="center" style="padding:0;Margin:0">
-                                          <a href="{{ $setting->pinterest }}" target="_blank">
-                                            <img title="Pinterest" src="{{ asset('front/assets/mail_images/pinterest-circle-white.png') }}" alt="P" width="24" height="24"
-                                              style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic">
-                                          </a>
-                                        </td>
+                                      <td valign="top" align="center" style="padding:0;Margin:0"><a href="{{ $setting->pinterest }}" target="_blank"><img title="Pinterest" src="{{ asset('front/assets/mail_images/pinterest-circle-white.png') }}" alt="P" width="24" height="24" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
                                       @endif
                                     </tr>
                                   </table>
