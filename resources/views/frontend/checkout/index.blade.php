@@ -285,17 +285,13 @@
       preferredCountries: ["us"],
     });
 
-    $('.mobile_input .iti__flag-container').click(function() {
-      // var countryCode = iti.getSelectedCountryData().dialCode;
-      var countryCode = $('.mobile_input .iti__selected-flag').attr('title');
-      var Code = countryCode.replace(/[^0-9]/g, '');
+    $('#telephone').on('countrychange', function(e) {
+      var Code = iti.getSelectedCountryData().dialCode;
       $('#shiping_mobile_country_code').val("+" + Code);
     });
 
-    $('.billing_input .iti__flag-container').click(function() {
-      // var countryCode = iti_second.getSelectedCountryData().dialCode;
-      var countryCode = $('.billing_input .iti__selected-flag').attr('title');
-      var Code = countryCode.replace(/[^0-9]/g, '');
+    $('#billing_mobile').on('countrychange', function(e) {
+      var Code = iti_second.getSelectedCountryData().dialCode;
       $('#billing_mobile_country_code').val("+" + Code);
     });
 

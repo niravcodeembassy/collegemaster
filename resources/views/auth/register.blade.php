@@ -158,9 +158,8 @@
     });
 
 
-    $('.iti__flag-container').click(function() {
-      var countryCode = $('.iti__selected-flag').attr('title');
-      var Code = countryCode.replace(/[^0-9]/g, '');
+    $('#mobile').on('countrychange', function(e) {
+      var Code = iti.getSelectedCountryData().dialCode;
       $('#code').val("+" + Code);
     });
 

@@ -88,7 +88,11 @@ class AbstractDicountClass
         'discount' => $normalDiscount,
         'hsn_cod' => $item->hsn_cod,
         'tax' =>   $tax,
-        'notes' => $item->notes
+        'notes' => $item->notes,
+        'order_has_gift' => $item->order_has_gift,
+        'order_has_message' => $item->order_has_message,
+        'gift_message' => $item->gift_message,
+        'optional_note' => $item->optional_note,
       ];
 
       return  $tax;

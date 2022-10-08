@@ -28,7 +28,7 @@ class HomeController extends Controller
   public function index()
   {
 
-    $this->data['customer'] = Customer::count();
+    $this->data['customer'] = Customer::where('is_admin', false)->count();
     $this->data['totalOrders'] = Order::count();
     $this->data['todayOrder'] = Order::whereDate('created_at', date('Y-m-d'))->count();
     $this->data['revenue'] = Order::where('payment_status', 'completed')->sum('total');

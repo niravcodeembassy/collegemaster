@@ -153,10 +153,9 @@ $schema = [$schema_organization, $schema_local];
     });
 
 
-
-    $('.iti__flag-container').click(function() {
-      var countryCode = iti.getSelectedCountryData().dialCode;
-      $('#code').val("+" + countryCode);
+    $('#mobile').on('countrychange', function(e) {
+      var Code = iti.getSelectedCountryData().dialCode;
+      $('#code').val("+" + Code);
     });
 
     $('form').on('submit', function(e) {

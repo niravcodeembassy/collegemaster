@@ -225,15 +225,10 @@
       preferredCountries: ["us"],
     });
 
-    $('.iti__flag-container').click(function() {
-      country();
+    $('#telephone').on('countrychange', function(e) {
+      var Code = iti.getSelectedCountryData().dialCode;
+      $('#code').val("+" + Code);
     });
-
-    function country() {
-      var countryCode = $('.iti__selected-flag').attr('title');
-      var countryCode = countryCode.replace(/[^0-9]/g, '')
-      $('#code').val("+" + countryCode);
-    }
 
     // $('#telephone').keyup(function() {
     //   var mobile_no = $(this).val();
