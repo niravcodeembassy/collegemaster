@@ -27,6 +27,7 @@
     </div>
   </div>
 
+
   <div class="footer-top footer-container footer-one pt-70 pb-20 pt-sm-50">
     <div class="container-fluid">
       <div class="row clearfix footer_grid mx-xl-5 mx-2">
@@ -38,7 +39,7 @@
               <img class="img-fluid mb-2" alt="google review" title="google review" src="{{ asset('front/assets/images/website_icon/google.png') }}">
             </a>
             <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
-              <img class="img-fluid my-2" alt="trust icon review"  title="trust icon review" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
+              <img class="img-fluid my-2" alt="trust icon review" title="trust icon review" src="{{ asset('front/assets/images/website_icon/trust.png') }}">
             </a>
             <a href="{{ $frontsetting->esty_link ?? '' }}" target="_blank">
               <img class="img-fluid my-2" alt="esty review" title="esty review" src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
@@ -55,7 +56,7 @@
           <div class="footer-nav-container">
             <nav>
               <ul class="footer-links">
-                @if (!is_null($frontsetting->category) && isset($frontsetting->category))
+                @if (isset($frontsetting->category))
                   @php
                     $category = \App\Category::whereIn('id', $frontsetting->category)->get();
                   @endphp

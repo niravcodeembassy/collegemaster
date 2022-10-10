@@ -13,6 +13,14 @@
 
           @php
             $url = request()->segment(1) == null ? url('/') : url(app()->getlocale());
+            $category = \App\Category::whereNull('is_active')
+                ->where('name', '!=', 'All')
+                ->with([
+                    'subCategory' => function ($q) {
+                        $q->whereNull('is_active');
+                    },
+                ])
+                ->get();
           @endphp
           <div class="logo">
             <a href="{{ route('front.home') }}">
@@ -110,30 +118,35 @@
       </div>
     </div>
 
+
     <div class="main_category  d-none d-lg-block">
       <div class="container wide">
         <div class="header-bottom-navigation text-center d-none d-lg-block mt-lg-2 ">
           <nav class="site-nav">
+
             <button class="left_scroll d-xl-none d-lg-block" onclick="leftScroll()"><i class="fa fa-angle-left fa-lg" aria-hidden="true"></i></button>
             <ul class="main_list" id="category_scroll">
-              @foreach ($forntcategory->whereBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
+
+              @foreach ($category->skip(0)->take(10) as $item)
                 <li class="menu-item-has-children">
                   <a href="{{ route('category.product', $item->slug) }}" class="category_link">{{ ucfirst($item->name) }}</a>
-                  <ul class="sub-menu single-column-menu">
-                    @foreach ($item->subCategory as $list)
-                      <li>
-                        <a href="{{ route('product.details', ['cat_slug' => $item->slug, 'product_subcategory_slug' => $list->slug, 'slug' => null]) }}">
-                          {{ ucfirst($list->name) }}
-                        </a>
-                      </li>
-                    @endforeach
-                  </ul>
+                  @if ($item->subCategory->count() > 0)
+                    <ul class="sub-menu single-column-menu">
+                      @foreach ($item->subCategory as $list)
+                        <li>
+                          <a href="{{ route('product.details', ['cat_slug' => $item->slug, 'product_subcategory_slug' => $list->slug, 'slug' => null]) }}">
+                            {{ ucfirst($list->name) }}
+                          </a>
+                        </li>
+                      @endforeach
+                    </ul>
+                  @endif
                 </li>
               @endforeach
               <li class="menu-item-has-children"><a href="{{ route('category.product', 'all') }}" class="category_link">Other</a>
-                @if ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All')->count() > 0)
+                @if ($category->skip(10)->count() > 0)
                   <ul class="sub-menu single-column-menu">
-                    @foreach ($forntcategory->whereNotBetween('id', [1, 12])->where('name', '!=', 'All') as $item)
+                    @foreach ($category->skip(10) as $item)
                       <li>
                         <a href="{{ route('category.product', $item->slug) }}">{{ ucfirst($item->name) }}</a>
                       </li>
