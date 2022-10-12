@@ -11,6 +11,7 @@ use App\Blog;
 use App\Model\Testimonial;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Helpers\Helper;
 use App\Model\SubCategory;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
 
   public function index()
   {
+
     // $product = Product::get();
     // foreach ($product as $key => $value) {
     //   $pattern = '/❤️️🖤❤️️️/i';
@@ -88,4 +90,5 @@ class HomeController extends Controller
 
     return response()->json($filter_result);
   }
+
 }

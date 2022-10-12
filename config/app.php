@@ -180,9 +180,11 @@ return [
     Jenssegers\Agent\AgentServiceProvider::class,
     Stevebauman\Location\LocationServiceProvider::class,
 
+
     /*
          * Package Service Providers...
          */
+    Maatwebsite\Excel\ExcelServiceProvider::class,
 
     /*
          * Application Service Providers...
@@ -249,6 +251,7 @@ return [
     'Helper' => \App\Helpers\Helper::class,
     'Agent' => Jenssegers\Agent\Facades\Agent::class,
     'Location' => 'Stevebauman\Location\Facades\Location',
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     'Uploader' => \App\Helpers\Uploader::class,
     'Schema' => \App\Helpers\Schema::class
   ],

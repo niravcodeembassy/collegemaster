@@ -16,7 +16,7 @@
         <div class="single-widget">
           <p class="single-sidebar-widget--title h2">Categories</p>
           <ul class="single-sidebar-widget--list single-sidebar-widget--list--category">
-            @foreach ($forntcategory as $item)
+            @foreach ($category as $item)
               <li class="has-children">
                 <a class="" href="{{ route('category.product', $item->slug) }}"> {{ ucfirst($item->name) ?? '' }} </a>
                 @if ($item->subCategory->count())

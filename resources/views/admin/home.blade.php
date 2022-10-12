@@ -1,5 +1,38 @@
 @extends('admin.layouts.app')
 
+@push('css')
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endpush
+
+@push('style')
+  <style>
+    #size_daterangepicker {
+      background-color: #fff !important;
+    }
+
+    #material_daterangepicker {
+      background-color: #fff !important;
+    }
+
+    #variant_daterangepicker {
+      background-color: #fff !important;
+    }
+
+    #country_daterangepicker {
+      background-color: #fff !important;
+    }
+
+    .size_cancel,
+    .material_cancel,
+    .variant_cancel,
+    .country_cancel {
+      left: 310px;
+      top: 12px;
+      background-color: white;
+    }
+  </style>
+@endpush
+
 @section('content')
   <div class="row">
     <div class="col-md-3 col-sm-6 col-12">
@@ -123,4 +156,74 @@
         </div>
     </div> --}}
   </div>
+
+  <div class="row">
+    <div class="col-md-5 mt-4">
+      <h5>Best Selling Size</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="size_daterangepicker" data-url="{{ route('admin.size.chart') }}" />
+          <i class="fa fa-times-circle size_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="size_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="size_pie_chart" height="350">
+        </canvas>
+      </div>
+
+    </div>
+    <div class="col-md-5 mt-4">
+      <h5>Best Selling Material</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="material_daterangepicker" data-url="{{ route('admin.material.chart') }}" />
+          <i class="fa fa-times-circle material_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="material_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="material_pie_chart" height="350">
+        </canvas>
+      </div>
+
+    </div>
+
+    <div class="col-md-5 mt-4">
+      <h5>Best Selling Variant (Size + Material)</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative variant_div">
+          <input class="form-control" readonly placeholder="Pick date range" id="variant_daterangepicker" data-url="{{ route('admin.variant.chart') }}" />
+          <i class="fa fa-times-circle variant_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="variant_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="variant_pie_chart" height="350">
+        </canvas>
+      </div>
+    </div>
+
+
+    <div class="col-md-5 mt-4">
+      <h5>Country Wise Sales</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-50 mb-4">
+          <h5>Country Wise Sales Chart</h5>
+          {{-- <select name="country_id" data-placeholder="Select Country" data-url="{{ route('admin.get.country') }}" id="country_id" class="form-control">
+            <option value="">Select option</option>
+          </select> --}}
+        </div>
+        <h5 class="country_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="country_pie_chart" height="350" data-link="{{ route('admin.country.chart') }}">
+        </canvas>
+      </div>
+    </div>
+  </div>
 @endsection
+
+@push('js')
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+
+  <script src="{{ asset('js/size-chart.js') }}"></script>
+  <script src="{{ asset('js/material-chart.js') }}"></script>
+  <script src="{{ asset('js/variant-chart.js') }}"></script>
+  <script src="{{ asset('js/country-chart.js') }}"></script>
+@endpush

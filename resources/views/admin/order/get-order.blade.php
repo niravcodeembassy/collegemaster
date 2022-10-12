@@ -65,7 +65,7 @@
             $shipped_ = $order->delivery_status == 'dispatched' ? '' : 'd-none';
             $delivered_ = $order->delivery_status == 'delivered' ? '' : 'd-none';
             $cancel_ = $order->delivery_status == 'cancelled' ? '' : 'd-none';
-            $approval = $order->approval_image !== null ? '' : 'd-none';
+            $approval = $order->delivery_status== 'customer_approval' && $order->approval_image !== null ? '' : 'd-none';
           @endphp
 
           <div class="{{ $shipped_ }}" id="hdn_element_shipped">
@@ -138,7 +138,7 @@
             </div>
 
           </div>
-          
+
           <div class="{{ $cancel_ }}" style="margin-bottom: 10px;" id="show_cancel_comment">
             <div class="contct-info">
 

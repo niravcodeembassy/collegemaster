@@ -31,6 +31,12 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::post('save-variant-images', 'HomeController@saveVariantImages')->name('product.image.saveVariantImages');
 
   Route::get('/', 'HomeController@index')->name('home');
+  Route::get('size/chart', 'HomeController@sizeChart')->name('size.chart');
+  Route::get('variant/chart', 'HomeController@variantChart')->name('variant.chart');
+  Route::get('material/chart', 'HomeController@materialChart')->name('material.chart');
+  Route::get('country/chart', 'HomeController@countryChart')->name('country.chart');
+
+  Route::get('test', 'OrderController@test');
 
   Route::group(['namespace' => 'Access'], function () {
 
@@ -151,6 +157,7 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::post('discount/list', 'DiscountController@dataListing')->name('discount.list');
   Route::resource('discount', 'DiscountController');
 
+
   Route::post('order/status', 'OrderController@changeStatus')->name('order.status');
   Route::post('order/checkorderCode', 'OrderController@checkorderCode')->name('order.checkorderCode');
   Route::post('order/list', 'OrderController@dataListing')->name('order.list');
@@ -165,6 +172,13 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
 
   Route::resource('order', 'OrderController');
   Route::post('orders-msg', 'OrderController@orderMsg')->name('orders.msg');
+
+
+
+  Route::get('export/print/', 'ExportController@exportPrint')->name('export.print');
+  Route::get('export/pdf/', 'ExportController@exportPdf')->name('export.pdf');
+  Route::get('export/excel/', 'ExportController@exportExcel')->name('export.excel');
+
 
 
   Route::group(['namespace' => 'Settings', 'middleware' => ['hasSettingPermission']], function () {

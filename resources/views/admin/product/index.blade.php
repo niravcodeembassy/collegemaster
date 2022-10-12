@@ -21,6 +21,20 @@
           'text' => 'Add Product',
       ])
   @endcomponent
+  
+  <div class="col mb-2">
+
+    <div class="d-flex justify-content-end align-items-center ">
+      <a href="{{ route('admin.export.excel', ['export' => 'product']) }}" class="btn btn-success btn-sm">
+        <i class="fas fa-file-export"></i> Best Selling Product Excel
+      </a>
+      <a href="{{ route('admin.export.pdf', ['export' => 'product']) }}" class="btn btn-warning btn-sm mx-2">
+        <i class="fa fa-file-pdf"></i> Best Selling Product PDF
+      </a>
+    </div>
+  </div>
+
+
 
   @php
     $Category = App\Category::get();

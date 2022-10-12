@@ -1,28 +1,10 @@
 @extends('frontend.layouts.app')
 
-@push('style')
-@endpush
-@push('style')
-  <style style="text/css">
-    .profiletimeline {
-      position: relative;
-      padding-left: 40px;
-      margin: 40px 10px 0 30px;
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .profiletimeline .sl-item .sl-left {
-      float: left;
-      margin-left: -60px;
-      z-index: 1;
-      margin-right: 15px;
-    }
-  </style>
+@push('css')
+  <link href="{{ asset('front/assets/css/order-list.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
-
-
   @include('frontend.layouts.banner', [
       'pageTitel' => 'Orders' ?? '',
   ])
@@ -73,12 +55,112 @@
                             <h6 class="mb-0">{{ ucfirst($item->payment_type) }}</h6>
                           @endisset
                         </a>
-                      </div>
 
+                        @php
+                          $order_placed = 'complete';
+                          $pic_receive = '';
+                          $work_in_progress = '';
+                          $customer_approval = '';
+                          $printing = '';
+                          $delivered = '';
+                          $order_content = 'Your item has been placed';
+                          if ($item->order_status == 'pick_not_receive') {
+                              $pic_receive = 'complete';
+                              $order_content = 'Your item has been picture received';
+                          }
+                          if ($item->order_status == 'work_in_progress') {
+                              $pic_receive = 'complete';
+                              $work_in_progress = 'complete';
+                              $order_content = 'Your item has been designing';
+                          }
+                          if ($item->order_status == 'customer_approval') {
+                              $pic_receive = 'complete';
+                              $work_in_progress = 'complete';
+                              $customer_approval = 'complete';
+                              $order_content = 'Your item has been approval';
+                          }
+                          if ($item->order_status == 'printing') {
+                              $pic_receive = 'complete';
+                              $work_in_progress = 'complete';
+                              $customer_approval = 'complete';
+                              $printing = 'complete';
+                              $order_content = 'Your item has been printing';
+                          }
+                          if ($item->order_status == 'delivered') {
+                              $pic_receive = 'complete';
+                              $work_in_progress = 'complete';
+                              $customer_approval = 'complete';
+                              $printing = 'complete';
+                              $delivered = 'complete';
+                              $order_content = 'Your item has been dispactched';
+                          }
+                        @endphp
+
+                        <ul class="timeline d-none d-md-flex d-lg-flex" id="timeline">
+                          <li class="li {{ $order_placed }}">
+                            <div class="timestamp">
+                              <span class="order_status">Order Received</span>
+                            </div>
+                            <div class="status">
+                              <h4></h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $pic_receive }}">
+                            <div class="timestamp">
+                              <span class="order_status">Picture Received</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->receive_date) ? date('D, jS  M', strtotime($item->receive_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $work_in_progress }}">
+                            <div class="timestamp">
+                              <span class="order_status">Designing</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->design_date) ? date('D, jS  M', strtotime($item->design_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $customer_approval }}">
+                            <div class="timestamp">
+                              <span class="order_status">Approval</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->approval_date) ? date('D, jS  M', strtotime($item->approval_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $printing }}">
+                            <div class="timestamp">
+                              <span class="order_status">Printing</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->printing_date) ? date('D, jS  M', strtotime($item->printing_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $delivered }}">
+                            <div class="timestamp">
+                              <span class="order_status">Dispatch</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->dispatch_date) ? date('D, jS  M', strtotime($item->dispatch_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                        </ul>
+                        <p class="mx-4 h6 d-none d-md-flex d-lg-flex"> {{ $order_content ?? '' }}</p>
+                      </div>
                     </div>
                     <hr class="m-3">
                   @endforeach
-
                 </div>
               @else
                 <h4 class="pl-4">You have no order</h4>
@@ -103,5 +185,4 @@
       </div>
     </div>
   </div>
-
 @endsection

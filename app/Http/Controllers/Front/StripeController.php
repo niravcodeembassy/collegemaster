@@ -42,6 +42,12 @@ class StripeController extends Controller
     $order_item = session('order_cart');
     $product_name = $order_item['cart'][0]['name'];
     $order_id = Order::orderBy('id', 'desc')->first();
+    if ($order_id != null) {
+      $order_id = $order_id->id + 1;
+    } else {
+      $order_id = 1;
+    }
+
 
     $checkout_session = \Stripe\Checkout\Session::create([
       'payment_method_types' => ['card'],
@@ -57,7 +63,7 @@ class StripeController extends Controller
         'quantity' => 1,
       ]],
       'mode' => 'payment',
-      'success_url' => env('APP_URL') . '/payment/stripe/success/' . $order_id->id,
+      'success_url' => env('APP_URL') . '/payment/stripe/success/' . $order_id,
       'cancel_url' => env('APP_URL') . '/transaction-fail',
     ]);
 

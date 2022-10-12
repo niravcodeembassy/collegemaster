@@ -120,10 +120,12 @@ class CheckOutController extends Controller
 
       $this->clearCart();
 
+      $body = view('template.placed', ['user_name' => ucwords($this->order->user->name), 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
+
       $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-      $body = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
+      $body_first = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
       //SMS sent message
-      $this->sendSmsMessage($this->user->phone, $body);
+      $this->sendSmsMessage($this->user->phone, $body_first);
       //whatsapp sent message
       $this->sendWhatsappMessage($this->user->phone, $body);
 
@@ -481,8 +483,9 @@ class CheckOutController extends Controller
       'user_id'     => Auth::user()->id,
     ]);
     $address['shipping_address'] = $shippingAddress;
+
     // if billing address is different then set in session
-    if ($orderaddress['different_billing_address'] == 'on') {
+    if ($orderaddress['billing_first_name'] && $orderaddress['different_billing_address'] == 'on') {
       $mobile_billing =   $orderaddress['billing_mobile_country_code'] . "" .  $orderaddress['billing_mobile'];
       $state = State::find($orderaddress['billing_state']);
       $country = Country::find($orderaddress['billing_country']);
@@ -609,10 +612,11 @@ class CheckOutController extends Controller
         session()->forget(['checkout_session']);
 
 
+        $body = view('template.placed', ['user_name' => ucwords($this->order->user->name), 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
         $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-        $body = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $body_first = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
 
-        $this->sendSmsMessage($this->user->phone, $body);
+        $this->sendSmsMessage($this->user->phone, $body_first);
         $this->sendWhatsappMessage($this->user->phone, $body);
 
         try {

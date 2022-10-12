@@ -7,6 +7,8 @@ use ZipArchive;
 use App\Setting;
 use Carbon\Carbon;
 use App\Model\Order;
+use App\Model\Product;
+use App\Model\Productvariant;
 use App\Model\CartImage;
 use App\Model\OrderChat;
 use App\Mail\OrderCanceled;
@@ -30,6 +32,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Twilio\Rest\Client;
+use App\Model\OrderItem;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -430,6 +434,7 @@ class OrderController extends Controller
       $strDate = $datedata[1] . '-' . $datedata[0] . '-' . $datedata[2];
 
       $strDate = $request->deleverd_date;
+      // $order->dispatch_date = date('Y-m-d H:i:s');
       $order->deleverd_date = date('Y-m-d H:i:s', strtotime($strDate));
       $order->deleverd_to_name = $request->user_name;
       $order->order_status = 'delivered';
@@ -442,12 +447,16 @@ class OrderController extends Controller
     }
 
     if ($request->delivery_status == 'pick_not_receive') {
-
+      // $order->receive_date = date('Y-m-d H:i:s');
       try {
         Mail::to($user->email)->send(new OrderPickNotReceive($order));
       } catch (\Exception $th) {
       }
     }
+
+    // if ($request->delivery_status == 'work_in_progress') {
+    //   $order->design_date = date('Y-m-d H:i:s');
+    // }
 
     if ($request->delivery_status == 'customer_approval') {
       $image = asset('storage/category/default.png');
@@ -460,6 +469,7 @@ class OrderController extends Controller
         $fileName = str_replace(' ', '_', $fileName);
         $uploadFile =  $image->storeAs('approval_image', $fileName);
         $order->approval_image =  $uploadFile;
+        // $order->approval_date = date('Y-m-d H:i:s');
         $image = asset('storage/' . $order->approval_image);
       }
 
@@ -470,6 +480,7 @@ class OrderController extends Controller
     }
 
     if ($request->delivery_status == 'printing') {
+      // $order->printing_date = date('Y-m-d H:i:s');
       try {
         Mail::to($user->email)->send(new OrderPrinting($order));
       } catch (\Exception $th) {
@@ -761,21 +772,29 @@ class OrderController extends Controller
 
     if (in_array($status, $order_status)) {
       if ($status == 'pick_not_receive') {
-        $content = 'waiting for pictures';
-        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $product = $order->items->pluck('name')->first();
+        // $tex = '';
+        // foreach ($product as $key => $list) {
+        //   $tex .= ' ' . ($key + 1) . '.' . $list;
+        // }
+        $body = view('template.picture', ['user_name' => ucwords($user->name), 'product' => $product])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
-        $content = 'Design Approval';
-        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $body = view('template.approval', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'printing') {
-        $content = 'Printing';
-        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $body = view('template.printing', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'delivered') {
         $date = date('F j, Y', strtotime($order->deleverd_date));
         $content = 'dispatched in ' . $date;
-        $body = 'we would  like to inform ' . ucwords($user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $body = view('template.dispatch', [
+          'user_name' => ucwords($user->name),
+          'order_number' => $order->order_number,
+          'courier_provider' => ucwords($order->deleverd_to_name),
+          'tracking_id' => $order->tracking_number,
+          'delivery_date' =>  $date
+        ])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       }
 
@@ -829,6 +848,12 @@ class OrderController extends Controller
     ], 200);
   }
 
+  public function test()
+  {
+    $msg = view('template.mobile-placed', ['user_name' => 'bhavin', 'order_number' => '22232', 'amount' => '345'])->render();
+    $this->sendSmsMessage('+918200059456', $msg);
+  }
+
   public function sendSmsMessage($mobile, $body)
   {
     $sid =  config("app.twilio.twilio_auth_sid");
@@ -846,8 +871,14 @@ class OrderController extends Controller
         )
       );
     } catch (\Exception $e) {
+      dd($e);
     }
   }
+
+
+
+
+
 
 
   public function sendWhatsappMessage($mobile, $body)

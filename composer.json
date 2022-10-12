@@ -25,6 +25,7 @@
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.1",
         "livewire/livewire": "^1.0",
+        "maatwebsite/excel": "^3.1",
         "razorpay/razorpay": "^2.5",
         "spatie/laravel-permission": "^3.11",
         "stevebauman/location": "^6.1",
