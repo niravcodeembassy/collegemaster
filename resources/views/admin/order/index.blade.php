@@ -62,25 +62,28 @@
           'action_icon' => 'fa fa-plus',
           'text' => '',
       ])
-    <a href="{{ route('admin.export.excel', ['export' => 'order']) }}" class="btn btn-success btn-sm">
-      <i class="fas fa-file-export"></i> Export
-    </a>
-    <a href="{{ route('admin.export.pdf', ['export' => 'order']) }}" class="btn btn-warning btn-sm mx-2">
-      <i class="fa fa-file-pdf"></i> PDF
-    </a>
+    @if ($total_order > 0)
+      <a href="{{ route('admin.export.excel', ['export' => 'order']) }}" class="btn btn-success btn-sm">
+        <i class="fas fa-file-export"></i>Order Report Excel
+      </a>
+      <a href="{{ route('admin.export.pdf', ['export' => 'order']) }}" class="btn btn-warning btn-sm mx-2">
+        <i class="fa fa-file-pdf"></i> Order Report Pdf
+      </a>
+    @endif
   @endcomponent
-
-  <div class="col mb-2">
-
-    <div class="d-flex justify-content-end align-items-center ">
-      <a href="{{ route('admin.export.excel', ['export' => 'refund']) }}" class="btn btn-success btn-sm">
-        <i class="fas fa-file-export"></i> Refund Report Excel
-      </a>
-      <a href="{{ route('admin.export.pdf', ['export' => 'refund']) }}" class="btn btn-warning btn-sm mx-2">
-        <i class="fa fa-file-pdf"></i> Refund Report PDF
-      </a>
+      
+  @if ($refund_total_order > 0)
+    <div class="col mb-2">
+      <div class="d-flex justify-content-end align-items-center ">
+        <a href="{{ route('admin.export.excel', ['export' => 'refund']) }}" class="btn btn-success btn-sm">
+          <i class="fas fa-file-export"></i> Refund Report Excel
+        </a>
+        <a href="{{ route('admin.export.pdf', ['export' => 'refund']) }}" class="btn btn-warning btn-sm mx-2">
+          <i class="fa fa-file-pdf"></i> Refund Report PDF
+        </a>
+      </div>
     </div>
-  </div>
+  @endif
 
   <div class="row">
     <div class="col-sm-12">

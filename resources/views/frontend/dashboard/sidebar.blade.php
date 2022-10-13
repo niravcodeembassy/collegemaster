@@ -1,4 +1,4 @@
-<div class="col-lg-3">
+<div class="{{ isset($class) ? $class : 'col-lg-3' }}">
 
   <div class="dashboard-left" style="left: 0px;">
     <div class="list-group">

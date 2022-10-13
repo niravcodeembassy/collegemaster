@@ -202,14 +202,12 @@
     <div class="col-md-5 mt-4">
       <h5>Country Wise Sales</h5>
       <div class="card p-4" style="height:480px;">
-        <div class="w-50 mb-4">
-          <h5>Country Wise Sales Chart</h5>
-          {{-- <select name="country_id" data-placeholder="Select Country" data-url="{{ route('admin.get.country') }}" id="country_id" class="form-control">
-            <option value="">Select option</option>
-          </select> --}}
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="country_daterangepicker" data-url="{{ route('admin.country.chart') }}" />
+          <i class="fa fa-times-circle country_cancel text-secondary position-absolute" style="display: none;"></i>
         </div>
         <h5 class="country_heading text-center" style="display: none">Data Not Found</h5>
-        <canvas id="country_pie_chart" height="350" data-link="{{ route('admin.country.chart') }}">
+        <canvas id="country_pie_chart" height="350">
         </canvas>
       </div>
     </div>

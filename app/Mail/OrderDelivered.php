@@ -30,7 +30,7 @@ class OrderDelivered extends Mailable
   public function build()
   {
     $this->order->load('itemslists', 'user');
-    $this->data['setting']  = Setting::findOrfail(1);
+    $this->data['setting']  = Setting::findOrFail(1);
     $this->data['shipping'] =  $this->order->address;
     $this->data['order'] = $this->order;
 

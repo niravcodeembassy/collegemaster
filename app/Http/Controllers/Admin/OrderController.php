@@ -68,6 +68,10 @@ class OrderController extends Controller
       $this->data['total_count'] = 0;
     }
 
+
+    $this->data['total_order'] = Order::count();
+    $this->data['refund_total_order'] = Order::where('order_status', 'refund')->count();
+
     return view('admin.order.index', $this->data);
   }
 
@@ -232,18 +236,27 @@ class OrderController extends Controller
       if ($item->total) {
         $item->total = $item->total ?? 0;
       }
-      $row['sendMessage'] = '<a class="btn btn-dark btn-sm text-white sendWhatsapp"
-      data-url="' . route('admin.order.whatsapp', $item->id) . '"
-      data-status="' . $item->order_status . '"
-      href="javascript:void(0)" data-id="' . $item->id . '">
-      <i class="fab fa-whatsapp"></i></i>&nbsp;&nbsp;Message
-      </a>&nbsp;&nbsp;
-      <a class="btn btn-info btn-sm text-white sendSms"
-      data-url="' . route('admin.order.sms', $item->id) . '"
-      data-status="' . $item->order_status . '"
-      href="javascript:void(0)" data-id="' . $item->id . '">
-      <i class="fas fa-comment-dots"></i></i>&nbsp;&nbsp;SMS
-      </a>&nbsp;&nbsp;';
+
+      $order_status = [
+        'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+      ];
+
+      $row['sendMessage'] = 'N/A';
+
+      if (in_array($item->order_status, $order_status)) {
+        $row['sendMessage'] = '<a class="btn btn-dark btn-sm text-white sendWhatsapp"
+        data-url="' . route('admin.order.whatsapp', $item->id) . '"
+        data-status="' . $item->order_status . '"
+        href="javascript:void(0)" data-id="' . $item->id . '">
+        <i class="fab fa-whatsapp"></i></i>&nbsp;&nbsp;Message
+        </a>&nbsp;&nbsp;
+        <a class="btn btn-info btn-sm text-white sendSms"
+        data-url="' . route('admin.order.sms', $item->id) . '"
+        data-status="' . $item->order_status . '"
+        href="javascript:void(0)" data-id="' . $item->id . '">
+        <i class="fas fa-comment-dots"></i></i>&nbsp;&nbsp;SMS
+        </a>';
+      }
 
       $row['totalPrice'] = '<span class="text-right d-block" >' . Helper::showPrice($item->total, $item->currency) . '</span>';
 
@@ -441,7 +454,7 @@ class OrderController extends Controller
       $order->tracking_number = $request->tracking_number;
 
       try {
-        Mail::to($user->email)->send(new OrderDelivered($order));
+        Mail::to($user->email)->send(new OrderDispatched($order));
       } catch (\Exception $th) {
       }
     }
@@ -772,12 +785,12 @@ class OrderController extends Controller
 
     if (in_array($status, $order_status)) {
       if ($status == 'pick_not_receive') {
-        $product = $order->items->pluck('name')->first();
-        // $tex = '';
-        // foreach ($product as $key => $list) {
-        //   $tex .= ' ' . ($key + 1) . '.' . $list;
-        // }
-        $body = view('template.picture', ['user_name' => ucwords($user->name), 'product' => $product])->render();
+        $product = $order->items->pluck('name');
+        $tex = '';
+        foreach ($product as $key => $list) {
+          $tex .= '(' . ($key + 1) . ') ' .  $list;
+        }
+        $body = view('template.picture', ['user_name' => ucwords($user->name), 'product' => $tex])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
         $body = view('template.approval', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
@@ -787,7 +800,6 @@ class OrderController extends Controller
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'delivered') {
         $date = date('F j, Y', strtotime($order->deleverd_date));
-        $content = 'dispatched in ' . $date;
         $body = view('template.dispatch', [
           'user_name' => ucwords($user->name),
           'order_number' => $order->order_number,
@@ -808,6 +820,8 @@ class OrderController extends Controller
       'message' => "Message Not Sent this Order Status"
     ], 200);
   }
+
+
 
   public function sendSms(Request $request)
   {
@@ -850,8 +864,9 @@ class OrderController extends Controller
 
   public function test()
   {
-    $msg = view('template.mobile-placed', ['user_name' => 'bhavin', 'order_number' => '22232', 'amount' => '345'])->render();
-    $this->sendSmsMessage('+918200059456', $msg);
+    // 919429289356
+    $body = view('template.picture', ['user_name' => "bhavin", 'product' => 'Apple'])->render();
+    $this->sendWhatsappMessage('+919429289356', $body);
   }
 
   public function sendSmsMessage($mobile, $body)
@@ -871,15 +886,9 @@ class OrderController extends Controller
         )
       );
     } catch (\Exception $e) {
-      dd($e);
+      // dd($e);
     }
   }
-
-
-
-
-
-
 
   public function sendWhatsappMessage($mobile, $body)
   {
@@ -902,6 +911,7 @@ class OrderController extends Controller
         ]
       );
     } catch (\Exception $e) {
+      // dd($e);
     }
   }
 }

@@ -69,7 +69,7 @@
             <!--=======  single-icon  =======-->
             @auth
               <div class="single-icon user-login">
-                <a href="{{ route('profile.index') }}">
+                <a href="{{ route('orders.list') }}">
                   <i class="ion-android-person"></i>
                 </a>
               </div>

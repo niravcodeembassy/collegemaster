@@ -10,10 +10,10 @@
   ])
 
   <section class="section-b-space">
-    <div class="container ">
+    <div class="container wide">
       <div class="row  mt-80 mb-80">
-        @include('frontend.dashboard.sidebar')
-        <div class="col-lg-9">
+        @include('frontend.dashboard.sidebar', ['class' => 'col-lg-2 offset-lg-2'])
+        <div class="col-lg-7">
           <div class="dashboard-right">
             <h3 class="pl-4">ORDER LIST</h3>
             <div class="dashboard ">
@@ -30,7 +30,7 @@
                         <a href="{{ route('orders.show', $item->id) }}" class="link call-modals" data-url="{{ route('orders.show', $item->id) }}" data-target-modal="#orderdetails" data-target="#orderdetails"> Order No :
                           {{ $item->order_number ?? '---' }}
                           | Date : <span class="sl-date text-behance">{{ $item->created_at->format('m-d-Y H:i:s') ?? '---' }} (IST) </span>
-                          @isset($item->order_status)
+                          {{-- @isset($item->order_status)
                             <small class="text-muted d-block f-12 pt-2">Order Status</small>
                             @php
                               $status = null;
@@ -53,7 +53,7 @@
                           @isset($item->payment_type)
                             <small class="text-muted d-block pt-2 f-12">Payment Mode</small>
                             <h6 class="mb-0">{{ ucfirst($item->payment_type) }}</h6>
-                          @endisset
+                          @endisset --}}
                         </a>
 
                         @php
@@ -63,43 +63,56 @@
                           $customer_approval = '';
                           $printing = '';
                           $delivered = '';
+                          $correction = '';
+                          $smallclass = '';
                           $order_content = 'Your item has been placed';
                           if ($item->order_status == 'pick_not_receive') {
                               $pic_receive = 'complete';
-                              $order_content = 'Your item has been picture received';
+                              $order_content = 'Your item has been waiting for Pictures';
                           }
                           if ($item->order_status == 'work_in_progress') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
-                              $order_content = 'Your item has been designing';
+                              $order_content = 'Your item has been Designing';
+                          }
+                          if ($item->order_status == 'correction') {
+                              $pic_receive = 'complete';
+                              $work_in_progress = 'complete';
+                              $correction = 'complete';
+                              $order_content = 'Your item has been Changes';
+                              $smallclass = 'small_size';
                           }
                           if ($item->order_status == 'customer_approval') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
                               $customer_approval = 'complete';
-                              $order_content = 'Your item has been approval';
+                              $correction = 'complete';
+                              $order_content = 'Your item has been Design Approval';
                           }
+
                           if ($item->order_status == 'printing') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
                               $customer_approval = 'complete';
                               $printing = 'complete';
-                              $order_content = 'Your item has been printing';
+                              $correction = 'complete';
+                              $order_content = 'Your item has been Printing';
                           }
                           if ($item->order_status == 'delivered') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
                               $customer_approval = 'complete';
                               $printing = 'complete';
+                              $correction = 'complete';
                               $delivered = 'complete';
-                              $order_content = 'Your item has been dispactched';
+                              $order_content = 'Your item has been Dispactched';
                           }
                         @endphp
 
                         <ul class="timeline d-none d-md-flex d-lg-flex" id="timeline">
                           <li class="li {{ $order_placed }}">
                             <div class="timestamp">
-                              <span class="order_status">Order Received</span>
+                              <span class="order_status {{ $smallclass }}">Order Received</span>
                             </div>
                             <div class="status">
                               <h4></h4>
@@ -107,7 +120,7 @@
                           </li>
                           <li class="li {{ $pic_receive }}">
                             <div class="timestamp">
-                              <span class="order_status">Picture Received</span>
+                              <span class="order_status {{ $smallclass }}">Wating for Picture</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -117,7 +130,17 @@
                           </li>
                           <li class="li {{ $work_in_progress }}">
                             <div class="timestamp">
-                              <span class="order_status">Designing</span>
+                              <span class="order_status {{ $smallclass }}">Picture Received</span>
+                            </div>
+                            <div class="status">
+                              <h4>
+                                {{-- {{ isset($item->receive_date) ? date('D, jS  M', strtotime($item->receive_date)) : '' }} --}}
+                              </h4>
+                            </div>
+                          </li>
+                          <li class="li {{ $work_in_progress }}">
+                            <div class="timestamp">
+                              <span class="order_status {{ $smallclass }}">Designing</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -125,9 +148,21 @@
                               </h4>
                             </div>
                           </li>
+                          @if ($item->order_status == 'correction')
+                            <li class="li {{ $correction }}">
+                              <div class="timestamp">
+                                <span class="order_status {{ $smallclass }}">Correction</span>
+                              </div>
+                              <div class="status">
+                                <h4>
+                                  {{-- {{ isset($item->design_date) ? date('D, jS  M', strtotime($item->design_date)) : '' }} --}}
+                                </h4>
+                              </div>
+                            </li>
+                          @endif
                           <li class="li {{ $customer_approval }}">
                             <div class="timestamp">
-                              <span class="order_status">Approval</span>
+                              <span class="order_status {{ $smallclass }}">Approval</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -137,7 +172,7 @@
                           </li>
                           <li class="li {{ $printing }}">
                             <div class="timestamp">
-                              <span class="order_status">Printing</span>
+                              <span class="order_status {{ $smallclass }}">Printing</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -147,7 +182,7 @@
                           </li>
                           <li class="li {{ $delivered }}">
                             <div class="timestamp">
-                              <span class="order_status">Dispatch</span>
+                              <span class="order_status {{ $smallclass }}">Dispatch</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -156,7 +191,7 @@
                             </div>
                           </li>
                         </ul>
-                        <p class="mx-4 h6 d-none d-md-flex d-lg-flex"> {{ $order_content ?? '' }}</p>
+                        <p class="mx-4 h6 d-none d-md-flex d-lg-flex order_msg_content"> {{ $order_content ?? '' }}</p>
                       </div>
                     </div>
                     <hr class="m-3">

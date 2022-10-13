@@ -55,7 +55,6 @@ class HomeController extends Controller
       'message' => 'Image uploaded successfully'
     ]);
   }
-
   public function sizeChart(Request $request)
   {
     $startDate = $request->startDate ?? date('Y-m-01');
@@ -97,7 +96,7 @@ class HomeController extends Controller
 
     return response()->json($json_data);
   }
-
+  
   public function variantChart(Request $request)
   {
     $startDate = $request->startDate ?? date('Y-m-01');
@@ -120,7 +119,7 @@ class HomeController extends Controller
       })
       ->groupBy('attribute')
       ->orderByDesc('quantity_sold')
-      ->take(10)
+      ->take(5)
       ->get();
 
     $item = $best_selling_variant->map(function ($item, $key) {
@@ -187,22 +186,35 @@ class HomeController extends Controller
 
   public function countryChart(Request $request)
   {
+
+    $startDate = $request->startDate ?? date('Y-m-01');
+    $endDate = $request->endDate ?? date('Y-m-t');
+    $today = $startDate == $endDate;
+
     // $country = $request->country;
     // $order = Order::whereJsonContains('address->shipping_address->country', $country);
 
     $opt = '$[0]."shipping_address"."country"';
     $country_wise_sales =  Order::select(
       DB::raw("json_extract(orders.address, '$opt') as country"),
-      'orders.*'
-    )->selectRaw('count(orders.user_id) AS count_total')
+      'orders.*',
+      'order_items.order_id',
+      'order_items.qty'
+    )->join('order_items', 'order_items.order_id', "=", "orders.id")
+      ->selectRaw('SUM(order_items.qty) AS quantity_sold')
       ->groupBy('country')
-      ->orderByDesc('count_total')
+      ->when($today && isset($startDate), function ($q) use ($startDate) {
+        return $q->whereDate('orders.created_at', $startDate);
+      })->when(!$today && isset($startDate), function ($q) use ($startDate, $endDate) {
+        return  $q->whereBetween('orders.created_at', [$startDate, $endDate]);
+      })
+      ->orderByDesc('quantity_sold')
       ->get();
 
     $item = $country_wise_sales->map(function ($item, $key) {
       $record = [
         'country' => str_replace(['"', "'"], "", $item->country),
-        'count' => $item->count_total,
+        'count' => $item->quantity_sold,
         'color' =>  '#' . dechex(rand(0x000000, 0xFFFFFF))
       ];
       return $record;
