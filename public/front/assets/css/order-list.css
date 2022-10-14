@@ -32,8 +32,8 @@ ul.timeline li .timestamp{
 
 ul.timeline li .status{
   padding: 0px 15px;
-  display: flex;
   border-top: 2px solid #D6DCE0;
+  display: flex;
   position: relative;
   justify-content: center;
   transition: all 200ms ease-in;
@@ -44,15 +44,11 @@ ul.timeline li .status{
   font-size: 14px;
 }
 
-/* span.small_size{
-  font-size: 14px !important;
-} */
-
 span.order_status{
   font-weight: 500;
   font-variant-caps: all-petite-caps;
-  font-size: 19px;
-  color: darkgrey;
+  font-size: 14px;
+  color: darkgray;
 }
 
 li.complete span.order_status{
@@ -86,31 +82,81 @@ p.order_msg_content{
   transition: all 200ms ease-in;
 }
 
-@media (min-device-width: 320px) and (max-device-width: 700px){
 
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  span.order_status {
+    font-size: 13px;
+}
+/* .section-b-space .col-lg-2{
+  flex: 0 0 25%;
+  max-width: 25%;
+} */
+.profiletimeline {
+  margin: 40px 0px 0 0px;
+}
+ul.timeline li .timestamp {
+  padding: 0px 8px;
+}
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+  span.order_status {
+    font-size: 13px;
+}
+ul.timeline li .timestamp {
+    padding: 0px 8px;
+}
+}
+
+
+@media (min-device-width: 320px) and (max-device-width: 700px){
   ul.timeline{
     list-style-type: none;
     display: block;
+    position: relative;
+  }
+
+ ul.timeline li::before {
+  background-color: #25800c;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    top: 6px;
+    left: 7px;
+    width: 3px;
+  }
+
+  ul.timeline li .timestamp {
+    margin-bottom: 15px;
+    padding: 0px 34px;
   }
 
   li.li {
     transition: all 200ms ease-in;
-    display: flex;
+    display: block;
     width: inherit;
   }
-  li.timestamp {
-    width: 100px
-  }
   .status::before{
-    left: -8%;
-    top: 30%;
+    left: 1%;
     transition: all 200ms ease-in;
   }
+
+  ul.timeline li .status{
+    padding: 0px 15px;
+    border-left: 0px;
+    border-top:0px;
+  }
+  .li.complete .status {
+    border-left: 0px;
+    border-top:0px;
+  }
 }
 
-
-@media screen and (max-width: 1024px) {
-  span.order_status {
-    font-size: 13px;
-}
+@media only screen and (min-width: 640px) and (max-width: 667px) {
+  .status::before{
+    left: 1%;
+    width: 10px;
+    height: 10px;
+    transition: all 200ms ease-in;
+  }
 }

@@ -25,7 +25,7 @@
 
   <section class="section-b-space">
     <div class="container wide">
-      <div class="row mt-80 mb-80">
+      <div class="row mt-lg-80 mt-20 mb-80">
         <div class="col-lg-2">
 
           <div class="dashboard-left" style="left: 0px;">

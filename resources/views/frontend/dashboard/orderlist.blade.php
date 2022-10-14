@@ -10,12 +10,12 @@
   ])
 
   <section class="section-b-space">
-    <div class="container wide">
+    <div class="container">
       <div class="row  mt-80 mb-80">
-        @include('frontend.dashboard.sidebar', ['class' => 'col-lg-2 offset-lg-2'])
-        <div class="col-lg-7">
+        @include('frontend.dashboard.sidebar', ['class' => 'col-lg-3'])
+        <div class="col-lg-9">
           <div class="dashboard-right">
-            <h3 class="pl-4">ORDER LIST</h3>
+            <h3 class="pl-4 mt-lg-0 mt-4">ORDER LIST</h3>
             <div class="dashboard ">
               @if (isset($customer->orders) && $customer->orders->count() > 0)
                 <div class="profiletimeline">
@@ -64,7 +64,6 @@
                           $printing = '';
                           $delivered = '';
                           $correction = '';
-                          $smallclass = '';
                           $order_content = 'Your item has been placed';
                           if ($item->order_status == 'pick_not_receive') {
                               $pic_receive = 'complete';
@@ -80,7 +79,6 @@
                               $work_in_progress = 'complete';
                               $correction = 'complete';
                               $order_content = 'Your item has been Changes';
-                              $smallclass = 'small_size';
                           }
                           if ($item->order_status == 'customer_approval') {
                               $pic_receive = 'complete';
@@ -108,11 +106,11 @@
                               $order_content = 'Your item has been Dispactched';
                           }
                         @endphp
-
-                        <ul class="timeline d-none d-md-flex d-lg-flex" id="timeline">
+                        {{-- d-none d-md-flex d-lg-flex --}}
+                        <ul class="timeline d-md-flex d-lg-flex d-sm-blok" id="timeline">
                           <li class="li {{ $order_placed }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Order Received</span>
+                              <span class="order_status">Order Received</span>
                             </div>
                             <div class="status">
                               <h4></h4>
@@ -120,7 +118,7 @@
                           </li>
                           <li class="li {{ $pic_receive }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Wating for Picture</span>
+                              <span class="order_status">Wating for Picture</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -130,7 +128,7 @@
                           </li>
                           <li class="li {{ $work_in_progress }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Picture Received</span>
+                              <span class="order_status">Picture Received</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -140,7 +138,7 @@
                           </li>
                           <li class="li {{ $work_in_progress }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Designing</span>
+                              <span class="order_status">Designing</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -151,7 +149,7 @@
                           @if ($item->order_status == 'correction')
                             <li class="li {{ $correction }}">
                               <div class="timestamp">
-                                <span class="order_status {{ $smallclass }}">Correction</span>
+                                <span class="order_status">Correction</span>
                               </div>
                               <div class="status">
                                 <h4>
@@ -162,7 +160,7 @@
                           @endif
                           <li class="li {{ $customer_approval }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Approval</span>
+                              <span class="order_status">Approval</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -172,7 +170,7 @@
                           </li>
                           <li class="li {{ $printing }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Printing</span>
+                              <span class="order_status">Printing</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -182,7 +180,7 @@
                           </li>
                           <li class="li {{ $delivered }}">
                             <div class="timestamp">
-                              <span class="order_status {{ $smallclass }}">Dispatch</span>
+                              <span class="order_status">Dispatch</span>
                             </div>
                             <div class="status">
                               <h4>
@@ -191,7 +189,7 @@
                             </div>
                           </li>
                         </ul>
-                        <p class="mx-4 h6 d-none d-md-flex d-lg-flex order_msg_content"> {{ $order_content ?? '' }}</p>
+                        <p class="mx-4 h6 order_msg_content"> {{ $order_content ?? '' }}</p>
                       </div>
                     </div>
                     <hr class="m-3">
