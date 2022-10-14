@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="content-language" content="en-us">
-  <title> @yield('title', $title ?? 'Home') | {{ env('APP_NAME') }}</title>
+  <title> @yield('title', $title ?? 'Home') | {{ $frontsetting->meta_title }}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">

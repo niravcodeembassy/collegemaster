@@ -122,6 +122,10 @@
                             $status = 'Designing';
                         } elseif ($item->order_status == 'dispatched') {
                             $status = 'Shipped';
+                        } elseif ($item->order_status == 'pick_not_receive') {
+                            $status = 'Waiting for Pic';
+                        } elseif ($item->order_status == 'correction') {
+                            $status = 'Changes';
                         } else {
                             $status = $item->order_status;
                         }

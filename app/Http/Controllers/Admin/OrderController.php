@@ -48,6 +48,13 @@ class OrderController extends Controller
   {
     $this->data['title'] =  'Order';
     $this->data['type'] = $request->get('type', 'online');
+
+    $online_order_count = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+    $cod_order_count = Order::where('payment_type', 'cash')->count();
+    $online_pending_order_count = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+      $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+    })->count();
+
     $status = array('order_placed', 'dispatched', 'delivered', 'cancelled', 'customer_approval', 'work_in_progress', 'pick_not_receive', 'correction', 'printing', 'refund');
     $online_count = [];
     $offline_count = [];
@@ -55,20 +62,24 @@ class OrderController extends Controller
     foreach ($status as $key => $list) {
       $online_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
       $offline_count[$list] =  Order::where('order_status', $list)->where('payment_type', 'cash')->count();
-      $pending_count[$list] =  0;
+      $pending_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+        $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+      })->count();
     }
-    $this->data['total_count'] = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+    $this->data['total_count'] = $online_order_count;
     $this->data['order_count'] = $online_count;
     if ($request->get('type') == 'cod') {
       $this->data['order_count'] = $offline_count;
-      $this->data['total_count'] = Order::where('payment_type', 'cash')->count();
+      $this->data['total_count'] = $cod_order_count;
     }
     if ($request->get('type') == 'pending') {
       $this->data['order_count'] = $pending_count;
-      $this->data['total_count'] = 0;
+      $this->data['total_count'] = $online_pending_order_count;
     }
 
-
+    $this->data['online_order_count'] = $online_order_count;
+    $this->data['cod_order_count'] = $cod_order_count;
+    $this->data['online_pending_order_count'] = $online_pending_order_count;
     $this->data['total_order'] = Order::count();
     $this->data['refund_total_order'] = Order::where('order_status', 'refund')->count();
 
@@ -105,7 +116,7 @@ class OrderController extends Controller
     if ($filter_status !== 'all') {
       $orders = Order::with('user', 'itemslists:id,order_id,qty')
         ->when($search, function ($query, $search) {
-          return $query->whereLike(['order_number', 'user.name'], "%{$search}%");
+          return $query->whereLike(['order_number','order_no','user.name'], "%{$search}%");
         })
         ->when($request->to_date, function ($query) use ($request) {
           return $query->where('created_at', '>=', date('Y-m-d', strtotime($request->to_date)));
@@ -199,25 +210,25 @@ class OrderController extends Controller
       // dump($item->order_status);
 
       if ($item->order_status == "cancelled") {
-        $row['deliveryStatus'] = '<span class = "badge badge-pill my-badge badge-danger m-auto mb-1">' . ucfirst(str_replace('_', ' ', $item->order_status)) . '</span>';
+        $row['deliveryStatus'] = '<span class = "badge my-badge badge-danger m-auto mb-1">' . ucfirst(str_replace('_', ' ', $item->order_status)) . '</span>';
       } else if ($item->order_status == 'order_placed') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-primary m-auto mb-1">New</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-primary m-auto mb-1">New</span>';
       } else if ($item->order_status == 'pick_not_receive') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Pick Not Receive</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-info m-auto mb-1">Waiting for Pic</span>';
       } else if ($item->order_status == 'correction') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Correction</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-info m-auto mb-1">Changes</span>';
       } else if ($item->order_status == 'printing') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Printing</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-info m-auto mb-1">Printing</span>';
       } else if ($item->order_status == 'delivered') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-success m-auto mb-1">Completed</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-success m-auto mb-1">Completed</span>';
       } else if ($item->order_status == 'customer_approval') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-warning bg-maroon m-auto mb-1">Approval</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-warning bg-maroon m-auto mb-1">Approval</span>';
       } else if ($item->order_status == 'work_in_progress') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-default bg-gray m-auto mb-1">Designing</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-default bg-gray m-auto mb-1">Designing</span>';
       } else if ($item->order_status == 'dispatched') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-info m-auto mb-1">Shipped</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-info m-auto mb-1">Shipped</span>';
       } else if ($item->order_status == 'refund') {
-        $row['deliveryStatus'] = '<span class="badge badge-pill my-badge badge-success m-auto mb-1">Refund</span>';
+        $row['deliveryStatus'] = '<span class="badge my-badge badge-success m-auto mb-1">Refund</span>';
       }
 
       $statusPopup = '<a class="call-model call-modal"
@@ -513,7 +524,7 @@ class OrderController extends Controller
       }
     }
 
-    $order->payment_status = $request->payment_status;
+    // $order->payment_status = $request->payment_status;
 
     if ($request->delivery_status == 'refund') {
       $order->refund_transaction_id = $request->refund_transaction_id;

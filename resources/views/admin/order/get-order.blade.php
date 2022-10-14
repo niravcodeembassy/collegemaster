@@ -13,7 +13,7 @@
         <div class="modal-body">
           <div class="tax-ajax-message"></div>
 
-          <div class="contct-shop hide">
+          {{-- <div class="contct-shop hide d-none">
             <div class="form-group">
 
               <label for="gst_type">Payment Status <em class="text-danger">*</em></label>
@@ -39,23 +39,23 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> --}}
 
           <div class="contct-info">
             <div class="form-group">
-              <label for="eidt_percentage">Delivery Status <em class="text-danger">*</em></label>
+              <label for="eidt_percentage">Order Status <em class="text-danger">*</em></label>
               <select name="delivery_status" id="delivery_status" data-rule-required="true" onchange="getdelivery_status();" data-parsley-group="first" required class="form-control">
-                <option value="">--- Delivery Status ---</option>
-                <option value="order_placed" {{ strtolower($order->order_status) == 'order_placed' ? 'selected' : '' }}>New</option>
-                <option value="pick_not_receive" {{ strtolower($order->order_status) == 'pick_not_receive' ? 'selected' : '' }}>Pick Not Recieve</option>
-                <option value="work_in_progress" {{ strtolower($order->order_status) == 'work_in_progress' ? 'selected' : '' }}>Designing</option>
-                <option value="correction" {{ strtolower($order->order_status) == 'correction' ? 'selected' : '' }}>Correction</option>
-                <option value="customer_approval" {{ strtolower($order->order_status) == 'customer_approval' ? 'selected' : '' }}>Approval</option>
-                <option value="printing" {{ strtolower($order->order_status) == 'printing' ? 'selected' : '' }}>Printing</option>
-                <option value="delivered" {{ strtolower($order->order_status) == 'delivered' ? 'selected' : '' }}>Completed</option>
-                <option value="refund" {{ strtolower($order->order_status) == 'refund' ? 'selected' : '' }}>Refund</option>
+                <option value="">--- Order Status ---</option>
+                <option value="order_placed" {{ strtolower($order->order_status) == 'order_placed' ? 'selected' : '' }}>NEW</option>
+                <option value="pick_not_receive" {{ strtolower($order->order_status) == 'pick_not_receive' ? 'selected' : '' }}>WAITING FOR PIC </option>
+                <option value="work_in_progress" {{ strtolower($order->order_status) == 'work_in_progress' ? 'selected' : '' }}>DESIGNING</option>
+                <option value="correction" {{ strtolower($order->order_status) == 'correction' ? 'selected' : '' }}>CHANGES</option>
+                <option value="customer_approval" {{ strtolower($order->order_status) == 'customer_approval' ? 'selected' : '' }}>APPROVAL</option>
+                <option value="printing" {{ strtolower($order->order_status) == 'printing' ? 'selected' : '' }}>PRINTING</option>
+                <option value="delivered" {{ strtolower($order->order_status) == 'delivered' ? 'selected' : '' }}>COMPLETED</option>
+                <option value="refund" {{ strtolower($order->order_status) == 'refund' ? 'selected' : '' }}>REFUND</option>
                 {{-- <option value="dispatched" {{ strtolower($order->order_status) == 'dispatched' ? 'selected' : '' }}>Shipped</option> --}}
-                <option value="cancelled" {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>Cancel</option>
+                <option value="cancelled" {{ $order->order_status == 'cancelled' ? 'selected' : '' }}>CANCEL</option>
               </select>
             </div>
           </div>
@@ -65,7 +65,7 @@
             $shipped_ = $order->delivery_status == 'dispatched' ? '' : 'd-none';
             $delivered_ = $order->delivery_status == 'delivered' ? '' : 'd-none';
             $cancel_ = $order->delivery_status == 'cancelled' ? '' : 'd-none';
-            $approval = $order->delivery_status== 'customer_approval' && $order->approval_image !== null ? '' : 'd-none';
+            $approval = $order->delivery_status == 'customer_approval' && $order->approval_image !== null ? '' : 'd-none';
           @endphp
 
           <div class="{{ $shipped_ }}" id="hdn_element_shipped">
@@ -159,7 +159,7 @@
             </div>
           </div>
 
-          <div class="{{$approval }}" style="margin-bottom: 10px;" id="show_approval_comment">
+          <div class="{{ $approval }}" style="margin-bottom: 10px;" id="show_approval_comment">
             <div class="contct-info">
               <div class="form-group">
                 <label for="refund_transaction_id">Approval Image Attachment</label>

@@ -95,7 +95,7 @@
                       @endif
 
                       @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'No')
-                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift :</span> : <span class="mx-2 dot bg-danger"></span></small>
+                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift :</span><span class="mx-2 dot bg-danger"></span></small>
                         <br>
                       @endif
 

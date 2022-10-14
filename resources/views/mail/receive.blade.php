@@ -565,7 +565,7 @@
                                   <p
                                     style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#000000;font-size:15px">
                                     Hello {{ ucwords($order->user->name) }}, <br />
-                                    Your Design Is Waiting For Pictures.<br><br></p>
+                                    Your Design Is Waiting for Pictures.<br><br></p>
                                 </td>
                               </tr>
                             </table>

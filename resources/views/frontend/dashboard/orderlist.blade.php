@@ -149,7 +149,7 @@
                           @if ($item->order_status == 'correction')
                             <li class="li {{ $correction }}">
                               <div class="timestamp">
-                                <span class="order_status">Correction</span>
+                                <span class="order_status">Changes</span>
                               </div>
                               <div class="status">
                                 <h4>

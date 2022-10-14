@@ -64,14 +64,14 @@
       ])
     @if ($total_order > 0)
       <a href="{{ route('admin.export.excel', ['export' => 'order']) }}" class="btn btn-success btn-sm">
-        <i class="fas fa-file-export"></i>Order Report Excel
+        <i class="fas fa-file-export"></i> Order Report Excel
       </a>
       <a href="{{ route('admin.export.pdf', ['export' => 'order']) }}" class="btn btn-warning btn-sm mx-2">
         <i class="fa fa-file-pdf"></i> Order Report Pdf
       </a>
     @endif
   @endcomponent
-      
+
   @if ($refund_total_order > 0)
     <div class="col mb-2">
       <div class="d-flex justify-content-end align-items-center ">
@@ -91,23 +91,23 @@
         <div class="card-header">
           <ul class="nav">
             <li class="nav-item">
-              <a class="btn btn-group-vertical text-uppercase ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online</a>
+              <a class="btn btn-group-vertical text-uppercase ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online ({{$online_order_count}})</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-group-vertical text-uppercase mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD</a>
+              <a class="btn btn-group-vertical text-uppercase mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD ({{$cod_order_count}})</a>
             </li>
             <li class="nav-item ">
-              <a class="btn btn-group-vertical text-uppercase {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending</a>
+              <a class="btn btn-group-vertical text-uppercase {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending ({{$online_pending_order_count}})</a>
             </li>
           </ul>
           <div class="mt-2">
             <ol class="breadcrumb text-muted fw-bold">
               <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="order_placed" class="btn-group-vertical type btn btn-active">NEW <span class="order_count">({{ $order_count['order_placed'] }})</span></a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="btn-group-vertical type btn btn-inactive">PIC NOT REC <span class="order_count">({{ $order_count['pick_not_receive'] }})</span></a>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="pick_not_receive" class="btn-group-vertical type btn btn-inactive">WAITING FOR PIC <span class="order_count">({{ $order_count['pick_not_receive'] }})</span></a>
               </li>
               <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="work_in_progress" class="btn-group-verticaltype btn btn-inactive">DESIGNING <span class="order_count">({{ $order_count['work_in_progress'] }})</span></a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="btn-group-vertical type btn btn-inactive">CORRECTION <span class="order_count">({{ $order_count['correction'] }})</span></a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="correction" class="btn-group-vertical type btn btn-inactive">CHANGES <span class="order_count">({{ $order_count['correction'] }})</span></a></li>
               <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="customer_approval" class="btn-group-vertical type btn btn-inactive">APPROVAL <span class="order_count">({{ $order_count['customer_approval'] }})</span></a></li>
               <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="printing" class="btn-group-vertical type btn btn-inactive">PRINTING <span class="order_count">({{ $order_count['printing'] }})</span></a></li>
               <li class="breadcrumb-item"><a href="javascript:void(0);" data-type="delivered" class="btn-group-vertical type btn btn-inactive">COMPLETED <span class="order_count">({{ $order_count['delivered'] }})</span></a></li>
