@@ -337,8 +337,14 @@
                 <div class="form-group">
                   <textarea class="form-control" id="delivery_caption" name="delivery_caption">{{ $setting->response->delivery_caption ?? '' }}</textarea>
                 </div>
+                <div class="form-group">
+                  <label for="delivery_days">Number Of Delivery Days </label>
+                  <input id="delivery_days" class="form-control" number="true" type="text" value="{{ $setting->response->delivery_days ?? '' }}" name="delivery_days">
+                </div>
               </div>
             </div>
+
+
 
             <hr style="margin: 15px -20px">
 

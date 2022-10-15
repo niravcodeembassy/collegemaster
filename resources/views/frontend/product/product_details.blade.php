@@ -690,7 +690,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                       </div>
                     </div>
                   </div>
-                  
+
                   <!--=======  End of shop product color block  =======-->
                   @php
                     $style = null;
@@ -720,19 +720,13 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                     @endauth --}}
 
                     @php
-                      $start = strtotime('+4 day');
-                      $last = strtotime('+11 day');
-                      $a = date('d', $start);
-                      $b = date('d', $last);
-                      $d = date('M', $start);
-                      $e = date('M', $last);
-                      $str = null;
-                      if ($d == $e) {
-                          $str = $a . ' - ' . $b . ' ' . $e . '.';
-                      } else {
-                          $str = $a . ' ' . $d . ' - ' . $b . ' ' . $e . '.';
+                      $delivery_days = isset($frontsetting->delivery_days) ? $frontsetting->delivery_days : 7;
+                      $today = today();
+                      $nexDate = today()->addDays($delivery_days);
+                      $date = $today->format('d M ') . '-' . $nexDate->format(' d M');
+                      if ($today->format('M') == $nexDate->format('M')) {
+                          $date = $today->format('d') . ' - ' . $nexDate->format('d M');
                       }
-
                     @endphp
 
                     <div class="shop-product__buttons mb-40 d-flex">
@@ -745,7 +739,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                         <a href="javascript:void(0)" class="delivery_truck_link mt-lg-0 mt-col-3">
                           <b class="mt-lg-0">Arrives By
                             <span class="bt">
-                              {{ $str }}
+                              {{ $date }}
                             </span></b><br />
                           <span>If you order today.</span>
                         </a>

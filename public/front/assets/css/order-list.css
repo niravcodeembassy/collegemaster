@@ -40,14 +40,14 @@ ul.timeline li .status{
 }
 .status h4{
   font-weight: 300;
-  padding-top: 15px;
+  padding-top: 2px;
   font-size: 14px;
 }
 
 span.order_status{
   font-weight: 500;
   font-variant-caps: all-petite-caps;
-  font-size: 14px;
+  font-size: 19px;
   color: darkgray;
 }
 
@@ -82,10 +82,16 @@ p.order_msg_content{
   transition: all 200ms ease-in;
 }
 
+@media  screen and (max-width: 1366px) {
+  span.order_status {
+    font-size: 16px;
+}
+}
 
+/* (1024x768) iPad 1 & 2, Landscape */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
   span.order_status {
-    font-size: 13px;
+    font-size: 14px;
 }
 /* .section-b-space .col-lg-2{
   flex: 0 0 25%;
@@ -98,6 +104,7 @@ ul.timeline li .timestamp {
   padding: 0px 8px;
 }
 }
+
 
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
   span.order_status {

@@ -58,7 +58,7 @@ if ($product->count() > 0) {
         'ratingValue' => isset($category_rating) ? intval($category_rating->avg_rating) : 0,
         'bestRating' => '5',
         'worstRating' => '1',
-        'reviewCount' => isset($category_rating) ? $category_rating->total_rating : 0,
+        'ratingCount' => isset($category_rating) ? $category_rating->total_rating : 0,
     ];
 
     $schema_third = [
@@ -180,8 +180,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                                                                                                          =            shop page content         =
-                                                                                                                                                                                                                                                                                                                                          =============================================-->
+                                                                                                                                                                                                                                                                                                                                            =            shop page content         =
+                                                                                                                                                                                                                                                                                                                                            =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">

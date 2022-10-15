@@ -7,13 +7,14 @@
 @section('content')
   @include('frontend.layouts.banner', [
       'pageTitel' => 'Orders' ?? '',
+      'wide' => 'wide' ?? '',
   ])
 
   <section class="section-b-space">
-    <div class="container">
+    <div class="container wide">
       <div class="row  mt-80 mb-80">
-        @include('frontend.dashboard.sidebar', ['class' => 'col-lg-3'])
-        <div class="col-lg-9">
+        @include('frontend.dashboard.sidebar', ['class' => 'col-xl-2 col-lg-3'])
+        <div class="col-lg-9 col-xl-9">
           <div class="dashboard-right">
             <h3 class="pl-4 mt-lg-0 mt-4">ORDER LIST</h3>
             <div class="dashboard ">
@@ -189,7 +190,7 @@
                             </div>
                           </li>
                         </ul>
-                        <p class="mx-4 h6 order_msg_content"> {{ $order_content ?? '' }}</p>
+                        <p class="mx-4 mt-2 h6 order_msg_content"> {{ $order_content ?? '' }}</p>
                       </div>
                     </div>
                     <hr class="m-3">
