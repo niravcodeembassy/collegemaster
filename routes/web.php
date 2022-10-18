@@ -74,8 +74,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
   Route::post('cart/view-remove', 'CartController@removecartView')->name('cart.view-remove');
 
 
-
-  Route::middleware(['auth', 'verified'])->group(function () {
+  // 'verified'
+  Route::middleware(['auth'])->group(function () {
 
     Route::get('load/image-popup', 'CartController@loadImagePopUp')->name('cart.load.popup');
     Route::get('load/image-popup/ordered', 'CartController@loadImagePopUpOrdered')->name('cart.load.popup.ordered');

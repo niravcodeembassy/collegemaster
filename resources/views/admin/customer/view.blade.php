@@ -36,6 +36,10 @@
           <h6>{{ $customer->email ?? '' }}</h6>
           <small class="text-muted d-block pt-10">Phone</small>
           <h6>{{ $customer->phone ?? '' }}</h6>
+          @if (isset($customer->country))
+            <small class="text-muted d-block pt-10">Country</small>
+            <h6>{{ $customer->country->name ?? '' }}</h6>
+          @endif
         </div>
       </div>
     </div>
@@ -72,7 +76,7 @@
                 @endforeach
               </div>
             @else
-              <h1> User has no orders.</h1>
+              <h4> User has no orders.</h4>
             @endif
           </div>
 

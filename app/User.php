@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Model\CartImage;
+use App\Model\Country;
 use App\Model\Order;
 use App\Notifications\Auth\ResetPassword;
 use App\Notifications\Auth\VerifyEmail;
@@ -60,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
   public function address()
   {
     return $this->hasOne(UserShippingAddress::class, 'user_id', 'id');
+  }
+  
+  public function country()
+  {
+    return $this->belongsTo(Country::class, 'country_id');
   }
 
   public function cartimage()

@@ -56,7 +56,7 @@
                     </div>
                   </div>
 
-                  <input type="hidden" id="code" name="country_code">
+                  <input type="hidden" id="code" name="country_code" value="+1">
                   <div class="col-md-12 w-100">
                     <label for="mobile">{{ __('Mobile number') }}</label>
                     <div class="intel_input">
