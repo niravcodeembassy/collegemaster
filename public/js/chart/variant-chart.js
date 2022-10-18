@@ -8,6 +8,8 @@ $(document).ready(function () {
       {
         data: [],
         backgroundColor: [],
+        borderWidth: 1,
+        hoverOffset: 4,
       },
     ],
   };
@@ -32,7 +34,7 @@ $(document).ready(function () {
   };
 
   const config = {
-    type: "pie",
+    type: "doughnut",
     data: pieData,
     options: pieOptions,
   };
@@ -101,8 +103,10 @@ $(document).ready(function () {
     cb
   );
 
-  $("#variant_daterangepicker").on("apply.daterangepicker",function (ev, picker) {
-    $(".variant_cancel").css("display", "block");
+  $("#variant_daterangepicker").on(
+    "apply.daterangepicker",
+    function (ev, picker) {
+      $(".variant_cancel").css("display", "block");
       var el = $(this);
       var url = el.data("url");
       DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
@@ -112,7 +116,9 @@ $(document).ready(function () {
     }
   );
 
-  $("#variant_daterangepicker").on("cancel.daterangepicker",function (ev, picker) {
+  $("#variant_daterangepicker").on(
+    "cancel.daterangepicker",
+    function (ev, picker) {
       $(this).val("");
       DATE_RANGE = [];
       picker.setStartDate({});

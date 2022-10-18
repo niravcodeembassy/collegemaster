@@ -320,69 +320,69 @@
 @section('twiter-image', $product->product_src)
 
 @php
-$priceData = Helper::productPrice($productVarinat);
-$schema_first = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'Product',
-    'name' => $product->meta_title,
-    'image' => $product->product_src,
-    'description' => $product->meta_description,
-    'brand' => [
-        '@type' => 'Brand',
-        'name' => env('APP_NAME'),
-    ],
-    'sku' => $product->sku,
-    'offers' => [
-        '@type' => 'Offer',
-        'url' => route('product.view', $product->slug),
-        'priceCurrency' => 'USD',
-        'price' => str_replace("$", '', $priceData->price),
-        'availability' => 'https://schema.org/InStock',
-        'itemCondition' => 'https://schema.org/NewCondition',
-    ],
-    'aggregateRating' => [
-        '@type' => 'AggregateRating',
-        'ratingValue' => $review_rating,
-        'bestRating' => '5',
-        'worstRating' => '1',
-        'ratingCount' => $product_review->sum('rating'),
-    ],
-];
+  $priceData = Helper::productPrice($productVarinat);
+  $schema_first = [
+      '@context' => 'https://schema.org/',
+      '@type' => 'Product',
+      'name' => $product->meta_title,
+      'image' => $product->product_src,
+      'description' => $product->meta_description,
+      'brand' => [
+          '@type' => 'Brand',
+          'name' => env('APP_NAME'),
+      ],
+      'sku' => $product->sku,
+      'offers' => [
+          '@type' => 'Offer',
+          'url' => route('product.view', $product->slug),
+          'priceCurrency' => 'USD',
+          'price' => str_replace("$", '', $priceData->price),
+          'availability' => 'https://schema.org/InStock',
+          'itemCondition' => 'https://schema.org/NewCondition',
+      ],
+      'aggregateRating' => [
+          '@type' => 'AggregateRating',
+          'ratingValue' => $review_rating,
+          'bestRating' => '5',
+          'worstRating' => '1',
+          'ratingCount' => $product_review->sum('rating'),
+      ],
+  ];
 
-$schema_organization = Schema::organizationSchema();
-$schema_local = Schema::localSchema();
+  $schema_organization = Schema::organizationSchema();
+  $schema_local = Schema::localSchema();
 
-$schema_third = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        [
-            '@type' => 'ListItem',
-            'position' => 1,
-            'name' => 'Home',
-            'item' => route('front.home'),
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => 2,
-            'name' => 'Products',
-            'item' => route('category.product', $product->category->slug),
-        ],
-        [
-            '@type' => 'ListItem',
-            'position' => 3,
-            'name' => $product->name,
-            'item' => url()->current(),
-        ],
-    ],
-];
+  $schema_third = [
+      '@context' => 'https://schema.org/',
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => [
+          [
+              '@type' => 'ListItem',
+              'position' => 1,
+              'name' => 'Home',
+              'item' => route('front.home'),
+          ],
+          [
+              '@type' => 'ListItem',
+              'position' => 2,
+              'name' => 'Products',
+              'item' => route('category.product', $product->category->slug),
+          ],
+          [
+              '@type' => 'ListItem',
+              'position' => 3,
+              'name' => $product->name,
+              'item' => url()->current(),
+          ],
+      ],
+  ];
 
-$product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
+  $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
 @endphp
 
 @section('schema')
@@ -720,6 +720,7 @@ $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
                     @endauth --}}
 
                     @php
+                      $processing_time = isset($frontsetting->processing_time) ? $frontsetting->processing_time : 4;
                       $delivery_days = isset($frontsetting->delivery_days) ? $frontsetting->delivery_days : 7;
                       $today = today();
                       $nexDate = today()->addDays($delivery_days);

@@ -189,7 +189,7 @@
     .slider.round {
       border-radius: 34px;
     }
-
+    
     .slider.round:before {
       border-radius: 50%;
     }

@@ -341,6 +341,20 @@
                   <label for="delivery_days">Number Of Delivery Days </label>
                   <input id="delivery_days" class="form-control" number="true" type="text" value="{{ $setting->response->delivery_days ?? '' }}" name="delivery_days">
                 </div>
+                <div class="form-group">
+                  <label for="offertext">Processing Time</label>
+                  <input id="processing_time" class="form-control"  type="text" value="{{ $setting->response->processing_time ?? '' }}" name="processing_time">
+                  
+                  {{-- <select class="form-control" name="processing_time">
+
+                    <option {{ optional($setting->response)->mail_encryption == 'tls' ? 'selected' : '' }}>
+                      tls
+                    </option>
+                    <option {{ optional($setting->response)->mail_encryption == 'ssl' ? 'selected' : '' }}>
+                      ssl
+                    </option>
+                  </select> --}}
+                </div>
               </div>
             </div>
 

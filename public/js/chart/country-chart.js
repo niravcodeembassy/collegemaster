@@ -1,38 +1,48 @@
 $(document).ready(function () {
-  var DATE_RANGE = [];
+  var ajaxUrl = $("#country_daterangepicker").data("url");
 
-  var ajaxUrl = $("#size_daterangepicker").data("url");
+  //pie chart
   var donutData = {
     labels: [],
     datasets: [
       {
         data: [],
         backgroundColor: [],
+        borderWidth: 1,
+        hoverOffset: 4,
       },
     ],
   };
 
-  var pieChartCanvas = $("#size_pie_chart").get(0).getContext("2d");
+  var pieChartCanvas = $("#country_pie_chart").get(0).getContext("2d");
   pieChartCanvas.height = 350;
   var pieData = donutData;
   var pieOptions = {
     maintainAspectRatio: false,
     responsive: false,
-    tooltips: {
-      enabled: true,
-      mode: "single",
-      // callbacks: {
-      //   label: function(tooltipItems, data) {
-      //     var amount = data.datasets[0].data[tooltipItems['index']];
-      //     var label = data.labels[tooltipItems['index']]
-      //     return label + " ₹ " + amount;
-      //   }
-      // }
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed !== null) {
+              label += new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(context.parsed);
+            }
+            return label;
+          },
+        },
+      },
     },
   };
 
   const config = {
-    type: "pie",
+    type: "doughnut",
     data: pieData,
     options: pieOptions,
   };
@@ -41,12 +51,10 @@ $(document).ready(function () {
 
   function addData(chart, label, data) {
     donutData.labels = data.labels;
-    donutData.datasets[0].data = data.quantity_sold;
+    donutData.datasets[0].data = data.count;
     donutData.datasets[0].backgroundColor = data.color;
     chart.update();
   }
-
-  //date range piker
 
   var DATE_RANGE = [];
   var start = moment().startOf("month");
@@ -58,12 +66,12 @@ $(document).ready(function () {
   ajaxRequest(ajaxUrl, first_date, last_date);
 
   function cb(start, end) {
-    $("#size_daterangepicker").val(
+    $("#country_daterangepicker").val(
       start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
     );
   }
 
-  $("#size_daterangepicker").daterangepicker(
+  $("#country_daterangepicker").daterangepicker(
     {
       autoUpdateInput: false,
       locale: {
@@ -87,29 +95,32 @@ $(document).ready(function () {
     cb
   );
 
-  $("#size_daterangepicker").on("apply.daterangepicker", function (ev, picker) {
-    $(".size_cancel").css("display", "block");
-    var el = $(this);
-    var url = el.data("url");
-    DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
-    DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
+  $("#country_daterangepicker").on(
+    "apply.daterangepicker",
+    function (ev, picker) {
+      $(".country_cancel").css("display", "block");
+      var el = $(this);
+      var url = el.data("url");
+      DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
+      DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
-    ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
-  });
+      ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
+    }
+  );
 
-  $("#size_daterangepicker").on(
+  $("#country_daterangepicker").on(
     "cancel.daterangepicker",
     function (ev, picker) {
       $(this).val("");
       DATE_RANGE = [];
       picker.setStartDate({});
       picker.setEndDate({});
-      $(".size_cancel").hide();
+      $(".country_cancel").hide();
       ajaxRequest(ajaxUrl, first_date, last_date);
     }
   );
 
-  $(document).on("click", ".size_cancel", function (e) {
+  $(document).on("click", ".country_cancel", function (e) {
     cb(start, end);
     DATE_RANGE = [];
     ajaxRequest(ajaxUrl, first_date, last_date);
@@ -129,10 +140,10 @@ $(document).ready(function () {
     })
       .always(function (respons) {})
       .done(function (respons) {
-        if (respons.quantity_sold.length == 0) {
-          $(".size_heading").show();
+        if (respons.count.length == 0) {
+          $(".country_heading").show();
         } else {
-          $(".size_heading").hide();
+          $(".country_heading").hide();
         }
         addData(myChart, "# of payment", respons);
       })

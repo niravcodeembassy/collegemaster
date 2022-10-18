@@ -80,7 +80,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Revenue</span>
-          <span class="info-box-number">₹ {{ $revenue ?? 0 }}</span>
+          <span class="info-box-number">$ {{ $revenue ?? 0 }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -162,7 +162,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-5 mt-4">
+    <div class="col-md-6 mt-4">
       <h5>Best Selling Size</h5>
       <div class="card p-4" style="height:480px;">
         <div class="w-75 mb-4 position-relative">
@@ -175,7 +175,7 @@
       </div>
 
     </div>
-    <div class="col-md-5 mt-4">
+    <div class="col-md-6 mt-4">
       <h5>Best Selling Material</h5>
       <div class="card p-4" style="height:480px;">
         <div class="w-75 mb-4 position-relative">
@@ -189,7 +189,7 @@
 
     </div>
 
-    <div class="col-md-5 mt-4">
+    <div class="col-md-6 mt-4">
       <h5>Best Selling Variant (Size + Material)</h5>
       <div class="card p-4" style="height:480px;">
         <div class="w-75 mb-4 position-relative variant_div">
@@ -202,9 +202,8 @@
       </div>
     </div>
 
-
-    <div class="col-md-5 mt-4">
-      <h5>Country Wise Sales</h5>
+    <div class="col-md-6 mt-4">
+      <h5>Country Wise Revenue</h5>
       <div class="card p-4" style="height:480px;">
         <div class="w-75 mb-4 position-relative">
           <input class="form-control" readonly placeholder="Pick date range" id="country_daterangepicker" data-url="{{ route('admin.country.chart') }}" />
@@ -215,8 +214,106 @@
         </canvas>
       </div>
     </div>
+
+    <div class="col-md-6 mt-4">
+      <h5>Last 6 Month Wise Order</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="sixMonthSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <h5>Last 6 Month Wise Revenue</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="sixMonthRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <h5>Day Wise Order (Current Week)</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="dayWiseSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <h5>Day Wise Revenue (Current Week)</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="dayWiseRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-4">
+      <h5>Global Sales by Top Locations</h5>
+      <div class="card">
+        <div class="card-header border-transparent">
+          <h3 class="card-title">Global Sales by Country</h3>
+        </div>
+        <div class="card-body p-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th style="width: 40%">COUNTRY</th>
+                      <th style="width: 20%" class="text-center">NO OF USERS</th>
+                      <th style="width: 20%" class="text-center">TOTAL ORDER</th>
+                      <th style="width: 20%" class="text-center">ORDER %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse ($countryWiseSale as $key=>$item)
+                      <tr>
+                        <td>{{ str_replace(['"', "'"], '', $item->country) }}</td>
+                        <td class="text-center">{{ $item->total_users }}</td>
+                        <td class="text-center">{{ $item->total_order }}</td>
+                        <td class="text-center">{{ round($item->percentage, 2) }} %</td>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="4" class="text-center">No record Found</td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {{-- <div class="col-md-6">
+              <div id="chart-container" class="pb-4 mx-4">FusionCharts XT will load here!</div>
+            </div> --}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 @endsection
+
+@push('scripts')
+  <script type="text/javascript">
+    var countryWiseSale = @json($countryWiseSale);
+    var sixMonthSale = @json($sixMonthSale);
+    var sixMonthRevenue = @json($sixMonthRevenue);
+    var dayWiseSale = @json($dayWiseSale);
+    var dayWiseRevenue = @json($dayWiseRevenue);
+  </script>
+@endpush
 
 @push('js')
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -224,8 +321,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   </script>
 
-  <script src="{{ asset('js/size-chart.js') }}"></script>
-  <script src="{{ asset('js/material-chart.js') }}"></script>
-  <script src="{{ asset('js/variant-chart.js') }}"></script>
-  <script src="{{ asset('js/country-chart.js') }}"></script>
+
+  {{-- <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script> --}}
+  {{-- <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script> --}}
+
+  <script src="{{ asset('js/chart/size-chart.js') }}"></script>
+  <script src="{{ asset('js/chart/material-chart.js') }}"></script>
+  <script src="{{ asset('js/chart/variant-chart.js') }}"></script>
+  <script src="{{ asset('js/chart/country-chart.js') }}"></script>
+  {{-- <script src="{{ asset('js/chart/country-fusionchart.js') }}"></script> --}}
+  <script src="{{ asset('js/chart/six-month-sales.js') }}"></script>
+  <script src="{{ asset('js/chart/six-month-revenue.js') }}"></script>
+  <script src="{{ asset('js/chart/day-wise-sales.js') }}"></script>
+  <script src="{{ asset('js/chart/day-wise-revenue.js') }}"></script>
 @endpush

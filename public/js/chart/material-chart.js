@@ -1,18 +1,20 @@
 $(document).ready(function () {
-  var ajaxUrl = $("#country_daterangepicker").data("url");
+  var DATE_RANGE = [];
 
-  //pie chart
+  var ajaxUrl = $("#material_daterangepicker").data("url");
   var donutData = {
     labels: [],
     datasets: [
       {
         data: [],
         backgroundColor: [],
+        borderWidth: 1,
+        hoverOffset: 4,
       },
     ],
   };
 
-  var pieChartCanvas = $("#country_pie_chart").get(0).getContext("2d");
+  var pieChartCanvas = $("#material_pie_chart").get(0).getContext("2d");
   pieChartCanvas.height = 350;
   var pieData = donutData;
   var pieOptions = {
@@ -25,7 +27,7 @@ $(document).ready(function () {
   };
 
   const config = {
-    type: "pie",
+    type: "doughnut",
     data: pieData,
     options: pieOptions,
   };
@@ -34,10 +36,12 @@ $(document).ready(function () {
 
   function addData(chart, label, data) {
     donutData.labels = data.labels;
-    donutData.datasets[0].data = data.count;
+    donutData.datasets[0].data = data.quantity_sold;
     donutData.datasets[0].backgroundColor = data.color;
     chart.update();
   }
+
+  //date range piker
 
   var DATE_RANGE = [];
   var start = moment().startOf("month");
@@ -46,15 +50,15 @@ $(document).ready(function () {
   var first_date = start.format("YYYY-MM-DD");
   var last_date = end.format("YYYY-MM-DD");
 
-  ajaxRequest(ajaxUrl, first_date, last_date);
+  ajaxMaterialRequest(ajaxUrl, first_date, last_date);
 
   function cb(start, end) {
-    $("#country_daterangepicker").val(
+    $("#material_daterangepicker").val(
       start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
     );
   }
 
-  $("#country_daterangepicker").daterangepicker(
+  $("#material_daterangepicker").daterangepicker(
     {
       autoUpdateInput: false,
       locale: {
@@ -78,38 +82,43 @@ $(document).ready(function () {
     cb
   );
 
-  $("#country_daterangepicker").on("apply.daterangepicker", function (ev, picker) {
-    $(".country_cancel").css("display", "block");
-    var el = $(this);
-    var url = el.data("url");
-    DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
-    DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
+  cb(start, end);
 
-    ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
-  });
+  $("#material_daterangepicker").on(
+    "apply.daterangepicker",
+    function (ev, picker) {
+      $(".material_cancel").css("display", "block");
+      var el = $(this);
+      var url = el.data("url");
+      DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
+      DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
-  $("#country_daterangepicker").on(
+      ajaxMaterialRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
+    }
+  );
+
+  $("#material_daterangepicker").on(
     "cancel.daterangepicker",
     function (ev, picker) {
       $(this).val("");
       DATE_RANGE = [];
       picker.setStartDate({});
       picker.setEndDate({});
-      $(".country_cancel").hide();
-      ajaxRequest(ajaxUrl, first_date, last_date);
+      $(".material_cancel").hide();
+      ajaxMaterialRequest(ajaxUrl, first_date, last_date);
     }
   );
 
-  $(document).on("click", ".country_cancel", function (e) {
+  $(document).on("click", ".material_cancel", function (e) {
     cb(start, end);
     DATE_RANGE = [];
-    ajaxRequest(ajaxUrl, first_date, last_date);
+    ajaxMaterialRequest(ajaxUrl, first_date, last_date);
     $(this).hide();
   });
 
-  cb(start, end);
+  // cb(start, end);
 
-  function ajaxRequest(url, start, end) {
+  function ajaxMaterialRequest(url, start, end) {
     $.ajax({
       type: "get",
       url: url,
@@ -120,10 +129,10 @@ $(document).ready(function () {
     })
       .always(function (respons) {})
       .done(function (respons) {
-        if (respons.count.length == 0) {
-          $(".country_heading").show();
+        if (respons.quantity_sold.length == 0) {
+          $(".material_heading").show();
         } else {
-          $(".country_heading").hide();
+          $(".material_heading").hide();
         }
         addData(myChart, "# of payment", respons);
       })
@@ -131,5 +140,4 @@ $(document).ready(function () {
         console.log(respons);
       });
   }
-
 });

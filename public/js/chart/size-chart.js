@@ -1,18 +1,20 @@
 $(document).ready(function () {
   var DATE_RANGE = [];
 
-  var ajaxUrl = $("#material_daterangepicker").data("url");
+  var ajaxUrl = $("#size_daterangepicker").data("url");
   var donutData = {
     labels: [],
     datasets: [
       {
         data: [],
         backgroundColor: [],
+        borderWidth: 1,
+        hoverOffset: 4,
       },
     ],
   };
 
-  var pieChartCanvas = $("#material_pie_chart").get(0).getContext("2d");
+  var pieChartCanvas = $("#size_pie_chart").get(0).getContext("2d");
   pieChartCanvas.height = 350;
   var pieData = donutData;
   var pieOptions = {
@@ -21,11 +23,18 @@ $(document).ready(function () {
     tooltips: {
       enabled: true,
       mode: "single",
+      // callbacks: {
+      //   label: function(tooltipItems, data) {
+      //     var amount = data.datasets[0].data[tooltipItems['index']];
+      //     var label = data.labels[tooltipItems['index']]
+      //     return label + " ₹ " + amount;
+      //   }
+      // }
     },
   };
 
   const config = {
-    type: "pie",
+    type: "doughnut",
     data: pieData,
     options: pieOptions,
   };
@@ -48,15 +57,15 @@ $(document).ready(function () {
   var first_date = start.format("YYYY-MM-DD");
   var last_date = end.format("YYYY-MM-DD");
 
-  ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+  ajaxRequest(ajaxUrl, first_date, last_date);
 
   function cb(start, end) {
-    $("#material_daterangepicker").val(
+    $("#size_daterangepicker").val(
       start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
     );
   }
 
-  $("#material_daterangepicker").daterangepicker(
+  $("#size_daterangepicker").daterangepicker(
     {
       autoUpdateInput: false,
       locale: {
@@ -80,41 +89,38 @@ $(document).ready(function () {
     cb
   );
 
-  cb(start, end);
+  $("#size_daterangepicker").on("apply.daterangepicker", function (ev, picker) {
+    $(".size_cancel").css("display", "block");
+    var el = $(this);
+    var url = el.data("url");
+    DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
+    DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
-  $("#material_daterangepicker").on("apply.daterangepicker",function (ev, picker) {
-    $(".material_cancel").css("display", "block");
-      var el = $(this);
-      var url = el.data("url");
-      DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
-      DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
+    ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
+  });
 
-      ajaxMaterialRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
-    }
-  );
-
-  $("#material_daterangepicker").on(
+  $("#size_daterangepicker").on(
     "cancel.daterangepicker",
     function (ev, picker) {
       $(this).val("");
       DATE_RANGE = [];
       picker.setStartDate({});
       picker.setEndDate({});
-      $(".material_cancel").hide();
-      ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+      $(".size_cancel").hide();
+      ajaxRequest(ajaxUrl, first_date, last_date);
     }
   );
 
-  $(document).on("click", ".material_cancel", function (e) {
+  $(document).on("click", ".size_cancel", function (e) {
     cb(start, end);
     DATE_RANGE = [];
-    ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+    ajaxRequest(ajaxUrl, first_date, last_date);
     $(this).hide();
   });
 
-  // cb(start, end);
+  cb(start, end);
 
-  function ajaxMaterialRequest(url, start, end) {
+  function ajaxRequest(url, start, end) {
     $.ajax({
       type: "get",
       url: url,
@@ -126,9 +132,9 @@ $(document).ready(function () {
       .always(function (respons) {})
       .done(function (respons) {
         if (respons.quantity_sold.length == 0) {
-          $(".material_heading").show();
+          $(".size_heading").show();
         } else {
-          $(".material_heading").hide();
+          $(".size_heading").hide();
         }
         addData(myChart, "# of payment", respons);
       })
