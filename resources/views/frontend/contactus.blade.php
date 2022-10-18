@@ -5,13 +5,13 @@
 @endsection
 
 @php
-$schema_organization = Schema::organizationSchema();
-$schema_local = Schema::localSchema();
+  $schema_organization = Schema::organizationSchema();
+  $schema_local = Schema::localSchema();
 
-$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [$schema_organization, $schema_local];
+  $schema = [$schema_organization, $schema_local];
 @endphp
 
 @push('css')
@@ -89,10 +89,11 @@ $schema = [$schema_organization, $schema_local];
 
 
                   <div class="col-md-12 mb-3">
-                    <input type="hidden" id="code" name="country_code">
+                    <input type="hidden" id="code" name="country_code" value="+1">
                     <label>Mobile Number <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="text" class="form-control form-control-lg" min="10" max="10" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
+                      <input type="text" data-rule-number="true" onkeypress="return onlyNumberKey(event)" data-rule-required="true" class="form-control form-control-lg telephone" placeholder="Mobile Number *" name="mobile" id="mobile"
+                        required="">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                     </div>
                   </div>
@@ -132,6 +133,7 @@ $schema = [$schema_organization, $schema_local];
 @endsection
 
 @push('js')
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
   <script src="{{ asset('front/assets/build/js/intlTelInput.min.js') }}"></script>
   <script src="{{ asset('front/assets/build/js/intlTelInput-jquery.min.js') }}"></script>
 @endpush
@@ -169,6 +171,16 @@ $schema = [$schema_organization, $schema_local];
       }
     });
 
+
+    function onlyNumberKey(evt) {
+
+      // Only ASCII character in that range allowed
+      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+      return true;
+    }
+
     $('#mobile').keyup(function() {
       var mobile_no = $(this).val();
       var country_code = iti.getSelectedCountryData().dialCode;
@@ -182,5 +194,27 @@ $schema = [$schema_organization, $schema_local];
         return false;
       }
     });
+
+    // $.validator.addMethod('customphone', function(value, element, params) {
+    //   var code = iti.getSelectedCountryData().dialCode;
+    //   var phone = "+" + code + "" + value;
+    //   return params.test(phone);
+    // }, "Please Enter Valid Mobile No");
+
+    // jQuery.validator.addClassRules("telephone", {
+    //   customphone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+    // });
+
+    // $("#contact-form").validate({
+    //   debug: false,
+    //   rules: {},
+    //   errorPlacement: function(error, element) {
+    //     if (element.parent('.iti ').length) {
+    //       error.insertAfter(element.parent()).addClass('text-danger');
+    //     } else {
+    //       error.appendTo(element.parent()).addClass('text-danger')
+    //     }
+    //   },
+    // });
   </script>
 @endpush

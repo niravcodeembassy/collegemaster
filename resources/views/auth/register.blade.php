@@ -60,7 +60,8 @@
                   <div class="col-md-12 w-100">
                     <label for="mobile">{{ __('Mobile number') }}</label>
                     <div class="intel_input">
-                      <input id="mobile" type="tel" placeholder="Mobile number" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required style="background: none;">
+                      <input id="mobile" type="tel" onkeypress="return onlyNumberKey(event)" placeholder="Mobile number" number="true" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile"
+                        value="{{ old('mobile') }}" required style="background: none;">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                       @error('mobile')
                         <span class="invalid-feedback" role="alert">
@@ -157,6 +158,14 @@
       preferredCountries: ["us"],
     });
 
+    function onlyNumberKey(evt) {
+
+      // Only ASCII character in that range allowed
+      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+      return true;
+    }
 
     $('#mobile').on('countrychange', function(e) {
       var Code = iti.getSelectedCountryData().dialCode;

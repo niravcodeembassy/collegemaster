@@ -162,103 +162,6 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 mt-4">
-      <h5>Best Selling Size</h5>
-      <div class="card p-4" style="height:480px;">
-        <div class="w-75 mb-4 position-relative">
-          <input class="form-control" readonly placeholder="Pick date range" id="size_daterangepicker" data-url="{{ route('admin.size.chart') }}" />
-          <i class="fa fa-times-circle size_cancel text-secondary position-absolute" style="display: none;"></i>
-        </div>
-        <h5 class="size_heading text-center" style="display: none">Data Not Found</h5>
-        <canvas id="size_pie_chart" height="350">
-        </canvas>
-      </div>
-
-    </div>
-    <div class="col-md-6 mt-4">
-      <h5>Best Selling Material</h5>
-      <div class="card p-4" style="height:480px;">
-        <div class="w-75 mb-4 position-relative">
-          <input class="form-control" readonly placeholder="Pick date range" id="material_daterangepicker" data-url="{{ route('admin.material.chart') }}" />
-          <i class="fa fa-times-circle material_cancel text-secondary position-absolute" style="display: none;"></i>
-        </div>
-        <h5 class="material_heading text-center" style="display: none">Data Not Found</h5>
-        <canvas id="material_pie_chart" height="350">
-        </canvas>
-      </div>
-
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Best Selling Variant (Size + Material)</h5>
-      <div class="card p-4" style="height:480px;">
-        <div class="w-75 mb-4 position-relative variant_div">
-          <input class="form-control" readonly placeholder="Pick date range" id="variant_daterangepicker" data-url="{{ route('admin.variant.chart') }}" />
-          <i class="fa fa-times-circle variant_cancel text-secondary position-absolute" style="display: none;"></i>
-        </div>
-        <h5 class="variant_heading text-center" style="display: none">Data Not Found</h5>
-        <canvas id="variant_pie_chart" height="350">
-        </canvas>
-      </div>
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Country Wise Revenue</h5>
-      <div class="card p-4" style="height:480px;">
-        <div class="w-75 mb-4 position-relative">
-          <input class="form-control" readonly placeholder="Pick date range" id="country_daterangepicker" data-url="{{ route('admin.country.chart') }}" />
-          <i class="fa fa-times-circle country_cancel text-secondary position-absolute" style="display: none;"></i>
-        </div>
-        <h5 class="country_heading text-center" style="display: none">Data Not Found</h5>
-        <canvas id="country_pie_chart" height="350">
-        </canvas>
-      </div>
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Last 6 Month Wise Order</h5>
-      <div class="card p-4">
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="sixMonthSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Last 6 Month Wise Revenue</h5>
-      <div class="card p-4">
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="sixMonthRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Day Wise Order (Current Week)</h5>
-      <div class="card p-4">
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="dayWiseSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 mt-4">
-      <h5>Day Wise Revenue (Current Week)</h5>
-      <div class="card p-4">
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="dayWiseRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="col-md-12 mt-4">
       <h5>Global Sales by Top Locations</h5>
       <div class="card">
@@ -298,6 +201,96 @@
             {{-- <div class="col-md-6">
               <div id="chart-container" class="pb-4 mx-4">FusionCharts XT will load here!</div>
             </div> --}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Best Selling Size</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="size_daterangepicker" data-url="{{ route('admin.size.chart') }}" />
+          <i class="fa fa-times-circle size_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="size_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="size_pie_chart" height="350">
+        </canvas>
+      </div>
+
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Best Selling Material</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="material_daterangepicker" data-url="{{ route('admin.material.chart') }}" />
+          <i class="fa fa-times-circle material_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="material_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="material_pie_chart" height="350">
+        </canvas>
+      </div>
+
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Best Selling Variant (Size + Material)</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative variant_div">
+          <input class="form-control" readonly placeholder="Pick date range" id="variant_daterangepicker" data-url="{{ route('admin.variant.chart') }}" />
+          <i class="fa fa-times-circle variant_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="variant_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="variant_pie_chart" height="350">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Country Wise Revenue</h5>
+      <div class="card p-4" style="height:480px;">
+        <div class="w-75 mb-4 position-relative">
+          <input class="form-control" readonly placeholder="Pick date range" id="country_daterangepicker" data-url="{{ route('admin.country.chart') }}" />
+          <i class="fa fa-times-circle country_cancel text-secondary position-absolute" style="display: none;"></i>
+        </div>
+        <h5 class="country_heading text-center" style="display: none">Data Not Found</h5>
+        <canvas id="country_pie_chart" height="350">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Last 6 Month Wise Order</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="sixMonthSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Last 6 Month Wise Revenue</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="sixMonthRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Day Wise Order (Current Week)</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="dayWiseSalesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <h5>Day Wise Revenue (Current Week)</h5>
+      <div class="card p-4">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="dayWiseRevenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
           </div>
         </div>
       </div>
