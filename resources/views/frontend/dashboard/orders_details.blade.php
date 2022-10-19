@@ -291,7 +291,7 @@
             <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
             <div class="card shadow-none border">
               <div class="card-body">
-                <span class="text-muted "> Name : <span class="text-uppercase"> {{ $order->user->name ?? '' }} </span></span> <br>
+                <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
                 <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
                 <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
               </div>
@@ -353,10 +353,10 @@
 
                 <span class="text-muted "> Transaction Id </span> <br>
                 <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
-                <hr>
 
+                {{-- <hr>
                 <span class="text-muted "> Payment Status </span> <br>
-                <span class="text-muted"> {{ $order->payment_status }}</span> <br>
+                <span class="text-muted"> {{ $order->payment_status }}</span> <br> --}}
               </div>
             </div>
 

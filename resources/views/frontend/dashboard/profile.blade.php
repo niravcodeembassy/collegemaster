@@ -144,7 +144,7 @@
                             </select>
                           </div>
 
-
+                          
                           <div class="form-group col-md-6">
                             <input type="hidden" name="old_state" id="old_state" value="{{ isset($user->state_id) && $user->state_id != '' ? strtolower($user->state_id) : '' }}">
                             <label>State*</label>

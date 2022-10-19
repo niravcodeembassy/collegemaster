@@ -55,7 +55,7 @@
                             <b>{{ $setting->store_name ?? '' }}</b>
                             <div class="billed-by-address">
                               <div class="billed-by-sub-address ">
-                                <span style="white-space: break-spaces;">{!! $setting->address ?? '' !!}</span>
+                                <span style="white-space: break-spaces;">{!! strtoupper($setting->address) ?? '' !!}</span>
                               </div>
                             </div>
                             <div class="address-email"><b>Email: </b><span>{{ $setting->email }}</span></div>
@@ -72,16 +72,16 @@
                   <div class="address-section-billed-by">
                     <h2 class="primary-text billed-to-heading">Ship To</h2>
                     <b>
-                      {{ $shipping_address->first_name }} {{ $shipping_address->last_name }}
+                      {{ ucwords($shipping_address->first_name) }} {{ ucwords($shipping_address->last_name) }}
                     </b>
                     <div class="billed-to-address">
                       <div class="billed-to-sub-address">
-                        <span>{{ $shipping_address->address_one ?? '' }}</span><br>
+                        <span>{{ strtoupper($shipping_address->address_one) ?? '' }}</span><br>
                         @if ($shipping_address->address_two)
-                          <span>{{ $shipping_address->address_two ?? '' }}</span> <br>
+                          <span>{{ strtoupper($shipping_address->address_two) ?? '' }}</span> <br>
                         @endif
-                        <span>{{ $shipping_address->city }}&nbsp;{{ $shipping_address->postal_code }}</span>
-                        <span>{{ $shipping_address->state }}&nbsp;{{ $shipping_address->country }}</span><br>
+                        <span>{{ strtoupper($shipping_address->city) }}&nbsp;{{ $shipping_address->postal_code }}</span>
+                        <span>{{ strtoupper($shipping_address->state) }}&nbsp;{{ strtoupper($shipping_address->country) }}</span><br>
                       </div>
                     </div>
                     <div class="address-email"><b>Email: </b><span>{{ $shipping_address->email }}</span></div>
@@ -90,16 +90,16 @@
                   <div class="address-section-billed-to">
                     <h2 class="primary-text billed-to-heading">Bill To</h2>
                     <b>
-                      {{ $belling_address->first_name }} {{ $belling_address->last_name }}
+                      {{ ucwords($belling_address->first_name) }} {{ ucwords($belling_address->last_name) }}
                     </b>
                     <div class="billed-to-address">
                       <div class="billed-to-sub-address">
-                        <span>{{ $belling_address->address_one ?? '' }}</span><br>
+                        <span>{{ strtoupper($belling_address->address_one) ?? '' }}</span><br>
                         @if ($belling_address->address_two)
-                          <span>{{ $belling_address->address_two ?? '' }}</span> <br>
+                          <span>{{ strtoupper($belling_address->address_two) ?? '' }}</span> <br>
                         @endif
-                        <span>{{ $belling_address->city }}&nbsp;{{ $belling_address->postal_code }}</span>
-                        <span>{{ $belling_address->state }}&nbsp;{{ $belling_address->country }}</span><br>
+                        <span>{{ strtoupper($belling_address->city) }}&nbsp;{{ $belling_address->postal_code }}</span>
+                        <span>{{ strtoupper($belling_address->state) }}&nbsp;{{ strtoupper($belling_address->country) }}</span><br>
                       </div>
                     </div>
                     <div class="address-email"><b>Email: </b><span>{{ $belling_address->email }}</span></div>

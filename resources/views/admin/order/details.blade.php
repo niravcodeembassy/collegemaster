@@ -166,7 +166,7 @@
       <h5 class="card-title w-100 text-muted my-3">Contact Information </h5>
       <div class="card shadow-none border">
         <div class="card-body">
-          <span class="text-muted "> Name : <span class="text-uppercase"> {{ $order->user->name ?? '' }} </span> </span> <br>
+          <span class="text-muted "> Name : {{ $order->user->name ?? '' }} </span> <br>
           <span class="text-muted "> Email : {{ $order->user->email ?? '' }} </span> <br>
           <span class="text-muted "> Phone : {{ $order->user->phone ?? '' }} </span>
         </div>
@@ -316,12 +316,17 @@
           <span class="text-muted text-uppercase">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
         </div>
       </div>
-
+      
       @if (isset($address->billing_address) && count((array) $address->billing_address))
         <h5 class="card-title w-100 text-muted my-3">Billing Address</h5>
         <div class="card shadow-none border">
           <div class="card-body">
-
+            @if ($billing->billing_email)
+              <span class="text-muted"> <strong>Email</strong> : {{ $billing->billing_email }}</span> <br>
+            @endif
+            @if ($billing->billing_mobile)
+              <span class="text-muted"> <strong>Mobile</strong> : {{ $billing->billing_mobile }}</span> <br>
+            @endif
             @if ($billing->billing_address_one)
               <span class="text-muted text-uppercase">{{ $billing->billing_address_one }}</span> <br>
             @endif
@@ -347,10 +352,10 @@
 
           <span class="text-muted "> Transaction Id </span> <br>
           <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
-          <hr>
 
+          {{-- <hr>
           <span class="text-muted "> Payment Status </span> <br>
-          <span class="text-muted"> {{ $order->payment_status }}</span> <br>
+          <span class="text-muted"> {{ $order->payment_status }}</span> <br> --}}
         </div>
       </div>
 

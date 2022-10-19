@@ -33,7 +33,7 @@ class UserProfileController extends Controller
     }])->findOrfail(\Auth::id());
     return view('frontend.dashboard.profile', $this->data);
   }
-
+  
   public function orderList()
   {
     $this->data['title'] = 'Order';

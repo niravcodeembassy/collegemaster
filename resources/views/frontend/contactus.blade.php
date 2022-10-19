@@ -77,13 +77,13 @@
                   <div class="col-md-12 mb-3">
                     <label>First Name <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control form-control-lg" placeholder="First Name *" id="customername" required="">
+                      <input type="text" name="name" class="form-control form-control-lg" placeholder="First Name *" id="customername" data-rule-required="true">
                     </div>
                   </div>
                   <div class="col-md-12 mb-3">
                     <label>Email <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email *" required="">
+                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email *" data-rule-email="true" data-rule-required="true">
                     </div>
                   </div>
 
@@ -92,8 +92,7 @@
                     <input type="hidden" id="code" name="country_code" value="+1">
                     <label>Mobile Number <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <input type="text" data-rule-number="true" onkeypress="return onlyNumberKey(event)" data-rule-required="true" class="form-control form-control-lg telephone" placeholder="Mobile Number *" name="mobile" id="mobile"
-                        required="">
+                      <input type="text" data-rule-number="true" data-rule-required="true" class="form-control form-control-lg telephone" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                     </div>
                   </div>
@@ -101,7 +100,7 @@
                   <div class="col-md-12 mb-3">
                     <label>Subject <span class="text-danger">*</span></label>
                     <div class="input-group">
-                      <textarea rows="3" placeholder="Subject *" class="form-control" name="subject" id="subject"></textarea>
+                      <textarea rows="3" placeholder="Subject *" class="form-control" data-rule-required="true" name="subject" id="subject"></textarea>
                     </div>
                   </div>
                   <div class="col-md-12 mb-2">
@@ -172,49 +171,48 @@
     });
 
 
-    function onlyNumberKey(evt) {
+    // $('#mobile').keyup(function() {
+    //   var mobile_no = $(this).val();
+    //   var country_code = iti.getSelectedCountryData().dialCode;
+    //   var phone = "+" + country_code + "" + mobile_no;
+    //   var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+    //   if (regex.test(phone)) {
+    //     $('#mobile-error').text('');
+    //     return true;
+    //   } else {
+    //     $('#mobile-error').text('Please Enter Valid Mobile No');
+    //     return false;
+    //   }
+    // });
 
-      // Only ASCII character in that range allowed
-      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
-        return false;
-      return true;
-    }
+    $.validator.addMethod('customphone', function(value, element, params) {
+      var code = iti.getSelectedCountryData().dialCode;
+      var phone = "+" + code + "" + value;
+      return params.test(phone);
+    }, "Please Enter Valid Mobile No");
 
-    $('#mobile').keyup(function() {
-      var mobile_no = $(this).val();
-      var country_code = iti.getSelectedCountryData().dialCode;
-      var phone = "+" + country_code + "" + mobile_no;
-      var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(phone)) {
-        $('#mobile-error').text('');
-        return true;
-      } else {
-        $('#mobile-error').text('Please Enter Valid Mobile No');
-        return false;
-      }
+    jQuery.validator.addClassRules("telephone", {
+      customphone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
     });
 
-    // $.validator.addMethod('customphone', function(value, element, params) {
-    //   var code = iti.getSelectedCountryData().dialCode;
-    //   var phone = "+" + code + "" + value;
-    //   return params.test(phone);
-    // }, "Please Enter Valid Mobile No");
+    // jQuery.validator.addMethod("lettersonly", function(value, element) {
+    //   return this.optional(element) || /^[a-z]+$/i.test(value);
+    // }, "Letters only please");
 
-    // jQuery.validator.addClassRules("telephone", {
-    //   customphone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
-    // });
-
-    // $("#contact-form").validate({
-    //   debug: false,
-    //   rules: {},
-    //   errorPlacement: function(error, element) {
-    //     if (element.parent('.iti ').length) {
-    //       error.insertAfter(element.parent()).addClass('text-danger');
-    //     } else {
-    //       error.appendTo(element.parent()).addClass('text-danger')
-    //     }
-    //   },
-    // });
+    $("#contact-form").validate({
+      debug: false,
+      rules: {
+        // name: {
+        //   lettersonly: true
+        // },
+      },
+      errorPlacement: function(error, element) {
+        if (element.parent('.iti ').length) {
+          error.insertAfter(element.parent()).addClass('text-danger');
+        } else {
+          error.appendTo(element.parent()).addClass('text-danger')
+        }
+      },
+    });
   </script>
 @endpush

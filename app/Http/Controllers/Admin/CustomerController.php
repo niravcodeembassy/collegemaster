@@ -16,6 +16,7 @@ class CustomerController extends Controller
   public function index()
   {
     $this->data['title'] = 'Customers';
+    $this->data['total_user'] = User::where('is_admin', 0)->count();
     return view('admin.customer.index', $this->data);
   }
 
@@ -23,7 +24,7 @@ class CustomerController extends Controller
   {
 
     // Listing colomns to show
-    $columns = array('name', 'email', 'phone', 'created_at', 'created_at', 'orders_count', 'action');
+    $columns = array('name', 'email', 'phone', 'country_id', 'created_at', 'created_at', 'orders_count', 'action');
 
     $totalData = User::where('is_admin', 0)->count(); // datata table count
 
@@ -48,12 +49,15 @@ class CustomerController extends Controller
     $customcollections = $customcollections->offset($start)->limit($limit)->orderBy($order, $dir)->get();
 
     $data = [];
+
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
+      $country = isset($item->country) ? '<span class = "badge badge-secondary p-2">' . $item->country->name . '</span>' : 'N/A';
       // dd(route('admin.brand.edit', $item->id));
       $row['name']   = $item->name;
       $row['email']  = $item->email;
       $row['phone']  = $item->phone;
+      $row['country']  = $country;
       $row['created_at']  = date("d-m-Y", strtotime($item->created_at));
       $row['time']  = date("H:i:s", strtotime($item->created_at));
       $row['order_status'] =  '<i class="fa fa-truck f-18 px-2"></i>' . $item->orders_count;

@@ -48,6 +48,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label><b>Message :</b></label>
+                                         <span>{{ $contact->comment ?? '' }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

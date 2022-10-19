@@ -49,7 +49,7 @@ class OrderController extends Controller
     $this->data['title'] =  'Order';
     $this->data['type'] = $request->get('type', 'online');
 
-    $online_order_count = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+    $online_order_count = Order::whereIn('payment_type', ['stripe', 'razorpay'])->count();
     $cod_order_count = Order::where('payment_type', 'cash')->count();
     $online_pending_order_count = Order::whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
       $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
@@ -60,7 +60,7 @@ class OrderController extends Controller
     $offline_count = [];
     $pending_count = [];
     foreach ($status as $key => $list) {
-      $online_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->count();
+      $online_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->count();
       $offline_count[$list] =  Order::where('order_status', $list)->where('payment_type', 'cash')->count();
       $pending_count[$list] =  Order::where('order_status', $list)->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
         $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
@@ -116,7 +116,7 @@ class OrderController extends Controller
     if ($filter_status !== 'all') {
       $orders = Order::with('user', 'itemslists:id,order_id,qty')
         ->when($search, function ($query, $search) {
-          return $query->whereLike(['order_number','order_no','user.name'], "%{$search}%");
+          return $query->whereLike(['order_number', 'order_no', 'user.name'], "%{$search}%");
         })
         ->when($request->to_date, function ($query) use ($request) {
           return $query->where('created_at', '>=', date('Y-m-d', strtotime($request->to_date)));
@@ -128,8 +128,7 @@ class OrderController extends Controller
           return $query->where('payment_type', 'cash')->where('order_status', $filter_status);
         })
         ->when($request->get('type') == 'online', function ($query) use ($filter_status) {
-          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')
-            ->where('order_status', $filter_status);
+          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('order_status', $filter_status);
         })
         ->when($request->get('type') == 'pending', function ($query) {
           return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
@@ -152,7 +151,7 @@ class OrderController extends Controller
           return $query->where('payment_type', 'cash');
         })
         ->when($request->get('type') == 'online', function ($query) {
-          return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
+          return $query->whereIn('payment_type', ['stripe', 'razorpay']);
         })
         ->when($request->get('type') == 'pending', function ($query) {
           return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
@@ -203,7 +202,7 @@ class OrderController extends Controller
       $row['created_at'] = date("d-m-Y", strtotime($item->created_at));
 
       $username = ($item->user->name != '') ? ($item->user->name) : $item->user->email;
-      $name = '<a class="btn-link" target="_blank" href="' . route('admin.customer.show', $item->user_id) . '">' . ucfirst($username) . '</a>';
+      $name = '<a class="btn-link" target="_blank" href="' . route('admin.customer.show', $item->user_id) . '">' . ucwords($username) . '</a>';
       $row['customerName'] = $name;
 
       $row['qty'] = $item->itemslists->sum('qty');

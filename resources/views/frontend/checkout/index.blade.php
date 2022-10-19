@@ -146,7 +146,7 @@
                         <input type="email" data-rule-required="#different_billing_address:checked" value="{{ $sessionData['billing_email'] ?? '' }}" data-rule-email="true" name="billing_email" placeholder="Email Address">
                       </div>
 
-                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code">
+                      <input type="hidden" id="billing_mobile_country_code" name="billing_mobile_country_code" value="+1">
                       <div class="col-md-6 col-12 mb-20 billing_input">
                         <label for="billing_mobile">Mobile no*</label>
                         <input type="tel" placeholder="Phone number" value="{{ $sessionData['billing_mobile'] ?? '' }}" name="billing_mobile" id="billing_mobile" data-rule-required="true"

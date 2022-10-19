@@ -161,13 +161,13 @@
                   <b>Ship to</b>
                   <table>
                     <tr>
-                      <td><span>{{ $shipping_address->address_one ?? '' }}</span><br>
+                      <td><span>{{ strtoupper($shipping_address->address_one) ?? '' }}</span><br>
                         @if ($shipping_address->address_two)
-                          <span>{{ $shipping_address->address_two ?? '' }}</span> <br>
+                          <span>{{ strtoupper($shipping_address->address_two) ?? '' }}</span> <br>
                         @endif
-                        <span>{{ $shipping_address->city }}&nbsp;{{ $shipping_address->postal_code }}</span>
-                        <span>{{ $shipping_address->state }}</span><br>
-                        <span>{{ $shipping_address->country }}</span>
+                        <span>{{ strtoupper($shipping_address->city) }}&nbsp;{{ strtoupper($shipping_address->postal_code) }}</span>
+                        <span>{{ strtoupper($shipping_address->state) }}</span><br>
+                        <span>{{ strtoupper($shipping_address->country) }}</span>
                       </td>
                     </tr>
                   </table>

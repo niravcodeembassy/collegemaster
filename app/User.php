@@ -62,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return $this->hasOne(UserShippingAddress::class, 'user_id', 'id');
   }
-  
+
   public function country()
   {
     return $this->belongsTo(Country::class, 'country_id');
@@ -94,8 +94,33 @@ class User extends Authenticatable implements MustVerifyEmail
     return 'https://ui-avatars.com/api/?name=' . $this->name;
   }
 
+  public function getFirstNameAttribute($value)
+  {
+    return ucwords($value);
+  }
+
+  public function getLastNameAttribute($value)
+  {
+    return ucwords($value);
+  }
+
+  public function getNameAttribute($value)
+  {
+    return ucwords($value);
+  }
+
   public function message()
   {
     return $this->hasMany(Message::class);
+  }
+
+  public function getAddress1Attribute($value)
+  {
+    return strtoupper($value);
+  }
+  
+  public function getAddress2Attribute($value)
+  {
+    return strtoupper($value);
   }
 }

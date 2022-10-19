@@ -8,6 +8,7 @@ use App\Model\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Exports\OrderExport;
+use App\Exports\CustomerExport;
 use App\Exports\BestSellingExport;
 use App\Exports\RefundReportExport;
 
@@ -34,6 +35,14 @@ class ExportController extends Controller
       try {
         return (new RefundReportExport())->download('refund report.xlsx');
       } catch (\Exception $e) {
+      }
+    }
+
+    if ($type == 'customer') {
+      try {
+        return (new CustomerExport())->download('customer report.xlsx');
+      } catch (\Exception $e) {
+        dd($e);
       }
     }
   }
@@ -65,6 +74,5 @@ class ExportController extends Controller
 
   public function exportPrint()
   {
-   
   }
 }

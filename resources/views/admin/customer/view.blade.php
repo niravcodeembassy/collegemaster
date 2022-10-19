@@ -20,7 +20,7 @@
         <div class="card-body">
           <div class="text-center">
             <img src="{{ $customer->profile_src }}" class="rounded-circle" width="150">
-            <h4 class="mt-3">{{ strtoupper($customer->name) }}</h4>
+            <h4 class="mt-3">{{ $customer->name }}</h4>
             <div class="row text-center justify-content-md-center">
               <div class="col-4">
                 <a href="javascript:void(0)" class="link"><i class="fa fa-truck f-18"></i>

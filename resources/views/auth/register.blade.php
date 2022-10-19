@@ -17,14 +17,14 @@
               <p class="font-para mb-0 h6">Enter your email and password to register</p>
             </div>
             <div class="card-body pb-3">
-              <form class="auth_form" method="POST" action="{{ route('register') }}">
+              <form class="auth_form" method="POST" action="{{ route('register') }}" id="register_form">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">
                     <label for="first_name">{{ __('First name') }}</label>
                     <div class="mb-3">
-                      <input id="first_name" type="text" placeholder="First Name" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name"
-                        autofocus>
+                      <input id="first_name" type="text" placeholder="First Name" class="form-control form-control-lg @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required
+                        autocomplete="first_name" autofocus>
                       @error('first_name')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -35,8 +35,8 @@
                   <div class="col-md-6">
                     <label for="last_name">{{ __('Last name') }}</label>
                     <div class="mb-3">
-                      <input id="last_name" type="text" placeholder="Last Name" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name"
-                        autofocus>
+                      <input id="last_name" type="text" placeholder="Last Name" class="form-control form-control-lg @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required
+                        autocomplete="last_name" autofocus>
                       @error('last_name')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
                   <div class="col-md-12">
                     <label for="email">{{ __('E-Mail') }}</label>
                     <div class="mb-3">
-                      <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email">
+                      <input id="email" type="email" data-rule-email="true" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email">
                       @error('email')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -60,8 +60,8 @@
                   <div class="col-md-12 w-100">
                     <label for="mobile">{{ __('Mobile number') }}</label>
                     <div class="intel_input">
-                      <input id="mobile" type="tel" onkeypress="return onlyNumberKey(event)" placeholder="Mobile number" number="true" class="form-control  form-control-lg @error('mobile') is-invalid @enderror" name="mobile"
-                        value="{{ old('mobile') }}" required style="background: none;">
+                      <input id="mobile" type="text" placeholder="Mobile number" number="true" class="form-control telephone form-control-lg @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required
+                        style="background: none;">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                       @error('mobile')
                         <span class="invalid-feedback" role="alert">
@@ -74,10 +74,10 @@
                   @php
                     $countryList = App\Model\Country::get();
                   @endphp
-                  <div class="col-md-12" style="margin-top:-5px">
+                  <div class="col-md-12 mb-3">
                     <label for="Country">{{ __('Country') }}</label>
-                    <div class="mb-3">
-                      <select class="nice-select form-control  form-control-lg  w-100" placeholder="Country" name="country_id" style="display: none;" id="country">
+                    <div>
+                      <select class="nice-select form-control  form-control-lg  w-100" data-rule-required="true" placeholder="Country" name="country_id" id="country">
                         <option value="">Select Country</option>
                         @foreach ($countryList as $item)
                           <option value="{{ $item->id }}">
@@ -88,7 +88,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-12 mt-3">
+                  <div class="col-md-12">
                     <label for="password">{{ __('Password') }}</label>
                     <div class="mb-3">
                       <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="password">
@@ -140,6 +140,7 @@
 @endsection
 
 @push('js')
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
   <script src="{{ asset('front/assets/js/checkout.js') }}"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
   <script src="https://js.stripe.com/v3/"></script>
@@ -158,15 +159,6 @@
       preferredCountries: ["us"],
     });
 
-    function onlyNumberKey(evt) {
-
-      // Only ASCII character in that range allowed
-      var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-      if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
-        return false;
-      return true;
-    }
-
     $('#mobile').on('countrychange', function(e) {
       var Code = iti.getSelectedCountryData().dialCode;
       $('#code').val("+" + Code);
@@ -183,18 +175,59 @@
       }
     });
 
-    $('#mobile').keyup(function() {
-      var mobile_no = $(this).val();
-      var country_code = iti.getSelectedCountryData().dialCode;
-      var phone = "+" + country_code + "" + mobile_no;
-      var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-      if (regex.test(phone)) {
-        $('#mobile-error').text('');
-        return true;
-      } else {
-        $('#mobile-error').text('Please Enter Valid Mobile No');
-        return false;
-      }
+    // $('#mobile').keyup(function() {
+    //   var mobile_no = $(this).val();
+    //   var country_code = iti.getSelectedCountryData().dialCode;
+    //   var phone = "+" + country_code + "" + mobile_no;
+    //   var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+    //   if (regex.test(phone)) {
+    //     $('#mobile-error').text('');
+    //     return true;
+    //   } else {
+    //     $('#mobile-error').text('Please Enter Valid Mobile No');
+    //     return false;
+    //   }
+    // });
+
+    $.validator.addMethod('customphone', function(value, element, params) {
+      var code = iti.getSelectedCountryData().dialCode;
+      var phone = "+" + code + "" + value;
+      return params.test(phone);
+    }, "Please Enter Valid Mobile No");
+
+    jQuery.validator.addClassRules("telephone", {
+      customphone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+    });
+
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+      return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "Letters only please");
+
+    $("#register_form").validate({
+      debug: false,
+      rules: {
+        first_name: {
+          lettersonly: true
+        },
+        last_name: {
+          lettersonly: true
+        },
+        password: {
+          required: true,
+          minlength: 8,
+        },
+        password_confirmation: {
+          required: true,
+          equalTo: "#password"
+        },
+      },
+      errorPlacement: function(error, element) {
+        if (element.parent('.iti ').length) {
+          error.insertAfter(element.parent()).addClass('text-danger');
+        } else {
+          error.appendTo(element.parent()).addClass('text-danger')
+        }
+      },
     });
   </script>
   <script src="{{ asset('front/assets/build/js/intlTelInput-jquery.min.js') }}"></script>

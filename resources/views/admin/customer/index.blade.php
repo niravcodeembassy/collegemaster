@@ -17,6 +17,11 @@
           'icon' => '',
           'tagline' => 'Lorem ipsum dolor sit amet.',
       ])
+    @if ($total_user > 0)
+      <a href="{{ route('admin.export.excel', ['export' => 'customer']) }}" class="btn btn-success btn-sm">
+        <i class="fas fa-file-export"></i> Customer Report Excel
+      </a>
+    @endif
   @endcomponent
 
   <div class="row">
@@ -28,6 +33,7 @@
               <th style="width:12%" data-orderable="true">Name</th>
               <th style="width:20%" data-orderable="false">E-mail</th>
               <th style="width:15%">Mobile No</th>
+              <th style="width:10%" data-orderable="true">Country</th>
               <th style="width:10%" data-orderable="true">Date</th>
               <th style="width:10%" data-orderable="true">Time</th>
               <th style="width:10%" data-orderable="true">Order</th>
@@ -71,6 +77,9 @@
           },
           {
             "data": "phone"
+          },
+          {
+            "data": "country"
           },
           {
             "data": "created_at"

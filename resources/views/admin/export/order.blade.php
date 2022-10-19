@@ -82,7 +82,7 @@
         <td>{{ $list->order->user->first_name ?? '' }}</td>
         <td>{{ $list->order->user->last_name ?? '' }}</td>
         <td>{{ $list->order->user->phone ?? '' }}</td>
-        <td>{{ $adr ?? '' }}</td>
+        <td>{{ strtoupper($adr) ?? '' }}</td>
         <td>{{ isset($shipping->country) ? $shipping->country : '' }}</td>
         <td>{{ isset($list->order) ? date('d-m-Y', strtotime($list->order->created_at)) : '' }}</td>
         <td>{{ $list->order->order_no ?? '' }}</td>
