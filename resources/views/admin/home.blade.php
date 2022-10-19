@@ -109,7 +109,7 @@
                 @if ($orders->count() > 0)
                   @foreach ($orders as $item)
                     <tr>
-                      <td><a href="{{ route('admin.order.show', $item->id) }}" class="link text-primary "> Order No. {{ $item->order_number ?? '---' }}</a></td>
+                      <td><a href="{{ route('admin.order.show', $item->id) }}" class="link text-primary "> {{ $item->order_number ?? '---' }}</a></td>
                       @php
                         $status = null;
                         if ($item->order_status == 'order_placed') {
