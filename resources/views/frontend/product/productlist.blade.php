@@ -39,51 +39,51 @@
 @section('twiter-image', $category->image_src)
 
 @php
-$schema_organization = Schema::organizationSchema();
-$schema_local = Schema::localSchema();
+  $schema_organization = Schema::organizationSchema();
+  $schema_local = Schema::localSchema();
 
-$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [
-    'organization' => $schema_organization,
-    'local' => $schema_local,
-];
-if ($product->count() > 0) {
-    $priceData = Helper::productPrice($productVarinat);
+  $schema = [
+      'organization' => $schema_organization,
+      'local' => $schema_local,
+  ];
+  if ($product->count() > 0) {
+      $priceData = Helper::productPrice($productVarinat);
 
-    $schema_first = [
-        '@context' => 'https://schema.org/',
-        '@type' => 'AggregateRating',
-        'ratingValue' => isset($category_rating) ? intval($category_rating->avg_rating) : 0,
-        'bestRating' => '5',
-        'worstRating' => '1',
-        'ratingCount' => isset($category_rating) ? $category_rating->total_rating : 0,
-    ];
+      $schema_first = [
+          '@context' => 'https://schema.org/',
+          '@type' => 'AggregateRating',
+          'ratingValue' => isset($category_rating) ? intval($category_rating->avg_rating) : 0,
+          'bestRating' => '5',
+          'worstRating' => '1',
+          'ratingCount' => isset($category_rating) ? $category_rating->total_rating : 0,
+      ];
 
-    $schema_third = [
-        '@context' => 'https://schema.org/',
-        '@type' => 'BreadcrumbList',
-        'itemListElement' => [
-            [
-                '@type' => 'ListItem',
-                'position' => 1,
-                'name' => 'Birthday Gifts',
-                'item' => route('category.product', 'birthday-gifts'),
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 2,
-                'name' => 'Birtday Collage',
-                'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
-            ],
-        ],
-    ];
-    $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    $schema['product_schema'] = $product_schema;
-    $schema['list_schema'] = $list_schema;
-}
+      $schema_third = [
+          '@context' => 'https://schema.org/',
+          '@type' => 'BreadcrumbList',
+          'itemListElement' => [
+              [
+                  '@type' => 'ListItem',
+                  'position' => 1,
+                  'name' => 'Birthday Gifts',
+                  'item' => route('category.product', 'birthday-gifts'),
+              ],
+              [
+                  '@type' => 'ListItem',
+                  'position' => 2,
+                  'name' => 'Birtday Collage',
+                  'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
+              ],
+          ],
+      ];
+      $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $schema['product_schema'] = $product_schema;
+      $schema['list_schema'] = $list_schema;
+  }
 @endphp
 
 @section('schema')
@@ -152,7 +152,7 @@ if ($product->count() > 0) {
                     <b>Filter Category</b>
                   </a>
                 </div>
-                <div class="single-icon ">
+                <div class="single-icon">
                   {{-- <a href="{{ route('category.product' , [ 'slug' => $category->slug ,'type' => 'grid-four' ,  ] + request()->query() ) }}"
                   class="{{ request('type','grid') == 'grid-four' ? 'active' : '' }} mr-3" style="opacity: 0.4;">
                   <i class="ti-layout-grid3-alt "></i>
@@ -180,8 +180,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                                                                                                            =            shop page content         =
-                                                                                                                                                                                                                                                                                                                                            =============================================-->
+                                                                                                                                                                                                                                                                                                                                              =            shop page content         =
+                                                                                                                                                                                                                                                                                                                                              =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">

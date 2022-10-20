@@ -75,32 +75,31 @@
                 @endif
                 <div class="row">
                   <div class="col-md-12 mb-3">
-                    <label>First Name <span class="text-danger">*</span></label>
+                    <label>First Name </label>
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control form-control-lg" placeholder="First Name *" id="customername" data-rule-required="true">
+                      <input type="text" name="name" class="form-control form-control-lg" placeholder="First Name" id="customername">
                     </div>
                   </div>
                   <div class="col-md-12 mb-3">
-                    <label>Email <span class="text-danger">*</span></label>
+                    <label>Email </label>
                     <div class="input-group">
-                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email *" data-rule-email="true" data-rule-required="true">
+                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" data-rule-email="true">
                     </div>
                   </div>
-
 
                   <div class="col-md-12 mb-3">
                     <input type="hidden" id="code" name="country_code" value="+1">
-                    <label>Mobile Number <span class="text-danger">*</span></label>
+                    <label>Mobile Number </label>
                     <div class="input-group">
-                      <input type="text" data-rule-number="true" data-rule-required="true" class="form-control form-control-lg telephone" placeholder="Mobile Number *" name="mobile" id="mobile" required="">
+                      <input type="text" class="form-control form-control-lg telephone" placeholder="Mobile Number" name="mobile" id="mobile">
                       <label id="mobile-error" class="error text-danger" for="phone"></label>
                     </div>
                   </div>
 
                   <div class="col-md-12 mb-3">
-                    <label>Subject <span class="text-danger">*</span></label>
+                    <label>Subject </label>
                     <div class="input-group">
-                      <textarea rows="3" placeholder="Subject *" class="form-control" data-rule-required="true" name="subject" id="subject"></textarea>
+                      <textarea rows="3" placeholder="Subject" class="form-control" name="subject" id="subject"></textarea>
                     </div>
                   </div>
                   <div class="col-md-12 mb-2">

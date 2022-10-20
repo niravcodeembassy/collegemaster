@@ -8,10 +8,11 @@ use App\Model\Homepagebanner;
 use App\Model\Newsletter;
 use App\Model\Product;
 use App\Blog;
+use App\Model\ProductReview;
 use App\Model\Testimonial;
 use Illuminate\Http\Request;
 use App\Category;
-use App\Helpers\Helper;
+use Illuminate\Support\Facades\DB;
 use App\Model\SubCategory;
 
 class HomeController extends Controller
@@ -91,4 +92,64 @@ class HomeController extends Controller
     return response()->json($filter_result);
   }
 
+  public function productReview(Request $request)
+  {
+
+    $filter = $request->get('filter');
+
+    $order = array('latest', 'oldest');
+
+    $reviews = ProductReview::select('product_reviews.*')
+      ->with(['product.defaultimage', 'product.category', 'user'])
+      ->whereNull('product_reviews.is_active')
+      ->when(in_array($filter, $order) && $filter == 'latest', function ($query) {
+        return $query->orderBy('product_reviews.id', 'Desc');
+      })
+      ->when(in_array($filter, $order) && $filter == 'oldest', function ($query) {
+        return $query->orderBy('product_reviews.id', 'Asc');
+      })
+      ->when(is_numeric($filter), function ($query) use ($filter) {
+        return $query->where('product_reviews.rating', '=', $filter);
+      })->when(!is_numeric($filter) && !in_array($filter, $order), function ($query) use ($filter) {
+        return $query->join('products', function ($join) {
+          $join->on('products.id', '=', 'product_reviews.product_id');
+        })->join('categories', function ($join) use ($filter) {
+          $join->on('categories.id', '=', 'products.category_id')
+            ->where('categories.slug', $filter);
+        });
+      })
+      ->paginate(10);
+
+    $rating_details = ProductReview::select(
+      DB::raw("product_reviews.rating as rating"),
+      'product_reviews.*'
+    )->whereNull('product_reviews.is_active')
+      ->selectRaw('COUNT(product_reviews.id) AS total_rating,COUNT(*) as total_reviews,COUNT(product_reviews.id)*100/(SELECT COUNT(*) FROM product_reviews) as percentage')
+      ->groupBy(['rating'])
+      ->orderByDesc('rating')
+      ->get();
+
+    $title = array('Super', 'Very Good', 'Good', 'Pleasant', 'Poor');
+    $rating_details->map(function ($item, $key) use ($title) {
+      $item['rating_title'] = $title[$key];
+      return $item;
+    });
+
+    $category = Category::groupBy('categories.id')
+      ->whereNull('categories.is_active')
+      ->select('categories.id', 'categories.slug', 'categories.name')
+      ->join('products', function ($join) {
+        $join->on('categories.id', '=', 'products.category_id');
+      })->join('product_reviews', function ($join) {
+        $join->on('products.id', '=', 'product_reviews.product_id')
+          ->whereNull('product_reviews.is_active');
+      })->selectRaw("count(product_reviews.id) as total_reviews")->take(5)->get();
+
+    $this->data['title'] = 'Review';
+    $this->data['category'] = $category;
+    $this->data['reviews'] = $reviews;
+    $this->data['rating_details'] = $rating_details;
+    $this->data['avg_rating'] = ProductReview::whereNull('is_active')->avg('rating');
+    return $this->view('frontend.product-review');
+  }
 }

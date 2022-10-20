@@ -47,7 +47,7 @@ class ProductController extends Controller
           ->where('categories.slug', $slug);
       })->join('product_reviews', function ($join) use ($slug) {
         $join->on('products.id', '=', 'product_reviews.product_id');
-      })->selectRaw("avg(rating) as avg_rating,count(rating) as total_rating")->first();
+      })->selectRaw("avg(rating) as avg_rating,sum(rating) as total_rating")->first();
 
 
     $categoryList = Category::whereNull('is_active')
@@ -56,6 +56,7 @@ class ProductController extends Controller
       }])->with(['subCategory' => function ($q) {
         $q->whereNull('is_active');
       }])->whereNull('is_active')->get();
+
 
 
 
@@ -150,7 +151,7 @@ class ProductController extends Controller
           ->where('sub_categories.slug', $slug);
       })->join('product_reviews', function ($join) use ($slug) {
         $join->on('products.id', '=', 'product_reviews.product_id');
-      })->selectRaw("avg(rating) as avg_rating, count(rating) as total_rating")->first();
+      })->selectRaw("avg(rating) as avg_rating, sum(rating) as total_rating")->first();
 
     $category = Category::findOrFail($subCategory->category_id);
 
@@ -228,7 +229,7 @@ class ProductController extends Controller
     }, function ($q) use ($product) {
       return $q->where('product_id', $product->id)->where('type', 'variant')->first();
     });
-    
+
     if (Auth::check()) {
       $this->data['wishList'] = WishList::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();
       $this->data['cart_product'] = ShoppingCart::where('user_id', Auth::user()->id)->where('variant_id', $variant->id)->first();

@@ -39,6 +39,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['isActiveUser']], functio
 
   Route::get('contact-us', 'ContactUsController@index')->name('contact-us.index');
 
+  Route::get('review', 'HomeController@productReview')->name('review');
+
   Route::get('about-us', 'ContactUsController@about')->name('page.about');
   Route::get('our-story', 'ContactUsController@ourStory')->name('page.story');
   Route::get('privacy-policy', 'ContactUsController@policy')->name('page.policy');

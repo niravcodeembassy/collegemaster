@@ -93,6 +93,9 @@
                   <h4><a href="{{ route('blog') }}">Blog</a></h4>
                 </li>
                 <li>
+                  <h4><a href="{{ route('review', ['filter' => 'latest']) }}">Review</a></h4>
+                </li>
+                <li>
                   <h4><a href="{{ route('contact-us.index') }}">Contact</a></h4>
                 </li>
                 <li>
