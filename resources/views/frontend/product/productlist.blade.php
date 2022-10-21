@@ -55,10 +55,10 @@
       $schema_first = [
           '@context' => 'https://schema.org/',
           '@type' => 'AggregateRating',
-          'ratingValue' => isset($category_rating) ? intval($category_rating->avg_rating) : 0,
+          'ratingValue' => round($global_review_avg, 1),
           'bestRating' => '5',
           'worstRating' => '1',
-          'ratingCount' => isset($category_rating) ? $category_rating->total_rating : 0,
+          'ratingCount' => $global_review_count,
       ];
 
       $schema_third = [
@@ -180,8 +180,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                                                                                                              =            shop page content         =
-                                                                                                                                                                                                                                                                                                                                              =============================================-->
+                                                                                                                                                                                                                                                                                                                                                =            shop page content         =
+                                                                                                                                                                                                                                                                                                                                                =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">

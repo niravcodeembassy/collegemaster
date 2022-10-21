@@ -52,10 +52,10 @@ if ($product->count() > 0) {
     $priceData = Helper::productPrice($productVarinat);
     $schema_first = [
         '@context' => 'https://schema.org/',
-        'ratingValue' => isset($subcategory_rating) ? intval($subcategory_rating->avg_rating) : 0,
+        'ratingValue' => round($global_review_avg, 1),
         'bestRating' => '5',
         'worstRating' => '1',
-        'ratingCount' => isset($subcategory_rating) ? $subcategory_rating->total_rating : 0,
+        'ratingCount' => $global_review_count,
     ];
 
     $schema_third = [

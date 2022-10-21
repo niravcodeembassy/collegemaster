@@ -342,10 +342,10 @@
       ],
       'aggregateRating' => [
           '@type' => 'AggregateRating',
-          'ratingValue' => $review_rating,
+          'ratingValue' => round($global_review_avg, 1),
           'bestRating' => '5',
           'worstRating' => '1',
-          'ratingCount' => $product_review->sum('rating'),
+          'ratingCount' => $global_review_count,
       ],
   ];
 

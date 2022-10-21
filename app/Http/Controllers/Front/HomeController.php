@@ -121,7 +121,7 @@ class HomeController extends Controller
             ->whereIn('categories.slug', explode(',', $category_filter));
         });
       })
-      ->paginate(10);
+      ->paginate(20);
 
     $rating_details = ProductReview::select(
       DB::raw("product_reviews.rating as rating"),
@@ -146,7 +146,7 @@ class HomeController extends Controller
       })->join('product_reviews', function ($join) {
         $join->on('products.id', '=', 'product_reviews.product_id')
           ->whereNull('product_reviews.is_active');
-      })->selectRaw("count(product_reviews.id) as total_reviews")->take(5)->get();
+      })->selectRaw("count(product_reviews.id) as total_reviews")->get();
 
     $this->data['title'] = 'Review';
     $this->data['category'] = $category;

@@ -8,10 +8,21 @@
   $schema_organization = Schema::organizationSchema();
   $schema_local = Schema::localSchema();
 
+  $schema_first = [
+      '@context' => 'https://schema.org/',
+      '@type' => 'AggregateRating',
+      'ratingValue' => round($avg_rating, 1),
+      'bestRating' => '5',
+      'worstRating' => '1',
+      'ratingCount' => $rating_details->sum('total_rating'),
+  ];
+
   $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $review_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-  $schema = [$schema_organization, $schema_local];
+  $schema = [$schema_organization, $schema_local, $review_schema];
+
 @endphp
 
 @section('schema')
@@ -276,10 +287,10 @@
           <div class="row">
             @forelse ($reviews as $key=> $review)
               @php
-                $img_url = $review->product->defaultimage->image_url;
-                $img_alt = $review->product->defaultimage->image_alt;
+                $img_url = $review->product->defaultimage->image_url ?? '';
+                $img_alt = $review->product->defaultimage->image_alt ?? '';
                 $img = asset('storage/' . $img_url);
-                $category = $review->product->category->name;
+                $category = $review->product->category->name ?? '';
                 $name = isset($review->user) ? $review->user->name : $review->name;
                 $published_date = date('d.m.Y', strtotime($review->created_at));
                 $user_url = 'https://ui-avatars.com/api/?name=' . $name;
@@ -320,7 +331,7 @@
                         </div>
                       </div>
                     </div>
-                    <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug]) }}">View Product</a>
+                    {{-- <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug ?? '']) }}">View Product</a> --}}
                   </div>
                 </div>
               </div>

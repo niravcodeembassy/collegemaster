@@ -57,6 +57,11 @@ class ProductController extends Controller
         $q->whereNull('is_active');
       }])->whereNull('is_active')->get();
 
+    $global_review_avg = ProductReview::whereNull('is_active')->avg('rating');
+    $global_review_count = ProductReview::whereNull('is_active')->count();
+
+    $this->data['global_review_avg'] = $global_review_avg;
+    $this->data['global_review_count'] = $global_review_count;
 
 
 
@@ -176,6 +181,11 @@ class ProductController extends Controller
         $q->whereNull('is_active');
       }])->whereNull('is_active')->get();
 
+    $global_review_avg = ProductReview::whereNull('is_active')->avg('rating');
+    $global_review_count = ProductReview::whereNull('is_active')->count();
+
+    $this->data['global_review_avg'] = $global_review_avg;
+    $this->data['global_review_count'] = $global_review_count;
     if ($product->count() > 0) {
       $first_product = $product->first();
       $variant = $first_product->productvariant;
@@ -259,6 +269,9 @@ class ProductController extends Controller
       });
     }
 
+
+    $global_review_avg = ProductReview::whereNull('is_active')->avg('rating');
+    $global_review_count = ProductReview::whereNull('is_active')->count();
     $review = ProductReview::where('product_id', $product->id)->whereNull('is_active')->with('user')->paginate(2);
     $product_review = $product->product_review->whereNull('is_active');
     $review_rating = intval($product_review->pluck('rating')->avg());
@@ -270,6 +283,9 @@ class ProductController extends Controller
     $this->data['review'] = $review;
     $this->data['social_link'] = $social_link;
     $this->data['faqList'] = $faq;
+    $this->data['global_review_avg'] = $global_review_avg;
+    $this->data['global_review_count'] = $global_review_count;
+
     return $this->view('frontend.product.product_details');
   }
 
