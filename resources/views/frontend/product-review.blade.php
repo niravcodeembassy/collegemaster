@@ -331,7 +331,7 @@
                         </div>
                       </div>
                     </div>
-                    {{-- <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug ?? '']) }}">View Product</a> --}}
+                    <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug ?? '']) }}">View Product</a>
                   </div>
                 </div>
               </div>
