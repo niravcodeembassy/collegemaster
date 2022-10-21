@@ -97,25 +97,28 @@ class HomeController extends Controller
 
     $filter = $request->get('filter');
 
+
     $order = array('latest', 'oldest');
 
+    $category_filter = $request->get('category');
+    $review_filter = $request->get('rating');
     $reviews = ProductReview::select('product_reviews.*')
       ->with(['product.defaultimage', 'product.category', 'user'])
       ->whereNull('product_reviews.is_active')
       ->when(in_array($filter, $order) && $filter == 'latest', function ($query) {
-        return $query->orderBy('product_reviews.id', 'Desc');
+        return $query->orderBy('product_reviews.created_at', 'Desc');
       })
       ->when(in_array($filter, $order) && $filter == 'oldest', function ($query) {
-        return $query->orderBy('product_reviews.id', 'Asc');
+        return $query->orderBy('product_reviews.created_at', 'Asc');
       })
-      ->when(is_numeric($filter), function ($query) use ($filter) {
-        return $query->where('product_reviews.rating', '=', $filter);
-      })->when(!is_numeric($filter) && !in_array($filter, $order), function ($query) use ($filter) {
+      ->when($review_filter, function ($query) use ($review_filter) {
+        return $query->whereIn('product_reviews.rating', explode(',', $review_filter));
+      })->when($category_filter, function ($query) use ($category_filter) {
         return $query->join('products', function ($join) {
           $join->on('products.id', '=', 'product_reviews.product_id');
-        })->join('categories', function ($join) use ($filter) {
+        })->join('categories', function ($join) use ($category_filter) {
           $join->on('categories.id', '=', 'products.category_id')
-            ->where('categories.slug', $filter);
+            ->whereIn('categories.slug', explode(',', $category_filter));
         });
       })
       ->paginate(10);

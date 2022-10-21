@@ -73,7 +73,7 @@
     }
 
     .card {
-      background-color: #e9ecef !important;
+      background-color: #f9f9f9 !important;
     }
 
     .bottom_border {
@@ -96,7 +96,7 @@
     }
 
     .review_img {
-      height: 70px;
+      height: 60px;
     }
 
     .digit {
@@ -116,6 +116,19 @@
     div.progress_bar_review .col-lg-2 {
       flex: 0 0 12.666667%;
       max-width: 12.666667%;
+    }
+
+    .single-review__image img {
+      height: 50px;
+      width: 50px;
+    }
+
+    .single-review__image {
+      flex-basis: 50px;
+    }
+
+    .review_text_content small {
+      font-size: 70%;
     }
 
     @media only screen and (max-width: 480px) {
@@ -141,7 +154,7 @@
         <div class="col-lg-3"></div>
         <div class="col-lg-9 text-center">
           <span class="h2 gold font-weight-bold">{{ $rating_details->sum('total_rating') }}</span>
-          <span class="h2 font-weight-bold">Customer Reviews</span>
+          <span class="h2 font-weight-bold text-uppercase mx-2">Customer Reviews</span>
           <p class="review_text">Shopper Approved collects trusted reviews from customers who have made a verified purchase</p>
         </div>
       </div>
@@ -153,7 +166,7 @@
             @for ($i = 0; $i < round($avg_rating); $i++)
               <i class="fa fa-star gold star fa-lg" aria-hidden="true"></i>
             @endfor
-            @for ($i = 0; $i < 5 - round($avg_rating, 2); $i++)
+            @for ($i = 0; $i < 5 - round($avg_rating); $i++)
               <i class="fa fa-star-o fa-lg" aria-hidden="true"></i>
             @endfor
             <br>
@@ -183,8 +196,16 @@
                 </div>
               @endforeach
             </div>
-            <div class="col-lg-4 mt-md-50 mt-sm-50 mt-lg-0">
-              {{-- <img src="{{ asset('front/assets/images/truck.png') }}" class="img-fluid review_img" alt="review" title="review"> --}}
+            <div class="col-lg-4 col-md-4 mt-md-0 mt-sm-50 mt-lg-0">
+              <div class="d-flex mt-4">
+                <div class="review_image_content">
+                  <img src="{{ asset('front/assets/images/icon.png') }}" class="img-fluid review_img" alt="review" title="review">
+                </div>
+                <div class="review_text_content mx-2">
+                  <span class="h3">2 YERAS</span><br />
+                  <small>COLLECTING REVIEWS</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -192,57 +213,63 @@
       </div>
 
       <div class="row">
+
         <div class="col-lg-3 col-md-12 col-sm-12 col-12">
           <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between bottom_border mb-3">
-                <span class="h5">Filters</span>
-                <i class="ion-android-funnel"></i>
-              </div>
-              <p>Date</p>
-              {{-- <div class="form-check">
-                  <input class="form-check-input filter_review" type="radio" {{ request()->get('filter') == 'all' ? 'checked' : '' }} data-filter="all" id="all">
-                  <label class="form-check-label mx-2" for="all">
-                    All
-                  </label>
-                </div> --}}
-              <div class="form-check my-2">
-                <input class="form-check-input filter_review" type="radio" {{ request()->get('filter') == 'latest' ? 'checked' : '' }} data-filter="latest" id="latest">
-                <label class="form-check-label mx-2" for="latest">
-                  Latest
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input filter_review" type="radio" {{ request()->get('filter') == 'oldest' ? 'checked' : '' }} data-filter="oldest" id="oldest">
-                <label class="form-check-label mx-2" for="oldest">
-                  Oldest
-                </label>
-              </div>
-              <p class="bottom_top mt-4">Category</p>
-              @forelse ($category as $item)
-                <div class="form-check">
-                  <input class="form-check-input filter_review" type="checkbox" {{ request()->get('filter') == $item->slug ? 'checked' : '' }} data-filter="{{ $item->slug }}">
-                  <label class="form-check-label mx-2">
-                    {{ $item->name }}
-                  </label>
-                  <span class="digit">{{ $item->total_reviews }}</span>
+            <form action="{{ route('review') }}" method="get" id="filterForm">
+              <div class="card-body">
+
+                <div class="d-flex justify-content-between bottom_border mb-3">
+                  <span class="h5">Filters</span>
+                  <i class="ion-android-funnel"></i>
                 </div>
-              @empty
-                <p>Category Review Not Found</p>
-              @endforelse
-              <p class="bottom_top mt-4">Rating</p>
-              @forelse ($rating_details as $details)
-                <div class="form-check">
-                  <input class="form-check-input filter_review" type="checkbox" data-filter="{{ $details->rating }}" {{ request()->get('filter') == $details->rating ? 'checked' : '' }}>
-                  <label class="form-check-label mx-2">
-                    {{ $details->rating_title }} ({{ $details->rating }}) <i class="fa fa-star active star fa-1x" aria-hidden="true"></i>
+                <p>Date</p>
+                <div class="form-check my-2">
+                  <input class="form-check-input filter_date" value="latest" name="filter" type="radio" {{ request()->get('filter') == 'latest' ? 'checked' : '' }} data-order="latest" id="latest">
+                  <label class="form-check-label mx-2" for="latest">
+                    Latest
                   </label>
-                  <span class="digit">{{ $details->total_rating }}</span>
                 </div>
-              @empty
-                <p>Rating Not Found</p>
-              @endforelse
-            </div>
+                <div class="form-check">
+                  <input class="form-check-input filter_date" value="oldest" name="filter" type="radio" {{ request()->get('filter') == 'oldest' ? 'checked' : '' }} data-order="oldest" id="oldest">
+                  <label class="form-check-label mx-2" for="oldest">
+                    Oldest
+                  </label>
+                </div>
+                <p class="bottom_top mt-4">Category</p>
+                <div id="category_rating">
+                  @forelse ($category as $item)
+                    <div class="form-check">
+                      <input class="form-check-input filter_category" value="{{ $item->slug }}" type="checkbox" value="{{ $item->slug }}" name="category[]" @if (in_array($item->slug, explode(',', request()->get('category', '')))) checked @endif>
+                      <label class="form-check-label mx-2">
+                        {{ $item->name }}
+                      </label>
+                      <span class="digit">{{ $item->total_reviews }}</span>
+                    </div>
+                  @empty
+                    <p>Category Review Not Found</p>
+                  @endforelse
+                </div>
+                <p class="bottom_top mt-4">Rating</p>
+                <div id="rating_info">
+                  @forelse ($rating_details as $details)
+                    <div class="form-check">
+                      <input class="form-check-input filter_rating" type="checkbox" name="rating[]" value="{{ $details->rating }}" @if (in_array($details->rating, explode(',', request()->get('rating', '')))) checked @endif>
+                      <label class="form-check-label mx-2">
+                        {{ $details->rating_title }} ({{ $details->rating }}) <i class="fa fa-star active star fa-1x" aria-hidden="true"></i>
+                      </label>
+                      <span class="digit">{{ $details->total_rating }}</span>
+                    </div>
+                  @empty
+                    <p>Rating Not Found</p>
+                  @endforelse
+                </div>
+              </div>
+              <div class="m-3">
+                {{-- <button type="submit" class="btn btn-success mr-2">Filter</button> --}}
+                <button type="buton" class="reset_btn btn btn-dark">Reset</button>
+              </div>
+            </form>
           </div>
         </div>
         <div class="col-lg-9 mt-md-50 mt-sm-50 mt-lg-0">
@@ -278,7 +305,7 @@
                             <span class="">Published: {{ $published_date }}</span>
                           </span>
                         </div>
-                        <span>{{ $name }}</span>
+                        <span>{{ ucwords($name) }}</span>
                         <!--=======  End of message  =======-->
                       </div>
                     </div>
@@ -293,7 +320,7 @@
                         </div>
                       </div>
                     </div>
-                    <a class="lezada-button float-right" href="{{ route('product.view', ['slug' => $review->product->slug]) }}">View Product</a>
+                    <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug]) }}">View Product</a>
                   </div>
                 </div>
               </div>
@@ -325,18 +352,64 @@
 
 @push('script')
   <script>
-    $(document).on("change", ".filter_review", function(e) {
+    var filter = {
+      rating: @json(explode(',', request()->get('rating'))),
+      category: @json(explode(',', request()->get('category'))),
+      order: 'latest'
+    };
 
-      $('input[type="checkbox"]').not(this).prop('checked', false);
-      $('input[type="radio"]').not(this).prop('checked', false);
+    $(document).on('click', ".filter_rating", function() {
+      var checked = $(this).val();
+      if ($(this).is(':checked')) {
+        filter.rating.push(checked);
+      } else {
+        filter.rating.splice($.inArray(checked, filter.rating), 1);
+      }
+      filterResult(filter);
+    });
 
-      var filter = $(this).data('filter');
+    $(document).on('click', ".filter_category", function() {
+      var checked = $(this).val();
+      if ($(this).is(':checked')) {
+        filter.category.push(checked);
+      } else {
+        filter.category.splice($.inArray(checked, filter.category), 1);
+      }
+      filterResult(filter);
+    });
+
+    $(document).on('click', ".filter_date", function() {
+      filter.order = $(this).val();
+      filterResult(filter);
+    });
+
+    function filterResult(filterobj) {
+      const params = {};
+      const url = `{{ route('review') }}`;
+
+      if (filterobj.category.length) {
+        params.category = filterobj.category.join(",");
+      }
+
+      if (filterobj.rating.length) {
+        params.rating = filterobj.rating.join(",");
+      }
+
+      if (filterobj.order) {
+        params.filter = filterobj.order;
+      }
+
+      const query = $.param(params);
+      window.location.href = `${url}?${query}`;
+    }
+
+
+
+    $(document).on("click", ".reset_btn", function(e) {
+      e.preventDefault();
       var url = '{{ route('review') }}';
-
-      var link = url + "?filter=" + filter;
-
+      var link = url + "?filter=" + 'latest';
       window.location.href = link;
-
     });
   </script>
 @endpush
