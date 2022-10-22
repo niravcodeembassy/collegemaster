@@ -338,22 +338,12 @@
                   <textarea class="form-control" id="delivery_caption" name="delivery_caption">{{ $setting->response->delivery_caption ?? '' }}</textarea>
                 </div>
                 <div class="form-group">
-                  <label for="delivery_days">Number Of Delivery Days </label>
-                  <input id="delivery_days" class="form-control" number="true" type="text" value="{{ $setting->response->delivery_days ?? '' }}" name="delivery_days">
+                  <label for="offertext">Processing Time</label>
+                  <input id="processing_time" class="form-control" type="text" value="{{ $setting->response->processing_time ?? '' }}" name="processing_time">
                 </div>
                 <div class="form-group">
-                  <label for="offertext">Processing Time</label>
-                  <input id="processing_time" class="form-control"  type="text" value="{{ $setting->response->processing_time ?? '' }}" name="processing_time">
-                  
-                  {{-- <select class="form-control" name="processing_time">
-
-                    <option {{ optional($setting->response)->mail_encryption == 'tls' ? 'selected' : '' }}>
-                      tls
-                    </option>
-                    <option {{ optional($setting->response)->mail_encryption == 'ssl' ? 'selected' : '' }}>
-                      ssl
-                    </option>
-                  </select> --}}
+                  <label for="delivery_days">Number Of Delivery Days </label>
+                  <input id="delivery_days" class="form-control" number="true" type="text" value="{{ $setting->response->delivery_days ?? '' }}" name="delivery_days">
                 </div>
               </div>
             </div>

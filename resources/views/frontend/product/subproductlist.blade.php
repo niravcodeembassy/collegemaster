@@ -57,13 +57,13 @@
   ];
   if ($product->count() > 0) {
       $priceData = Helper::productPrice($productVarinat);
-      $schema_first = [
-          '@context' => 'https://schema.org/',
-          'ratingValue' => round($global_review_avg, 1),
-          'bestRating' => '5',
-          'worstRating' => '1',
-          'ratingCount' => $global_review_count,
-      ];
+      // $schema_first = [
+      //     '@context' => 'https://schema.org/',
+      //     'ratingValue' => round($global_review_avg, 1),
+      //     'bestRating' => '5',
+      //     'worstRating' => '1',
+      //     'ratingCount' => $global_review_count,
+      // ];
 
       $schema_sub_category = [
           '@context' => 'https://schema.org/',
@@ -103,11 +103,11 @@
       //     ],
       // ];
 
-      $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      // $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       $list_schema_Subcategory = json_encode($schema_sub_category, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-      $schema['product_schema'] = $product_schema;
+      // $schema['product_schema'] = $product_schema;
       $schema['subCategory_schema'] = $list_schema_Subcategory;
-    
+
       // $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       // $schema['list_schema'] = $list_schema;
   }

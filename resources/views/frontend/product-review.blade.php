@@ -11,21 +11,11 @@
   $schema_local = Schema::localSchema();
   $review_schema = Schema::reviewSchema();
 
-  $schema_first = [
-      '@context' => 'https://schema.org/',
-      '@type' => 'AggregateRating',
-      'ratingValue' => round($avg_rating, 1),
-      'bestRating' => '5',
-      'worstRating' => '1',
-      'ratingCount' => $rating_details->sum('total_rating'),
-  ];
-
   $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-  $review_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_review = json_encode($review_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-  $schema = [$schema_organization, $schema_local, $review_schema, $schema_review];
+  $schema = [$schema_organization, $schema_local, $schema_review];
 
 @endphp
 
@@ -203,16 +193,22 @@
     <div class="container pb-80">
 
       <div class="row mb-80">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-8 text-center">
+        <div class="col-lg-12 text-center">
           <span class="h2 gold font-weight-bold">{{ $rating_details->sum('total_rating') }}</span>
           <span class="h2 font-weight-bold text-uppercase mx-2">Customer Reviews</span>
           <p class="review_text text-uppercase">ALL REVIEWS ARE FROM CUSTOMERS WHO HAVE MADE A VERIFIED PURCHASE</p>
+          <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+              <i class="fa fa-circle" aria-hidden="true"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+          </div>
         </div>
       </div>
 
 
-      <div class="row mb-50">
+      <div class="row mb-20">
         <div class="col-lg-3 col-md-12 col-sm-12 col-12">
           <div class="text-center">
             <p class="h2 font-weight-bold">{{ round($avg_rating, 1) }}</p>
@@ -263,7 +259,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 my-4">
           <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon">
@@ -273,6 +269,7 @@
           </div>
         </div>
       </div>
+
 
 
       <div class="row">

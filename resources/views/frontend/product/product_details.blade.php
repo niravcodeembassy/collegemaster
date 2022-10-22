@@ -756,7 +756,7 @@
                     @php
                       $processing_time = isset($frontsetting->processing_time) ? $frontsetting->processing_time : 4;
                       $delivery_days = isset($frontsetting->delivery_days) ? $frontsetting->delivery_days : 7;
-                      $today = today();
+                      $today = today()->addDays($processing_time);
                       $nexDate = today()->addDays($delivery_days);
                       $date = $today->format('d M ') . '-' . $nexDate->format(' d M');
                       if ($today->format('M') == $nexDate->format('M')) {
