@@ -120,10 +120,9 @@ class CheckOutController extends Controller
 
       $this->clearCart();
 
-      $body = view('template.placed', ['user_name' => ucwords($this->order->user->name), 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
-
-      $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-      $body_first = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
+      $body = view('template.placed', ['user_name' => $this->order->user->name, 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
+      // $body_first = "Greetings, Your Order has been placed & Your Order No. is $order->order_number";
+      $body_first =  view('template.placed-sms', ['user_name' => $this->order->user->name, 'order_number' => $this->order->order_number])->render();
       //SMS sent message
       $this->sendSmsMessage($this->user->phone, $body_first);
       //whatsapp sent message
@@ -612,9 +611,9 @@ class CheckOutController extends Controller
         session()->forget(['checkout_session']);
 
 
-        $body = view('template.placed', ['user_name' => ucwords($this->order->user->name), 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
-        $content = 'placed, Order No.#' . $this->order->order_no . ' and Total Amount is $' . $this->order->total;
-        $body_first = 'we would  like to inform ' . ucwords($this->order->user->name) . ' that Your order has been ' . $content . ' at the moment.';
+        $body = view('template.placed', ['user_name' => $this->order->user->name, 'order_number' => $this->order->order_number, 'amount' => '$' . $this->order->total])->render();
+        // $body_first = "Greetings, Your Order has been placed & Your Order No. is $order->order_number";
+        $body_first =  view('template.placed-sms', ['user_name' => $this->order->user->name, 'order_number' => $this->order->order_number])->render();
 
         $this->sendSmsMessage($this->user->phone, $body_first);
         $this->sendWhatsappMessage($this->user->phone, $body);
@@ -720,8 +719,9 @@ class CheckOutController extends Controller
     $order = Order::findOrfail(decrypt($id));
     $name = Auth::user()->name;
 
-    return redirect()->route('orders.list')->with('success', "Hi $name , Your Order Successfully Placed & Your Order No. is $order->order_number");
-    // return view('frontend.payment.thankyou', ['order' => $order]);
+    // $msg = "Hi $name , Your Order Successfully Placed & Your Order No. is $order->order_number";
+    $msg = "Greetings, Your Order has been placed & Your Order No. is $order->order_number";
+    return redirect()->route('orders.list')->with('success', $msg);
   }
 
 

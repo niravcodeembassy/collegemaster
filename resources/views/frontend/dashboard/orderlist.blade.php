@@ -65,28 +65,28 @@
                           $printing = '';
                           $delivered = '';
                           $correction = '';
-                          $order_content = 'Your item has been placed';
+                          $order_content = 'Greetings, Your Order has been placed';
                           if ($item->order_status == 'pick_not_receive') {
                               $pic_receive = 'complete';
-                              $order_content = 'Your item has been waiting for Pictures';
+                              $order_content = 'Uh Oh, We are waiting for your pictures';
                           }
                           if ($item->order_status == 'work_in_progress') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
-                              $order_content = 'Your item has been Designing';
+                              $order_content = 'Yay! Your Masterpiece is in designing';
                           }
                           if ($item->order_status == 'correction') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
                               $correction = 'complete';
-                              $order_content = 'Your item has been Changes';
+                              $order_content = 'Greetings! Your desired changes have been made to your order';
                           }
                           if ($item->order_status == 'customer_approval') {
                               $pic_receive = 'complete';
                               $work_in_progress = 'complete';
                               $customer_approval = 'complete';
                               $correction = 'complete';
-                              $order_content = 'Your item has been Design Approval';
+                              $order_content = 'How die! We are awaiting your photo collage design approval';
                           }
 
                           if ($item->order_status == 'printing') {
@@ -95,7 +95,7 @@
                               $customer_approval = 'complete';
                               $printing = 'complete';
                               $correction = 'complete';
-                              $order_content = 'Your item has been Printing';
+                              $order_content = 'Yay! Your Masterpiece is in printing';
                           }
                           if ($item->order_status == 'delivered') {
                               $pic_receive = 'complete';
@@ -104,7 +104,7 @@
                               $printing = 'complete';
                               $correction = 'complete';
                               $delivered = 'complete';
-                              $order_content = 'Your item has been Dispactched';
+                              $order_content = 'Congratulations! Your order has been dispatched';
                           }
                         @endphp
                         {{-- d-none d-md-flex d-lg-flex --}}

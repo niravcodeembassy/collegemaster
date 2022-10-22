@@ -152,6 +152,32 @@
         max-width: 17.666667%;
       }
     }
+
+    .rating-box {
+      position: relative;
+      vertical-align: middle;
+      font-size: 1.5rem;
+      font-family: FontAwesome;
+      display: inline-block;
+      color: #f5cc26;
+    }
+
+    .rating-box:before {
+      content: "\f006 \f006 \f006 \f006 \f006";
+    }
+
+    .rating-box .rating {
+      position: absolute;
+      left: 0;
+      top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      color: #f5cc26;
+    }
+
+    .rating-box .rating:before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+    }
   </style>
 @endpush
 
@@ -166,20 +192,22 @@
         <div class="col-lg-9 text-center">
           <span class="h2 gold font-weight-bold">{{ $rating_details->sum('total_rating') }}</span>
           <span class="h2 font-weight-bold text-uppercase mx-2">Customer Reviews</span>
-          <p class="review_text">Shopper Approved collects trusted reviews from customers who have made a verified purchase</p>
+          <p class="review_text text-uppercase">ALL REVIEWS ARE FROM CUSTOMERS WHO HAVE MADE A VERIFIED PURCHASE</p>
         </div>
       </div>
+
 
       <div class="row mb-80">
         <div class="col-lg-3 col-md-12 col-sm-12 col-12">
           <div class="text-center">
             <p class="h2 font-weight-bold">{{ round($avg_rating, 1) }}</p>
-            @for ($i = 0; $i < round($avg_rating); $i++)
-              <i class="fa fa-star gold star fa-lg" aria-hidden="true"></i>
-            @endfor
-            @for ($i = 0; $i < 5 - round($avg_rating); $i++)
-              <i class="fa fa-star-o fa-lg" aria-hidden="true"></i>
-            @endfor
+            @php
+              $r = (round($avg_rating, 1) * 100) / 500;
+              $rating_percentage = $r * 100;
+            @endphp
+            <div class="rating-box">
+              <div class="rating" style="width:{{ $rating_percentage }}%;"></div>
+            </div>
             <br>
             <small class="text-capitalize mt-1">OVERALL STAR RATING</small>
           </div>
@@ -331,7 +359,7 @@
                         </div>
                       </div>
                     </div>
-                    <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug ?? '']) }}">View Product</a>
+                    {{-- <a class="lezada-button float-right mt-20" href="{{ route('product.view', ['slug' => $review->product->slug ?? '']) }}">View Product</a> --}}
                   </div>
                 </div>
               </div>
@@ -366,7 +394,7 @@
     var filter = {
       rating: @json(explode(',', request()->get('rating'))),
       category: @json(explode(',', request()->get('category'))),
-      order: 'latest'
+      order: @json(request()->get('filter'))
     };
 
     $(document).on('click', ".filter_rating", function() {

@@ -233,6 +233,32 @@
       margin-left: 4rem;
     }
 
+    .rating-box {
+      position: relative;
+      vertical-align: middle;
+      font-size: 1.5rem;
+      font-family: FontAwesome;
+      display: inline-block;
+      color: #f5cc26;
+    }
+
+    .rating-box:before {
+      content: "\f006 \f006 \f006 \f006 \f006";
+    }
+
+    .rating-box .rating {
+      position: absolute;
+      left: 0;
+      top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      color: #f5cc26;
+    }
+
+    .rating-box .rating:before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+    }
+
 
     @media only screen and (max-width: 480px) {
       .delivery_truck {

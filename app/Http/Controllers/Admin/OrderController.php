@@ -248,7 +248,7 @@ class OrderController extends Controller
       }
 
       $order_status = [
-        'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+        'pick_not_receive', 'customer_approval', 'printing', 'delivered', 'correction'
       ];
 
       $row['sendMessage'] = 'N/A';
@@ -790,7 +790,7 @@ class OrderController extends Controller
     $user = $order->user;
 
     $order_status = [
-      'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+      'pick_not_receive', 'customer_approval', 'printing', 'delivered', 'correction'
     ];
 
     if (in_array($status, $order_status)) {
@@ -802,6 +802,9 @@ class OrderController extends Controller
         }
         $body = view('template.picture', ['user_name' => ucwords($user->name), 'product' => $tex])->render();
         $this->sendWhatsappMessage($user->phone, $body);
+      } else if ($status == 'correction') {
+        $body = view('template.changes', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
+        $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
         $body = view('template.approval', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
         $this->sendWhatsappMessage($user->phone, $body);
@@ -812,7 +815,7 @@ class OrderController extends Controller
         $date = date('F j, Y', strtotime($order->deleverd_date));
         $body = view('template.dispatch', [
           'user_name' => ucwords($user->name),
-          'order_number' => $order->order_number,
+          'order_number' => $order->order_no,
           'courier_provider' => ucwords($order->deleverd_to_name),
           'tracking_id' => $order->tracking_number,
           'delivery_date' =>  $date
@@ -842,22 +845,32 @@ class OrderController extends Controller
     $user = $order->user;
 
     $order_status = [
-      'pick_not_receive', 'customer_approval', 'printing', 'delivered'
+      'pick_not_receive', 'customer_approval', 'printing', 'delivered', 'correction'
     ];
 
     if (in_array($status, $order_status)) {
       if ($status == 'pick_not_receive') {
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been waiting for pictures';
+        $body = view('template.picture-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
+        $this->sendSmsMessage($user->phone, $body);
+      } else if ($status == 'correction') {
+        $body = view('template.changes-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Design Approval';
+        $body = view('template.picture-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'printing') {
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that your order has been Printing';
+        $body = view('template.printing-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'delivered') {
         $date = date('F j, Y', strtotime($order->deleverd_date));
-        $body = 'Dear ' . ucwords($user->name) . ', We would like to inform you that you order has been Dispatched in ' . $date;
+        $body = view(
+          'template.dispatch-sms',
+          [
+            'user_name' => ucwords($user->name),
+            'courier_provider' => ucwords($order->deleverd_to_name),
+            'tracking_id' => $order->tracking_number,
+          ]
+        )->render();
         $this->sendSmsMessage($user->phone, $body);
       }
       return response()->json([
@@ -870,13 +883,6 @@ class OrderController extends Controller
       'success' => false,
       'message' => "SMS Not Sent this Order Status"
     ], 200);
-  }
-
-  public function test()
-  {
-    // 919429289356
-    $body = view('template.picture', ['user_name' => "bhavin", 'product' => 'Apple'])->render();
-    $this->sendWhatsappMessage('+919429289356', $body);
   }
 
   public function sendSmsMessage($mobile, $body)
@@ -921,7 +927,7 @@ class OrderController extends Controller
         ]
       );
     } catch (\Exception $e) {
-      // dd($e);
+      dd($e);
     }
   }
 }

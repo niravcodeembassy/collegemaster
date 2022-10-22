@@ -4,12 +4,15 @@
       <h3>Customer Reviews</h3>
       <div class="pb-bottom">
         <span>
-          @for ($i = 0; $i < $review_rating; $i++)
-            <i class="fa fa-star star fa-1x" aria-hidden="true"></i>
-          @endfor
-          @for ($i = 0; $i < 5 - $review_rating; $i++)
-            <i class="fa fa-star-o fa-1x" aria-hidden="true"></i>
-          @endfor
+          @php
+            $r = (round($review_rating, 1) * 100) / 500;
+            $rating_percentage = $r * 100;
+          @endphp
+
+          <div class="rating-box">
+            <div class="rating" style="width:{{ $rating_percentage }}%;"></div>
+          </div>
+          <span class="font-weight-bold">({{ round($review_rating, 1) }})</span>
           Based on {{ $product_review->count() }} reviews
         </span>
         <div class="shop-product__buttons float-right">
