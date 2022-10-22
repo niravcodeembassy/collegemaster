@@ -5,6 +5,13 @@
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@php
+  $title = 'Reset Password';
+@endphp
+@section('title')
+  {{ $title }}
+@endsection
+
 @section('content')
   <div class="min-vh-100 bg-gray-200">
     <div class="container">

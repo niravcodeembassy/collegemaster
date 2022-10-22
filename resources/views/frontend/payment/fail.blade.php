@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+@section('title','fail')
 @section('content')
 <div class="nothing-found-area ">
     <div class="container">

@@ -5,6 +5,13 @@
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@php
+  $title = 'Verify Email';
+@endphp
+@section('title')
+  {{ $title }}
+@endsection
+
 @section('content')
   <div class="bg-gray-200 min-vh-100">
     <div class="container">

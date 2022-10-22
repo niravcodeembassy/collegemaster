@@ -5,70 +5,72 @@
 @endpush
 
 @php
-$cat = [
-    [
-        'slug' => 'birthday-gifts',
-        'name' => 'Birthday Gifts',
-        'code' => 'NC',
-    ],
-    [
-        'slug' => 'sports-gifts',
-        'name' => 'Sport Collage',
-        'code' => 'SC',
-    ],
-    [
-        'slug' => 'pet-gifts',
-        'name' => 'Pet Collage',
-        'code' => 'PC',
-    ],
-    [
-        'slug' => 'custom-map-gifts',
-        'name' => 'Photo Mosaic',
-        'code' => 'MC',
-    ],
-    [
-        'slug' => 'custom-gifts',
-        'name' => 'Custom Collage',
-        'code' => 'CC',
-    ],
-    [
-        'slug' => 'latter-gifts',
-        'name' => 'Latter Collage',
-        'code' => 'LC',
-    ],
-];
+  $cat = [
+      [
+          'slug' => 'birthday-gifts',
+          'name' => 'Birthday Gifts',
+          'code' => 'NC',
+      ],
+      [
+          'slug' => 'sports-gifts',
+          'name' => 'Sport Collage',
+          'code' => 'SC',
+      ],
+      [
+          'slug' => 'pet-gifts',
+          'name' => 'Pet Collage',
+          'code' => 'PC',
+      ],
+      [
+          'slug' => 'custom-map-gifts',
+          'name' => 'Photo Mosaic',
+          'code' => 'MC',
+      ],
+      [
+          'slug' => 'custom-gifts',
+          'name' => 'Custom Collage',
+          'code' => 'CC',
+      ],
+      [
+          'slug' => 'latter-gifts',
+          'name' => 'Latter Collage',
+          'code' => 'LC',
+      ],
+  ];
 
-$category_list = [];
+  $category_list = [];
 
-foreach ($cat as $key => $value) {
-    $category_list[] = [
-        '@type' => 'DefinedTerm',
-        'name' => $value['name'],
-        'termCode' => $value['code'],
-        'url' => route('category.product', $value['slug']),
-    ];
-}
+  foreach ($cat as $key => $value) {
+      $category_list[] = [
+          '@type' => 'DefinedTerm',
+          'name' => $value['name'],
+          'termCode' => $value['code'],
+          'url' => route('category.product', $value['slug']),
+      ];
+  }
 
-$schema_site_link = [
-    '@context' => 'https://schema.org/',
-    '@type' => 'WebSite',
-    'name' => env('APP_NAME'),
-    'url' => env('APP_URL'),
-    'potentialAction' => [
-        '@type' => 'SearchAction',
-        'target' => route('category.product', 'all') . '?term={search_term_string}',
-        'query-input' => 'required name=search_term_string',
-    ],
-];
+  $schema_site_link = [
+      '@context' => 'https://schema.org/',
+      '@type' => 'WebSite',
+      'name' => env('APP_NAME'),
+      'url' => env('APP_URL'),
+      'potentialAction' => [
+          '@type' => 'SearchAction',
+          'target' => route('category.product', 'all') . '?term={search_term_string}',
+          'query-input' => 'required name=search_term_string',
+      ],
+  ];
 
-$schema_organization = Schema::organizationSchema();
-$schema_local = Schema::localSchema();
+  $review_schema = Schema::reviewSchema();
+  $schema_organization = Schema::organizationSchema();
+  $schema_local = Schema::localSchema();
 
-$schema_site = json_encode($schema_site_link, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_site = json_encode($schema_site_link, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_review = json_encode($review_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [$schema_site, $schema_organization, $schema_local];
+  $schema = [$schema_site, $schema_organization, $schema_local, $schema_review];
 @endphp
 
 
@@ -86,8 +88,8 @@ $schema = [$schema_site, $schema_organization, $schema_local];
 
 
   <!--=============================================
-                                                                                                                                                                                                                                                                 =            slider area         =
-                                                                                                                                                                                                                                                                 =============================================-->
+                                                                                                                                                                                                                                                                   =            slider area         =
+                                                                                                                                                                                                                                                                   =============================================-->
   @if ($banner->count())
     <!--  Demos -->
     {{-- <section class="slider-area mb-50"> --}}
@@ -250,7 +252,7 @@ $schema = [$schema_site, $schema_organization, $schema_local];
             </div>
 
             <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" alt="guarntee" title="guarntee"  class="img-fluid">
+              <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" alt="guarntee" title="guarntee" class="img-fluid">
               <h3>100% Love-it Guarantee</h3>
               <p>Love it or send it back! We guarantee a full refund with no hassle.</p>
             </div>
@@ -593,8 +595,8 @@ $lastBanner = $commonBanner->last();
   {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
   <!--=============================================
-                                                                                                                                                                                                                                                                         =            instagram slider area         =
-                                                                                                                                                                                                                                                                         =============================================-->
+                                                                                                                                                                                                                                                                           =            instagram slider area         =
+                                                                                                                                                                                                                                                                           =============================================-->
   {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

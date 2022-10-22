@@ -15,8 +15,15 @@
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
 
+@php
+  $title = isset($subCategory->meta_title) ? $subCategory->meta_title : $subCategory->name;
+@endphp
 @section('title')
-  {{ $subCategory->meta_title }}
+  {{ $title }}
+@endsection
+
+@section('title')
+  {{ $title }}
 @endsection
 
 
@@ -39,50 +46,71 @@
 @section('twiter-image', $subCategory->image_src)
 
 @php
-$schema_organization = Schema::organizationSchema();
-$schema_local = Schema::localSchema();
-$schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-$schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_organization = Schema::organizationSchema();
+  $schema_local = Schema::localSchema();
+  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-$schema = [
-    'organization' => $schema_organization,
-    'local' => $schema_local,
-];
-if ($product->count() > 0) {
-    $priceData = Helper::productPrice($productVarinat);
-    $schema_first = [
-        '@context' => 'https://schema.org/',
-        'ratingValue' => round($global_review_avg, 1),
-        'bestRating' => '5',
-        'worstRating' => '1',
-        'ratingCount' => $global_review_count,
-    ];
+  $schema = [
+      'organization' => $schema_organization,
+      'local' => $schema_local,
+  ];
+  if ($product->count() > 0) {
+      $priceData = Helper::productPrice($productVarinat);
+      $schema_first = [
+          '@context' => 'https://schema.org/',
+          'ratingValue' => round($global_review_avg, 1),
+          'bestRating' => '5',
+          'worstRating' => '1',
+          'ratingCount' => $global_review_count,
+      ];
 
-    $schema_third = [
-        '@context' => 'https://schema.org/',
-        '@type' => 'BreadcrumbList',
-        'itemListElement' => [
-            [
-                '@type' => 'ListItem',
-                'position' => 1,
-                'name' => 'Birthday Gifts',
-                'item' => route('category.product', 'birthday-gifts'),
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 2,
-                'name' => 'Birtday Collage',
-                'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
-            ],
-        ],
-    ];
+      $schema_sub_category = [
+          '@context' => 'https://schema.org/',
+          '@type' => 'product',
+          'name' => $subCategory->meta_title,
+          'image' => $subCategory->image_src,
+          'description' => $subCategory->meta_description,
+          'brand' => [
+              '@type' => 'Brand',
+              'name' => env('APP_NAME'),
+          ],
+          'aggregateRating' => [
+              '@type' => 'AggregateRating',
+              'ratingValue' => round($global_review_avg, 1),
+              'bestRating' => '5',
+              'worstRating' => '1',
+              'ratingCount' => $global_review_count,
+          ],
+      ];
 
-    $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      // $schema_third = [
+      //     '@context' => 'https://schema.org/',
+      //     '@type' => 'BreadcrumbList',
+      //     'itemListElement' => [
+      //         [
+      //             '@type' => 'ListItem',
+      //             'position' => 1,
+      //             'name' => 'Birthday Gifts',
+      //             'item' => route('category.product', 'birthday-gifts'),
+      //         ],
+      //         [
+      //             '@type' => 'ListItem',
+      //             'position' => 2,
+      //             'name' => 'Birtday Collage',
+      //             'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
+      //         ],
+      //     ],
+      // ];
 
-    $schema['product_schema'] = $product_schema;
-    $schema['list_schema'] = $list_schema;
-}
+      $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $list_schema_Subcategory = json_encode($schema_sub_category, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $schema['product_schema'] = $product_schema;
+      $schema['subCategory_schema'] = $list_schema_Subcategory;
+    
+      // $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      // $schema['list_schema'] = $list_schema;
+  }
 
 @endphp
 
@@ -173,8 +201,8 @@ if ($product->count() > 0) {
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                    =            shop page content         =
-                                                                                                                                                    =============================================-->
+                                                                                                                                                              =            shop page content         =
+                                                                                                                                                              =============================================-->
 
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">

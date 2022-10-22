@@ -4,6 +4,10 @@
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@section('title')
+  {{$title}}
+@endsection
+
 @section('content')
   <div class="auth-header min-vh-100">
     <div class="container">

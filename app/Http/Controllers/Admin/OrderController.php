@@ -803,7 +803,7 @@ class OrderController extends Controller
         $body = view('template.picture', ['user_name' => ucwords($user->name), 'product' => $tex])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'correction') {
-        $body = view('template.changes', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
+        $body = view('template.changes', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no, 'email' => $user->email])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
         $body = view('template.approval', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
@@ -885,6 +885,7 @@ class OrderController extends Controller
     ], 200);
   }
 
+
   public function sendSmsMessage($mobile, $body)
   {
     $sid =  config("app.twilio.twilio_auth_sid");
@@ -927,7 +928,7 @@ class OrderController extends Controller
         ]
       );
     } catch (\Exception $e) {
-      dd($e);
+      // dd($e);
     }
   }
 }

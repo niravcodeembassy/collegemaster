@@ -5,6 +5,10 @@
   <link rel="stylesheet" href="{{ asset('front/assets/build/css/intlTelInput.css') }}">
 @endpush
 
+@section('title')
+  {{$title}}
+@endsection
+
 
 @section('content')
   <div class="auth-header min-vh-100">

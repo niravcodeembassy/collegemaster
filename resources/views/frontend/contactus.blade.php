@@ -7,11 +7,13 @@
 @php
   $schema_organization = Schema::organizationSchema();
   $schema_local = Schema::localSchema();
+  $review_schema = Schema::reviewSchema();
 
+  $schema_review = json_encode($review_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-  $schema = [$schema_organization, $schema_local];
+  $schema = [$schema_organization, $schema_local, $schema_review];
 @endphp
 
 @push('css')

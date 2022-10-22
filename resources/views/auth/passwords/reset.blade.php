@@ -5,6 +5,13 @@
   <link href="{{ asset('front/assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@php
+  $title = 'Change Password';
+@endphp
+@section('title')
+  {{ $title }}
+@endsection
+
 @section('content')
   <div class="bg-gray-200 min-vh-100">
     <div class="container">
@@ -14,7 +21,7 @@
             <div class="card-header text-center pt-4 pb-1">
               <h4 class="font-weight-bolder mb-1">Change password</h4>
             </div>
-            
+
             <div class="card-body">
               <form method="POST" class="password_form" action="{{ route('password.update') }}">
                 @csrf

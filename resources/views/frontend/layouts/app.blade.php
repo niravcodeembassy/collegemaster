@@ -6,8 +6,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="content-language" content="en-us">
-  <title> @yield('title', $title ?? 'Home') | {{ $frontsetting->meta_title }}</title>
 
+  @if (request()->route()->getName()== 'front.home')
+  <title> @yield('title', $frontsetting->meta_title)</title>
+  @else
+  <title> @yield('title', $title) | {{ $frontsetting->store_name }}</title>
+  @endif
+
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
   <!-- Favicon -->

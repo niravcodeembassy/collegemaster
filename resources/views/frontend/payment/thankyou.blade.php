@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+@section('title','Thahank you')
 @section('content')
 <div class="nothing-found-area bg-404">
     <div class="container">

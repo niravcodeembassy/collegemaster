@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app')
 
+
 @push('style')
   <style>
     a.active {
@@ -44,6 +45,10 @@
       margin-left: 50px;
     }
 
+    .single-review__image img {
+      height: 50px;
+      width: 50px;
+    }
 
     .discounted-price {
       font-size: 1.35rem !important;
@@ -323,8 +328,11 @@
   </style>
 @endpush
 
+@php
+  $title = isset($product->meta_title) ? $product->meta_title : $product->name;
+@endphp
 @section('title')
-  {{ $product->meta_title }}
+  {{ $title }}
 @endsection
 
 @section('meta_title', $product->meta_title)
@@ -378,37 +386,37 @@
   $schema_organization = Schema::organizationSchema();
   $schema_local = Schema::localSchema();
 
-  $schema_third = [
-      '@context' => 'https://schema.org/',
-      '@type' => 'BreadcrumbList',
-      'itemListElement' => [
-          [
-              '@type' => 'ListItem',
-              'position' => 1,
-              'name' => 'Home',
-              'item' => route('front.home'),
-          ],
-          [
-              '@type' => 'ListItem',
-              'position' => 2,
-              'name' => 'Products',
-              'item' => route('category.product', $product->category->slug),
-          ],
-          [
-              '@type' => 'ListItem',
-              'position' => 3,
-              'name' => $product->name,
-              'item' => url()->current(),
-          ],
-      ],
-  ];
+  // $schema_third = [
+  //     '@context' => 'https://schema.org/',
+  //     '@type' => 'BreadcrumbList',
+  //     'itemListElement' => [
+  //         [
+  //             '@type' => 'ListItem',
+  //             'position' => 1,
+  //             'name' => 'Home',
+  //             'item' => route('front.home'),
+  //         ],
+  //         [
+  //             '@type' => 'ListItem',
+  //             'position' => 2,
+  //             'name' => 'Products',
+  //             'item' => route('category.product', $product->category->slug),
+  //         ],
+  //         [
+  //             '@type' => 'ListItem',
+  //             'position' => 3,
+  //             'name' => $product->name,
+  //             'item' => url()->current(),
+  //         ],
+  //     ],
+  // ];
 
   $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-  $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  // $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-  $schema = [$product_schema, $schema_organization, $list_schema, $schema_local];
+  $schema = [$product_schema, $schema_organization, $schema_local];
 @endphp
 
 @section('schema')

@@ -14,11 +14,14 @@
 @push('css')
   <link rel="stylesheet" href="{{ asset('front/assets/css/product-list.css') }}">
 @endpush
-
+@php
+  $title = isset($category->meta_title) ? $category->meta_title : $category->name;
+@endphp
 
 @section('title')
-  {{ $category->meta_title }}
+  {{ $title }}
 @endsection
+
 
 @section('meta_title', $category->meta_title)
 @section('keywords', $category->meta_keywords)
@@ -61,28 +64,49 @@
           'ratingCount' => $global_review_count,
       ];
 
-      $schema_third = [
+      $schema_category = [
           '@context' => 'https://schema.org/',
-          '@type' => 'BreadcrumbList',
-          'itemListElement' => [
-              [
-                  '@type' => 'ListItem',
-                  'position' => 1,
-                  'name' => 'Birthday Gifts',
-                  'item' => route('category.product', 'birthday-gifts'),
-              ],
-              [
-                  '@type' => 'ListItem',
-                  'position' => 2,
-                  'name' => 'Birtday Collage',
-                  'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
-              ],
+          '@type' => 'product',
+          'name' => $category->meta_title,
+          'image' => $category->image_src,
+          'description' => $category->meta_description,
+          'brand' => [
+              '@type' => 'Brand',
+              'name' => env('APP_NAME'),
+          ],
+          'aggregateRating' => [
+              '@type' => 'AggregateRating',
+              'ratingValue' => round($global_review_avg, 1),
+              'bestRating' => '5',
+              'worstRating' => '1',
+              'ratingCount' => $global_review_count,
           ],
       ];
+
+      // $schema_third = [
+      //     '@context' => 'https://schema.org/',
+      //     '@type' => 'BreadcrumbList',
+      //     'itemListElement' => [
+      //         [
+      //             '@type' => 'ListItem',
+      //             'position' => 1,
+      //             'name' => 'Birthday Gifts',
+      //             'item' => route('category.product', 'birthday-gifts'),
+      //         ],
+      //         [
+      //             '@type' => 'ListItem',
+      //             'position' => 2,
+      //             'name' => 'Birtday Collage',
+      //             'item' => route('product.details', ['cat_slug' => 'birthday-gifts', 'product_subcategory_slug' => 'birthday-collage', 'slug' => null]),
+      //         ],
+      //     ],
+      // ];
       $product_schema = json_encode($schema_first, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-      $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $list_schema_category = json_encode($schema_category, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       $schema['product_schema'] = $product_schema;
-      $schema['list_schema'] = $list_schema;
+      $schema['category_schema'] = $list_schema_category;
+      // $list_schema = json_encode($schema_third, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      // $schema['list_schema'] = $list_schema;
   }
 @endphp
 
@@ -180,8 +204,8 @@
 
       @include('frontend.product.partial.overlay')
       <!--=============================================
-                                                                                                                                                                                                                                                                                                                                                =            shop page content         =
-                                                                                                                                                                                                                                                                                                                                                =============================================-->
+                                                                                                                                                                                                                                                                                                                                                              =            shop page content         =
+                                                                                                                                                                                                                                                                                                                                                              =============================================-->
       <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
         <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
           <div class="row">
