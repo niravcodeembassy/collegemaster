@@ -11,6 +11,11 @@
       text-align: center;
     }
 
+    a#customer:hover {
+      color: #06090f;
+      text-decoration: underline;
+    }
+
     .breadcrumb-item+.breadcrumb-item::before {
       content: "|";
     }
@@ -91,13 +96,14 @@
         <div class="card-header">
           <ul class="nav">
             <li class="nav-item">
-              <a class="btn btn-group-vertical text-uppercase ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online ({{$online_order_count}})</a>
+              <a class="btn btn-group-vertical text-uppercase ml-2 {{ $type === 'online' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'online']) }}" role="button">Online ({{ $online_order_count }})</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-group-vertical text-uppercase mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD ({{$cod_order_count}})</a>
+              <a class="btn btn-group-vertical text-uppercase mx-2 {{ $type === 'cod' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'cod']) }}" role="button">COD ({{ $cod_order_count }})</a>
             </li>
             <li class="nav-item ">
-              <a class="btn btn-group-vertical text-uppercase {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending ({{$online_pending_order_count}})</a>
+              <a class="btn btn-group-vertical text-uppercase {{ $type === 'pending' ? 'btn-primary' : 'btn-light' }}" href="{{ route('admin.order.index', ['type' => 'pending']) }}" role="button">Online pending
+                ({{ $online_pending_order_count }})</a>
             </li>
           </ul>
           <div class="mt-2">

@@ -24,6 +24,7 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use App\Model\OrderChatAttachment;
 use App\Http\Controllers\Controller;
+use App\Model\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
@@ -33,7 +34,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Twilio\Rest\Client;
 use App\Model\OrderItem;
+use App\User;
 use Maatwebsite\Excel\Facades\Excel;
+use Twilio\Rest\Chat;
 
 class OrderController extends Controller
 {
@@ -202,7 +205,7 @@ class OrderController extends Controller
       $row['created_at'] = date("d-m-Y", strtotime($item->created_at));
 
       $username = ($item->user->name != '') ? ($item->user->name) : $item->user->email;
-      $name = '<a class="btn-link" target="_blank" href="' . route('admin.customer.show', $item->user_id) . '">' . ucwords($username) . '</a>';
+      $name = '<a class="btn-link" id="customer" target="_blank" href="' . route('admin.customer.show', $item->user_id) . '">' . ucwords($username) . '</a>';
       $row['customerName'] = $name;
 
       $row['qty'] = $item->itemslists->sum('qty');
@@ -421,6 +424,27 @@ class OrderController extends Controller
     $order = Order::findOrFail($id);
     $view = view('admin.order.get-order', ['order' => $order])->render();
     return response()->json(['html' => $view], 200);
+  }
+
+  public function initMessage(Request $request, $id)
+  {
+    $order = Order::findOrFail($id);
+    $view = view('admin.order.get-message', ['order' => $order])->render();
+    return response()->json(['html' => $view], 200);
+  }
+
+  public function initMessageSend(Request $request, $id)
+  {
+    $order = Order::findOrFail($id);
+    $admin_user = User::where('is_admin', true)->first();
+    $new_message = new Message();
+    $new_message->message = $request->message;
+    $new_message->user_id = $admin_user->id;
+    $new_message->order_id = $order->id;
+    $new_message->receiver = $order->user_id;
+    $new_message->save();
+
+    return redirect()->back()->with('success', 'Message sent successfully');
   }
 
   /**
@@ -804,7 +828,7 @@ class OrderController extends Controller
         $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'correction') {
         $body = view('template.changes', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no, 'email' => $user->email])->render();
-        $this->sendSmsMessage($user->phone, $body);
+        $this->sendWhatsappMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
         $body = view('template.approval', ['user_name' => ucwords($user->name), 'order_number' => $order->order_number])->render();
         $this->sendWhatsappMessage($user->phone, $body);
@@ -884,6 +908,20 @@ class OrderController extends Controller
       'message' => "SMS Not Sent this Order Status"
     ], 200);
   }
+
+  // public function test()
+  // {
+  //   $body = view('template.approval', ['user_name' => 'Bhavin', 'order_number' => '123'])->render();
+  // $body = view('template.changes', ['user_name' => 'Bhavin', 'order_number' => '123', 'email' => 'bhavin@gmail.com'])->render();
+  // $body = view('template.dispatch', [
+  //   'user_name' => 'Bhavin',
+  //   'order_number' => '123',
+  //   'courier_provider' => 'maruti',
+  //   'tracking_id' => '1234',
+  // ])->render();
+  //   $mobile = '+919429289356';
+  //   $this->sendWhatsappMessage($mobile, $body);
+  // }
 
 
   public function sendSmsMessage($mobile, $body)

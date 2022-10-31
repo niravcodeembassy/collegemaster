@@ -36,6 +36,9 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::get('material/chart', 'HomeController@materialChart')->name('material.chart');
   Route::get('country/chart', 'HomeController@countryChart')->name('country.chart');
 
+  // Route::get('/test', 'OrderController@test');
+
+
   Route::group(['namespace' => 'Access'], function () {
 
     Route::post('user/list', 'UserController@dataList')->name('user.dataList');
@@ -156,6 +159,8 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::resource('discount', 'DiscountController');
 
 
+  Route::get('order/init-message/{id}', 'OrderController@initMessage')->name('order.init.message');
+  Route::post('order/init-message/{id}', 'OrderController@initMessageSend')->name('order.init.message.send');
   Route::post('order/status', 'OrderController@changeStatus')->name('order.status');
   Route::post('order/checkorderCode', 'OrderController@checkorderCode')->name('order.checkorderCode');
   Route::post('order/list', 'OrderController@dataListing')->name('order.list');

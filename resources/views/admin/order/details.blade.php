@@ -36,7 +36,13 @@
     <div class="col-md-8 mb-8">
       <h5 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Order No : {{ $order->order_number }}</span>
-        <span class="badge badge-secondary badge-pill">{{ $order->created_at->format('d-m-Y') }}</span>
+        <div>
+          <a class="call-model call-modal btn btn-success btn-sm" data-target-modal="#message_form_model" data-id="{{ $order->id }}" data-url="{{ route('admin.order.init.message', $order->id) }}"
+            href="{{ route('admin.order.init.message', $order->id) }}" data-toggle="modal" data-target="#message_form_model">
+            <i class="fas fa-comment-dots"></i>  Message
+          </a>
+          <span class="badge badge-secondary badge-pill">{{ $order->created_at->format('d-m-Y') }}</span>
+        </div>
       </h5>
       <ul class="list-group mb-3 shadow-none b-0">
 
@@ -316,7 +322,7 @@
           <span class="text-muted text-uppercase">{{ $shipping->state ?? '' }} - {{ $shipping->country ?? '' }}</span> <br>
         </div>
       </div>
-      
+
       @if (isset($address->billing_address) && count((array) $address->billing_address))
         <h5 class="card-title w-100 text-muted my-3">Billing Address</h5>
         <div class="card shadow-none border">

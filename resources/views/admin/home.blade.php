@@ -30,6 +30,10 @@
       background-color: #fff !important;
     }
 
+    #order_rangepicker {
+      background-color: #fff !important;
+    }
+
     #country_daterangepicker {
       background-color: #fff !important;
     }
@@ -42,18 +46,32 @@
       top: 12px;
       background-color: white;
     }
+
+    .order_cancel {
+      left: 310px;
+      top: 12px;
+      background-color: white;
+    }
   </style>
 @endpush
 
 @section('content')
   <div class="row">
+
+    <div class="col-md-12">
+      <div class="w-25 mb-4 position-relative float-right">
+        <input class="form-control" readonly placeholder="choose date" id="order_rangepicker" data-url="{{ route('admin.home') }}" />
+        <i class="fa fa-times-circle order_cancel text-secondary position-absolute" style="display: none;"></i>
+      </div>
+    </div>
+
     <div class="col-md-3 col-sm-6 col-12">
       <div class="info-box">
         <span class="info-box-icon bg-info"><i class="fa fa-user-astronaut"></i></span>
 
         <div class="info-box-content">
           <span class="info-box-text">Customer</span>
-          <span class="info-box-number">{{ $customer }}</span>
+          <span class="info-box-number total_customer">{{ $customer }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -66,7 +84,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Orders</span>
-          <span class="info-box-number">{{ $totalOrders }}</span>
+          <span class="info-box-number total_order">{{ $totalOrders }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -92,7 +110,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Revenue</span>
-          <span class="info-box-number">$ {{ $revenue ?? 0 }}</span>
+          <span class="info-box-number revenue">$ {{ $revenue ?? 0 }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -366,6 +384,7 @@
     var sixMonthRevenue = @json($sixMonthRevenue);
     var dayWiseSale = @json($dayWiseSale);
     var dayWiseRevenue = @json($dayWiseRevenue);
+    var defaultFilter = @json(['customers' => $customer, 'orders' => $totalOrders, 'revenue' => '$ ' . $revenue]);
   </script>
 @endpush
 
@@ -379,6 +398,7 @@
   {{-- <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script> --}}
   {{-- <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script> --}}
 
+  <script src="{{ asset('js/chart/order-filter.js') }}"></script>
   <script src="{{ asset('js/chart/size-chart.js') }}"></script>
   <script src="{{ asset('js/chart/material-chart.js') }}"></script>
   <script src="{{ asset('js/chart/variant-chart.js') }}"></script>

@@ -29,18 +29,54 @@ class HomeController extends Controller
    *
    * @return \Illuminate\Contracts\Support\Renderable
    */
-  public function index()
+  public function index(Request $request)
   {
+
+    if ($request->ajax()) {
+
+      $startDate = $request->startDate;
+      $endDate = $request->endDate;
+      $today = $startDate == $endDate;
+
+      $customer =  Customer::where('is_admin', false)->when($today && isset($startDate), function ($q) use ($startDate) {
+        return $q->whereDate('created_at', $startDate);
+      })->when(!$today && isset($startDate), function ($q) use ($startDate, $endDate) {
+        return  $q->whereBetween('created_at', [$startDate, $endDate]);
+      })->count();
+
+      $orders = Order::when($today && isset($startDate), function ($q) use ($startDate) {
+        return $q->whereDate('created_at', $startDate);
+      })->when(!$today && isset($startDate), function ($q) use ($startDate, $endDate) {
+        return  $q->whereBetween('created_at', [$startDate, $endDate]);
+      })->get();
+
+      $total_order = $orders->count();
+      $revenue = $orders->sum('total');
+
+      $json_data = array(
+        "orders" => $total_order,
+        "customers" => $customer,
+        "revenue" => '$ ' . round($revenue, 2),
+      );
+
+      return response()->json($json_data);
+    }
+
     $this->data['customer'] = Customer::where('is_admin', false)->count();
     $this->data['totalOrders'] = Order::count();
     $this->data['todayOrder'] = Order::whereDate('created_at', date('Y-m-d'))->count();
-    $this->data['revenue'] = Order::where('order_status', 'delivered')->sum('total');
+    $this->data['revenue'] = Order::sum('total');
 
     $this->data['orders'] = Order::with('user')->whereDate('created_at', date('Y-m-d'))
-      ->where(function ($q) {
-        return $q->where('payment_status', '!=', 'failed')->orWhere('payment_status', '!=', 'pending')->where('payment_type', '!=', 'razorpay');
-      })
       ->orderBy('id', 'DESC')->get();
+
+    // $this->data['revenue'] = Order::where('order_status', 'delivered')->sum('total');
+    // $this->data['orders'] = Order::with('user')->whereDate('created_at', date('Y-m-d'))
+    //   ->where(function ($q) {
+    //     return $q->where('payment_status', '!=', 'failed')->orWhere('payment_status', '!=', 'pending')->where('payment_type', '!=', 'razorpay');
+    //   })
+    //   ->orderBy('id', 'DESC')->get();
+
 
     $opt = '$[0]."shipping_address"."country"';
     $countryWiseSale = Order::select(
@@ -219,8 +255,8 @@ class HomeController extends Controller
     $country_wise_revenue = Order::select(
       DB::raw("json_extract(orders.address, '$opt') as country"),
       'orders.*'
-    )->where('orders.order_status', 'delivered')
-      ->selectRaw('SUM(orders.total) AS total')
+    )->selectRaw('SUM(orders.total) AS total')
+      // ->where('orders.order_status', 'delivered')
       ->groupBy('country')
       ->when($today && isset($startDate), function ($q) use ($startDate) {
         return $q->whereDate('orders.created_at', $startDate);
@@ -277,7 +313,7 @@ class HomeController extends Controller
   {
     $last_six_month_revenue = Order::select('orders.*', DB::raw('MONTH(created_at) month'))
       ->where("created_at", ">", Carbon::now()->subMonths(6))
-      ->where('orders.order_status', 'delivered')
+      // ->where('orders.order_status', 'delivered')
       ->selectRaw('sum(orders.total) AS month_revenue')
       ->groupBy('month')
       ->get();
@@ -328,7 +364,7 @@ class HomeController extends Controller
   {
     $day_wise_revenue = Order::select('orders.*', DB::raw('DATE(created_at) date'))
       ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-      ->where('orders.order_status', 'delivered')
+      // ->where('orders.order_status', 'delivered')
       ->selectRaw('sum(orders.total) AS day_revenue')
       ->groupBy('date')
       ->get();

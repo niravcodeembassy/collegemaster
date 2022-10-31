@@ -373,7 +373,7 @@
 
         </div>
         <div class="modal-footer">
-          <a name="" id="close_img_btn" class="btn-link" href="#" data-dismiss="modal" role="button">Close</a>
+          <a name="" id="close_img_btn" class="lezada-button" href="#" data-dismiss="modal" role="button">Close</a>
         </div>
       </div>
     </div>
@@ -382,6 +382,10 @@
 
 @push('style')
   <style>
+    a.lezada-button {
+      padding: 5px 25px;
+    }
+
     #my-dropzone .message {
       font-family: "Segoe UI Light", "Arial", serif;
       font-weight: 600;

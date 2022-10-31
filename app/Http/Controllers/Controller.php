@@ -54,10 +54,14 @@ class Controller extends BaseController
     if ($request->ajax()) {
 
       $term = trim($request->search);
-      $products = Product::select('id', 'name')->where('name', 'like', $term . '_%')
-        ->orWhere(function ($query) use ($term) {
-          $query->Where('sku', 'like', "%$term%");
-        })->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
+
+      // $products = Product::select('id', 'name')->where('name', 'like', $term . '_%')
+      //   ->orWhere(function ($query) use ($term) {
+      //     $query->Where('sku', 'like', $term . '_%');
+      //   })->where('is_active', 'Yes')->orderBy('name', 'asc');
+
+      $products = Product::select('id', 'name', 'sku')->where('name', 'like', $term . '_%')->orWhere('sku', 'like', "%$term%")
+        ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
 
       $morePages = true;
       $pagination_obj = json_encode($products);

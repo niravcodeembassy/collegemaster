@@ -71,7 +71,7 @@
 
         </div>
         <div class="modal-footer">
-          <a name="" id="close_img_btn" class="btn-link" href="#" data-dismiss="modal" role="button">Close</a>
+          <a name="" id="close_img_btn" class="lezada-button" href="#" data-dismiss="modal" role="button">Close</a>
         </div>
       </div>
     </div>
@@ -80,6 +80,10 @@
 
 @push('style')
   <style>
+    a.lezada-button {
+      padding: 5px 25px;
+    }
+
     .table thead th {
       border-bottom: none;
     }
@@ -189,7 +193,7 @@
     .slider.round {
       border-radius: 34px;
     }
-    
+
     .slider.round:before {
       border-radius: 50%;
     }
@@ -260,44 +264,43 @@
           }
         });
       });
-    });
 
+      $(document).on("click", ".checkout-form-btn", function(event, data) {
+        var el = data || $(this);
 
-    $(document).on("click", ".checkout-form-btn", function(event, data) {
-      var el = data || $(this);
+        var cartlist = JSON.parse(el.attr("data-cartlist"));
+        var url = $(this).data("url");
 
-      var cartlist = JSON.parse(el.attr("data-cartlist"));
-      var url = $(this).data("url");
+        var c = [];
+        $(".cart-table tbody tr.gift_message_area").each(function() {
+          var cart_id = $(this).find(".cart_id").val();
+          var enable_gift = $(this).find(".enable_gift").val();
+          var enable_message = $(this).find(".enable_message").val();
+          var order_gift_message = $(this).find(".order_gift_message").val();
+          var order_optional_note = $(this).find(".order_optional_note").val();
 
-      var c = [];
-      $(".cart-table tbody tr.gift_message_area").each(function() {
-        var cart_id = $(this).find(".cart_id").val();
-        var enable_gift = $(this).find(".enable_gift").val();
-        var enable_message = $(this).find(".enable_message").val();
-        var order_gift_message = $(this).find(".order_gift_message").val();
-        var order_optional_note = $(this).find(".order_optional_note").val();
+          let obj = {
+            'cart_id': cart_id,
+            'order_has_gift': enable_gift,
+            'order_has_message': enable_message,
+            'gift_message': order_gift_message,
+            'optional_note': order_optional_note
+          };
+          c.push(obj);
+        });
+        cartlist.giftContent = c;
 
-        let obj = {
-          'cart_id': cart_id,
-          'order_has_gift': enable_gift,
-          'order_has_message': enable_message,
-          'gift_message': order_gift_message,
-          'optional_note': order_optional_note
-        };
-        c.push(obj);
-      });
-      cartlist.giftContent = c;
-
-      $.ajax({
-        type: "post",
-        url: url,
-        data: {
-          'gift_content': c,
-        },
-      }).done(function(res) {
-        window.location.href = res.back;
-      }).fail(function(respons) {
-        console.log(respons)
+        $.ajax({
+          type: "post",
+          url: url,
+          data: {
+            'gift_content': c,
+          },
+        }).done(function(res) {
+          window.location.href = res.back;
+        }).fail(function(respons) {
+          console.log(respons)
+        });
       });
     });
   </script>

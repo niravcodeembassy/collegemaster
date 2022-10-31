@@ -554,13 +554,13 @@ function loadDropZone() {
             icon: "success",
             loaderBg: "#f96868",
             position: "top-right",
-            afterHidden: function () {
-              $("body #close_img_btn").trigger("click");
-            },
+            // afterHidden: function () {
+            //   $("body #close_img_btn").trigger("click");
+            // },
           });
-          setTimeout(function () {
-            window.location.reload();
-          }, 5000);
+          // setTimeout(function () {
+          //   window.location.reload();
+          // }, 5000);
         }
       });
 
@@ -613,9 +613,9 @@ function loadDropZone() {
                 _this.emit("complete", file);
               },
             });
-            setTimeout(function () {
-              window.location.reload();
-            }, 5000);
+            // setTimeout(function () {
+            //   window.location.reload();
+            // }, 5000);
 
             // toast.fire({
             //     title: 'Success',
