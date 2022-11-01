@@ -42,13 +42,13 @@
     .material_cancel,
     .variant_cancel,
     .country_cancel {
-      left: 310px;
+      right: 10px;
       top: 12px;
       background-color: white;
     }
 
     .order_cancel {
-      left: 310px;
+      right: 10px;
       top: 12px;
       background-color: white;
     }
@@ -60,7 +60,7 @@
 
     <div class="col-md-12">
       <div class="w-25 mb-4 position-relative float-right">
-        <input class="form-control" readonly placeholder="choose date" id="order_rangepicker" data-url="{{ route('admin.home') }}" />
+        <input class="form-control" readonly placeholder="pick date range" id="order_rangepicker" data-url="{{ route('admin.home') }}" />
         <i class="fa fa-times-circle order_cancel text-secondary position-absolute" style="display: none;"></i>
       </div>
     </div>

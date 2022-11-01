@@ -148,14 +148,15 @@
       <div class="card main_invoice">
         <div class="card-body">
           <div class="order-page" id="order-page">
+            <div class="text-center buyer">
+              <h1>Website Order Form</h1>
+            </div>
             <div class="header">
-              <h2>Order {{ $order->order_number ?? '' }}</h2>
-              <p>{{ $shipping_address->first_name }} (7b2a310c6x5iovov)</p>
+              <h3>Order {{ $order->order_number ?? '' }}</h3>
+              <h5>{{ $shipping_address->first_name }} {{ $shipping_address->last_name }}</h5>
             </div>
             <div class="content-body">
               <div class="left_part">
-                <span><i class="fa fa-gift" aria-hidden="true"></i> Marked as gift</span><br>
-                <span><i class="fa fa-shopping-bag" aria-hidden="true"></i> Gift message included</span>
 
                 <div class="shipping">
                   <b>Ship to</b>
@@ -278,10 +279,16 @@
                                 <td class="pt-top pt-left">{{ $attributes['printing options'] ?? '' }}</td>
                               </tr>
                             @endif
-                            @if (isset($data->notes) && $data->notes != '')
+                            @if (isset($data->optional_note) && $data->optional_note != '')
                               <tr>
-                                <td class="pt-top">Personalization :</td>
-                                <td class="pt-top pt-left">{{ $data->notes ?? '' }}</td>
+                                <td class="pt-top">Gift message :</td>
+                                <td class="pt-top pt-left">{{ $data->optional_note ?? '' }}</td>
+                              </tr>
+                            @endif
+                            @if (isset($data->gift_message) && $data->gift_message != '')
+                              <tr>
+                                <td class="pt-top">Note from buyer :</td>
+                                <td class="pt-top pt-left">{{ $data->gift_message ?? '' }}</td>
                               </tr>
                             @endif
                           </table>
@@ -389,7 +396,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="note">
+                <div class="note" style="display: none">
                   <div class="buyer">
                     <b>Note from buyer</b>
                     <table>

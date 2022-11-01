@@ -32,6 +32,7 @@ class HomeController extends Controller
   public function index(Request $request)
   {
 
+
     if ($request->ajax()) {
 
       $startDate = $request->startDate;
@@ -113,8 +114,8 @@ class HomeController extends Controller
   }
   public function sizeChart(Request $request)
   {
-    $startDate = $request->startDate ?? date('Y-m-01');
-    $endDate = $request->endDate ?? date('Y-m-t');
+    $startDate = $request->startDate;
+    $endDate = $request->endDate;
     $today = $startDate == $endDate;
 
     $best_selling_size = OrderItem::select(
@@ -155,8 +156,8 @@ class HomeController extends Controller
 
   public function variantChart(Request $request)
   {
-    $startDate = $request->startDate ?? date('Y-m-01');
-    $endDate = $request->endDate ?? date('Y-m-t');
+    $startDate = $request->startDate;
+    $endDate = $request->endDate;
     $today = $startDate == $endDate;
 
     $best_selling_variant = OrderItem::select(
@@ -198,8 +199,8 @@ class HomeController extends Controller
 
   public function materialChart(Request $request)
   {
-    $startDate = $request->startDate ?? date('Y-m-01');
-    $endDate = $request->endDate ?? date('Y-m-t');
+    $startDate = $request->startDate;
+    $endDate = $request->endDate;
     $today = $startDate == $endDate;
 
     $opt = '$[0]."printing options"';
@@ -243,8 +244,8 @@ class HomeController extends Controller
   public function countryChart(Request $request)
   {
 
-    $startDate = $request->startDate ?? date('Y-m-01');
-    $endDate = $request->endDate ?? date('Y-m-t');
+    $startDate = $request->startDate;
+    $endDate = $request->endDate;
     $today = $startDate == $endDate;
 
     // $country = $request->country;
@@ -343,7 +344,18 @@ class HomeController extends Controller
       ->groupBy('date')
       ->get();
 
-    $sales = $day_wise_sales->map(function ($item) {
+    $weekMap = collect([
+      0 => 'Mon',
+      1 => 'Tue',
+      2 => 'Wed',
+      3 => 'Thu',
+      4 => 'Fri',
+      5 => 'Sat',
+      6 => 'Sun',
+    ]);
+
+
+    $sales = $day_wise_sales->map(function ($item, $index) {
       return
         [
           'day' => date("D", strtotime($item->date)),
@@ -352,10 +364,19 @@ class HomeController extends Controller
         ];
     });
 
+    $collect = $weekMap->map(function ($item, $index) use ($sales) {
+      return
+        [
+          'day' => $item,
+          'day_sales' => isset($sales[$index]) && $sales[$index]['day'] == $item ?  $sales[$index]['day_sales'] : 0,
+          'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4)
+        ];
+    });
+
     $data = array(
-      "day" => $sales->pluck('day'),
-      "day_sales" => $sales->pluck('day_sales'),
-      "color" => $sales->pluck('color'),
+      "day" => $collect->pluck('day'),
+      "day_sales" => $collect->pluck('day_sales'),
+      "color" => $collect->pluck('color'),
     );
     return json_encode($data);
   }
@@ -378,10 +399,30 @@ class HomeController extends Controller
         ];
     });
 
+    $weekMap = collect([
+      0 => 'Mon',
+      1 => 'Tue',
+      2 => 'Wed',
+      3 => 'Thu',
+      4 => 'Fri',
+      5 => 'Sat',
+      6 => 'Sun',
+    ]);
+
+
+    $collect = $weekMap->map(function ($item, $index) use ($revenue) {
+      return
+        [
+          'day' => $item,
+          'day_revenue' => isset($revenue[$index]) && $revenue[$index]['day'] == $item ?  $revenue[$index]['day_revenue'] : 0,
+          'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4)
+        ];
+    });
+
     $data = array(
-      "day" => $revenue->pluck('day'),
-      "day_revenue" => $revenue->pluck('day_revenue'),
-      "color" => $revenue->pluck('color'),
+      "day" => $collect->pluck('day'),
+      "day_revenue" => $collect->pluck('day_revenue'),
+      "color" => $collect->pluck('color'),
     );
     return json_encode($data);
   }

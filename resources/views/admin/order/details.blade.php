@@ -37,11 +37,11 @@
       <h5 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Order No : {{ $order->order_number }}</span>
         <div>
-          <a class="call-model call-modal btn btn-success btn-sm" data-target-modal="#message_form_model" data-id="{{ $order->id }}" data-url="{{ route('admin.order.init.message', $order->id) }}"
-            href="{{ route('admin.order.init.message', $order->id) }}" data-toggle="modal" data-target="#message_form_model">
-            <i class="fas fa-comment-dots"></i>  Message
+          <a class="call-model call-modal btn btn-success btn-sm" data-target-modal="#message_form_model" data-id="{{ $order->id }}" data-url="{{ route('admin.order.init.message', $order->id) }}" href="{{ route('admin.order.init.message', $order->id) }}"
+            data-toggle="modal" data-target="#message_form_model">
+            <i class="fas fa-comment-dots"></i> Message
           </a>
-          <span class="badge badge-secondary badge-pill">{{ $order->created_at->format('d-m-Y') }}</span>
+          <span class="badge badge-secondary badge-pill">{{ $order->created_at->format('m-d-Y H:i:s') }}</span>
         </div>
       </h5>
       <ul class="list-group mb-3 shadow-none b-0">
@@ -359,9 +359,12 @@
           <span class="text-muted "> Transaction Id </span> <br>
           <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
 
-          {{-- <hr>
-          <span class="text-muted "> Payment Status </span> <br>
-          <span class="text-muted"> {{ $order->payment_status }}</span> <br> --}}
+          <hr>
+
+          <span class="text-muted "> Delivery Details </span> <br>
+          <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
+          <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
+          <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
         </div>
       </div>
 

@@ -354,9 +354,11 @@
                 <span class="text-muted "> Transaction Id </span> <br>
                 <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
 
-                {{-- <hr>
-                <span class="text-muted "> Payment Status </span> <br>
-                <span class="text-muted"> {{ $order->payment_status }}</span> <br> --}}
+                <hr>
+                <span class="text-muted "> Delivery Details </span> <br>
+                <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
+                <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
+                <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
               </div>
             </div>
 

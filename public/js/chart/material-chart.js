@@ -20,9 +20,24 @@ $(document).ready(function () {
   var pieOptions = {
     maintainAspectRatio: false,
     responsive: false,
-    tooltips: {
-      enabled: true,
-      mode: "single",
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+        align: "start",
+        labels: {
+          usePointStyle: true,
+          pointStyle: "rectRounded",
+          filter: (legendItem, data) => {
+            const label = legendItem.text;
+            const isLargeNumber = (element) => element == label;
+            const labelIndex = data.labels.findIndex(isLargeNumber);
+            const qtd = data.datasets[0].data[labelIndex];
+            legendItem.text = `${legendItem.text} : ${qtd}`;
+            return true;
+          },
+        },
+      },
     },
   };
 
@@ -47,10 +62,10 @@ $(document).ready(function () {
   var start = moment().startOf("month");
   var end = moment().endOf("month");
 
-  var first_date = start.format("YYYY-MM-DD");
-  var last_date = end.format("YYYY-MM-DD");
+  // var first_date = start.format("YYYY-MM-DD");
+  // var last_date = end.format("YYYY-MM-DD");
 
-  ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+  ajaxMaterialRequest(ajaxUrl);
 
   function cb(start, end) {
     $("#material_daterangepicker").val(
@@ -82,17 +97,16 @@ $(document).ready(function () {
     cb
   );
 
-  cb(start, end);
 
-  $("#material_daterangepicker").on(
-    "apply.daterangepicker",
-    function (ev, picker) {
+  $("#material_daterangepicker").on("apply.daterangepicker",function (ev, picker) {
       $(".material_cancel").css("display", "block");
       var el = $(this);
       var url = el.data("url");
       DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
       DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
-
+      if(picker.chosenLabel != 'Custom Range'){
+        $("#material_daterangepicker").val(picker.chosenLabel);
+      }
       ajaxMaterialRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
     }
   );
@@ -105,20 +119,18 @@ $(document).ready(function () {
       picker.setStartDate({});
       picker.setEndDate({});
       $(".material_cancel").hide();
-      ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+      ajaxMaterialRequest(ajaxUrl);
     }
   );
 
   $(document).on("click", ".material_cancel", function (e) {
-    cb(start, end);
     DATE_RANGE = [];
-    ajaxMaterialRequest(ajaxUrl, first_date, last_date);
+    $("#material_daterangepicker").val('');
+    ajaxMaterialRequest(ajaxUrl);
     $(this).hide();
   });
 
-  // cb(start, end);
-
-  function ajaxMaterialRequest(url, start, end) {
+  function ajaxMaterialRequest(url, start='', end='') {
     $.ajax({
       type: "get",
       url: url,

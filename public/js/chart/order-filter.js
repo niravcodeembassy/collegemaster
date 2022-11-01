@@ -53,6 +53,9 @@ $(document).ready(function () {
     DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
     DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
+    if (picker.chosenLabel != "Custom Range") {
+      $("#order_rangepicker").val(picker.chosenLabel);
+    }
     ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
   });
 

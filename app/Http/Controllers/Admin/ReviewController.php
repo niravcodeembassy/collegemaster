@@ -72,7 +72,7 @@ class ReviewController extends Controller
     // DB::enableQueryLog();
     // genrate a query
     $customcollections = ProductReview::with(['product', 'user'])->when($search, function ($query, $search) {
-      return $query->whereLike(['user.name', 'user.email', 'product.name'], $search)->orWhere('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
+      return $query->whereLike(['user.name', 'user.email', 'product.name', 'message', 'name', 'email'], $search);
     });
 
     // dd($totalData);
@@ -86,7 +86,7 @@ class ReviewController extends Controller
     foreach ($customcollections as $key => $item) {
 
       $row['name']   =  $item->name == null ? $item->user->name : $item->name;
-      $row['product']  = $item->product->name;
+      $row['product']  = isset($item->product) ? $item->product->name : 'N/A';
       $row['email']  = $item->email == null ? $item->user->email : $item->email;
       $row['review']  = $this->text($item->rating . ' <i class="fa fa-star"></i>');
       $row['status'] = $this->status($item->is_active, $item->id, route('admin.review.status'));

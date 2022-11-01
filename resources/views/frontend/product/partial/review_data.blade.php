@@ -22,8 +22,10 @@
 
       <!--=======  username and date  =======-->
 
-      <p class="username">{{ isset($item->user) ? $item->user->name : $item->name }} <span class="date">/
-          {{ $item->created_at->format('M d Y') }}</span>
+      <p class="username">{{ isset($item->user) ? $item->user->name : $item->name }} <span class="date">|
+          {{ date('d.m.Y', strtotime($item->created_at)) }}</span>
+
+
       </p>
 
       <!--=======  End of username and date  =======-->

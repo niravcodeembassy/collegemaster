@@ -125,15 +125,22 @@
 
             <div class="contct-info">
               <div class="form-group">{{-- data-rule-required="true"<em class="text-danger">*</em> --}}
-                <label for="eidt_percentage">Name(Delivered to) </label>
-                <input type="text" id="user_name" name="user_name" value="{{ $order->deleverd_to_name ?? '' }}" style="width: 100%;" class="form-control-user form-control">
+                <label for="eidt_percentage">courier provider<em class="text-danger">*</em></label>
+                <select name="user_name" id="user_name" data-rule-required="true"required class="form-control">
+                  <option value="">Courier provider</option>
+                  @if (isset($setting->courier_provider))
+                    @foreach (explode(',', $setting->courier_provider) as $provider)
+                      <option value="{{ $provider }}" {{ $provider == $order->deleverd_to_name ? 'selected' : '' }}>{{ $provider }}</option>
+                    @endforeach
+                  @endif
+                </select>
               </div>
             </div>
 
             <div class="contct-info">
               <div class="form-group">
-                <label for="eidt_percentage">Tracking number </label>
-                <input type="text" id="tracking_number" name="tracking_number" value="{{ $order->tracking_number ?? '' }}" style="width: 100%;" class="form-control-user form-control">
+                <label for="eidt_percentage">Tracking number <em class="text-danger">*</em></label>
+                <input type="text" data-rule-required="true" id="tracking_number" name="tracking_number" value="{{ $order->tracking_number ?? '' }}" style="width: 100%;" class="form-control-user form-control">
               </div>
             </div>
 

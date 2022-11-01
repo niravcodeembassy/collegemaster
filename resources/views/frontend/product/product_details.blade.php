@@ -22,6 +22,10 @@
       width: 100% !important;
     }
 
+    .single-review__content .date {
+      padding-left: 0px;
+    }
+
     .related_margin {
       margin-top: 25px;
       margin-bottom: 70px;

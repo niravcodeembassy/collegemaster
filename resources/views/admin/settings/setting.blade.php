@@ -345,9 +345,13 @@
                   <label for="delivery_days">Number Of Delivery Days </label>
                   <input id="delivery_days" class="form-control" number="true" type="text" value="{{ $setting->response->delivery_days ?? '' }}" name="delivery_days">
                 </div>
+                <div class="form-group">
+                  <label for="courier_provider">Courier Provider</label>
+                  <input id="courier_provider" class="form-control" type="text" value="{{ $setting->response->courier_provider ?? '' }}" name="courier_provider">
+                </div>
+                <span class="text-danger"> You can separate by ,(comma) (E.X. Courier1,Courier2)</span>
               </div>
             </div>
-
 
 
             <hr style="margin: 15px -20px">

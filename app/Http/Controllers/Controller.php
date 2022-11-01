@@ -60,7 +60,7 @@ class Controller extends BaseController
       //     $query->Where('sku', 'like', $term . '_%');
       //   })->where('is_active', 'Yes')->orderBy('name', 'asc');
 
-      $products = Product::select('id', 'name', 'sku')->where('name', 'like', $term . '_%')->orWhere('sku', 'like', "%$term%")
+      $products = Product::select('id', 'name', 'sku')->where('name', 'like', "%$term%")->orWhere('sku', 'like', "%$term%")
         ->where('is_active', 'Yes')->orderBy('name', 'asc')->simplePaginate(10);
 
       $morePages = true;

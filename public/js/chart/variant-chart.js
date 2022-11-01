@@ -20,16 +20,24 @@ $(document).ready(function () {
   var pieOptions = {
     maintainAspectRatio: false,
     responsive: false,
-    tooltips: {
-      enabled: true,
-      mode: "single",
-      // callbacks: {
-      //   label: function(tooltipItems, data) {
-      //     var amount = data.datasets[0].data[tooltipItems['index']];
-      //     var label = data.labels[tooltipItems['index']]
-      //     return label + " ₹ " + amount;
-      //   }
-      // }
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+        align: "start",
+        labels: {
+          usePointStyle: true,
+          pointStyle: "rectRounded",
+          filter: (legendItem, data) => {
+            const label = legendItem.text;
+            const isLargeNumber = (element) => element == label;
+            const labelIndex = data.labels.findIndex(isLargeNumber);
+            const qtd = data.datasets[0].data[labelIndex];
+            legendItem.text = `${legendItem.text} : ${qtd}`;
+            return true;
+          },
+        },
+      },
     },
   };
 
@@ -68,10 +76,10 @@ $(document).ready(function () {
   var start = moment().startOf("month");
   var end = moment().endOf("month");
 
-  var first_date = start.format("YYYY-MM-DD");
-  var last_date = end.format("YYYY-MM-DD");
+  // var first_date = start.format("YYYY-MM-DD");
+  // var last_date = end.format("YYYY-MM-DD");
 
-  ajaxRequest(ajaxUrl, first_date, last_date);
+  ajaxRequest(ajaxUrl);
 
   function cb(start, end) {
     $("#variant_daterangepicker").val(
@@ -103,15 +111,16 @@ $(document).ready(function () {
     cb
   );
 
-  $("#variant_daterangepicker").on(
-    "apply.daterangepicker",
-    function (ev, picker) {
+  $("#variant_daterangepicker").on("apply.daterangepicker",function (ev, picker) {
       $(".variant_cancel").css("display", "block");
       var el = $(this);
       var url = el.data("url");
       DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
       DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
+      if(picker.chosenLabel != 'Custom Range'){
+        $("#variant_daterangepicker").val(picker.chosenLabel);
+      }
       ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
     }
   );
@@ -124,20 +133,18 @@ $(document).ready(function () {
       picker.setStartDate({});
       picker.setEndDate({});
       $(".variant_cancel").hide();
-      ajaxRequest(ajaxUrl, first_date, last_date);
+      ajaxRequest(ajaxUrl);
     }
   );
 
   $(document).on("click", ".variant_cancel", function (e) {
-    cb(start, end);
     DATE_RANGE = [];
-    ajaxRequest(ajaxUrl, first_date, last_date);
+    $('#variant_daterangepicker').val('');
+    ajaxRequest(ajaxUrl);
     $(this).hide();
   });
 
-  cb(start, end);
-
-  function ajaxRequest(url, start, end) {
+  function ajaxRequest(url,  start='', end='') {
     $.ajax({
       type: "get",
       url: url,

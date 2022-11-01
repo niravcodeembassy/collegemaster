@@ -166,15 +166,27 @@ class OrderController extends Controller
 
     $totalFiltered = $orders->count();
 
-    $sql = Order::when($request->get('type') == 'cod', function ($query) use ($filter_status) {
-      return $query->where('payment_type', 'cash');
-    })->when($request->get('type') == 'online', function ($query) use ($filter_status) {
-      return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
-    })->when($request->get('type') == 'pending', function ($query) use ($filter_status) {
-      return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
-        $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+    if ($filter_status !== 'all') {
+      $sql = Order::when($request->get('type') == 'cod', function ($query) use ($filter_status) {
+        return $query->where('payment_type', 'cash')->where('order_status', $filter_status);
+      })->when($request->get('type') == 'online', function ($query) use ($filter_status) {
+        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending')->where('order_status', $filter_status);
+      })->when($request->get('type') == 'pending', function ($query) use ($filter_status) {
+        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+          $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+        });
       });
-    });
+    } else {
+      $sql = Order::when($request->get('type') == 'cod', function ($query) use ($filter_status) {
+        return $query->where('payment_type', 'cash');
+      })->when($request->get('type') == 'online', function ($query) use ($filter_status) {
+        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where('payment_status', '!=', 'failed')->where('payment_status', '!=', 'pending');
+      })->when($request->get('type') == 'pending', function ($query) use ($filter_status) {
+        return $query->whereIn('payment_type', ['stripe', 'razorpay'])->where(function ($q) {
+          $q->where('payment_status', 'failed')->orWhere('payment_status', 'pending');
+        });
+      });
+    }
 
     $totalData = $sql->count();
 
@@ -421,7 +433,8 @@ class OrderController extends Controller
   public function edit(Request $request, $id)
   {
     $order = Order::findOrFail($id);
-    $view = view('admin.order.get-order', ['order' => $order])->render();
+    $setting = Setting::generalSettings()->first()->response;
+    $view = view('admin.order.get-order', ['order' => $order, 'setting' => $setting])->render();
     return response()->json(['html' => $view], 200);
   }
 

@@ -142,7 +142,7 @@ class ProductController extends Controller
       $row['option'] = $this->action([
         collect([
           'text' => 'View',
-          'action' => route('admin.product.show', $item->id),
+          'action' => route('product.view', $item->slug),
           'id' => $item->id,
           'icon' => 'fa fa-eye',
           'permission' => false
