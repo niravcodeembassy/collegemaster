@@ -879,7 +879,7 @@ class OrderController extends Controller
         $body = view('template.changes-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'customer_approval') {
-        $body = view('template.picture-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
+        $body = view('template.approval-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
         $this->sendSmsMessage($user->phone, $body);
       } else if ($status == 'printing') {
         $body = view('template.printing-sms', ['user_name' => ucwords($user->name), 'order_number' => $order->order_no])->render();
@@ -907,7 +907,7 @@ class OrderController extends Controller
       'message' => "SMS Not Sent this Order Status"
     ], 200);
   }
-  
+
   public function sendSmsMessage($mobile, $body)
   {
     $sid =  config("app.twilio.twilio_auth_sid");
