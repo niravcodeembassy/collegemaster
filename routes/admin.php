@@ -36,8 +36,6 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::get('material/chart', 'HomeController@materialChart')->name('material.chart');
   Route::get('country/chart', 'HomeController@countryChart')->name('country.chart');
 
-  // Route::get('/test', 'OrderController@test');
-
 
   Route::group(['namespace' => 'Access'], function () {
 

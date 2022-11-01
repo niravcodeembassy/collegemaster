@@ -36,7 +36,6 @@ use Twilio\Rest\Client;
 use App\Model\OrderItem;
 use App\User;
 use Maatwebsite\Excel\Facades\Excel;
-use Twilio\Rest\Chat;
 
 class OrderController extends Controller
 {
@@ -908,22 +907,7 @@ class OrderController extends Controller
       'message' => "SMS Not Sent this Order Status"
     ], 200);
   }
-
-  // public function test()
-  // {
-  //   $body = view('template.approval', ['user_name' => 'Bhavin', 'order_number' => '123'])->render();
-  // $body = view('template.changes', ['user_name' => 'Bhavin', 'order_number' => '123', 'email' => 'bhavin@gmail.com'])->render();
-  // $body = view('template.dispatch', [
-  //   'user_name' => 'Bhavin',
-  //   'order_number' => '123',
-  //   'courier_provider' => 'maruti',
-  //   'tracking_id' => '1234',
-  // ])->render();
-  //   $mobile = '+919429289356';
-  //   $this->sendWhatsappMessage($mobile, $body);
-  // }
-
-
+  
   public function sendSmsMessage($mobile, $body)
   {
     $sid =  config("app.twilio.twilio_auth_sid");
