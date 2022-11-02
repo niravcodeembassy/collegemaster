@@ -83,7 +83,7 @@ class ProductController extends Controller
     $this->data['category_list_view'] = '';
     if (isset($categoryList) && $categoryList->count() > 0) {
       $this->data['category_list_view'] = view('frontend.product.partial.category-list', [
-        'AllProductCount' => Product::count(),
+        'AllProductCount' => Product::where('is_active', 'Yes')->count(),
         'categoryList' => $categoryList,
         'category' => $category
       ])->render();

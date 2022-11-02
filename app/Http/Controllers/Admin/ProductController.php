@@ -89,21 +89,16 @@ class ProductController extends Controller
           return $join->on('products.id', '=', 'productvariants.product_id')->where('productvariants.type', '=', 'single');
         });
     }
-    $customcollections->where('products.deleted_at', null);
     $totalData = $customcollections->count();
 
     $customcollections = $customcollections->when($search, function ($query, $search) {
       return $query->where('products.name', 'LIKE', "%{$search}%")->orWhere('products.sku', 'LIKE', "%{$search}%");
     });
 
-
-
     $totalFiltered = $customcollections->count();
-
     $customcollections = $customcollections->offset($start)->limit($limit)->orderBy($order, $dir)->get();
     // dump($customcollections);
     $data = [];
-    Log::info('product slug', ['data' => $customcollections]);
 
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
@@ -493,12 +488,12 @@ class ProductController extends Controller
     $product = Product::with('productdefaultvariant', 'productvariants.variantCombination', 'productoptionvalue')->where('id', $id)->first();
 
     $newProduct = $product->replicate();
-    $newProduct->name = null;
+    $newProduct->name = 'product-clone-title-' . time();
     $newProduct->content = null;
     $newProduct->short_content = null;
-    $newProduct->slug = null;
+    $newProduct->slug = 'product_clone_slug_' . time();
     $newProduct->sku = null;
-    $newProduct->meta_slug = null;
+    $newProduct->meta_slug = 'product_clone_slug_' . time();
     $newProduct->meta_description = null;
     $newProduct->meta_title = null;
     $newProduct->is_active = 'No';
