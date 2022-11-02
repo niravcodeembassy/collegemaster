@@ -103,7 +103,7 @@ class ProductController extends Controller
     $customcollections = $customcollections->offset($start)->limit($limit)->orderBy($order, $dir)->get();
     // dump($customcollections);
     $data = [];
-    Log::info('product slug', ['slug', route('product.view', ['data' => $customcollections])]);
+    Log::info('product slug', ['data' => $customcollections]);
 
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
