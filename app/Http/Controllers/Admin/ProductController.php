@@ -13,6 +13,7 @@ use App\Model\HsCode;
 use App\Traits\DatatableTrait;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -142,7 +143,7 @@ class ProductController extends Controller
       $row['option'] = $this->action([
         collect([
           'text' => 'View',
-          'action' => route('product.view', ['slug' => $item->slug]),
+          'action' => route('product.view', ['slug' => $item->slug ?? '']),
           'id' => $item->id,
           'icon' => 'fa fa-eye',
           'permission' => false
@@ -178,6 +179,7 @@ class ProductController extends Controller
         ]) : []),
         // 'view_target' => route('product.detail', ['slug' => $item->handle]),
       ]);
+      Log::info('product slug', ['slug', route('product.view', ['slug' => $item->slug ?? '']), $item->id]);
       $data[] = $row;
     }
     $json_data = array(
