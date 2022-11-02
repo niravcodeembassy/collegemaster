@@ -89,7 +89,7 @@ class ProductController extends Controller
           return $join->on('products.id', '=', 'productvariants.product_id')->where('productvariants.type', '=', 'single');
         });
     }
-    $customcollections->where('deleted_at', null);
+    $customcollections->where('products.deleted_at', null);
     $totalData = $customcollections->count();
 
     $customcollections = $customcollections->when($search, function ($query, $search) {
