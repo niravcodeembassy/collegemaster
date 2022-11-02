@@ -103,6 +103,8 @@ class ProductController extends Controller
     $customcollections = $customcollections->offset($start)->limit($limit)->orderBy($order, $dir)->get();
     // dump($customcollections);
     $data = [];
+    Log::info('product slug', ['slug', route('product.view', ['data' => $customcollections])]);
+
     // dd($customcollections);
     foreach ($customcollections as $key => $item) {
       $row['id'] = $item->id;
@@ -179,7 +181,7 @@ class ProductController extends Controller
         ]) : []),
         // 'view_target' => route('product.detail', ['slug' => $item->handle]),
       ]);
-      Log::info('product slug', ['slug', route('product.view', ['slug' => $item->slug ?? '']), $item->id]);
+      //Log::info('product slug', ['slug', route('product.view', ['slug' => $item->slug ?? '']), $item->id]);
       $data[] = $row;
     }
     $json_data = array(

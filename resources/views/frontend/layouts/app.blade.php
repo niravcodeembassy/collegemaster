@@ -10,10 +10,10 @@
   @if (request()->route()->getName()== 'front.home')
   <title> @yield('title', $frontsetting->meta_title)</title>
   @else
-  <title> @yield('title', $title) | {{ $frontsetting->store_name }}</title>
+  <title> @yield('title', $title ?? '') | {{ $frontsetting->store_name }}</title>
   @endif
 
-  
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
   <!-- Favicon -->
