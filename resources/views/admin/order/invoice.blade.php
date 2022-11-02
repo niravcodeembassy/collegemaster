@@ -49,7 +49,7 @@
     }
 
     .text-center {
-      text-align: right;
+      text-align: center;
     }
 
 
@@ -138,6 +138,10 @@
     .img_product {
       height: 70px;
       width: 70px;
+    }
+
+    .w-88 {
+      width: 88%;
     }
   </style>
 </head>
@@ -249,54 +253,44 @@
 
                     <table class="order-table">
                       <tr>
-                        <td class="w-12">
+                        <td class="w-12" colspan="1">
                           <img src="{{ $image_url ?? 'https://i.etsystatic.com/18954143/r/il/4d9459/2243517109/il_340x270.2243517109_k5dq.jpg' }}" class="img_product">
                         </td>
-                        <td class="w-54 v-top">
+                        <td class="w-54 v-top" colspan="1">
                           <b>{{ $data->name . '-' . $data->hsn_cod ?? '' }}
                           </b>
                         </td>
-                        <td class="w-34 v-top text-right">
-                          {{ $data->qty }} x {!! Helper::showPrice($data->price ?? 0, $order->currency, $order->currency) !!}
+                        <td class="w-34 v-top text-right" colspan="1">
+                          <span>{{ $data->qty }} x {!! Helper::showPrice($data->price ?? 0, $order->currency, $order->currency) !!}</span>
                         </td>
                       </tr>
+                    </table>
+                    <table class="order-table">
                       <tr>
-                        <td class="w-12">
-                        </td>
-                        <td class="w-54">
-                          <table>
-                            <tr>
-                              <td class="pt-top">SKU : </td>
-                              <td class="pt-top pt-left">{{ $product->sku ?? '' }}</td>
-                            </tr>
-                            @if (count($attributes) > 0)
-                              <tr>
-                                <td class="pt-top">Size : </td>
-                                <td class="pt-top pt-left">{{ $attributes['size'] ?? '' }} inches</td>
-                              </tr>
-                              <tr>
-                                <td class="pt-top">Printing Options :</td>
-                                <td class="pt-top pt-left">{{ $attributes['printing options'] ?? '' }}</td>
-                              </tr>
-                            @endif
-                            @if (isset($data->optional_note) && $data->optional_note != '')
-                              <tr>
-                                <td class="pt-top">Gift message :</td>
-                                <td class="pt-top pt-left">{{ $data->optional_note ?? '' }}</td>
-                              </tr>
-                            @endif
-                            @if (isset($data->gift_message) && $data->gift_message != '')
-                              <tr>
-                                <td class="pt-top">Note from buyer :</td>
-                                <td class="pt-top pt-left">{{ $data->gift_message ?? '' }}</td>
-                              </tr>
-                            @endif
-                          </table>
-                        </td>
-                        <td class="w-34">
-
+                        <td class="w-88 v-top" colspan="2" style="padding-left:94px;">
+                          <span class="pt-top"><b>SKU :</b> </span>
+                          <span class="pt-top pt-left">{{ $product->sku ?? '' }}</span> <br />
+                          @if (count($attributes) > 0)
+                            <span class="pt-top"><b>Size :</b></span>
+                            <span class="pt-top pt-left">{{ $attributes['size'] ?? '' }} inches</span>
+                            <br />
+                            <span class="pt-top" style="width:25%"><b>Printing Options :</b></span>
+                            <span class="pt-top pt-left" style="width:75%">{{ $attributes['printing options'] ?? '' }}</span>
+                            <br />
+                          @endif
+                          @if (isset($data->gift_message) && $data->gift_message != '')
+                            <span class="pt-top" style="width:25%"><b>Gift message :</b></span>
+                            <span class="pt-top pt-left" style="width:75%">{{ $data->gift_message ?? '' }}</span>
+                            <br />
+                          @endif
+                          @if (isset($data->optional_note) && $data->optional_note != '')
+                            <span class="pt-top"><b>Note from buyer :</b></span>
+                            <span class="pt-top pt-left">{{ $data->optional_note ?? '' }}</span>
+                            <br />
+                          @endif
                         </td>
                       </tr>
+
                     </table>
                     @if ($loop->last)
                       <span>
@@ -359,7 +353,7 @@
                               <table>
                                 <tr>
                                   <td>
-                                    {!! Helper::showPrice($data->final_price_total, $order->currency, $order->currency) !!}
+                                    {!! Helper::showPrice($subtotal, $order->currency, $order->currency) !!}
                                   </td>
                                 </tr>
                                 <tr>
