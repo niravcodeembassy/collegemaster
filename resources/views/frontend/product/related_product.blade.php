@@ -2,8 +2,8 @@
   <div class="row">
     @if ($product->buytogetherproducts->count() > 0)
       <div class="col-lg-12 order-1 order-lg-2 mb-md-80 mb-sm-80" style="margin-top:-100px">
-        <h3 class="text-center my-2 text-capitalize">Related Product</h3>
-        <div class="divider-custom">
+        <h3 class="text-center mt-4 mb-2 text-capitalize">Related Product</h3>
+        <div class="divider-custom" style="margin-bottom:10px;">
           <div class="divider-custom-line"></div>
           <div class="divider-custom-icon">
             <i class="fa fa-circle" aria-hidden="true"></i>

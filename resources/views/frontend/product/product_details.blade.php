@@ -44,6 +44,13 @@
       color: rgb(235, 113, 0);
     }
 
+    .br-theme-fontawesome-stars .br-widget a.br-selected:after {
+      color: rgb(235, 113, 0) !important;
+    }
+    .br-theme-fontawesome-stars .br-widget a.br-active:after {
+      color: rgb(235, 113, 0) !important;
+    }
+
     a.delivery_truck_link {
       color: #444444;
     }
@@ -54,7 +61,7 @@
     }
 
     .single-review__image img {
-      height: 52px;
+      height: 50px;
       width: 50px;
     }
 
