@@ -377,6 +377,14 @@ class OrderController extends Controller
             'action' => route('admin.order.inv', $item->id),
             'permission' => true,
           ]),
+          collect([
+            'text' => 'Print Order Form',
+            'id' => $item->id,
+            'class' => 'printOrder',
+            'icon' => 'fa fa-print',
+            'action' => route('admin.order.pdf', $item->id),
+            'permission' => true,
+          ]),
         ],
 
         $action_edit
@@ -757,25 +765,16 @@ class OrderController extends Controller
   {
     $data =  $this->invoiceData($id);
 
-    $html = view('admin.order.test', [
+    $html = view('admin.order.invoice', [
       'order' => $data['order'],
       'setting' => $data['setting'],
       'shipping_address' => $data['shipping_address'],
       'billing_address' => $data['belling_address'],
       'type' => $data['type'],
-      'title' => 'invoice'
+      'title' => 'order-form'
     ])->render();
 
-    $dompdf = new Pdf();
-    $dompdf->loadHtml($html);
-
-    // (Optional) Setup the paper size and orientation
-    $dompdf->setPaper('A4', 'landscape');
-
-    // Render the HTML as PDF
-    $dompdf->render();
-
-    return $dompdf->stream();
+    return response()->json(['html' => $html], 200);
   }
 
   public function invoiceData($id)

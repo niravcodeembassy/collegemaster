@@ -54,6 +54,12 @@
       font-size: 14px;
     }
 
+    .shop-product__rating .product-rating i.active {
+      color: rgb(235, 113, 0);
+    }
+
+    color: rgb(235, 113, 0);
+
     .page-item.active .page-link {
       background-color: #333333;
       border-color: #333333;
@@ -126,7 +132,7 @@
 
     i.gold,
     span.gold {
-      color: #f5cc26;
+      color: rgb(235, 113, 0);
     }
 
     div.progress_bar_review .col-lg-2 {
@@ -164,7 +170,7 @@
       font-size: 1.5rem;
       font-family: FontAwesome;
       display: inline-block;
-      color: #f5cc26;
+      color: rgb(235, 113, 0);
     }
 
     .rating-box:before {
@@ -177,7 +183,7 @@
       top: 0;
       white-space: nowrap;
       overflow: hidden;
-      color: #f5cc26;
+      color: rgb(235, 113, 0);
     }
 
     .rating-box .rating:before {

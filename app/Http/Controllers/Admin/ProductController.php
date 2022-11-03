@@ -45,10 +45,12 @@ class ProductController extends Controller
     $dir = $request->input('order.0.dir');
     $search = $request->input('search.value');
 
-    if (isset($request->category_id)) {
+    if (isset($request->category_id) || isset($request->sub_category_id)) {
       $category_id = $request->category_id;
+      $sub_category_id = $request->sub_category_id;
     } else {
       $category_id = 0;
+      $sub_category_id = 0;
     }
 
     // dd($request);
@@ -57,13 +59,16 @@ class ProductController extends Controller
     // genrate a query
     // 'categories.name as category_name',
 
-    if (isset($request->category_id)) {
+    if (isset($request->category_id) || isset($request->sub_category_id)) {
       $customcollections = Product::select('products.id', 'products.sku', 'products.tax', 'productvariants.taxable_price', 'productvariants.offer_price', 'productvariants.mrp_price', 'categories.name as category_name', 'sub_categories.name as subcategory_name', 'products.product_type', 'products.name as title', 'products.category_id', 'products.sub_category_id', 'products.slug', 'product_images.image_name', 'image_url', 'products.is_active')
         ->leftJoin('categories', function ($join) {
           return $join->on('products.category_id', '=', 'categories.id');
         })
         ->where('has_box', 'No')
         ->where('products.category_id', $category_id)
+        ->when($request->sub_category_id, function ($query) use ($sub_category_id) {
+          $query->where('products.sub_category_id', $sub_category_id);
+        })
         ->leftJoin('sub_categories', function ($join) {
           return $join->on('products.sub_category_id', '=', 'sub_categories.id');
         })
@@ -143,6 +148,7 @@ class ProductController extends Controller
           'action' => route('product.view', ['slug' => $item->slug ?? '']),
           'id' => $item->id,
           'icon' => 'fa fa-eye',
+          'page_target' => '_blank',
           'permission' => false
         ]),
         collect([

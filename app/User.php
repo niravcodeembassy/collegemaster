@@ -9,6 +9,7 @@ use App\Notifications\Auth\ResetPassword;
 use App\Notifications\Auth\VerifyEmail;
 use App\Model\ShoppingCart;
 use App\Model\UserShippingAddress;
+use App\Model\WishList;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -83,6 +84,11 @@ class User extends Authenticatable implements MustVerifyEmail
     return $this->hasMany(Order::class);
   }
 
+  public function wishlist()
+  {
+    return $this->hasMany(WishList::class, 'user_id');
+  }
+
   public function getProfileSrcAttribute()
   {
     $imageExist  =  Storage::disk('public')->exists($this->profile_image);
@@ -118,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return strtoupper($value);
   }
-  
+
   public function getAddress2Attribute($value)
   {
     return strtoupper($value);

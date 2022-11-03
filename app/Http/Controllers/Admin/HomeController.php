@@ -354,21 +354,21 @@ class HomeController extends Controller
       6 => 'Sun',
     ]);
 
-
-    $sales = $day_wise_sales->map(function ($item, $index) {
+    $sales = $day_wise_sales->map(function ($item, $index) use ($weekMap) {
       return
         [
           'day' => date("D", strtotime($item->date)),
           'day_sales' => $item->day_sales,
-          'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4)
+          'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4),
         ];
     });
 
     $collect = $weekMap->map(function ($item, $index) use ($sales) {
+      $d = $sales->where('day', $item)->first();
       return
         [
           'day' => $item,
-          'day_sales' => isset($sales[$index]) && $sales[$index]['day'] == $item ?  $sales[$index]['day_sales'] : 0,
+          'day_sales' => isset($d) ? $d['day_sales'] : 0,
           'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4)
         ];
     });
@@ -399,6 +399,7 @@ class HomeController extends Controller
         ];
     });
 
+    
     $weekMap = collect([
       0 => 'Mon',
       1 => 'Tue',
@@ -409,12 +410,12 @@ class HomeController extends Controller
       6 => 'Sun',
     ]);
 
-
     $collect = $weekMap->map(function ($item, $index) use ($revenue) {
+      $d = $revenue->where('day', $item)->first();
       return
         [
           'day' => $item,
-          'day_revenue' => isset($revenue[$index]) && $revenue[$index]['day'] == $item ?  $revenue[$index]['day_revenue'] : 0,
+          'day_revenue' => isset($d) ? $d['day_revenue'] : 0,
           'color' => $this->adjustBrightness('#' . dechex(rand(0x000000, 0xFFFFFF)), 0.4)
         ];
     });

@@ -92,13 +92,13 @@
                 <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Notes </span> : {{ $item->notes }}</div>
               @endif
 
-              @if (isset($item->order_has_gift) && $item->order_has_gift == 'Yes')
+              {{-- @if (isset($item->order_has_gift) && $item->order_has_gift == 'Yes')
                 <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift </span> : <span class="mx-2 dot bg-success"></span>Price does not display</div>
               @endif
 
               @if (isset($item->order_has_gift) && $item->order_has_gift == 'No')
                 <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift</span> : <span class="mx-2 dot bg-danger"></span></div>
-              @endif
+              @endif --}}
 
               @if (isset($item->gift_message) && $item->gift_message != '')
                 <div class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Gift Message </span> : {{ $item->gift_message }}</div>
@@ -358,13 +358,13 @@
 
           <span class="text-muted "> Transaction Id </span> <br>
           <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
-
-          <hr>
-
-          <span class="text-muted "> Delivery Details </span> <br>
-          <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
-          <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
-          <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
+          @if ($order->order_status == 'delivered')
+            <hr>
+            <span class="text-muted "> Delivery Details </span> <br>
+            <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
+            <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
+            <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
+          @endif
         </div>
       </div>
 

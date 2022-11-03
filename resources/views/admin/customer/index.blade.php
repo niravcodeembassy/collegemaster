@@ -31,14 +31,15 @@
           <thead class="bg-light">
             <tr>
               <th style="width:12%" data-orderable="true">Name</th>
-              <th style="width:20%" data-orderable="false">E-mail</th>
+              <th style="width:15%" data-orderable="false">E-mail</th>
               <th style="width:15%">Mobile No</th>
               <th style="width:10%" data-orderable="true">Country</th>
               <th style="width:10%" data-orderable="true">Date</th>
               <th style="width:10%" data-orderable="true">Time</th>
               <th style="width:10%" data-orderable="true">Order</th>
-              <th style="width:12%" data-orderable="false">Status</th>
-              <th style="width:12%" data-orderable="false" class="text-center">Action</th>
+              <th style="width:10%" data-orderable="true">Like</th>
+              <th style="width:10%" data-orderable="false">Status</th>
+              <th style="width:10%" data-orderable="false" class="text-center">Action</th>
             </tr>
           </thead>
         </table>
@@ -67,7 +68,7 @@
           }
         },
         "order": [
-          [0, "asc"]
+          [4, "desc"]
         ],
         "columns": [{
             "data": "name"
@@ -89,6 +90,9 @@
           },
           {
             "data": "order_status"
+          },
+          {
+            "data": "wishlist"
           },
           {
             "data": "status"

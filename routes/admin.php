@@ -166,7 +166,7 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::get('order/rmeove-image/{id}', 'OrderController@orderRemovePic')->name('order.removepic');
   Route::get('order/invoice/{id}', 'OrderController@orderInvoice')->name('order.inv');
 
-  Route::get('order/pdf/{id}', 'OrderController@orderPdf')->name('order.pdf');
+  Route::get('order/print-form/{id}', 'OrderController@orderPdf')->name('order.pdf');
 
   Route::post('order/sendWhatsapp/{id}', 'OrderController@sendWhatsapp')->name('order.whatsapp');
   Route::post('order/sendSms/{id}', 'OrderController@sendSms')->name('order.sms');

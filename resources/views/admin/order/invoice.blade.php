@@ -4,7 +4,7 @@
 <head>
   <style>
     .main_invoice span,
-    td {
+    .invoice_tbl td {
       font-size: 20px;
     }
 
@@ -164,7 +164,7 @@
 
                 <div class="shipping">
                   <b>Ship to</b>
-                  <table>
+                  <table class="invoice_tbl">
                     <tr>
                       <td><span>{{ strtoupper($shipping_address->address_one) ?? '' }}</span><br>
                         @if ($shipping_address->address_two)
@@ -180,7 +180,7 @@
                 <div class="scheduled">
                   @if (isset($order->shipping_date))
                     <b>Scheduled to ship by</b>
-                    <table>
+                    <table class="invoice_tbl">
                       <tr>
                         <td>
 
@@ -193,7 +193,7 @@
                 </div>
                 <div class="shop">
                   <b>Shop</b>
-                  <table>
+                  <table class="invoice_tbl">
                     <tr>
                       <td>{{ $setting->store_name ?? '' }}
                       </td>
@@ -251,7 +251,7 @@
                       }
                     @endphp
 
-                    <table class="order-table">
+                    <table class="order-table invoice_tbl">
                       <tr>
                         <td class="w-12" colspan="1">
                           <img src="{{ $image_url ?? 'https://i.etsystatic.com/18954143/r/il/4d9459/2243517109/il_340x270.2243517109_k5dq.jpg' }}" class="img_product">
@@ -265,10 +265,10 @@
                         </td>
                       </tr>
                     </table>
-                    <table class="order-table">
+                    <table class="order-table invoice_tbl">
                       <tr>
                         <td class="w-88 v-top" colspan="2" style="padding-left:94px;">
-                          <span class="pt-top"><b>SKU :</b> </span>
+                          <span class="pt-top"><b>Sku :</b> </span>
                           <span class="pt-top pt-left">{{ $product->sku ?? '' }}</span> <br />
                           @if (count($attributes) > 0)
                             <span class="pt-top"><b>Size :</b></span>
@@ -307,7 +307,7 @@
                   <div class="right">
                     <div class="main">
                       <div class="main_left">
-                        <table class="invoice-table">
+                        <table class="invoice-table invoice_tbl">
                           <tr>
                             <td class="text-right v-top">
                               <table>
@@ -347,7 +347,7 @@
                         </table>
                       </div>
                       <div class="main_right">
-                        <table class="invoice-table">
+                        <table class="invoice-table invoice_tbl">
                           <tr>
                             <td class="text-right v-top">
                               <table>
@@ -401,7 +401,7 @@
                   </div>
                   <div class="mesage">
                     <b>Gift message</b>
-                    <table>
+                    <table class="invoice_tbl">
                       <tr>
                         <td><span>{{ $order->gift ?? 'The most wonderful thing I decided to do was to share my life and heart with you.' }}</span></td>
                       </tr>

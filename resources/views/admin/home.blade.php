@@ -52,11 +52,27 @@
       top: 12px;
       background-color: white;
     }
+
+    .card-primary:not(.card-outline)>.card-header {
+      background-color: #1c2b46;
+    }
+
+    div.backend_main_content * input,
+    .info-box-content span,
+    table td,
+    table tr,
+    table th,
+    .card-footer a,
+    .card input,
+    h5,
+    h3 {
+      text-transform: uppercase;
+    }
   </style>
 @endpush
 
 @section('content')
-  <div class="row">
+  <div class="row backend_main_content">
 
     <div class="col-md-12">
       <div class="w-25 mb-4 position-relative float-right">
@@ -271,7 +287,7 @@
           </canvas>
         </div>
       </div>
-      <div class="card card-primary collapsed-card">
+      {{-- <div class="card card-primary collapsed-card d-none">
         <div class="card-header">
           <h3 class="card-title">Last 6 Month Wise Order</h3>
           <div class="card-tools">
@@ -286,7 +302,7 @@
           </div>
         </div>
       </div>
-      <div class="card card-primary collapsed-card">
+      <div class="card card-primary collapsed-card d-none">
         <div class="card-header">
           <h3 class="card-title">Day Wise Revenue (Current Week)</h3>
           <div class="card-tools">
@@ -300,7 +316,7 @@
             <canvas id="dayWiseRevenueChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%; display: block; width: 764px;" class="chartjs-render-monitor"></canvas>
           </div>
         </div>
-      </div>
+      </div> --}}
     </div>
     <div class="col-md-6 mt-2">
 
@@ -342,7 +358,7 @@
           </canvas>
         </div>
       </div>
-      <div class="card card-primary collapsed-card">
+      {{-- <div class="card card-primary collapsed-card d-none">
         <div class="card-header">
           <h3 class="card-title">Last 6 Month Wise Revenue</h3>
           <div class="card-tools">
@@ -357,7 +373,7 @@
           </div>
         </div>
       </div>
-      <div class="card card-primary collapsed-card">
+      <div class="card card-primary collapsed-card d-none">
         <div class="card-header">
           <h3 class="card-title">Day Wise Order (Current Week)</h3>
           <div class="card-tools">
@@ -371,7 +387,7 @@
             <canvas id="dayWiseSalesChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%; display: block; width: 764px;" class="chartjs-render-monitor"></canvas>
           </div>
         </div>
-      </div>
+      </div> --}}
 
     </div>
   </div>
@@ -404,8 +420,8 @@
   <script src="{{ asset('js/chart/variant-chart.js') }}"></script>
   <script src="{{ asset('js/chart/country-chart.js') }}"></script>
   {{-- <script src="{{ asset('js/chart/country-fusionchart.js') }}"></script> --}}
-  <script src="{{ asset('js/chart/six-month-sales.js') }}"></script>
+  {{-- <script src="{{ asset('js/chart/six-month-sales.js') }}"></script>
   <script src="{{ asset('js/chart/six-month-revenue.js') }}"></script>
   <script src="{{ asset('js/chart/day-wise-sales.js') }}"></script>
-  <script src="{{ asset('js/chart/day-wise-revenue.js') }}"></script>
+  <script src="{{ asset('js/chart/day-wise-revenue.js') }}"></script> --}}
 @endpush

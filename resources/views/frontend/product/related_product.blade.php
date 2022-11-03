@@ -2,7 +2,14 @@
   <div class="row">
     @if ($product->buytogetherproducts->count() > 0)
       <div class="col-lg-12 order-1 order-lg-2 mb-md-80 mb-sm-80" style="margin-top:-100px">
-        <h2 class="text-center my-4">Related Product</h2>
+        <h3 class="text-center my-2 text-capitalize">Related Product</h3>
+        <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon">
+            <i class="fa fa-circle" aria-hidden="true"></i>
+          </div>
+          <div class="divider-custom-line"></div>
+        </div>
 
         <div class="product-carousel-container product-carousel-container--smarthome mb-15 mb-md-0 mb-sm-0">
           <div class="container">

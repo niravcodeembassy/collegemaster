@@ -1,5 +1,5 @@
 @php
-$subTotal = 0;
+  $subTotal = 0;
 @endphp
 @forelse($cartList as$key=> $cart)
   @php
@@ -114,19 +114,23 @@ $subTotal = 0;
         <div class="d-block">
           <label class="switch mr-2">
             <input type="hidden" value="{{ $cart->id }}" name="cart[{{ $key }}]cart_id[]" class="cart_id">
-            <input type="checkbox" class="enable_gift" value="{{ $cart->order_has_gift ?? '' }}" name="cart[{{ $key }}]order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
-            <span class="slider round"></span>
-          </label>
-          <span>This order is a gift</span>
-          <p class="gift_slip">Prices will not be shown on packing slip</p>
-        </div>
-        <div class="gift_message_content mt-2 {{ $cart->order_has_message == 'Yes' ? 'd-block' : 'd-none' }}">
-          <label class="switch switch_second my-3">
-            <input type="checkbox" class="enable_message" value="{{ $cart->order_has_message ?? '' }}" name="cart[{{ $key }}]order_has_message[]" id="enable_{{ $cart->id }}" {{ $cart->order_has_message == 'Yes' ? 'checked' : '' }}>
+            {{-- <input type="checkbox" class="enable_gift" value="{{ $cart->order_has_gift ?? '' }}" name="cart[{{ $key }}]order_has_gift[]" id="gift_{{ $cart->id }}" {{ $cart->order_has_gift == 'Yes' ? 'checked' : '' }}>
+            <span class="slider round"></span> --}}
+
+            <input type="checkbox" class="enable_message enable_gift" value="{{ $cart->order_has_message ?? '' }}" name="cart[{{ $key }}]order_has_message[]" id="enable_{{ $cart->id }}"
+              {{ $cart->order_has_message == 'Yes' ? 'checked' : '' }}>
             <span class="slider round"></span>
           </label>
           <span>Add Gift Message For Free</span>
-          <div class="gift_message  {{ $cart->order_has_message == 'Yes' ? '' : 'd-none' }}">
+        </div>
+   
+        <div class="gift_message_content mt-2 {{ $cart->order_has_message == 'Yes' ? 'd-block' : 'd-none' }}">
+          {{-- <label class="switch switch_second my-3">
+            <input type="checkbox" class="enable_message" value="{{ $cart->order_has_message ?? '' }}" name="cart[{{ $key }}]order_has_message[]" id="enable_{{ $cart->id }}" {{ $cart->order_has_message == 'Yes' ? 'checked' : '' }}>
+            <span class="slider round"></span>
+          </label>
+          <span>Add Gift Message For Free</span> --}}
+          <div class="gift_message">
             <textarea name="cart[{{ $key }}]gift_message[]" rows="3" class="col-lg-6 col-12 order_gift_message form-control" placeholder="Enter Your message - make sure to include to/from names">{{ $cart->gift_message ?? '' }}</textarea>
             <label class="col-lg-6 col-12">Use the space above to enter your gift message. Please make sure to include to/from names.</label>
           </div>

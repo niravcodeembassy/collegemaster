@@ -9426,7 +9426,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   margin-bottom: 40px;
 }
 .single-review__image {
-  flex-basis: 70px;
+  flex-basis: 50px;
 }
 .single-review__image img {
   border-radius: 50%;

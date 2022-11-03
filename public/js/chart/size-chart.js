@@ -104,13 +104,15 @@ $(document).ready(function () {
     DATE_RANGE[0] = picker.startDate.format("YYYY-MM-DD");
     DATE_RANGE[1] = picker.endDate.format("YYYY-MM-DD");
 
-    if(picker.chosenLabel != 'Custom Range'){
+    if (picker.chosenLabel != "Custom Range") {
       $("#size_daterangepicker").val(picker.chosenLabel);
     }
     ajaxRequest(url, DATE_RANGE[0], DATE_RANGE[1]);
   });
 
-  $("#size_daterangepicker").on("cancel.daterangepicker",function (ev, picker) {
+  $("#size_daterangepicker").on(
+    "cancel.daterangepicker",
+    function (ev, picker) {
       $(this).val("");
       DATE_RANGE = [];
       picker.setStartDate({});
@@ -123,13 +125,13 @@ $(document).ready(function () {
   $(document).on("click", ".size_cancel", function (e) {
     DATE_RANGE = [];
     ajaxRequest(ajaxUrl);
-    $("#size_daterangepicker").val('');
+    $("#size_daterangepicker").val("");
     $(this).hide();
   });
 
   // cb(start, end);
 
-  function ajaxRequest(url, start='', end='') {
+  function ajaxRequest(url, start = "", end = "") {
     $.ajax({
       type: "get",
       url: url,

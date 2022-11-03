@@ -40,6 +40,10 @@
       color: #444444;
     }
 
+    .shop-product__rating .product-rating i.active {
+      color: rgb(235, 113, 0);
+    }
+
     a.delivery_truck_link {
       color: #444444;
     }
@@ -50,7 +54,7 @@
     }
 
     .single-review__image img {
-      height: 50px;
+      height: 52px;
       width: 50px;
     }
 
@@ -248,7 +252,7 @@
       font-size: 1.5rem;
       font-family: FontAwesome;
       display: inline-block;
-      color: #f5cc26;
+      color: rgb(235, 113, 0);
     }
 
     .rating-box:before {
@@ -261,7 +265,7 @@
       top: 0;
       white-space: nowrap;
       overflow: hidden;
-      color: #f5cc26;
+      color: rgb(235, 113, 0);
     }
 
     .rating-box .rating:before {
@@ -929,6 +933,9 @@
                       <!--=======  shop product reviews  =======-->
 
                       @include('frontend.product.partial.review')
+
+
+
 
                       <!--=======  End of shop product reviews  =======-->
                     </div>

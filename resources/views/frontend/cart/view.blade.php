@@ -235,32 +235,46 @@
 @push('script')
   <script>
     $(document).ready(function(e) {
+      // $(".enable_gift").each(function(list, item) {
+      //   let check_id = $(item).attr('id');
+      //   $('#' + check_id).change(function(e) {
+      //     if ($(this).is(":checked")) {
+      //       $(this).val('Yes');
+      //       $(this).parent().parent().next().removeClass('d-none');
+      //     } else {
+      //       $(this).val('No');
+      //       $(this).parent().parent().next().removeClass('d-block').addClass('d-none');
+      //       $(this).parent().parent().next().find('textarea').val('');
+      //       $(this).parent().parent().next().find('.gift_message').addClass('d-none');
+      //       $(this).parent().parent().next().find('input[type="checkbox"]').prop('checked', false)
+      //     }
+      //   });
+      // });
+
+      // $(".enable_message").each(function(list, item) {
+      //   let check_id = $(item).attr('id');
+      //   $('#' + check_id).change(function(e) {
+      //     if ($(this).is(":checked")) {
+      //       $(this).val('Yes');
+      //       $(this).parent().parent().children('.gift_message').removeClass('d-none');
+      //     } else {
+      //       $(this).val('No');
+      //       $(this).parent().children('.gift_message_content').addClass('d-none');
+      //       $(this).parent().children('.gift_message_content').find('textarea').val('');
+      //     }
+      //   });
+      // });
+
       $(".enable_gift").each(function(list, item) {
         let check_id = $(item).attr('id');
         $('#' + check_id).change(function(e) {
           if ($(this).is(":checked")) {
             $(this).val('Yes');
-            $(this).parent().parent().next().removeClass('d-none');
+            $(this).parent().parent().next().removeClass('d-none').addClass('d-block')
           } else {
             $(this).val('No');
             $(this).parent().parent().next().removeClass('d-block').addClass('d-none');
             $(this).parent().parent().next().find('textarea').val('');
-            $(this).parent().parent().next().find('.gift_message').addClass('d-none');
-            $(this).parent().parent().next().find('input[type="checkbox"]').prop('checked', false)
-          }
-        });
-      });
-
-      $(".enable_message").each(function(list, item) {
-        let check_id = $(item).attr('id');
-        $('#' + check_id).change(function(e) {
-          if ($(this).is(":checked")) {
-            $(this).val('Yes');
-            $(this).parent().parent().children('.gift_message').removeClass('d-none');
-          } else {
-            $(this).val('No');
-            $(this).parent().parent().children('.gift_message').addClass('d-none');
-            $(this).parent().parent().children('.gift_message').find('textarea').val('');
           }
         });
       });

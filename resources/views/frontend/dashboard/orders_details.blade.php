@@ -10,7 +10,7 @@
     // dd($shipping);
     $billing = $address->billing_address;
   @endphp
-  <section class="section-b-space mt-60">
+  <section class="section-b-space mt-60 mb-50 font-color">
     <div class="container ">
       <div class="modal-body">
         <div class="row">
@@ -18,7 +18,7 @@
             <h5 class="d-flex justify-content-between align-items-center mb-3">
               <span class="text-muted"> Order No : {{ $order->order_number }}</span>
               <div>
-                <a href="{{ route('order.inv', $order->id) }}" class="text-strong mr-5" style="cursor: pointer;"> <i class="fa fa-print"></i> View Invoice </a>
+                <a href="{{ route('order.inv', $order->id) }}" class="text-muted text-strong mr-5" style="cursor: pointer;"> <i class="fa fa-print"></i> View Invoice </a>
                 <span class="badge  badge-secondary badge-pill">{{ $order->created_at->format('m-d-Y H:i:s') }} (IST)</span>
               </div>
             </h5>
@@ -61,8 +61,8 @@
                 @endphp
                 <li class="list-group-item d-flex justify-content-between lh-condensed order-table">
                   <img src="{{ $image_url }}" title="{{ $item->name }}" alt="{{ $item->name }}" style="width: 160px; height:160px;" class="mr-4">
-                  <div class="product-details" style="margin-right: 134px">
-                    <h6 class="my-0 f-18 p-name" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
+                  <div class="product-details">
+                    <h6 class="my-0 f-18 p-name text-muted" title="{{ $item->name }}">{{ Str::words($item->name, 10, '...') }}</h6>
                     @if (count($attributes) > 0)
                       <div class="options">
                         @foreach ($attributes as $key => $attribute)
@@ -76,47 +76,47 @@
                       </div>
                     @endif
 
-                    <small class="text-muted f-12">SKU : <b>{{ $sku->sku }}</b> </small>
+                    <small class="text-muted f-12">SKU : {{ $sku->sku }} </small>
                     <br>
                     <small class="text-muted f-12">QTY : {{ str_replace('.00', ' ', $qty) }} </small>
                     <br>
                     <small class="text-muted f-12">PRICE : {!! Helper::showPrice($raw_data['qty_price'] ?? 0, $order->currency, $order->currency) !!}</small>
 
 
-                    @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['order_has_gift']) && isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
+                    @if ((isset($raw_data['notes']) && $raw_data['notes'] != '') || (isset($raw_data['gift_message']) && $raw_data['gift_message'] != ''))
                       <hr>
                       @if (isset($raw_data['notes']) && $raw_data['notes'] != '')
-                        <small class="text-muted" style="margin-top: 5px;"><span class="text-uppercase">Notes</span> : {{ $raw_data['notes'] ?? '' }}</small><br>
+                        <small class="text-muted f-12" style="margin-top: 5px;"><span class="text-uppercase">Notes</span> : {{ $raw_data['notes'] ?? '' }}</small><br>
                       @endif
 
-                      @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'Yes')
-                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Order Has Gift </span> : <span class="mx-2 dot bg-success"></span> Price does not display</small>
+                      {{-- @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'Yes')
+                        <small class="text-muted f-12" style="margin-top: 3px;"><span class="text-uppercase">Order Has Gift </span> : <span class="mx-2 dot bg-success"></span> Price does not display</small>
                         <br>
                       @endif
 
                       @if (isset($raw_data['order_has_gift']) && $raw_data['order_has_gift'] == 'No')
-                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift :</span><span class="mx-2 dot bg-danger"></span></small>
+                        <small class="text-muted f-12" style="margin-top: 3px;"><span class="text-uppercase">This Order Has Gift :</span><span class="mx-2 dot bg-danger"></span></small>
                         <br>
-                      @endif
+                      @endif --}}
 
                       @if (isset($raw_data['gift_message']) && $raw_data['gift_message'] != '')
-                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Gift Message</span> : {{ $raw_data['gift_message'] ?? '' }}</small>
+                        <small class="text-muted f-12" style="margin-top: 3px;"><span class="text-uppercase">Gift Message</span> : {{ $raw_data['gift_message'] ?? '' }}</small>
                         <br>
                       @endif
                       @if (isset($raw_data['optional_note']) && $raw_data['optional_note'] != '')
-                        <small class="text-muted" style="margin-top: 3px;"><span class="text-uppercase">Optional Note </span>: {{ $raw_data['optional_note'] ?? '' }}</small>
+                        <small class="text-muted f-12" style="margin-top: 3px;"><span class="text-uppercase">Optional Note </span>: {{ $raw_data['optional_note'] ?? '' }}</small>
                         <br>
                       @endif
                     @endif
                   </div>
                   @if (in_array($order->order_status, ['order_placed', 'pick_not_receive', 'work_in_progress', 'correction']) && !$item->images->count() > 0)
                     <div data-url="{{ route('cart.load.popup.ordered', ['item' => $item->id]) }}" class="text-center load-image-popup">
-                      @include('svg.upload', ['width' => '30px'])
+                      @include('svg.upload', ['width' => '20px'])
                     </div>
                   @endif
                   @if ($item->images->count())
                     <div class="d-flex flex-column align-items-center">
-                      @include('svg.right', ['width' => '30px'])
+                      @include('svg.right', ['width' => '20px'])
                       <span class="text-success text-center" style="font-size: 11px;line-height:initial">
                         you have rich maximum limit of upload
                       </span>
@@ -127,30 +127,30 @@
               @if ($order->subtotal)
                 <li class="list-group-item d-flex justify-content-between lh-condensed s-total">
                   <div class="offset-7">
-                    <h6 class="my-0">Subtotal</h6>
+                    <small class="text-muted f-12 my-0">Subtotal</small>
                   </div>
-                  <span class="text-muted ">{!! Helper::showPrice($order->subtotal, $order->currency) !!}</span>
+                  <span class="text-muted f-12">{!! Helper::showPrice($order->subtotal, $order->currency) !!}</span>
                 </li>
               @endif
 
               @if ($order->discount && $order->discount > 0)
                 <li class="list-group-item d-flex justify-content-between lh-condensed discount">
                   <div class="offset-7">
-                    <h6 class="my-0">Discount </h6>
+                    <small class="text-muted f-12 my-0">Discount</small>
                     @if ($order->discount_code)
-                      <span> Coupon Code : {{ $order->discount_code }} </span>
+                      <span class="text-muted"> Coupon Code : {{ $order->discount_code }} </span>
                     @endif
                   </div>
-                  <span class="text-muted ">{!! Helper::showPrice($order->discount, $order->currency) !!}</span>
+                  <small class="text-muted ">{!! Helper::showPrice($order->discount, $order->currency) !!}</small>
                 </li>
               @endif
 
               @if ($order->shipping_charge)
                 <li class="list-group-item d-flex justify-content-between lh-condensed shipping">
                   <div class="offset-7">
-                    <h6 class="my-0">Shipping charge</h6>
+                    <small class="text-muted my-0">Shipping charge</small>
                   </div>
-                  <span class="text-muted ">{!! Helper::showPrice($order->shipping_charge, $order->currency) !!}</span>
+                  <small class="text-muted ">{!! Helper::showPrice($order->shipping_charge, $order->currency) !!}</small>
                 </li>
               @endif
 
@@ -158,9 +158,9 @@
               @if ($order->total)
                 <li class="list-group-item d-flex justify-content-between lh-condensed total">
                   <div class="offset-7">
-                    <h6 class="my-0">Grand Total</h6>
+                    <small class="my-0 text-muted">Grand Total</small>
                   </div>
-                  <span class="text-muted "><b> {!! Helper::showPrice($order->total ?? 0, $order->currency) !!}</b></span>
+                  <small class="text-muted "><b> {!! Helper::showPrice($order->total ?? 0, $order->currency) !!}</b></small>
                 </li>
               @endif
 
@@ -299,9 +299,7 @@
 
           </div>
           <div class="col-md-4 ">
-
-
-            <h5 class="card-title w-100 text-muted my-3">Shipping Address</h5>
+            <h5 class="card-title w-100 text-muted mb-3">Shipping Address</h5>
             <div class="card shadow-none border">
               <div class="card-body">
                 @if ($shipping->email)
@@ -354,11 +352,14 @@
                 <span class="text-muted "> Transaction Id </span> <br>
                 <span class="text-muted"> {{ $order->transaction_id ?? '------------' }} </span> <br>
 
+
+                @if ($order->order_status == 'delivered')
                 <hr>
-                <span class="text-muted "> Delivery Details </span> <br>
-                <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
-                <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
-                <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
+                  <span class="text-muted "> Delivery Details </span> <br>
+                  <span class="text-muted">Delivery Date : {{ isset($order->deleverd_date) ? date('F j, Y', strtotime($order->deleverd_date)) : '' }} </span> <br>
+                  <span class="text-muted">Courier Provider : {{ $order->deleverd_to_name }} </span> <br>
+                  <span class="text-muted">Tracking Number : {{ $order->tracking_number }} </span> <br>
+                @endif
               </div>
             </div>
 
@@ -386,6 +387,10 @@
   <style>
     a.lezada-button {
       padding: 5px 25px;
+    }
+
+    .text-muted {
+      color: #1b1b1c !important;
     }
 
     #my-dropzone .message {

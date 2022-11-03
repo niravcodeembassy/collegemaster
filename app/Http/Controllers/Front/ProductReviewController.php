@@ -34,7 +34,7 @@ class ProductReviewController extends Controller
 
   public function reviewList(Request $request, $id)
   {
-    $review = ProductReview::with('user')->where('product_id', $id)->whereNull('is_active')->paginate(2);
+    $review = ProductReview::with('user')->where('product_id', $id)->whereNull('is_active')->orderBy('created_at', 'Desc')->paginate(2);
     if ($request->ajax()) {
       $view = view('frontend.product.partial.review_data', ['review' => $review])->render();
       return response()->json(['html' => $view]);

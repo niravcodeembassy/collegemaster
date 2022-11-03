@@ -7,7 +7,7 @@
 @endpush
 @push('style')
   <style>
-    tbody td {
+    .table tbody td {
       text-align: center;
     }
 
@@ -50,6 +50,10 @@
     span.order_count {
       display: contents;
     }
+
+    .main_invoice {
+      display: none !important;
+    }
   </style>
 @endpush
 @push('js')
@@ -89,6 +93,8 @@
       </div>
     </div>
   @endif
+
+  <div id="load-order-form"></div>
 
   <div class="row">
     <div class="col-sm-12">
@@ -152,6 +158,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 @endpush
 @push('js')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js" integrity="sha512-d5Jr3NflEZmFDdFHZtxeJtBzk0eB+kkRXWFQqEc1EKmolXjHm2IKCA7kTvXBNjIYzjXfD5XzIjaaErpkZHCkBg==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 @endpush
@@ -304,6 +311,25 @@
       });
 
 
+      $(document).on('click', '.printOrder', function(e) {
+        e.preventDefault();
+        var el = $(this);
+        var url = el.attr('href');
+
+        $.ajax({
+          type: "get",
+          url: url,
+          data: {}
+        }).always(function(respons) {}).done(function(respons) {
+          $('#load-order-form').html(respons.html);
+          const a = $('#order-page').printThis({
+            importStyle: true,
+            beforePrintEvent: function(a) {}
+          });
+        }).fail(function(respons) {
+          console.log(respons);
+        });
+      });
     });
   </script>
 @endpush

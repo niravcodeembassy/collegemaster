@@ -1,23 +1,25 @@
 <div class="border">
   <div class="main p-4">
-    <div class="customer {{ $review->count() > 0 ? 'border-bottom' : '' }}">
-      <h3>Customer Reviews</h3>
-      <div class="pb-bottom">
-        <span>
-          @php
-            $r = (round($review_rating, 1) * 100) / 500;
-            $rating_percentage = $r * 100;
-          @endphp
+    <div class="customer row  {{ $review->count() > 0 ? 'border-bottom' : '' }}">
+      <div class="col-md-5">
+        <h3>Customer Reviews</h3>
+        <div class="pb-bottom display-flex ">
+          <span>
+            @php
+              $r = (round($review_rating, 1) * 100) / 500;
+              $rating_percentage = $r * 100;
+            @endphp
 
-          <div class="rating-box">
-            <div class="rating" style="width:{{ $rating_percentage }}%;"></div>
-          </div>
-          <span class="font-weight-bold">({{ round($review_rating, 1) }})</span>
-          Based on {{ $product_review->count() }} reviews
-        </span>
-        <div class="shop-product__buttons float-right">
-          <a class="lezada-button lezada-button--medium review_btn" data-toggle="collapse" href="#reviewForm" role="button" aria-expanded="false" aria-controls="collapseExample">WRITE A REVIEW</a>
+            <div class="rating-box">
+              <div class="rating" style="width:{{ $rating_percentage }}%;"></div>
+            </div>
+            <span class="font-weight-bold">({{ round($review_rating, 1) }})</span>
+            Based on {{ $product_review->count() }} reviews
+          </span>
         </div>
+      </div>
+      <div class="col-md-4 mt-lg-3 mt-sm-0">
+        <a class="lezada-button lezada-button--medium review_btn" data-toggle="collapse" href="#reviewForm" role="button" aria-expanded="false" aria-controls="collapseExample">WRITE A REVIEW</a>
       </div>
     </div>
 

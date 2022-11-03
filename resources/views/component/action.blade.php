@@ -92,7 +92,7 @@
                                     @endif
                                         data-id="{{ $item->get('id',null) }}"
                                         data-url="{{ $item->get('action' , 'javaqscrip:void(0)') }}"
-                                        href="{{ $item->get('action' , 'javaqscrip:void(0)') }}"
+                                        href="{{ $item->get('action' , 'javaqscrip:void(0)') }}" target="{{$item->get('page_target','_self')}}"
                                         @if($item->get('attrs' ,null))
                                             @foreach ($item->get('attrs') as $key => $attr)
                                                 {{$key}}="{{$attr}}"

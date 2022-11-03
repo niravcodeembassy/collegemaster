@@ -24,7 +24,7 @@ class CustomerController extends Controller
   {
 
     // Listing colomns to show
-    $columns = array('name', 'email', 'phone', 'country_id', 'created_at', 'created_at', 'orders_count', 'action');
+    $columns = array('name', 'email', 'phone', 'country_id', 'created_at', 'created_at', 'orders_count', 'wishlist_count', 'action');
 
     $totalData = User::where('is_admin', 0)->count(); // datata table count
 
@@ -38,7 +38,7 @@ class CustomerController extends Controller
 
     // DB::enableQueryLog();
     // genrate a query
-    $customcollections = User::where('is_admin', 0)->withCount('orders')->when($search, function ($query, $search) {
+    $customcollections = User::where('is_admin', 0)->withCount('orders', 'wishlist')->when($search, function ($query, $search) {
       return $query->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%")->orWhere('phone', 'LIKE', "%{$search}%");
     });
 
@@ -61,6 +61,7 @@ class CustomerController extends Controller
       $row['created_at']  = date("d-m-Y", strtotime($item->created_at));
       $row['time']  = date("H:i:s", strtotime($item->created_at));
       $row['order_status'] =  '<i class="fa fa-truck f-18 px-2"></i>' . $item->orders_count;
+      $row['wishlist'] =  '<i class="fa fa-heart f-18 px-2"></i>' . $item->wishlist_count;
       $row['status'] = $this->status($item->is_active, $item->id, route('admin.customer.status'));
       $row['action'] = $this->action([
         collect([
@@ -89,7 +90,14 @@ class CustomerController extends Controller
     $this->data['title'] = 'Customer';
     $this->data['customer'] = User::with(['orders' => function ($q) {
       $q->orderBy('id', 'DESC');
-    }])->findOrfail($id);
+    }], 'wishlist.variant')->findOrfail($id);
+
+    // $this->data['order'] = User::with(['orders' => function ($q) {
+    //   $q->orderBy('id', 'DESC');
+    // }])->paginate('5');
+
+    // $this->data['wishlist'] = User::with('wishlist')->paginate('5');
+
     return view('admin.customer.view', $this->data);
   }
 

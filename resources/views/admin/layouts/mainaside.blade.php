@@ -125,11 +125,14 @@
           </p>
         </a>
       </li>
+      @php
+        $order = App\Model\Order::where('order_status', 'order_placed')->count();
+      @endphp
       <li class="nav-item">
         <a href="{{ route('admin.order.index', ['type' => 'online']) }}" class="nav-link  {{ Helper::isActive(['order.*']) }}">
           <i class="px-1  nav-icon f-18 fa fa fa-shopping-bag d-inline-block"></i>
           <p class="align-middle">
-            Order
+            Order <span class="badge badge-sm badge-danger mx-2 p-1 text-center">{{ $order }}</span>
           </p>
         </a>
       </li>

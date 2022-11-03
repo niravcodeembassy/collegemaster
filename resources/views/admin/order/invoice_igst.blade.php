@@ -269,7 +269,7 @@
         }
       });
     });
-
+    
     $('.printOrder').on('click', function(e) {
       const a = $('#order-page').printThis({
         importStyle: true,
