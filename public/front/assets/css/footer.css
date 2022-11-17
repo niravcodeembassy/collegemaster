@@ -2,7 +2,8 @@ footer{display:inline-block;width:100%}.newsletter{background:#353535;padding:40
 .footer-bottom {
   padding: 10px 0;
   background-color: #353535;
-  font-size: 17px;
+  /* font-size: 17px; */
+  font-size: 15px;
 }
 .footer-nav-container nav ul li {
   padding: 1px !important;
@@ -184,5 +185,12 @@ h4{
     }
     .f-50{
       flex-basis: 54%;
+    }
+  }
+
+
+@media only screen and (max-width: 600px) {
+    .newsletter .left h4{
+      text-align: center;
     }
   }

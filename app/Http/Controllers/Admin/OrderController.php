@@ -764,7 +764,6 @@ class OrderController extends Controller
   public function orderPdf($id)
   {
     $data =  $this->invoiceData($id);
-
     $html = view('admin.order.invoice', [
       'order' => $data['order'],
       'setting' => $data['setting'],

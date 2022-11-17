@@ -1,109 +1,106 @@
 @extends('frontend.layouts.app')
 
 @push('css')
-  <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/assets/css/testimonial.css') }}">
 @endpush
 
 @php
-  $cat = [
-      [
-          'slug' => 'birthday-gifts',
-          'name' => 'Birthday Gifts',
-          'code' => 'NC',
-      ],
-      [
-          'slug' => 'sports-gifts',
-          'name' => 'Sport Collage',
-          'code' => 'SC',
-      ],
-      [
-          'slug' => 'pet-gifts',
-          'name' => 'Pet Collage',
-          'code' => 'PC',
-      ],
-      [
-          'slug' => 'custom-map-gifts',
-          'name' => 'Photo Mosaic',
-          'code' => 'MC',
-      ],
-      [
-          'slug' => 'custom-gifts',
-          'name' => 'Custom Collage',
-          'code' => 'CC',
-      ],
-      [
-          'slug' => 'latter-gifts',
-          'name' => 'Latter Collage',
-          'code' => 'LC',
-      ],
-  ];
+    $cat = [
+        [
+            'slug' => 'birthday-gifts',
+            'name' => 'Birthday Gifts',
+            'code' => 'NC',
+        ],
+        [
+            'slug' => 'sports-gifts',
+            'name' => 'Sport Collage',
+            'code' => 'SC',
+        ],
+        [
+            'slug' => 'pet-gifts',
+            'name' => 'Pet Collage',
+            'code' => 'PC',
+        ],
+        [
+            'slug' => 'custom-map-gifts',
+            'name' => 'Photo Mosaic',
+            'code' => 'MC',
+        ],
+        [
+            'slug' => 'custom-gifts',
+            'name' => 'Custom Collage',
+            'code' => 'CC',
+        ],
+        [
+            'slug' => 'latter-gifts',
+            'name' => 'Latter Collage',
+            'code' => 'LC',
+        ],
+    ];
 
-  $category_list = [];
+    $category_list = [];
 
-  foreach ($cat as $key => $value) {
-      $category_list[] = [
-          '@type' => 'DefinedTerm',
-          'name' => $value['name'],
-          'termCode' => $value['code'],
-          'url' => route('category.product', $value['slug']),
-      ];
-  }
+    foreach ($cat as $key => $value) {
+        $category_list[] = [
+            '@type' => 'DefinedTerm',
+            'name' => $value['name'],
+            'termCode' => $value['code'],
+            'url' => route('category.product', $value['slug']),
+        ];
+    }
 
-  $schema_site_link = [
-      '@context' => 'https://schema.org/',
-      '@type' => 'WebSite',
-      'name' => env('APP_NAME'),
-      'url' => env('APP_URL'),
-      'potentialAction' => [
-          '@type' => 'SearchAction',
-          'target' => route('category.product', 'all') . '?term={search_term_string}',
-          'query-input' => 'required name=search_term_string',
-      ],
-  ];
+    $schema_site_link = [
+        '@context' => 'https://schema.org/',
+        '@type' => 'WebSite',
+        'name' => env('APP_NAME'),
+        'url' => env('APP_URL'),
+        'potentialAction' => [
+            '@type' => 'SearchAction',
+            'target' => route('category.product', 'all') . '?term={search_term_string}',
+            'query-input' => 'required name=search_term_string',
+        ],
+    ];
 
-  $review_schema = Schema::reviewSchema();
-  $schema_organization = Schema::organizationSchema();
-  $schema_local = Schema::localSchema();
+    $review_schema = Schema::reviewSchema();
+    $schema_organization = Schema::organizationSchema();
+    $schema_local = Schema::localSchema();
 
-  $schema_site = json_encode($schema_site_link, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-  $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-  $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-  $schema_review = json_encode($review_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $schema_site = json_encode($schema_site_link, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $schema_organization = json_encode($schema_organization, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $schema_local = json_encode($schema_local, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $schema_review = json_encode($review_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-  $schema = [$schema_site, $schema_organization, $schema_local, $schema_review];
+    $schema = [$schema_site, $schema_organization, $schema_local, $schema_review];
 @endphp
 
 
 @section('schema')
-  @foreach ($schema as $key => $list)
-    <x-schema>
-      {!! $list !!}
-    </x-schema>
-  @endforeach
+    @foreach ($schema as $key => $list)
+        <x-schema>
+            {!! $list !!}
+        </x-schema>
+    @endforeach
 @endsection
 
 @section('content')
-
-
-
-
-  <!--=============================================
-                                                                                                                                                                                                                                                                   =            slider area         =
-                                                                                                                                                                                                                                                                   =============================================-->
-  @if ($banner->count())
-    <!--  Demos -->
-    {{-- <section class="slider-area mb-50"> --}}
-    <div class="slider-area">
-      <div class="fadeOut owl-carousel owl-theme">
-        @foreach ($banner as $item)
-          <div class="item">
-            <img src="{{ asset('storage/' . $item->slider_img) }}" alt="{{ $item->title ?? '' }}" title="{{ $item->title ?? '' }}">
-          </div>
-        @endforeach
-      </div>
-    </div>
-    {{-- </section> --}}
-    {{-- <div class="slider-area mb-50">
+    <!--=============================================
+                                                                                                                                                                                                                                                                                                                                               =            slider area         =
+                                                                                                                                                                                                                                                                                                                                               =============================================-->
+    @if ($banner->count())
+        <!--  Demos -->
+        {{-- <section class="slider-area mb-50"> --}}
+        <div class="slider-area">
+            <div class="fadeOut owl-carousel owl-theme">
+                @foreach ($banner as $item)
+                    <div class="item">
+                        <img src="{{ asset('storage/' . $item->slider_img) }}" alt="{{ $item->title ?? '' }}"
+                            title="{{ $item->title ?? '' }}">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        {{-- </section> --}}
+        {{-- <div class="slider-area mb-50">
   <div id="rev_slider_17_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-7"
     data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
     <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
@@ -183,36 +180,36 @@
   </div><!-- END REVOLUTION SLIDER -->
 </div> --}}
 
-    <!--=====  End of slider area  ======-->
-  @endif
-  <div class="icon-box-area icon-box-area--feature-icon pt-50 pb-50 mb-50">
-    <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <!--=======  section title  =======-->
-            <div class="section-title section-title--one text-center">
-              <h2 class="text-uppercase font-weight-bold quality_h3">We Guarantee you'll love it</h2>
-              <span class="text-muted quality_span">Quality you can trust!</span>
-              <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon">
-                  <i class="fa fa-circle" aria-hidden="true"></i>
+        <!--=====  End of slider area  ======-->
+    @endif
+    <div class="icon-box-area icon-box-area--feature-icon pt-50 pb-50 mb-50">
+        <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!--=======  section title  =======-->
+                        <div class="section-title section-title--one text-center">
+                            <h2 class="text-uppercase font-weight-bold quality_h3">We Guarantee you'll love it</h2>
+                            <span class="text-muted quality_span">Quality you can trust!</span>
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon">
+                                    <i class="fa fa-circle" aria-hidden="true"></i>
+                                </div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                        </div>
+                        <!--=======  End of section title  =======-->
+                    </div>
                 </div>
-                <div class="divider-custom-line"></div>
-              </div>
             </div>
-            <!--=======  End of section title  =======-->
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="container wide">
-      <div class="row">
-        <div class="col-lg-12">
-          <!--=======  product carousel  =======-->
-          <div class="row website_trust lezada-slick-slider trust_slider product-carousel product-carousel--smarthome"
-            data-slick-setting='{
+        <div class="container wide">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--=======  product carousel  =======-->
+                    <div class="row website_trust lezada-slick-slider trust_slider product-carousel product-carousel--smarthome"
+                        data-slick-setting='{
             "slidesToShow": 4,
             "slidesToScroll": 2,
             "arrows": false,
@@ -223,7 +220,7 @@
             "prevArrow": {"buttonClass": "slick-prev", "iconClass": "ti-angle-left" },
             "nextArrow": {"buttonClass": "slick-next", "iconClass": "ti-angle-right" }
           }'
-            data-slick-responsive='[
+                        data-slick-responsive='[
             {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
             {"breakpoint":1299, "settings": {"slidesToShow": 3, "arrows": false} },
             {"breakpoint":1199, "settings": {"slidesToShow": 3, "arrows": false} },
@@ -233,166 +230,211 @@
             {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000, "arrows": false} }
           ]'>
 
-            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" alt="ship" title="ship" class="img-fluid">
-              <h3>Ready to ship within 48 hours</h3>
-              <p>All Our custom products are ready to ship within 48 hours.</p>
-            </div>
+                        <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
+                            <img src="{{ asset('front/assets/images/website_icon/ship.png') }}" alt="ship"
+                                title="ship" class="img-fluid">
+                            <h3>Ready to ship within 48 hours</h3>
+                            <p>All Our custom products are ready to ship within 48 hours.</p>
+                        </div>
 
-            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/print.png') }}" alt="print" title="print" class="img-fluid">
-              <h3>Long-Lasting Prints</h3>
-              <p>you are assured to maintain and preserve those special moments for a longer time</p>
-            </div>
+                        <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
+                            <img src="{{ asset('front/assets/images/website_icon/print.png') }}" alt="print"
+                                title="print" class="img-fluid">
+                            <h3>Long-Lasting Prints</h3>
+                            <p>you are assured to maintain and preserve those special moments for a longer time</p>
+                        </div>
 
-            <div class="trust_icon col-lg-10 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" alt="sold" title="sold" class="img-fluid">
-              <h3>Over 25000+ Prints sold</h3>
-              <p>Since 2019, we've sold 25k custom photo gifts to worldwide.</p>
-            </div>
+                        <div class="trust_icon col-lg-10 col-xl-9 col-md-12 p-0">
+                            <img src="{{ asset('front/assets/images/website_icon/sold.png') }}" alt="sold"
+                                title="sold" class="img-fluid">
+                            <h3>Over 25000+ Prints sold</h3>
+                            <p>Since 2019, we've sold 25k custom photo gifts to worldwide.</p>
+                        </div>
 
-            <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
-              <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" alt="guarntee" title="guarntee" class="img-fluid">
-              <h3>100% Love-it Guarantee</h3>
-              <p>Love it or send it back! We guarantee a full refund with no hassle.</p>
-            </div>
-          </div>
-
-          <!--=======  End of single product  =======-->
-        </div>
-
-        <!--=======  End of product carousel  =======-->
-      </div>
-    </div>
-  </div>
-
-  @if ($commonBanner->count() > 0)
-    <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <!--=======  section title  =======-->
-            <div class="section-title section-title--one text-center">
-              <h1 class="text-uppercase font-weight-bold quality_h3">Clever & unique ideas</h1>
-              <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon">
-                  <i class="fa fa-circle" aria-hidden="true"></i>
-                </div>
-                <div class="divider-custom-line"></div>
-              </div>
-              <p class="idea_content d-xl-block d-none">
-                <span>Collage Master is a one-of-a-kind gifting service that has revolutionized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master</span>
-                <br /><span> refined this concept and added our own twist to it. We have come up with a new way of capturing your memories and portraying them</span><br />
-                <span>in a beautiful manner. We are more than just a collage-making service.</span>
-              </p>
-              <p class="idea_content d-xl-none">
-                Collage Master is a one-of-a-kind gifting service that has revolutinized the art of gifting. Gifting pictures has been an age-old concept but we at Collage Master
-                refined this concept and added our own twist to it. We have come up with a new way of capturing your memories and portraying them
-                in a beautiful manner. We are more than just a collage-making service.
-              </p>
-            </div>
-            <!--=======  End of section title  =======-->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hover-banner-area mb-65 mb-md-45 mb-sm-45">
-      <div class="container wide">
-        <div class="row">
-          @foreach ($commonBanner as $item)
-            <div class="col-xl-3 col-lg-4 col-sm-6 col-md-6 mb-30 banner_side">
-              <!--=======  single category  =======-->
-              <div class="single-category single-category--three">
-                <!--=======  single category image  =======-->
-                <div class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
-                  <img src="{{ $item->banner_image }}" class="img-fluid" alt="{{ $item->caption1 ?? '' }}" title="{{ $item->caption1 ?? '' }}">
-                </div>
-                <!--=======  single category content  =======-->
-                <div class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">
-                  <div class="title">
-                    <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }} <span>{{ $item->caption2 ?? '' }}</span></a></p>
-                    @if ($item->url)
-                      <a class="lezada-button caption_button lezada-button--custom" href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
-                    @endif
-                  </div>
-                </div>
-                <!--=======  banner-link  =======-->
-                @if ($item->url)
-                  <a href="{{ $item->url }}" class="banner-link"></a>
-                @endif
-                <!--=======  End of banner-link  =======-->
-              </div>
-              <!--=======  End of single category  =======-->
-            </div>
-          @endforeach
-        </div>
-      </div>
-    </div>
-  @endif
-
-  @php
-    $dayofdeal = App\Model\DealOfDay::first();
-    $date = explode(' ', $dayofdeal->end_time)[0];
-    $end_date = explode('-', $date);
-  @endphp
-
-  @if ($dayofdeal != null && $dayofdeal->status == 1)
-    <div class="countdown-timer-area mb-100 countdown-background countdown-bg-4 pt-30 pb-30">
-      <div class="container wide">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row align-items-center">
-              <div class="col-lg-4 col-xl-5">
-                <div class="countdown-image text-center">
-                  <img src="{{ env('APP_URL') . '/storage/' . $dayofdeal->bg_img }}" class="img-fluid" alt="deal" title="deal">
-                </div>
-              </div>
-              <div class=" col-12 col-xl-7 col-lg-8 mt-4">
-                <div class="countdown-wrapper text-center">
-                  <h3>{{ $dayofdeal->title }}</h3>
-                  <div class="deal-countdown" data-countdown="{{ $end_date[0] }}/{{ $end_date[1] }}/{{ $end_date[2] }}">
-                    <div class="single-countdown">
-                      <span class="single-countdown__time">00</span>
-                      <span class="single-countdown__text">Days</span>
+                        <div class="trust_icon col-lg-12 col-xl-9 col-md-12 p-0">
+                            <img src="{{ asset('front/assets/images/website_icon/guarntee.png') }}" alt="guarntee"
+                                title="guarntee" class="img-fluid">
+                            <h3>100% Love-it Guarantee</h3>
+                            <p>Love it or send it back! We guarantee a full refund with no hassle.</p>
+                        </div>
                     </div>
-                    <div class="single-countdown">
-                      <span class="single-countdown__time">00</span>
-                      <span class="single-countdown__text">Hours</span>
-                    </div>
-                    <div class="single-countdown">
-                      <span class="single-countdown__time">00</span>
-                      <span class="single-countdown__text">Minutes</span>
-                    </div>
-                    <div class="single-countdown">
-                      <span class="single-countdown__time">00</span>
-                      <span class="single-countdown__text">Seconds</span>
-                    </div>
-                  </div>
-                  @if ($dayofdeal->btn_url != null)
-                    <a href="{{ $dayofdeal->btn_url }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
-                      <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
-                  @else
-                    @if ($dayofdeal->product_id != null)
-                      @php
-                        $product = App\Model\Product::find($dayofdeal->product_id);
-                        $routeParameter = Helper::productRouteParameter($product);
-                      @endphp
-                      <a href="{{ route('product.view', $product->slug) }}" class="lezada-button lezada-button--medium lezada-button--icon--left">
-                        <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
-                    @endif
-                  @endif
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  @endif
-  <!--=====  End of banner category area  ======-->
 
-  {{-- <!--=============================================
+                    <!--=======  End of single product  =======-->
+                </div>
+
+                <!--=======  End of product carousel  =======-->
+            </div>
+        </div>
+    </div>
+
+    @if ($commonBanner->count() > 0)
+        <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!--=======  section title  =======-->
+                        @if (isset($frontsetting->sec_one_title))
+                            <div class="section-title section-title--one text-center">
+                                @if ($frontsetting->sec_one_title)
+                                    <h1 class="text-uppercase font-weight-bold quality_h3">
+                                        {{ $frontsetting->sec_one_title }}
+                                    </h1>
+                                @endif
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon">
+                                        <i class="fa fa-circle" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                @if ($frontsetting->sec_one_description)
+                                    <p class="idea_content sec_one_description">
+                                        <span>{{ $frontsetting->sec_one_description }}</span>
+                                    </p>
+                                @endif
+                            </div>
+                        @endif
+                        <!--=======  End of section title  =======-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hover-banner-area mb-65 mb-md-45 mb-sm-45">
+            <div class="container wide">
+                <div class="row">
+                    @foreach ($commonBanner as $item)
+                        <div class="col-xl-3 col-lg-4 col-sm-6 col-md-6 mb-30 banner_side">
+                            <!--=======  single category  =======-->
+                            <div class="single-category single-category--three">
+                                <!--=======  single category image  =======-->
+                                <div
+                                    class="single-category__image single-category__image--three single-category__image--three--creativehome single-category__image--three--banner">
+                                    <img src="{{ $item->banner_image }}" class="img-fluid"
+                                        alt="{{ $item->caption1 ?? '' }}" title="{{ $item->caption1 ?? '' }}">
+                                </div>
+                                <!--=======  single category content  =======-->
+                                <div
+                                    class="single-category__content single-category__content--three single-category__content--three--creativehome  single-category__content--three--banner mt-25 mb-lg-0 mb-md-15 mb-sm-15">
+                                    <div class="title">
+                                        <p><a href="{{ $item->url }}">{{ $item->caption1 ?? '' }}
+                                                <span>{{ $item->caption2 ?? '' }}</span></a></p>
+                                        @if ($item->url)
+                                            <a class="lezada-button caption_button lezada-button--custom"
+                                                href="{{ $item->url }}">{{ $item->caption3 ?? '' }}</a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <!--=======  banner-link  =======-->
+                                @if ($item->url)
+                                    <a href="{{ $item->url }}" class="banner-link"></a>
+                                @endif
+                                <!--=======  End of banner-link  =======-->
+                            </div>
+                            <!--=======  End of single category  =======-->
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!--=======  section title  =======-->
+    @if (isset($frontsetting->sec_two_title))
+        <div class="section-title-container mb-30 mb-md-30 mb-sm-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title section-title--one text-center">
+                            @if ($frontsetting->sec_two_title)
+                                <h1 class="text-uppercase font-weight-bold quality_h3">{{ $frontsetting->sec_two_title }}
+                                </h1>
+                            @endif
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon">
+                                    <i class="fa fa-circle" aria-hidden="true"></i>
+                                </div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            @if ($frontsetting->sec_two_description)
+                                <p class="sec_two_description">
+                                    <span>{{ $frontsetting->sec_two_description }}</span>
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    <!--=======  End of section title  =======-->
+
+    @php
+        $dayofdeal = App\Model\DealOfDay::first();
+        $date = explode(' ', $dayofdeal->end_time)[0];
+        $end_date = explode('-', $date);
+    @endphp
+
+    @if ($dayofdeal != null && $dayofdeal->status == 1)
+        <div class="countdown-timer-area mb-100 countdown-background countdown-bg-4 pt-30 pb-30">
+            <div class="container wide">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-xl-5">
+                                <div class="countdown-image text-center">
+                                    <img src="{{ env('APP_URL') . '/storage/' . $dayofdeal->bg_img }}" class="img-fluid"
+                                        alt="deal" title="deal">
+                                </div>
+                            </div>
+                            <div class=" col-12 col-xl-7 col-lg-8 mt-4">
+                                <div class="countdown-wrapper text-center">
+                                    <h3>{{ $dayofdeal->title }}</h3>
+                                    <div class="deal-countdown"
+                                        data-countdown="{{ $end_date[0] }}/{{ $end_date[1] }}/{{ $end_date[2] }}">
+                                        <div class="single-countdown">
+                                            <span class="single-countdown__time">00</span>
+                                            <span class="single-countdown__text">Days</span>
+                                        </div>
+                                        <div class="single-countdown">
+                                            <span class="single-countdown__time">00</span>
+                                            <span class="single-countdown__text">Hours</span>
+                                        </div>
+                                        <div class="single-countdown">
+                                            <span class="single-countdown__time">00</span>
+                                            <span class="single-countdown__text">Minutes</span>
+                                        </div>
+                                        <div class="single-countdown">
+                                            <span class="single-countdown__time">00</span>
+                                            <span class="single-countdown__text">Seconds</span>
+                                        </div>
+                                    </div>
+                                    @if ($dayofdeal->btn_url != null)
+                                        <a href="{{ $dayofdeal->btn_url }}"
+                                            class="lezada-button lezada-button--medium lezada-button--icon--left">
+                                            <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
+                                    @else
+                                        @if ($dayofdeal->product_id != null)
+                                            @php
+                                                $product = App\Model\Product::find($dayofdeal->product_id);
+                                                $routeParameter = Helper::productRouteParameter($product);
+                                            @endphp
+                                            <a href="{{ route('product.view', $product->slug) }}"
+                                                class="lezada-button lezada-button--medium lezada-button--icon--left">
+                                                <i class="icon-left ion-ios-cart"></i> {{ $dayofdeal->btn_name }}</a>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    <!--=====  End of banner category area  ======-->
+
+    {{-- <!--=============================================
          =            section title  container      =
          =============================================-->
 <div class="section-title-container mb-70 mb-md-50 mb-sm-50">
@@ -449,9 +491,9 @@
     </div>
   </div>
 </div> --}}
-  <!--=====  End of product carousel container  ======-->
+    <!--=====  End of product carousel container  ======-->
 
-  {{-- <!--=============================================
+    {{-- <!--=============================================
          =            sofa banner rev         =
          =============================================-->
 @php
@@ -592,12 +634,12 @@ $lastBanner = $commonBanner->last();
   </div>
   <!-- END REVOLUTION SLIDER -->
 </div> --}}
-  {{-- <!--=====  End of sofa banner rev  ======--> --}}
+    {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
-  <!--=============================================
-                                                                                                                                                                                                                                                                           =            instagram slider area         =
-                                                                                                                                                                                                                                                                           =============================================-->
-  {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
+    <!--=============================================
+                                                                                                                                                                                                                                                                                                                                                       =            instagram slider area         =
+                                                                                                                                                                                                                                                                                                                                                       =============================================-->
+    {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-8 order-2 order-lg-1">
@@ -628,64 +670,61 @@ $lastBanner = $commonBanner->last();
     </div>
   </div>
 </div> --}}
-  <!--=====  End of instagram slider area  ======-->
+    <!--=====  End of instagram slider area  ======-->
 
-  <!--=====  Testimonial area  ======-->
+    <!--=====  Testimonial area  ======-->
 
-  @include('frontend.testimonial', [
-      'testimonial' => $testimonial,
-  ])
+    @include('frontend.testimonial', [
+        'testimonial' => $testimonial,
+    ])
 
-  <div class="text-center mb-60">
-    @if (isset($frontsetting->is_active) && $frontsetting->is_active == true)
-      <div>
-        {!! $frontsetting->trust_box ?? '' !!}
-      </div>
-    @endif
-  </div>
-
-
-
+    <div class="text-center mb-60">
+        @if (isset($frontsetting->is_active) && $frontsetting->is_active == true)
+            <div>
+                {!! $frontsetting->trust_box ?? '' !!}
+            </div>
+        @endif
+    </div>
 @endsection
 
 
 @push('js')
-  <link rel="stylesheet" href="{{ asset('front/assets/css/owl.carousel.min.css') }}">
-  <script src="{{ asset('front/assets/js/owl.carousel.js') }}"></script>
-  <link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/assets/css/owl.carousel.min.css') }}">
+    <script src="{{ asset('front/assets/js/owl.carousel.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
 
-  <script>
-    var owl = $('.owl-carousel');
-    owl.owlCarousel({
-      items: 1,
-      animateOut: 'slideOutUp',
-      animateIn: 'goDown',
-      loop: true,
-      autoplay: true,
-      autoplayTimeout: 5000,
-      // autoplayHoverPause: true,
-      navigation: false,
-      navigationText: false,
-      transitionStyle: "fade"
-    });
-    jQuery(document).ready(function($) {
-      $('.fadeOut').owlCarousel({
-        items: 1,
-        animateOut: 'fadeOut',
-        loop: true,
-        margin: 10,
-      });
-      $('.custom1').owlCarousel({
-        animateOut: 'slideOutDown',
-        animateIn: 'flipInX',
-        items: 1,
-        margin: 30,
-        stagePadding: 30,
-        smartSpeed: 450
-      });
-    });
-  </script>
-  {{-- <!-- Revolution Slider JS -->
+    <script>
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 1,
+            animateOut: 'slideOutUp',
+            animateIn: 'goDown',
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            // autoplayHoverPause: true,
+            navigation: false,
+            navigationText: false,
+            transitionStyle: "fade"
+        });
+        jQuery(document).ready(function($) {
+            $('.fadeOut').owlCarousel({
+                items: 1,
+                animateOut: 'fadeOut',
+                loop: true,
+                margin: 10,
+            });
+            $('.custom1').owlCarousel({
+                animateOut: 'slideOutDown',
+                animateIn: 'flipInX',
+                items: 1,
+                margin: 30,
+                stagePadding: 30,
+                smartSpeed: 450
+            });
+        });
+    </script>
+    {{-- <!-- Revolution Slider JS -->
 <script src="{{ asset('front/assets/revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
 <script src="{{ asset('front/assets/revolution/js/jquery.themepunch.tools.min.js') }}">
 </script>
@@ -703,6 +742,6 @@ $lastBanner = $commonBanner->last();
   src="{{ asset('front/assets/revolution/js/extensions/revolution.extension.navigation.min.js') }}"></script>
 <script type="text/javascript"
   src="{{ asset('front/assets/revolution/js/extensions/revolution.extension.parallax.min.js') }}"></script> --}}
-  <!--<script src="{{ asset('front/assets/js/main.js') }}"></script>-->
-  <!--  <script src="{{ asset('front/assets/js/plugins.js') }}"></script>-->
+    <!--<script src="{{ asset('front/assets/js/main.js') }}"></script>-->
+    <!--  <script src="{{ asset('front/assets/js/plugins.js') }}"></script>-->
 @endpush

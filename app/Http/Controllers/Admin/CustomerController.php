@@ -74,7 +74,6 @@ class CustomerController extends Controller
 
       $data[] = $row;
     }
-
     $json_data = array(
       "draw" => intval($request->input('draw')),
       "recordsTotal" => intval($totalData),

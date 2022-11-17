@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Support\Facades\DB;
 use App\Model\SubCategory;
+use App\Setting;
 
 class HomeController extends Controller
 {

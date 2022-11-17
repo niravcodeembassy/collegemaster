@@ -961,9 +961,13 @@
 
   /*----------  sidebar category dropdown  ----------*/
 
+  // var sidebarCategoryParent = $(
+  //   ".single-filter-widget--list--category li.has-children, .single-sidebar-widget--list--category li.has-children"
+  // );
   var sidebarCategoryParent = $(
-    ".single-filter-widget--list--category li.has-children, .single-sidebar-widget--list--category li.has-children"
+    ".single-filter-widget--list--category li.has-children"
   );
+
   sidebarCategoryParent.append('<a href="#" class="expand-icon">+</a>');
 
   var expandIcon = $(".expand-icon");

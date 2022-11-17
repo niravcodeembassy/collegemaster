@@ -100,6 +100,21 @@ class User extends Authenticatable implements MustVerifyEmail
     return 'https://ui-avatars.com/api/?name=' . $this->name;
   }
 
+  public function setFirstNameAttribute($value)
+  {
+    $this->attributes['first_name'] = strtolower($value);
+  }
+
+  public function setLastNameAttribute($value)
+  {
+    $this->attributes['last_name'] = strtolower($value);
+  }
+
+  public function setNameAttribute($value)
+  {
+    $this->attributes['name'] = strtolower($value);
+  }
+
   public function getFirstNameAttribute($value)
   {
     return ucwords($value);

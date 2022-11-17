@@ -408,6 +408,17 @@ p.idea_content{
   font-size: 14px;
 }
 
+p.sec_one_description{
+  max-width: 1035px;
+}
+
+p.sec_two_description{
+  margin-top:15px;
+  margin-bottom:10px;
+  text-align: justify;
+  font-size: 14px;
+}
+
 span.quality_span{
   font-size: 12px;
   line-height: 2px;

@@ -1177,7 +1177,7 @@ a.scroll-top:hover {
   top: 0;
   left: 0;
   width: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
   animation: 700ms ease-in-out 0s normal none 1 running fadeInDown;
   transition: 0.3s;
   z-index: 999;
@@ -9433,7 +9433,8 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 }
 .single-review__content {
   flex-basis: calc(100% - 70px);
-  padding-left: 30px;
+  /* padding-left: 30px; */
+  padding-left: 1.5rem;
 }
 .single-review__content .username {
   font-size: 18px;
@@ -11922,6 +11923,18 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 .compare-table .table tbody tr td.pro-dimensions {
   font-size: 15px;
   font-weight: 400;
+}
+
+.product-button-tab{
+      background-color: #222222;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+.product-button-tab.active{
+  color: #fff !important;
+  opacity: unset !important;
 }
 
 /*=====  End of 41. compare  ======*/

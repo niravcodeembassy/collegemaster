@@ -274,7 +274,7 @@ class ProductController extends Controller
 
     $global_review_avg = ProductReview::whereNull('is_active')->avg('rating');
     $global_review_count = ProductReview::whereNull('is_active')->count();
-    $review = ProductReview::where('product_id', $product->id)->whereNull('is_active')->with('user')->paginate(2);
+    $review = ProductReview::where('product_id', $product->id)->whereNull('is_active')->with('user')->orderBy('created_at', 'DESC')->paginate(2);
     $product_review = $product->product_review->whereNull('is_active');
     $review_rating = round($product_review->pluck('rating')->avg(), 1);
     $this->data['product_review'] = $product_review;
