@@ -84,8 +84,8 @@
 
 @section('content')
     <!--=============================================
-                                                                                                                                                                                                                                                                                                                                               =            slider area         =
-                                                                                                                                                                                                                                                                                                                                               =============================================-->
+                                                                                                                                                                                                                                                                                                                                                   =            slider area         =
+                                                                                                                                                                                                                                                                                                                                                   =============================================-->
     @if ($banner->count())
         <!--  Demos -->
         {{-- <section class="slider-area mb-50"> --}}
@@ -288,7 +288,7 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 @if ($frontsetting->sec_one_description)
-                                    <p class="idea_content sec_one_description">
+                                    <p class="idea_content sec_one_description mx-auto">
                                         <span>{{ $frontsetting->sec_one_description }}</span>
                                     </p>
                                 @endif
@@ -637,8 +637,8 @@ $lastBanner = $commonBanner->last();
     {{-- <!--=====  End of sofa banner rev  ======--> --}}
 
     <!--=============================================
-                                                                                                                                                                                                                                                                                                                                                       =            instagram slider area         =
-                                                                                                                                                                                                                                                                                                                                                       =============================================-->
+                                                                                                                                                                                                                                                                                                                                                           =            instagram slider area         =
+                                                                                                                                                                                                                                                                                                                                                           =============================================-->
     {{-- <div class="instagram-slider-area mb-100 mb-md-80 mb-sm-80">
   <div class="container">
     <div class="row align-items-center">

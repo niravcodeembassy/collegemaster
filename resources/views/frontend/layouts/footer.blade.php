@@ -30,7 +30,8 @@
 
 
     <div class="footer-top footer-container footer-one pt-70 pb-20 pt-sm-50">
-        <div class="logo d-sm-none d-flex justify-content-around">
+        <h3 class="text-center footer_heading text-uppercase">CHECK REVIEWS ON</h3>
+        <div class="logo d-sm-none d-flex justify-content-around mb-3">
             <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
                 <img class="img-fluid my-2" alt="google review" title="google review"
                     src="{{ asset('front/assets/images/mobile_icon/google.png') }}">

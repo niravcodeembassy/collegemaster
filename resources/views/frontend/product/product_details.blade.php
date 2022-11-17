@@ -989,7 +989,7 @@
                                         </div>
                                     </div>
                                     <div class="d-sm-none">
-                                        <div class="d-flex justify-content-between mb-4">
+                                        <div class="d-flex justify-content-around mb-4">
                                             <a class="product-button-tab mr-1" data-toggle="tab" href="#product-series-1"
                                                 role="tab" aria-selected="true">Description</a>
                                             <a class="product-button-tab mr-1" data-toggle="tab" href="#product-series-2"

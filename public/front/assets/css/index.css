@@ -410,6 +410,7 @@ p.idea_content{
 
 p.sec_one_description{
   max-width: 1035px;
+  white-space: pre-line;
 }
 
 p.sec_two_description{
@@ -417,6 +418,7 @@ p.sec_two_description{
   margin-bottom:10px;
   text-align: justify;
   font-size: 14px;
+  white-space: pre-line;
 }
 
 span.quality_span{

@@ -91,14 +91,94 @@ class HomeController extends Controller
     $six_month_revenue = $this->lastSixMonthRevenue();
     $day_wise_sale = $this->dayWiseSales();
     $day_wise_revenue = $this->dayWiseRevenue();
+    $monthWiseSaleTable = $this->monthWiseSale();
+    $dayWiseSaleTable = $this->dayWiseSaleTable();
 
     $this->data['sixMonthSale'] =  $six_month_sale;
     $this->data['sixMonthRevenue'] =  $six_month_revenue;
     $this->data['dayWiseSale'] =  $day_wise_sale;
     $this->data['dayWiseRevenue'] =  $day_wise_revenue;
+    $this->data['monthWiseSaleTable'] =  $monthWiseSaleTable;
+    $this->data['dayWiseSaleTable'] =  $dayWiseSaleTable;
 
     $this->data['countryWiseSale'] =  $countryWiseSale;
     return view('admin.home', $this->data);
+  }
+
+  public function dayWiseSaleTable()
+  {
+    $dayWiseSale = Order::select(
+      DB::raw('year(created_at) as year'),
+      DB::raw('month(created_at) as month'),
+      DB::raw('day(created_at) as day'),
+      DB::raw('sum(total) as price'),
+      DB::raw('COUNT(orders.id) AS total_order'),
+    )
+      ->where(DB::raw('date(created_at)'), '>=', Carbon::now()->subDays(12))
+      ->groupBy('year')
+      ->groupBy('month')
+      ->groupBy('day')
+      ->get()
+      ->toArray();
+    $dayWiseSale = collect($dayWiseSale);
+
+    $period = now()->subDays(11)->dayssUntil(now());
+    $data = [];
+    foreach ($period as $date) {
+      if ($dayWiseSale->where('year', $date->year)->where('month', $date->month)->where('day', $date->day)->count() > 0) {
+        $day_record = $dayWiseSale->where('year', $date->year)->where('month', $date->month)->where('day', $date->day)->first();
+        $data[] = [
+          "label" => $date->day . '-' . $date->shortMonthName . '-' . $date->year,
+          "order" => $day_record['total_order'],
+          "amount" => $day_record['price'],
+        ];
+      } else {
+        $data[] = [
+          "label" => $date->day . '-' . $date->shortMonthName . '-' . $date->year,
+          "order" => 0,
+          "amount" => 0.00,
+        ];
+      }
+    }
+    $data = array_reverse($data);
+    return $data;
+  }
+
+  public function monthWiseSale()
+  {
+    $monthWiseSale = Order::select(
+      DB::raw('year(created_at) as year'),
+      DB::raw('month(created_at) as month'),
+      DB::raw('sum(total) as price'),
+      DB::raw('COUNT(orders.id) AS total_order'),
+    )
+      ->where(DB::raw('date(created_at)'), '>=', Carbon::now()->startOfMonth()->subMonth(12))
+      ->groupBy('year')
+      ->groupBy('month')
+      ->get()
+      ->toArray();
+    $monthWiseSale = collect($monthWiseSale);
+
+    $period = now()->subMonths(11)->monthsUntil(now());
+    $data = [];
+    foreach ($period as $date) {
+      if ($monthWiseSale->where('year', $date->year)->where('month', $date->month)->count() > 0) {
+        $month_record = $monthWiseSale->where('year', $date->year)->where('month', $date->month)->first();
+        $data[] = [
+          "label" => $date->shortMonthName . '-' . $date->year,
+          "order" => $month_record['total_order'],
+          "amount" => $month_record['price'],
+        ];
+      } else {
+        $data[] = [
+          "label" => $date->shortMonthName . '-' . $date->year,
+          "order" => 0,
+          "amount" => 0.00,
+        ];
+      }
+    }
+    $data = array_reverse($data);
+    return $data;
   }
   public function saveVariantImages(Request $request)
   {
@@ -399,7 +479,7 @@ class HomeController extends Controller
         ];
     });
 
-    
+
     $weekMap = collect([
       0 => 'Mon',
       1 => 'Tue',
