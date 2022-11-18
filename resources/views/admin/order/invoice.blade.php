@@ -303,6 +303,13 @@
                                                             style="font-size: 23px;">{{ $data->optional_note ?? 'N/A' }}</span>
                                                         <br />
                                                     @endif
+                                                    @if (isset($data->notes) && $data->notes != '')
+                                                        <span class="pt-top text-danger"
+                                                            style="font-size: 23px;"><b>Personalization :</b></span>
+                                                        <span class="pt-top pt-left text-danger"
+                                                            style="font-size: 23px;">{{ $data->notes ?? 'N/A' }}</span>
+                                                        <br />
+                                                    @endif
                                                 </td>
                                             </tr>
 
