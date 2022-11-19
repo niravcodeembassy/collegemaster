@@ -30,7 +30,7 @@
 
 
     <div class="footer-top footer-container footer-one pt-70 pb-20 pt-sm-50">
-        <h3 class="text-center footer_heading text-uppercase">CHECK REVIEWS ON</h3>
+        <h3 class="text-center footer_heading text-uppercase d-sm-none">CHECK REVIEWS ON</h3>
         <div class="logo d-sm-none d-flex justify-content-around mb-3">
             <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
                 <img class="img-fluid my-2" alt="google review" title="google review"
@@ -204,7 +204,7 @@
                         </p>
                         <div class="d-flex">
                             <section class="f-50">
-                                <h3 class="footer_heading text-uppercase">Follow us</h3>
+                                <h3 class="footer_heading text-uppercase foo_hed_follow">Follow us</h3>
                                 <ul class="footer-links list-inline social-link">
                                     @if ($frontsetting->facebook)
                                         <li><a href="{{ $frontsetting->facebook }}"> <i
@@ -237,7 +237,7 @@
                             </section>
                             <section class="f-50-logo">
                                 <a href="{{ route('front.home') }}">
-                                    <img class="img-fluid" src="{{ asset('storage/' . $frontsetting->logo) }}"
+                                    <img class="img-fluid foo_logo" src="{{ asset('storage/' . $frontsetting->logo) }}"
                                         alt="At Auros" title="At Auros">
                                 </a>
                             </section>

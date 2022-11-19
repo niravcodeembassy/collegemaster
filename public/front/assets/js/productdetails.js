@@ -374,6 +374,18 @@ $(document).ready(function () {
     var el = $(this);
     let url = el.data("url");
 
+    $(".order_gift_message").each(function () {
+      localStorage.setItem($(this).attr("name"), $(this).val());
+    });
+
+    $(".enable_message").each(function () {
+      localStorage.setItem($(this).attr("name"), $(this).val());
+    });
+
+    $(".order_optional_note").each(function () {
+      localStorage.setItem($(this).attr("name"), $(this).val());
+    });
+
     // window.loaders.show();
 
     $.ajax({
@@ -431,6 +443,18 @@ $(document).ready(function () {
       window.location.href = el.attr("href");
     }
     return false;
+  });
+
+  $(".order_gift_message").each(function () {
+    $(this).val(localStorage.getItem($(this).attr("name")));
+    localStorage.removeItem($(this).attr("name"));
+  });
+
+  
+
+  $(".order_optional_note").each(function () {
+    $(this).val(localStorage.getItem($(this).attr("name")));
+    localStorage.removeItem($(this).attr("name"));
   });
 });
 

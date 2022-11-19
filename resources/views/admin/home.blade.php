@@ -210,78 +210,6 @@
     </div> --}}
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-12 mt-2">
-            <h5>MONTH WISE SALE</h5>
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 40%">MONTH</th>
-                                            <th style="width: 30%" class="text-center">TOTAL ORDER</th>
-                                            <th style="width: 30%" class="text-center">ORDER AMOUNT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($monthWiseSaleTable as $key=>$item)
-                                            <tr>
-                                                <td>{{ $item['label'] }}</td>
-                                                <td class="text-center">{{ $item['order'] }}</td>
-                                                <td class="text-center">${{ number_format($item['amount'], 2) }}</td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="4" class="text-center">No record Found</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-12 mt-2">
-            <h5>DAY WISE SALE</h5>
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 40%">DATE</th>
-                                            <th style="width: 30%" class="text-center">TOTAL ORDER</th>
-                                            <th style="width: 30%" class="text-center">ORDER AMOUNT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($dayWiseSaleTable as $key=>$item)
-                                            <tr>
-                                                <td>{{ $item['label'] }}</td>
-                                                <td class="text-center">{{ $item['order'] }}</td>
-                                                <td class="text-center">${{ number_format($item['amount'], 2) }}</td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="4" class="text-center">No record Found</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12 mt-2">
             <h5>Global Sales by Top Locations</h5>
             <div class="card">
@@ -369,6 +297,42 @@
                     </canvas>
                 </div>
             </div>
+            <div class="card card-primary collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">MONTH WISE SALE</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" style="display:none">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%">MONTH</th>
+                                    <th style="width: 30%" class="text-center">TOTAL ORDER</th>
+                                    <th style="width: 30%" class="text-center">ORDER AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($monthWiseSaleTable as $key=>$item)
+                                    <tr>
+                                        <td>{{ $item['label'] }}</td>
+                                        <td class="text-center">{{ $item['order'] }}</td>
+                                        <td class="text-center">${{ number_format($item['amount'], 2) }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">No record Found</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             {{-- <div class="card card-primary collapsed-card d-none">
         <div class="card-header">
           <h3 class="card-title">Last 6 Month Wise Order</h3>
@@ -446,6 +410,42 @@
                         style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%; display: block; width: 764px;"
                         class="chartjs-render-monitor"></canvas>
                     </canvas>
+                </div>
+            </div>
+            <div class="card card-primary collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">DAY WISE SALE</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" style="display:none">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%">DATE</th>
+                                    <th style="width: 30%" class="text-center">TOTAL ORDER</th>
+                                    <th style="width: 30%" class="text-center">ORDER AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($dayWiseSaleTable as $key=>$item)
+                                    <tr>
+                                        <td>{{ $item['label'] }}</td>
+                                        <td class="text-center">{{ $item['order'] }}</td>
+                                        <td class="text-center">${{ number_format($item['amount'], 2) }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">No record Found</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             {{-- <div class="card card-primary collapsed-card d-none">

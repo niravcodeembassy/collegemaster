@@ -287,6 +287,15 @@
                 });
             });
 
+            $(".enable_message").each(function() {
+                if (localStorage.getItem($(this).attr("name")) == "Yes") {
+                    $(this).attr("checked", true);
+                    $(this).trigger("change");
+                }
+                $(this).val(localStorage.getItem($(this).attr("name")));
+                localStorage.removeItem($(this).attr("name"));
+            });
+
             $(document).on("click", ".checkout-form-btn", function(event, data) {
                 var el = data || $(this);
 

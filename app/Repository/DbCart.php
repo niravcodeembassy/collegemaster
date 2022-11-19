@@ -30,6 +30,7 @@ class DbCart implements Cart
 
   public function add()
   {
+    // dd($this->request);
     //Add to cart item
     if (!Auth::check() && !Session::has('cart_session')) {
       Session::put('cart_session', Session::getId());

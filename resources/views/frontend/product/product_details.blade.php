@@ -969,7 +969,7 @@
                                 <div class="shop-product__description-tab pt-30 mb-100">
                                     <!--=======  tab navigation  =======-->
 
-                                    <div
+                                    {{-- <div
                                         class="tab-product-navigation tab-product-navigation--product-desc mb-20 d-sm-block d-none">
                                         <div class="nav nav-tabs justify-content-center flex-lg-row" id="nav-tab2"
                                             role="tablist">
@@ -987,8 +987,8 @@
                                                     ({{ $product_review->count() }})</h3>
                                             </a>
                                         </div>
-                                    </div>
-                                    <div class="d-sm-none">
+                                    </div> --}}
+                                    <div class="">
                                         <div class="d-flex justify-content-around mb-4 nav" role="tablist">
                                             <a class="nav-item nav-link product-button-tab mr-1 active" data-toggle="tab"
                                                 href="#product-series-1" role="tab"

@@ -60,7 +60,10 @@
   /* active and deactive about overlay */
 
   $("#offcanvas-about-icon").on("click", function () {
-    $("#about-overlay").addClass("active-about-overlay");
+    // $("#about-overlay").addClass("active-about-overlay");
+    // $(".overlay-close").addClass("active").removeClass("inactive");
+    // $("body").addClass("active-body-search-overlay");
+    $("#category-overlay").addClass("active-about-overlay");
     $(".overlay-close").addClass("active").removeClass("inactive");
     $("body").addClass("active-body-search-overlay");
   });

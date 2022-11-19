@@ -11933,6 +11933,12 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
     border-radius: 4px;
     border: 1px solid #181717;
 }
+@media (min-width: 768px) {
+  .product-button-tab{
+    padding: 10px 29px;
+      font-size: 16px;
+  }
+}
 .product-button-tab.active{
   background-color: #000;
     color: #fff;
@@ -11959,17 +11965,55 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
     top: 31%;
     font-size: 20px;
 }
-.related_slick_slider:hover .slick-arrow.slick-prev{
+.related_slick_slider .slick-arrow.slick-prev{
     left: 20px !important;
 }
-.related_slick_slider:hover .slick-arrow{
+.related_slick_slider .slick-arrow{
   visibility: visible;
     opacity: 1;
 }
-.related_slick_slider:hover .slick-arrow.slick-next{
+.related_slick_slider .slick-arrow.slick-next{
     right: 20px !important;
 }
 
+.cart-table td.product-quantity .pro-qty{
+  padding-bottom: 0;
+  padding-top: 0 ;
+  margin-left: 0;
+  margin-right: 0;
+}
 
-
+@media only screen and (max-width: 600px) {
+  .pro-qty input{
+        width: 60px;
+  }
+  .cart-table td.product-quantity .pro-qty{
+    margin: 0 10px 0 -32px;
+  }
+  .cart-table td.total-price{
+    margin-top: -30px !important;
+    text-align: left !important;
+    padding-right: 10px !important;
+    margin-left: 50px !important;
+    width: 30% !important;
+}
+#cart-tbody .product-name{
+  max-width: unset !important;
+}
+td.load-image-popup svg{
+  cursor: pointer;
+    position: absolute;
+    bottom: 4%;
+    left: 33%;
+}
+td.load-image-popup .upload_pic_car{
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: initial;
+    position: absolute;
+    right: 12%;
+    /* top: 0; */
+    bottom: 6%;
+}
+}
 /*=====  End of 41. compare  ======*/

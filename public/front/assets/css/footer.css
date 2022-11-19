@@ -44,6 +44,18 @@ h3.footer_heading{
   margin: 0 0 10px;
   font-style: bold !important;
 }
+
+h3.foo_hed_follow{
+  margin: 0px;
+}
+.foo_logo{
+  max-width: 110%;
+}
+@media only screen and (max-width: 600px) {
+.foo_logo{
+  max-width: 140%;
+}
+}
 .footer-nav-container nav ul li a {
   color: #444444 !important;
   font-size: 13px;
