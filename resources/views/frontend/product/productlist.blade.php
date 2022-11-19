@@ -209,8 +209,8 @@
 
             @include('frontend.product.partial.overlay')
             <!--=============================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              =            shop page content         =
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              =============================================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              =            shop page content         =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              =============================================-->
             <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
                 <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
                     <div class="row">
@@ -576,7 +576,7 @@
 
                             <div class="row">
                                 <div class="col-lg-12 d-flex justify-content-center mt-30 mx-lg-0 mx-2">
-                                    {{ $product->appends(request()->query())->links() }}
+                                    {{ $product->appends(request()->query())->onEachSide(0)->links() }}
                                 </div>
                             </div>
 
