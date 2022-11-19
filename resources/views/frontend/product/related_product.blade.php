@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         @if ($product->buytogetherproducts->count() > 0)
-            <div class="col-lg-12 order-1 order-lg-2 mb-md-80 mb-sm-80" style="margin-top:-100px">
+            <div class="col-lg-12 order-1 order-lg-2 mb-md-80" style="margin-top:-100px">
                 <h3 class="text-center mt-4 mb-2 text-capitalize">RELATED PRODUCT</h3>
                 <div class="divider-custom" style="margin-bottom:10px;">
                     <div class="divider-custom-line"></div>
@@ -17,7 +17,7 @@
                             <div class="col-lg-12">
                                 <!--=======  product carousel  =======-->
 
-                                <div class="lezada-slick-slider product-carousel product-carousel--smarthome {{ $product->buytogetherproducts->count() > 4 ? '' : 'related_margin' }}"
+                                <div class="related_slick_slider lezada-slick-slider product-carousel product-carousel--smarthome {{ $product->buytogetherproducts->count() > 4 ? '' : 'related_margin' }}"
                                     data-slick-setting='{
                 "slidesToShow": 4,
                 "slidesToScroll": 4,
@@ -35,7 +35,7 @@
                 {"breakpoint":991, "settings": {"slidesToShow": 3,"slidesToScroll": 3, "arrows": false} },
                 {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "arrows": false} },
                 {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2,  "arrows": false} },
-                {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "arrows": false} }
+                {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "arrows": true} }
               ]'>
 
                                     @foreach ($product->buytogetherproducts as $item)

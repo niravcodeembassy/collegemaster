@@ -34,15 +34,15 @@
         <div class="logo d-sm-none d-flex justify-content-around mb-3">
             <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
                 <img class="img-fluid my-2" alt="google review" title="google review"
-                    src="{{ asset('front/assets/images/mobile_icon/google.png') }}">
+                    src="{{ asset('front/assets/images/mobile_icon/google.svg') }}">
             </a>
             <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
                 <img class="img-fluid my-2" alt="trust icon review" title="trust icon review"
-                    src="{{ asset('front/assets/images/mobile_icon/trust.png') }}">
+                    src="{{ asset('front/assets/images/mobile_icon/trust.svg') }}">
             </a>
             <a href="{{ $frontsetting->esty_link ?? '' }}" target="_blank">
                 <img class="img-fluid my-2" alt="esty review" title="esty review"
-                    src="{{ asset('front/assets/images/mobile_icon/etsy.png') }}">
+                    src="{{ asset('front/assets/images/mobile_icon/etsy.svg') }}">
             </a>
         </div>
         <div class="container-fluid">

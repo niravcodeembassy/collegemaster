@@ -11926,15 +11926,50 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 }
 
 .product-button-tab{
-      background-color: #222222;
-    color: #fff;
+     background-color: #fff;
+    color: #000;
     padding: 5px 10px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: 4px;
+    border: 1px solid #181717;
 }
 .product-button-tab.active{
-  color: #fff !important;
+  background-color: #000;
+    color: #fff;
   opacity: unset !important;
 }
+.cus_review{
+  padding-bottom: 3.5rem;
+}
+@media only screen and (max-width: 600px) {
+.cus_review{
+  padding-bottom: 10px !important;
+}
+.review_btn{
+    margin-bottom: 10px;
+}
+}
+.related_slick_slider .slick-arrow{
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    border: none;
+    color: black;
+    top: 31%;
+    font-size: 20px;
+}
+.related_slick_slider:hover .slick-arrow.slick-prev{
+    left: 20px !important;
+}
+.related_slick_slider:hover .slick-arrow{
+  visibility: visible;
+    opacity: 1;
+}
+.related_slick_slider:hover .slick-arrow.slick-next{
+    right: 20px !important;
+}
+
+
 
 /*=====  End of 41. compare  ======*/

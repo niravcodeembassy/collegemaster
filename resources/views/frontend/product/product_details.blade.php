@@ -989,13 +989,15 @@
                                         </div>
                                     </div>
                                     <div class="d-sm-none">
-                                        <div class="d-flex justify-content-around mb-4">
-                                            <a class="product-button-tab mr-1" data-toggle="tab" href="#product-series-1"
-                                                role="tab" aria-selected="true">Description</a>
-                                            <a class="product-button-tab mr-1" data-toggle="tab" href="#product-series-2"
-                                                role="tab" aria-selected="true">Specification</a>
-                                            <a class="product-button-tab mr-1" data-toggle="tab" href="#product-series-3"
-                                                role="tab" aria-selected="true">Reviews
+                                        <div class="d-flex justify-content-around mb-4 nav" role="tablist">
+                                            <a class="nav-item nav-link product-button-tab mr-1 active" data-toggle="tab"
+                                                href="#product-series-1" role="tab"
+                                                aria-selected="true">Description</a>
+                                            <a class="nav-item nav-link product-button-tab mr-1" data-toggle="tab"
+                                                href="#product-series-2" role="tab"
+                                                aria-selected="true">Specification</a>
+                                            <a class="nav-item nav-link product-button-tab mr-1" data-toggle="tab"
+                                                href="#product-series-3" role="tab" aria-selected="true">Reviews
                                                 ({{ $product_review->count() }})</a>
                                         </div>
                                     </div>

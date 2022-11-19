@@ -117,7 +117,8 @@
             text-align: left;
             -webkit-print-color-adjust: exact;
             color-adjust: exact;
-            margin-top: 40px;
+            /* margin-top: 40px; */
+            margin-top: 35px;
             margin-left: 5px;
         }
 
@@ -155,16 +156,22 @@
                         <div class="text-center buyer">
                             <h1>Website Order Form</h1>
                         </div>
-                        <div class="header">
+                        {{-- <div class="header">
                             <h3>Order {{ $order->order_number ?? '' }}</h3>
                             <h5>{{ ucfirst($shipping_address->first_name) }} {{ ucfirst($shipping_address->last_name) }}
                             </h5>
                             <h5>{{ $shipping_address->email }}</h5>
                             <h5>{{ $shipping_address->mobile }}</h5>
-                        </div>
+                        </div> --}}
                         <div class="content-body">
                             <div class="left_part">
-
+                                <h3>Order {{ $order->order_number ?? '' }}</h3>
+                                <h5>{{ ucfirst($shipping_address->first_name) }}
+                                    {{ ucfirst($shipping_address->last_name) }}
+                                </h5>
+                                <h5>{{ $shipping_address->email }}</h5>
+                                <h5>{{ $shipping_address->mobile }}</h5>
+                                <br>
                                 <div class="shipping">
                                     <b>Ship to</b>
                                     <table class="invoice_tbl">

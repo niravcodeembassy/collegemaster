@@ -1,9 +1,10 @@
 <div class="border">
     <div class="main p-4">
-        <div class="customer d-flex justify-content-between  {{ $review->count() > 0 ? 'border-bottom' : '' }}">
+        <div
+            class="customer d-flex justify-content-between flex-wrap  {{ $review->count() > 0 ? 'border-bottom' : '' }}">
             <div class="">
                 <h3>Customer Reviews</h3>
-                <div class="pb-bottom display-flex ">
+                <div class="display-flex cus_review">
                     <span>
                         @php
                             $r = (round($review_rating, 1) * 100) / 500;
