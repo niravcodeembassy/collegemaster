@@ -148,7 +148,6 @@ class ProductController extends Controller
   }
   public function subcategoryProductList(Request $request, $cat_slug, $slug)
   {
-
     $subCategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'image', 'description', 'meta_title', 'meta_description', 'meta_keywords', 'category_id')->firstOrFail();
 
     $subcategory_rating = SubCategory::groupBy('sub_categories.id')

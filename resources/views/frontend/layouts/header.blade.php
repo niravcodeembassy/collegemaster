@@ -21,6 +21,33 @@
                                 },
                             ])
                             ->get();
+                        $active_category = null;
+                        if (\Request::route()->getName() == 'category.product') {
+                            $slug = request()->route('slug');
+                            $active_category = \App\Category::with('subCategory')
+                                ->where('slug', $slug)
+                                ->select('id', 'image', 'slug', 'name', 'description', 'meta_title', 'meta_description', 'meta_keywords')
+                                ->firstOrFail();
+                        }
+                        if (\Request::route()->getName() == 'product.details') {
+                            $slug = \Request::route('product_subcategory_slug');
+                            $subCategory = \App\Model\SubCategory::where('slug', $slug)->firstOrFail();
+                            $active_category = \App\Category::findOrFail($subCategory->category_id);
+                        }
+                        $categoryList = \App\Category::whereNull('is_active')
+                            ->withCount([
+                                'products' => function ($q) {
+                                    $q->where('is_active', 'Yes');
+                                },
+                            ])
+                            ->with([
+                                'subCategory' => function ($q) {
+                                    $q->whereNull('is_active');
+                                },
+                            ])
+                            ->whereNull('is_active')
+                            ->get();
+                        $AllProductCount = \App\Model\Product::where('is_active', 'Yes')->count();
                     @endphp
                     <div class="logo">
                         <a href="{{ route('front.home') }}">
@@ -121,7 +148,8 @@
                         </div>
                     </form>
                 </div>
-                {{-- @include('frontend.layouts.category_ovelay') --}}
+                @include('frontend.layouts.category_ovelay')
+                {{-- @include('frontend.product.partial.overlay') --}}
             </div>
         </div>
 

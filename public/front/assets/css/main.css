@@ -11962,7 +11962,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
     height: 35px;
     border: none;
     color: black;
-    top: 31%;
+    top: 27%;
     font-size: 20px;
 }
 .related_slick_slider .slick-arrow.slick-prev{
@@ -11983,6 +11983,12 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   margin-right: 0;
 }
 
+@media only screen and (max-width: 1024px) {
+   .related_slick_slider .slick-arrow{
+    top: 22%;
+}
+}
+
 @media only screen and (max-width: 600px) {
   .pro-qty input{
         width: 60px;
@@ -11996,24 +12002,27 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
     padding-right: 10px !important;
     margin-left: 50px !important;
     width: 30% !important;
-}
-#cart-tbody .product-name{
-  max-width: unset !important;
-}
-td.load-image-popup svg{
-  cursor: pointer;
-    position: absolute;
-    bottom: 4%;
-    left: 33%;
-}
-td.load-image-popup .upload_pic_car{
-    margin-top: 4px;
-    font-size: 12px;
-    line-height: initial;
-    position: absolute;
-    right: 12%;
-    /* top: 0; */
-    bottom: 6%;
+  }
+  #cart-tbody .product-name{
+    max-width: unset !important;
+  }
+  td.load-image-popup svg{
+    cursor: pointer;
+      position: absolute;
+      bottom: 4%;
+      left: 33%;
+  }
+  td.load-image-popup .upload_pic_car{
+      margin-top: 4px;
+      font-size: 12px;
+      line-height: initial;
+      position: absolute;
+      right: 12%;
+      /* top: 0; */
+      bottom: 6%;
+  }
+  .related_slick_slider .slick-arrow{
+    top: 31%;
 }
 }
 /*=====  End of 41. compare  ======*/

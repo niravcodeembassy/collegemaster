@@ -90,7 +90,7 @@ class CustomerController extends Controller
     $this->data['customer'] = User::with(['orders' => function ($q) {
       $q->orderBy('id', 'DESC');
     }], 'wishlist.variant')->findOrfail($id);
-
+    // dd($this->data);
     // $this->data['order'] = User::with(['orders' => function ($q) {
     //   $q->orderBy('id', 'DESC');
     // }])->paginate('5');

@@ -15,7 +15,6 @@
             <div class="widget-wrapper">
                 <!--=======  single widget  =======-->
                 <div class="single-widget">
-
                     {!! $category_list_view !!}
                 </div>
                 <!--=======  End of single widget  =======-->

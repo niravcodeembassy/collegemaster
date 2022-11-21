@@ -53,15 +53,15 @@
                     <div class="logo d-sm-block d-none  ">
                         <a href="{{ $frontsetting->google_link ?? '' }}" target="_blank">
                             <img class="img-fluid mb-2" alt="google review" title="google review"
-                                src="{{ asset('front/assets/images/website_icon/google.png') }}">
+                                src="{{ asset('front/assets/images/website_icon/google.svg') }}">
                         </a>
                         <a href="{{ $frontsetting->pilot_link ?? '' }}" target="_blank">
                             <img class="img-fluid my-2" alt="trust icon review" title="trust icon review"
-                                src="{{ asset('front/assets/images/website_icon/trust.png') }}">
+                                src="{{ asset('front/assets/images/website_icon/trust.svg') }}">
                         </a>
                         <a href="{{ $frontsetting->esty_link ?? '' }}" target="_blank">
                             <img class="img-fluid my-2" alt="esty review" title="esty review"
-                                src="{{ asset('front/assets/images/website_icon/etsy.png') }}">
+                                src="{{ asset('front/assets/images/website_icon/etsy.svg') }}">
                         </a>
                     </div>
                     <!--=======  End of logo  =======-->
@@ -237,8 +237,9 @@
                             </section>
                             <section class="f-50-logo">
                                 <a href="{{ route('front.home') }}">
-                                    <img class="img-fluid foo_logo" src="{{ asset('storage/' . $frontsetting->logo) }}"
-                                        alt="At Auros" title="At Auros">
+                                    <img class="img-fluid foo_logo"
+                                        src="{{ asset('storage/' . $frontsetting->logo) }}" alt="At Auros"
+                                        title="At Auros">
                                 </a>
                             </section>
                         </div>

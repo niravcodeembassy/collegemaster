@@ -30,11 +30,11 @@
                 "nextArrow": {"buttonClass": "slick-next", "iconClass": "ti-angle-right" }
               }'
                                     data-slick-responsive='[
-                {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": false} },
-                {"breakpoint":1199, "settings": {"slidesToShow": 4, "arrows": false} },
-                {"breakpoint":991, "settings": {"slidesToShow": 3,"slidesToScroll": 3, "arrows": false} },
-                {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "arrows": false} },
-                {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2,  "arrows": false} },
+                {"breakpoint":1501, "settings": {"slidesToShow": 4, "arrows": true} },
+                {"breakpoint":1199, "settings": {"slidesToShow": 4, "arrows": true} },
+                {"breakpoint":991, "settings": {"slidesToShow": 3,"slidesToScroll": 3, "arrows": true} },
+                {"breakpoint":767, "settings": {"slidesToShow": 2, "slidesToScroll": 2, "arrows": true} },
+                {"breakpoint":575, "settings": {"slidesToShow": 2, "slidesToScroll": 2,  "arrows": true} },
                 {"breakpoint":479, "settings": {"slidesToShow": 1, "slidesToScroll": 1, "arrows": true} }
               ]'>
 

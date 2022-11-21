@@ -206,10 +206,10 @@
                 </div>
             </div>
 
-            @include('frontend.product.partial.overlay')
+            {{-- @include('frontend.product.partial.overlay') --}}
             <!--=============================================
-                                                                                                                                                                          =            shop page content         =
-                                                                                                                                                                          =============================================-->
+                                                                                                                                                                                      =            shop page content         =
+                                                                                                                                                                                      =============================================-->
 
             <div class="shop-page-content mb-100 mt-sm-10 mb-sm-10">
                 <div class="{{ request('term') !== null || request('flag') == 'false' ? 'container' : 'container wide' }}">
