@@ -36,10 +36,12 @@
 @media (max-width: 568px) {
   .q-slick-slider::after {
     width: 96px;
+        background-size: 50px;  
   }
 
   .q-slick-slider::before {
     width: 96px;
+        background-size: 50px;
   }
 }
 
