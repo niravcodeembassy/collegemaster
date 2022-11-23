@@ -268,13 +268,24 @@ class OrderController extends Controller
       $row['sendMessage'] = 'N/A';
 
       if (in_array($item->order_status, $order_status)) {
-        $row['sendMessage'] = '<a class="btn btn-dark btn-sm text-white sendWhatsapp"
+        $w_disabled = '';
+        $whatsapp_status = json_decode($item->whatsapp_status);
+        $stored_status = $item->order_status;
+        if ($whatsapp_status->$stored_status == true) {
+          $w_disabled = 'disabled';
+        }
+        $s_disabled = '';
+        $sms_status = json_decode($item->sms_status);
+        if ($sms_status->$stored_status == true) {
+          $s_disabled = 'disabled';
+        }
+        $row['sendMessage'] = '<a class="btn btn-dark btn-sm text-white sendWhatsapp ' . $w_disabled . '"
         data-url="' . route('admin.order.whatsapp', $item->id) . '"
         data-status="' . $item->order_status . '"
         href="javascript:void(0)" data-id="' . $item->id . '">
         <i class="fab fa-whatsapp"></i></i>&nbsp;&nbsp;Message
         </a>&nbsp;&nbsp;
-        <a class="btn btn-info btn-sm text-white sendSms"
+        <a class="btn btn-info btn-sm text-white sendSms ' . $s_disabled . '"
         data-url="' . route('admin.order.sms', $item->id) . '"
         data-status="' . $item->order_status . '"
         href="javascript:void(0)" data-id="' . $item->id . '">
@@ -856,7 +867,7 @@ class OrderController extends Controller
         ])->render();
         $this->sendWhatsappMessage($user->phone, $body);
       }
-
+      $order->update(['whatsapp_status' => array_merge(json_decode($order->whatsapp_status, true), [$status => true])]);
       return response()->json([
         'success' => true,
         'message' => "Message Sent Successfully"
@@ -907,6 +918,7 @@ class OrderController extends Controller
         )->render();
         $this->sendSmsMessage($user->phone, $body);
       }
+      $order->update(['sms_status' => array_merge(json_decode($order->sms_status, true), [$status => true])]);
       return response()->json([
         'success' => true,
         'message' => "SMS Sent Successfully"

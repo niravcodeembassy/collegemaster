@@ -239,6 +239,8 @@ class CheckOutController extends Controller
     $order->payment_type    = $this->request->payment_method;
     $order->payment_status  = 'pending';
     $order->address         = json_encode($this->address);
+    $order->whatsapp_status = json_encode($this->getStatus());
+    $order->sms_status      = json_encode($this->getStatus());
     $order->subtotal        = $subtotal;
     $order->shipping_charge = $shipping_charge;
     $order->total           = $total;
@@ -384,6 +386,8 @@ class CheckOutController extends Controller
     $order->payment_type    = $payment_method;
     $order->payment_status  = 'pending';
     $order->address         = json_encode($address);
+    $order->whatsapp_status = json_encode($this->getStatus());
+    $order->sms_status = json_encode($this->getStatus());
     $order->subtotal        = $subtotal;
     $order->shipping_charge = $shipping_charge;
     $order->total           = $total;
@@ -824,5 +828,22 @@ class CheckOutController extends Controller
       );
     } catch (\Exception $e) {
     }
+  }
+
+  public function getStatus()
+  {
+    $data = [
+      'order_placed' => false,
+      'dispatched' => false,
+      'delivered' => false,
+      'cancelled' => false,
+      'customer_approval' => false,
+      'work_in_progress' => false,
+      'pick_not_receive' => false,
+      'correction' => false,
+      'printing' => false,
+      'refund' => false,
+    ];
+    return $data;
   }
 }

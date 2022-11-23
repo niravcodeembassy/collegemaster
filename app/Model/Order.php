@@ -34,6 +34,46 @@ class Order extends Model
     return $this->order_status;
   }
 
+  public function getWhatsappStatusAttribute($value)
+  {
+    if ($value == null) {
+      $data = [
+        'order_placed' => false,
+        'dispatched' => false,
+        'delivered' => false,
+        'cancelled' => false,
+        'customer_approval' => false,
+        'work_in_progress' => false,
+        'pick_not_receive' => false,
+        'correction' => false,
+        'printing' => false,
+        'refund' => false,
+      ];
+      return json_encode($data);
+    }
+    return $value;
+  }
+
+  public function getSmsStatusAttribute($value)
+  {
+    if ($value == null) {
+      $data = [
+        'order_placed' => false,
+        'dispatched' => false,
+        'delivered' => false,
+        'cancelled' => false,
+        'customer_approval' => false,
+        'work_in_progress' => false,
+        'pick_not_receive' => false,
+        'correction' => false,
+        'printing' => false,
+        'refund' => false,
+      ];
+      return json_encode($data);
+    }
+    return $value;
+  }
+
   public function singleItem()
   {
     return $this->hasOne(OrderItem::class, 'order_id');
@@ -45,10 +85,10 @@ class Order extends Model
   }
 
   public function getApprovalImageSrcAttribute()
-    {   
-        if($this->approval_image && Storage::exists($this->approval_image) ) {
-            return asset('storage/'.$this->approval_image);
-        }
-        return asset('storage/category/default.png');
+  {
+    if ($this->approval_image && Storage::exists($this->approval_image)) {
+      return asset('storage/' . $this->approval_image);
     }
+    return asset('storage/category/default.png');
+  }
 }
