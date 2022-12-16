@@ -19,10 +19,12 @@
                     </span>
                 </div>
             </div>
-            <div class="mt-3">
-                <a class="lezada-button lezada-button--medium review_btn" data-toggle="collapse" href="#reviewForm"
-                    role="button" aria-expanded="false" aria-controls="collapseExample">WRITE A REVIEW</a>
-            </div>
+            @if ($product_order_count > 0)
+                <div class="mt-3">
+                    <a class="lezada-button lezada-button--medium review_btn" data-toggle="collapse" href="#reviewForm"
+                        role="button" aria-expanded="false" aria-controls="collapseExample">WRITE A REVIEW</a>
+                </div>
+            @endif
         </div>
 
         <div class="collapse py-4 border-bottom border-top" id="reviewForm">

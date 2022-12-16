@@ -12,6 +12,7 @@ use App\Model\SubCategory;
 use App\Model\WishList;
 use Illuminate\Http\Request;
 use App\Model\FrequentAskQuestion;
+use App\Model\Order;
 use Auth;
 use Helper;
 use Str;
@@ -276,6 +277,16 @@ class ProductController extends Controller
     $review = ProductReview::where('product_id', $product->id)->whereNull('is_active')->with('user')->orderBy('created_at', 'DESC')->paginate(2);
     $product_review = $product->product_review->whereNull('is_active');
     $review_rating = round($product_review->pluck('rating')->avg(), 1);
+
+    $this->data['product_order_count'] = 0;
+    if (Auth::check()) {
+      $user_orders = Order::rightJoin('order_items', 'order_items.order_id', '=', 'orders.id')
+        ->where('user_id', Auth::user()->id)
+        ->whereJsonContains('raw_data', ['product_id' => $product->id])
+        ->count();
+      $this->data['product_order_count'] = $user_orders;
+    }
+
     $this->data['product_review'] = $product_review;
     $this->data['review_rating'] = $review_rating;
     $this->data['product'] = $product;
