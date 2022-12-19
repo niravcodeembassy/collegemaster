@@ -49,6 +49,7 @@
         content="@author_handle" />
   <meta name="twitter:image" content="@yield('twiter-image', asset('storage/' . $frontsetting->logo))">
 
+  <meta name="google-site-verification" content="7pE6Ui7WszxRR3lwGDOQLd1VsBxOLGiaS4o9-05CbwU" />
 
   @if (isset($frontsetting->google_head_script))
   {!! $frontsetting->google_head_script !!}
