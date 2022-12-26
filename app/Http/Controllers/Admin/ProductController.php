@@ -15,6 +15,8 @@ use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
+use App\Http\Resources\GoogleProductDeleteResource;
 
 class ProductController extends Controller
 {
@@ -180,6 +182,14 @@ class ProductController extends Controller
           'icon' => 'fa fa-shopping-cart',
           'permission' => true
         ]) : []),
+        collect([
+          'text' => 'Google Update',
+          'action' => route('admin.google.updateproduct', $item->id),
+          'id' => $item->id,
+          'class' => 'google-update',
+          'icon' => 'fa fa-store',
+          'permission' => true
+        ]),
         // 'view_target' => route('product.detail', ['slug' => $item->handle]),
       ]);
       //Log::info('product slug', ['slug', route('product.view', ['slug' => $item->slug ?? '']), $item->id]);
@@ -348,7 +358,7 @@ class ProductController extends Controller
   public function update(Request $request, $id)
   {
 
-    // dd('f');
+    // dd($request);
 
 
     try {
@@ -439,6 +449,7 @@ class ProductController extends Controller
 
       $inShoppingCart = ShoppingCart::where('product_id', $product->id)->delete();
       // $product->delete();
+      $this->googleDelete($product->id);
       $p = Product::find($product->id)->delete();
 
       return response()->json([
@@ -451,6 +462,64 @@ class ProductController extends Controller
         'success' => false,
         'message' => 'Product associate with user cart !'
       ], 406);
+    }
+  }
+
+  public function googleDelete($product_id)
+  {
+    $product_variation = Productvariant::with('product')->where('product_id', $product_id)->where('type', 'variant');
+    if ($product_variation->count() > 0) {
+      $config = config("laravel-google-merchant-api.merchants.moirei");
+      $app_name = data_get($config, 'app_name');
+      $merchant_id = data_get($config, 'merchant_id');
+      $client_credentials_path = data_get($config, 'client_credentials_path');
+      $client_authorize = $this->initClient($app_name, $merchant_id, $client_credentials_path);
+
+      $product_variation = $product_variation->get();
+      $google_product = GoogleProductDeleteResource::collection($product_variation);
+      try {
+        $body_content = [
+          "body" => json_encode(["entries" => $google_product])
+        ];
+        $response = $client_authorize->request(
+          'post',
+          'products/batch',
+          $body_content
+        );
+      } catch (\GuzzleHttp\Exception\ClientException $e) {
+        return false;
+      } catch (Exception $e) {
+        return false;
+      }
+    }
+  }
+
+  public function initClient($app_name, $merchant_id, $client_credentials_path)
+  {
+    $version = config('laravel-google-merchant-api.version', 'v2');
+    $client_config = collect(config('laravel-google-merchant-api.client_config'))->only([
+      'timeout', 'headers', 'proxy',
+      'allow_redirects', 'http_errors', 'decode_content', 'verify', 'cookies',
+    ])->filter()->all();
+    $client_config['base_uri'] = "https://www.googleapis.com/content/$version/";
+    $client_config['headers'] = array_merge($client_config['headers'] ?? [], [
+      'Accept' => 'application/json',
+      'Content-Type' => 'application/json',
+    ]);
+
+    if ((strpos($client_credentials_path, '.json') !== false) && file_exists($client_credentials_path)) {
+      $client = new \Google_Client();
+      $client->setHttpClient(new Client($client_config));
+
+      $client->setApplicationName($app_name);
+      $client->setUseBatch(true);
+
+      $client->setAuthConfig($client_credentials_path);
+      $client->addScope('https://www.googleapis.com/auth/content');
+
+      return $client->authorize();
+    } else {
+      return new Client($client_config);
     }
   }
 

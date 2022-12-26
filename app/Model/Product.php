@@ -16,6 +16,7 @@ class Product extends Model
   protected $fillable = ['attachment'];
   protected $appends = ['product_src'];
 
+
   public function getVarinatAttribute($value)
   {
     return json_decode($value);

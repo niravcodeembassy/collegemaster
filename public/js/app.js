@@ -20509,6 +20509,39 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("click", ".google-update", function (e) {
+    e.preventDefault();
+    var el = $(this);
+    var url = el.attr("href");
+    var id = el.data("id");
+     showLoader();
+     $.ajax({
+       type: "POST",
+       url: url,
+       cache: false,
+       data: {
+         id: id,
+       },
+     })
+       .always(function (respons) {
+         stopLoader();
+       })
+       .done(function (respons) {
+         toast.fire({
+           type: "success",
+           title: "Success",
+           text: respons.message,
+         });
+       })
+       .fail(function (respons) {
+         var data = respons.responseJSON;
+         toast.fire({
+           type: "error",
+           title: "Error",
+           text: "something went wrong please try again !",
+         });
+       });
+  });
   $(document).on('click', '.change-status', function (e) {
     var el = $(this);
     var url = el.data('url');

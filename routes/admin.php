@@ -174,7 +174,10 @@ Route::group(['middleware' => ['admin.auth:admin', 'admin.verified'], 'namespace
   Route::resource('order', 'OrderController');
   Route::post('orders-msg', 'OrderController@orderMsg')->name('orders.msg');
 
-
+  Route::get('insert-google-merchant', 'GoogleMerchantController@insertProduct')->name('google.insert');
+  Route::get('delete-google-merchant', 'GoogleMerchantController@deleteProduct')->name('google.delete');
+  Route::post('update-google-merchant', 'GoogleMerchantController@updateProduct')->name('google.updateproduct');
+  Route::resource('google-merchant', 'GoogleMerchantController');
 
   Route::get('export/print/', 'ExportController@exportPrint')->name('export.print');
   Route::get('export/pdf/', 'ExportController@exportPdf')->name('export.pdf');
