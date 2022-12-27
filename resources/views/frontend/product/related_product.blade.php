@@ -2,7 +2,7 @@
     <div class="row">
         @if ($product->buytogetherproducts->count() > 0)
             <div class="col-lg-12 order-1 order-lg-2 mb-md-80" style="margin-top:-100px">
-                <h3 class="text-center mt-4 mb-2 text-capitalize">RELATED PRODUCT</h3>
+                <h3 class="text-center mt-4 mb-2 text-capitalize" style="font-weight: 600;">RELATED PRODUCT</h3>
                 <div class="divider-custom" style="margin-bottom:10px;">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon">
@@ -40,7 +40,7 @@
 
                                     @foreach ($product->buytogetherproducts as $item)
                                         <!--=======  single product  =======-->
-                                        <div class="col">
+                                        <div class="">
                                             @include('frontend.product.partial.single-relatedproduct', [
                                                 'product' => $item,
                                             ])

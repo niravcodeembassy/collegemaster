@@ -9158,7 +9158,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   display: block;
 }
 .shop-product__description-tab {
-  border-top: 1px solid #ededed;
+  /* border-top: 1px solid #ededed; */
 }
 .shop-product__description-tab--double-border {
   border-bottom: 1px solid #ededed;
@@ -11925,24 +11925,39 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   font-weight: 400;
 }
 
+.custom-product-tab{
+  border-bottom: 1px solid #ededed;
+}
 .product-button-tab{
-     background-color: #fff;
-    color: #000;
+   background-color: #353535;
+    color: #fff;
     padding: 5px 10px;
     font-size: 13px;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     border: 1px solid #181717;
+}
+.product-button-tab:hover{
+  color: #fff !important;
 }
 @media (min-width: 768px) {
   .product-button-tab{
-    padding: 10px 29px;
+    padding: 10px 45px;
       font-size: 16px;
   }
 }
 .product-button-tab.active{
-  background-color: #000;
-    color: #fff;
+  background-color: #fff;
+  color: #353535;
   opacity: unset !important;
+}
+.product-button-tab.active:hover{
+  color: #353535 !important;
+}
+.product-button-tab-left{
+  border-top-left-radius: 75px;
+}
+.product-button-tab-right{
+  border-top-right-radius: 75px;
 }
 .cus_review{
   padding-bottom: 3.5rem;

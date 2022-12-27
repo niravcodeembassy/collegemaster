@@ -989,15 +989,17 @@
                                         </div>
                                     </div> --}}
                                     <div class="">
-                                        <div class="d-flex justify-content-around mb-4 nav" role="tablist">
-                                            <a class="nav-item nav-link product-button-tab mr-1 active" data-toggle="tab"
-                                                href="#product-series-1" role="tab"
+                                        <div class="d-flex justify-content-center mb-4 nav custom-product-tab"
+                                            role="tablist">
+                                            <a class="nav-item nav-link product-button-tab product-button-tab-left mr-2 active"
+                                                data-toggle="tab" href="#product-series-1" role="tab"
                                                 aria-selected="true">Description</a>
-                                            <a class="nav-item nav-link product-button-tab mr-1" data-toggle="tab"
+                                            <a class="nav-item nav-link product-button-tab mr-2" data-toggle="tab"
                                                 href="#product-series-2" role="tab"
                                                 aria-selected="true">Specification</a>
-                                            <a class="nav-item nav-link product-button-tab mr-1" data-toggle="tab"
-                                                href="#product-series-3" role="tab" aria-selected="true">Reviews
+                                            <a class="nav-item nav-link product-button-tab product-button-tab-right mr-2"
+                                                data-toggle="tab" href="#product-series-3" role="tab"
+                                                aria-selected="true">Reviews
                                                 ({{ $product_review->count() }})</a>
                                         </div>
                                     </div>
